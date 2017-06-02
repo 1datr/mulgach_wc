@@ -11,7 +11,7 @@ class WorkersController extends BaseController
 		$conn = get_connection();
 		$res = $conn->query("SELECT * FROM @+workers");
 		echo "<h3>workers</h3>";
-		$this->out_view('workers/index',array('res'=>$res,'conn'=>$conn));
+		$this->out_view('index',array('res'=>$res,'conn'=>$conn));
 	}
 	
 	public function ActionBlockx()
