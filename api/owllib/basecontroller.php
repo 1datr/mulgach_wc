@@ -12,12 +12,19 @@ class BaseController
 	VAR $_CONTROLLER_DIR=NULL; // директория контроллера (заполняется из модуля page)
 	VAR $_ENV;
 	VAR $_MODEL;
+	VAR $_CONNECTION;
 	
 	function __construct($_env_info=array())
 	{
 		$this->_CONTROLLER_DIR = $_env_info['_CONTROLLER_DIR'];
 		$this->_ENV = $_env_info['_ENV'];
 		
+		$conn = get_connection();
+		if(!empty($conn))
+		{
+			$this->_CONNECTION = $conn;
+			$this->_ENV['ONNECTION']=$this->_CONNECTION;
+		}
 		//$this->_MODEL = 
 		$model_file = url_seg_add($this->get_current_dir(),"model.php");
 		if(file_exists($model_file))

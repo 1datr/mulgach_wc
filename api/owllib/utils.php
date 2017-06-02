@@ -15,19 +15,55 @@ function merge_arrays($array1,$array2)
 	return $res;
 }
 
-function url_seg_add($seg1,$seg2)
+function ximplode($delimeter,$array,$prefix,$suffix,$options=NULL)
 {
-	if((substr($seg1,-1)=="/") || (substr($seg1,-1)=="\\"))
+	$i=0;
+	$str = "";
+	foreach($array as $key => $item)
 	{
-		$seg1 = substr($seg1,0,-1);		
+		$itemz = $item;
+		$prefixz=strtr($prefix,array('{value}'=>$item,'{key}'=>$key));
+		$suffixz=strtr($suffix,array('{value}'=>$item,'{key}'=>$key));
+		$delimeterz=strtr($delimeter,array('{value}'=>$item,'{key}'=>$key));
+		if($i>0)
+		{
+			$str = $str.$delimeterz;
+		}
+		$str=$str.$prefixz.$item.$suffixz;
+		$i++;
 	}
-	
-	if((substr($seg2,0,1)=="/") || (substr($seg2,0,1)=="\\") )
+	return $str;
+}
+
+function url_seg_add()
+{
+	$numargs = func_num_args();
+	$arg_list = func_get_args();
+	$resstr="";
+	foreach ($arg_list as $idx => $arg)
 	{
-		$seg2 = substr($seg2,1,strlen($seg2)-1);
+		if((substr($arg,-1)=="/") || (substr($arg,-1)=="\\"))
+		{
+			$arg = substr($arg,0,-1);
+		}
+		
+		if((substr($arg,0,1)=="/") || (substr($arg,0,1)=="\\") )
+		{
+			$arg = substr($arg,1,strlen($arg)-1);
+		}
+		
+		if($idx==0)
+		{
+			$resstr=$arg;
+		}
+		else 
+		{
+			$resstr=$resstr."/".$arg;
+		}
 	}
+
+	return $resstr;
 	
-	return "{$seg1}/{$seg2}";
 }
 // добавить точку перед директорией 
 function dir_dotted($dir)

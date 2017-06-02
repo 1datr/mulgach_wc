@@ -1,11 +1,21 @@
 <?php
+class DbRecord
+{
+	VAR $_TABLE;
+	function save()
+	{
+		
+	}
+	
+}
+
 class BaseModel
 {
 	VAR $_TABLE;
 	VAR $_LOOKUPS;
 	VAR $_SETTINGS;
 	VAR $_LOCATION;
-	VAR $_ENV;
+	VAR $_ENV;	
 	
 	function __construct($_LOCATION="",$the_ENV=array())
 	{
@@ -28,6 +38,18 @@ class BaseModel
 			$this->_SETTINGS = $settings;
 			$this->_TABLE=$this->_SETTINGS['table'];
 		}
+	}
+	
+	private function db_query($query)
+	{
+		$res = $this->_ENV['_CONNECTION']->query($query);
+		return $res;
+	}
+	
+	function find($where=1,$orderby=NULL)
+	{
+		$sql=$this->select_query($where,$orderby);
+		$res = $this->db_query($sql);
 	}
 	
 	function select_query($where=1,$orderby=NULL,$group=NULL,$having=NULL)

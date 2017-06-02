@@ -42,7 +42,7 @@ class owl_route extends owl_Module
 					}
 					else 
 					{
-						$_REQUEST['arg'.$argidx]=$slice;
+						$_REQUEST['args'][$argidx]=$slice;
 						$argidx++;
 					}
 				}
