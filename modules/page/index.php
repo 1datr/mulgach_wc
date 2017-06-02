@@ -178,6 +178,10 @@ class owl_page extends owl_Module
 	
 	function draw()
 	{
+		$event_res = array();
+		// вызвать событие в модулях
+		$res = call_modules($this->get_mod_name(),'before_out',$event_res);
+		
 		if(!empty($_REQUEST['jsblock']))	// блок js-файлов
 		{
 			$this->draw_js($_REQUEST['jsblock']);

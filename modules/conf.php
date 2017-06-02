@@ -4,5 +4,6 @@ $_MODULES = array(
 	'db'=>array(),	
 	'jquery'=>array(),
 	'bootstrap'=>array(),
+	'route'=>array(),
 );
 ?>

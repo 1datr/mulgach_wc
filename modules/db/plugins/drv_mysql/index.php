@@ -24,6 +24,7 @@ class plg_drv_mysql extends mod_plugin
 			echo('Could not connect mysql host: ' . mysql_error());
 			die();
 		}  
+		//print_r($_PARAMS);
 		
 		mysql_query("SET SESSION character_set_results = '".$_PARAMS['charset']."'");
 		mysql_set_charset($_PARAMS['charset']);
