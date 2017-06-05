@@ -11,13 +11,10 @@ class OtdelController extends BaseController
 		$this->add_keyword('workers');
 		
 		$conn = get_connection();
-		
-		$sql = $this->_MODEL->select_query();
-	//	echo $sql;
-		$res = $conn->query($sql);
-		
+
+		$ds = $this->_MODEL->findAsPager();
 		echo "<h3>OTDELS LIST</h3>";
-		$this->out_view('index',array('res'=>$res,'conn'=>$conn));
+		$this->out_view('index',array('ds'=>$ds,'conn'=>$conn));
 	}
 	
 	public function ActionBlockx()

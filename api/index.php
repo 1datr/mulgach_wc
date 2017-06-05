@@ -18,9 +18,10 @@ if(!empty($_CONFIG))
 {
 	require_once "{$_CONFIGS_AREA}{$_CONFIG}/config.php";
 }
+require_once __DIR__."/owllib/utils.php";
 require_once __DIR__."/modulebase.php";
 require_once __DIR__."/owllib/modelbase.php";
-require_once __DIR__."/owllib/utils.php";
+
 require_once __DIR__."/owllib/module.php";
 
 $_MOD_CLASSES=array();

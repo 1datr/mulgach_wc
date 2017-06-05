@@ -15,6 +15,15 @@ function merge_arrays($array1,$array2)
 	return $res;
 }
 
+function def_options($defs,&$opt_array)
+{
+	foreach ($defs as $defkey => $defval)
+	{
+		if(empty($opt_array[$defkey]))
+			$opt_array[$defkey]=$defval;
+	}
+}
+
 function ximplode($delimeter,$array,$prefix,$suffix,$options=NULL)
 {
 	$i=0;

@@ -23,9 +23,9 @@ class BaseController
 		if(!empty($conn))
 		{
 			$this->_CONNECTION = $conn;
-			$this->_ENV['ONNECTION']=$this->_CONNECTION;
+			$this->_ENV['_CONNECTION']=$this->_CONNECTION;
 		}
-		//$this->_MODEL = 
+
 		$model_file = url_seg_add($this->get_current_dir(),"model.php");
 		if(file_exists($model_file))
 		{

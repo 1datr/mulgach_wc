@@ -1,6 +1,6 @@
 <table>
 <?php
-$conn->list_rows($res,function($row,$number)
+$ds->walk(function($row,$number)
 {
 	echo "<tr>";
 	foreach ($row as $key => $val)
