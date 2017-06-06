@@ -20,6 +20,7 @@ if(!empty($_CONFIG))
 }
 require_once __DIR__."/owllib/utils.php";
 require_once __DIR__."/modulebase.php";
+require_once __DIR__."/owllib/basecontroller.php";
 require_once __DIR__."/owllib/modelbase.php";
 
 require_once __DIR__."/owllib/module.php";

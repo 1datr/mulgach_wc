@@ -527,8 +527,58 @@ class owl_page extends owl_Module
 		$_action_name = $con_info['_ACTION'];
 		
 		
+		// Такого метода нет в контроллере
+		if(!method_exists($controller_object, $_action_name))
+		{
+			$_action_name="ActionIndex";
+			// смещаем параметры не связанные с контроллером и действием
+		//	print_r($_REQUEST['args']);
+			$args2 = array($_REQUEST['action']);
+			
+			$_REQUEST['action']='index';
+			
+			if(!empty($_REQUEST['args']))
+			foreach ($_REQUEST['args'] as $idx => $arg)
+			{
+				$args2[]=$arg;
+			}
+			//
+			$_REQUEST['args']=$args2;
+		}
 		
-		$controller_object->$_action_name();
+		
+		// Параметры метода
+		$class = new ReflectionClass($controller_name);
+		$method = $class->getMethod($_action_name);
+		$method_params = $method->getParameters();
+		$method_args=array();
+		
+		//print_r($_REQUEST);
+		
+		$idx_in_req_args=0;
+		foreach ($method_params as $idx => $arg)
+		{
+			if(!empty($_REQUEST[$arg->name]))
+			{
+				$method_args[] = $_REQUEST[$arg->name];
+			}
+			elseif(!empty($_REQUEST['args'][$idx_in_req_args])) 
+			{				
+				$method_args[]=$_REQUEST['args'][$idx_in_req_args];
+				$_REQUEST[$arg->name]=$_REQUEST['args'][$idx_in_req_args];
+				$idx_in_req_args++;
+			}
+			else 
+			{
+				$defval = $arg->getDefaultValue();
+				$method_args[]=$defval;
+				$_REQUEST[$arg->name]=$defval;
+			}
+		}
+		
+		//print_r($method_args);
+		call_user_func_array(array($controller_object,$_action_name), $method_args);
+		//$controller_object->$_action_name();
 		
 		$content = ob_get_contents();
 		ob_end_clean();

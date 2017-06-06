@@ -6,10 +6,10 @@ class SiteController extends BaseController
 	{
 		$this->_TITLE="Master";
 		$this->add_css($this->get_current_dir()."/css/style.css");
-		$this->add_block('LEFT', 'site', 'Blockx');
+		
 		$this->add_block('BASE_MENU', 'site', 'menu');
 		$this->add_keyword('xxx');
-		echo "<h3>MASTER</h3>";
+		$this->out_view('index',array());
 	}
 	
 	public function ActionBlockx()

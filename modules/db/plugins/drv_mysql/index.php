@@ -2,6 +2,7 @@
 
 class plg_drv_mysql extends mod_plugin 
 {
+	use dbDriver;
 	VAR $connection;
 	VAR $parent_module;
 	VAR $_DB_PARAMS;
@@ -34,7 +35,7 @@ class plg_drv_mysql extends mod_plugin
 	public function query($sql)
 	{
 		$sql = QueryMaker::prepare_query($sql, $this->_DB_PARAMS['prefix']);
-	//	echo $sql;
+	//	var_dump($sql);
 		$res = mysql_query($sql);
 		return $res;
 	}

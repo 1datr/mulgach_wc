@@ -13,6 +13,7 @@ class BaseModel
 	{
 		$this->_LOCATION=$_LOCATION;
 		$this->_ENV = $the_ENV;
+		$this->_ENV['model']=$this;
 		$this->read_base_info();
 	}
 	
@@ -37,6 +38,13 @@ class BaseModel
 		$res = $this->_ENV['_CONNECTION']->query($query);
 		return $res;
 	}
+	
+	private function make_dbrec($row)
+	{
+		
+	}
+	
+	
 	// find as default dataset
 	function find($where=1,$orderby=NULL)
 	{
@@ -51,20 +59,24 @@ class BaseModel
 		def_options(array('page_size'=>20),$options);
 		$info = $this->page_query_struct($page,$options['page_size'],$where=1,$orderby);
 		//print_r($info);
-		$res = $this->db_query($info['page_query']);
+		$params=array('page'=>$page);
+		$params['res'] = $this->db_query($info['page_query']);
+		
 		$res_count = $this->db_query($info['query_count']);
-		$row_res = $this->_ENV['_CONNECTION']->get_row($res_count);	
-				
+		$row_res = $this->_ENV['_CONNECTION']->get_row($res_count);
+		$params['total_count'] = $row_res['COUNT'];
+		
 		if($row_res['COUNT'] % $options['page_size']==0 )
 		{
-			$pagecount = $row_res['COUNT'] / $options['page_size'];
+			$params['pagecount'] = $row_res['COUNT'] / $options['page_size'];
 		}
 		else 
 		{
-			$pagecount = floor($row_res['COUNT'] / $options['page_size'])+1;
+			$params['pagecount'] = floor($row_res['COUNT'] / $options['page_size'])+1;
 		}
+		$params['env'] = $this->_ENV;
 		
-		$ds = new PageDataSet($res,$pagecount,$page,$this->_ENV);
+		$ds = new PageDataSet($params);
 		return $ds;
 	}
 	// struct with queries

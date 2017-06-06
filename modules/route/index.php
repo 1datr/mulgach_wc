@@ -2,6 +2,7 @@
 // модуль маршрутизатор
 define('__request_descr__', 'r');
 
+
 class owl_route extends owl_Module 
 {
 	VAR $_DIR_CONFIG;
@@ -27,8 +28,11 @@ class owl_route extends owl_Module
 			$def_action='index';
 			$req_slices = explode('/', $req);
 			$argidx=0;
+			$str_varval="";
 			foreach ($req_slices as $idx => $slice)
 			{
+				if(empty($slice)) 
+					continue;
 				list($varname,$varval)=explode(':',$slice);
 				if(empty($varval))
 				{
@@ -48,17 +52,54 @@ class owl_route extends owl_Module
 				}
 				else 
 				{
-					$_REQUEST[$varname] = $varval;
+					if($str_varval!="")
+						$str_varval=$str_varval."&";
+					$str_varval=$str_varval."{$varname}={$varval}";
+					//$_REQUEST[$varname] = $varval;
 				}
 				//echo "$varname : $varval |";
 			}
-		//	print_r($_REQUEST);
+
+			if(!empty($str_varval))
+			{
+				$parsed = array();
+				parse_str($str_varval,$parsed);
+				$_REQUEST = array_merge($_REQUEST,$parsed);
+				//foreach ($parsed as $varname => $varval){}
+			}
+
 		}
 	}
-	/*
-	function get_actions()
+	
+	static function make_url($to_change=array(),$to_delete=array())
 	{
-		return array('draw');
+		$str = $_REQUEST['controller'];
+		if($_REQUEST['action'])
+		{
+			if($_REQUEST['action']!='index')
+				$str = url_seg_add($str,$_REQUEST['action']);
+		}
+		if(!empty($_REQUEST['args'] ))
+		{
+			foreach ($_REQUEST['args'] as $arg)
+			{
+				$str=url_seg_add($str,$arg);
+			}
+		}
+		foreach ($_REQUEST as $key => $var)
+		{
+			if(!in_array($key, array('controller','action','args')))
+			{
+				if(!empty($to_change[$key]))
+				{
+					$val = $to_change[$key]; 
+					$str = url_seg_add($str,"$key:$val");
+				}
+				else 
+					$str = url_seg_add($str,"$key:$var");
+			}
+		}
+		return $str;
 	}
-	*/
+		
 }

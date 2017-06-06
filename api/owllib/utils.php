@@ -83,6 +83,41 @@ function dir_dotted($dir)
 	}
 	return url_seg_add('./', $dir);
 }
+
+function get_files_in_folder($dir_path)
+{
+	$d = dir($dir_path);
+	$result=array();
+	//	echo "Дескриптор: " . $d->handle . "\n";
+	//	echo "Путь: " . $d->path . "\n";
+	while (false !== ($entry = $d->read())) {
+		if(($entry!="..")&&($entry!="."))
+		{
+			$filename = url_seg_add($dir_path, $entry);
+			
+			$result[]=$filename;
+			
+		}
+	}
+	$d->close();
+	return $result;
+}
+
+function unlink_folder($fldr)
+{
+	$nested_files=get_files_in_folder($fldr);
+	foreach ($nested_files as $nested)
+	{
+		if(is_dir($nested))
+			unlink_folder(dir_dotted($nested));
+		else 
+			chown($nested, 666);
+			unlink(dir_dotted($nested));
+	}
+	chown($fldr, 666);
+	//if(file_exists($fldr)) echo ";;;";
+	unlink($fldr);
+}
 // Найти файл
 function find_file($search, $dir_path=".", $rootonly=FALSE)
 {
@@ -118,4 +153,8 @@ function find_file($search, $dir_path=".", $rootonly=FALSE)
 	return $result;
 }
 
+function UcaseFirst($str)
+{
+	return ucfirst(strtolower($str));
+}
 //function 

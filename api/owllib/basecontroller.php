@@ -1,4 +1,6 @@
 <?php
+require_once url_seg_add(__DIR__,"widget.php");
+
 class BaseController
 {
 	VAR $_JS=array();
@@ -34,6 +36,15 @@ class BaseController
 			//echo $thename;
 			$model_class_name = "Model".ucfirst(strtolower($thename));
 			$this->_MODEL = new $model_class_name($this->_CONTROLLER_DIR,$this->_ENV);
+		}
+	}
+	
+	function connect_db($dbparams)
+	{
+		$res = connect_db($dbparams);
+		if(!empty($res))
+		{
+			$this->_ENV['_CONNECTION']=$res;
 		}
 	}
 	
@@ -136,6 +147,34 @@ class BaseController
 		$this->_CSS = array_merge($this->_JS,$req['css']);
 		$this->_META = array_merge($this->_JS,$req['meta']);
 		echo $req['content'];
+	}
+	
+	function usewidget($wid_object,$params=array())
+	{
+	//	ob_start();
+		$wid_object->out($params);
+	//	$html = ob_end_clean();
+		
+		$this->_JS = array_merge($this->_JS,$wid_object->_JS);
+		$this->_CSS = array_merge($this->_CSS,$wid_object->_CSS);
+		$this->_META = array_merge($this->_META,$wid_object->_META);
+	//	echo $html;
+	}
+	
+	function redirect($url)
+	{
+		?>
+		<script type="text/javascript">
+<!--
+	document.location="<?=$url?>";
+//-->
+</script>
+		<?php 
+	}
+	
+	function redirect_back()
+	{
+		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
 	function query($controller,$method,$args=array())

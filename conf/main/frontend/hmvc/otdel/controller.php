@@ -2,7 +2,7 @@
 class OtdelController extends BaseController
 {
 		
-	public function ActionIndex()
+	public function ActionIndex($page=1)
 	{
 		$this->_TITLE="OTDELS";
 		$this->add_css($this->get_current_dir()."/../../css/style.css");
@@ -12,9 +12,9 @@ class OtdelController extends BaseController
 		
 		$conn = get_connection();
 
-		$ds = $this->_MODEL->findAsPager();
+		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		echo "<h3>OTDELS LIST</h3>";
-		$this->out_view('index',array('ds'=>$ds,'conn'=>$conn));
+		$this->out_view('index',array('ds'=>$ds));
 	}
 	
 	public function ActionBlockx()

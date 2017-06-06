@@ -4,7 +4,7 @@
 </button>
 
 <!-- Brand -->
-<a class="navbar-brand" href="#">MASTER</a>
+<a class="navbar-brand" href="#">Logo</a>
 
 <!-- Links -->
 <div class="collapse navbar-collapse" id="nav-content">   

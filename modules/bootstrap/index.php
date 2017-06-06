@@ -5,7 +5,23 @@ class owl_bootstrap extends owl_Module
 {
 	function __construct($_PARAMS)
 	{
-		
+		$this->use_my_widgtes();
+	}
+	
+	function use_my_widgtes()
+	{
+		$files = get_files_in_folder( url_seg_add(__DIR__,'widgets'));
+		foreach ($files as $thefile)
+		{
+			if(is_dir($thefile))
+			{
+				$wid_file=url_seg_add($thefile,'index.php');
+				if(file_exists($wid_file))				
+				{
+					require_once $wid_file;
+				}
+			}
+		}
 	}
 	
 	function wait_events()
