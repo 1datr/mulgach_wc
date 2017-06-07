@@ -35,7 +35,9 @@ class BaseController
 			$thename = $this->get_this_name();
 			//echo $thename;
 			$model_class_name = "Model".ucfirst(strtolower($thename));
-			$this->_MODEL = new $model_class_name($this->_CONTROLLER_DIR,$this->_ENV);
+			$model_env = $this->_ENV;
+			$model_env['_CONTROLLER']=$this;
+			$this->_MODEL = new $model_class_name($this->_CONTROLLER_DIR,$model_env);
 		}
 	}
 	
@@ -196,6 +198,11 @@ class BaseController
 						'args'=>$args,
 					)
 				);
+	}
+	
+	function get_controller($controller)
+	{
+		return $this->_ENV['page_module']->get_controller($controller);
 	}
 }
 

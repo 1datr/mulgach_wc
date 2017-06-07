@@ -598,4 +598,44 @@ class owl_page extends owl_Module
 		);
 	}
 
+	function get_controller($conname)
+	{
+		$info = $this->controller_info($conname);
+		return $this->get_controller_object($info);
+	}
+	// вызвать действие контроллера
+	function get_controller_object($con_info,$_CONFIG=NULL,$_EP=NULL)
+	{
+		GLOBAL $_BASEDIR;
+		GLOBAL $_CONFIGS_AREA;
+		if($_CONFIG==NULL)
+		{
+			GLOBAL $_CONFIG;
+		}
+	
+		if($_EP==NULL)
+		{
+			GLOBAL $_EP;
+		}
+	
+		require_once "{$_BASEDIR}api/owllib/basecontroller.php";
+	
+		require_once $con_info['_CONTROLLER_FILE'];
+	
+		$controller_name = $con_info['_CONTROLLER_CLASS'];
+	
+		// получить страницу из контроллера
+		ob_start();
+	
+		$this->_ENV_INFO['page_module']=$this;
+		$controller_object = new $controller_name(
+				array(
+						'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],
+						'_ENV'=>$this->_ENV_INFO,
+				));
+	
+	
+		return $controller_object;
+	}
+	
 }

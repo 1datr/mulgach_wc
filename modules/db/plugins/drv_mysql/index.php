@@ -49,7 +49,9 @@ class plg_drv_mysql extends mod_plugin
 	public function query($sql)
 	{
 		$sql = QueryMaker::prepare_query($sql, $this->_DB_PARAMS['prefix']);
-	//	var_dump($sql);
+		
+//		echo ">> $sql >>";
+	
 		$res = mysql_query($sql);
 		return $res;
 	}

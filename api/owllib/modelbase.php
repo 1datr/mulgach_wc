@@ -88,8 +88,14 @@ class BaseModel
 		{
 			foreach ($this->_SETTINGS['constraints'] as $cfld => $constraint)
 			{
+				$model = $this->get_model($constraint['model']);
+			//	print_r($model->_SETTINGS['fields']);
+				foreach($model->_SETTINGS['fields'] as $_fld)
+				{
+					$selects[]="`$cfld`.`$_fld` as `$cfld.$_fld`";
+				}
 				$joins = "{$joins} LEFT OUTER JOIN @+".$constraint['model']." as `$cfld` ON {$this->_TABLE}.`{$cfld}`=`$cfld`.`".$constraint['fld']."`";
-				$selects[]="`$cfld`.*";
+				//$selects[]="`$cfld`.*";
 			}
 		}
 		$sql_selects=implode(',', $selects);
@@ -112,8 +118,13 @@ class BaseModel
 		{
 			foreach ($this->_SETTINGS['constraints'] as $cfld => $constraint)
 			{
+				$model = $this->get_model($constraint['model']);
+				foreach($model->_SETTINGS['fields'] as $_fld)
+				{
+					$selects[]="$cfld.$_fld as `$cfld.$_fld`";
+				}
 				$joins = "{$joins} LEFT OUTER JOIN @+".$constraint['model']." as `$cfld` ON {$this->_TABLE}.`{$cfld}`=`$cfld`.`".$constraint['fld']."`";
-				$selects[]="`$cfld`.*";
+				//$selects[]="`$cfld`.*";
 			}
 		}
 		$sql_selects=implode(',', $selects);
@@ -121,5 +132,11 @@ class BaseModel
 			$sql_selects=",$sql_selects";
 		$query="SELECT `{$this->_TABLE}`.*{$sql_selects} FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where";
 		return $query;
+	}
+	
+	function get_model($triada)
+	{
+		$ctrlr = $this->_ENV['_CONTROLLER']->get_controller($triada);
+		return $ctrlr->_MODEL;
 	}
 }
