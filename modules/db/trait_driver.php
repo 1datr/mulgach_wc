@@ -1,6 +1,10 @@
 <?php
 trait dbDriver {
-	function query($sql){}
-	function get_row($res,$idx=NULL){}
-	function rowcount($res){}
+	public function query($sql){}
+	public function get_row($res,$idx=NULL){}
+	public function rowcount($res){}
+	public function get_tables(){}
+	public function get_table_fields($tbl){}
+	public function get_primary($var){}
+	public function get_constraints($table){}
 }

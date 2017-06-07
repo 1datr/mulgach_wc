@@ -90,14 +90,24 @@ class BaseController
 		$this->_INLINE_SCRIPT=$script;
 	}
 	
-	function add_js($js)
+	protected function file_if_relative(&$thefile_name)
 	{
-		$this->_JS[]=$js;
+		if(substr($thefile_name,0,1)=='#')
+		{
+			$thefile_name = url_seg_add($this->_CONTROLLER_DIR,strtr($thefile_name,array('#'=>'/')));
+		}
 	}
 	
+	function add_js($js)
+	{
+		$this->file_if_relative($js);
+		$this->_JS[]=$js;
+	}
+		
 	// add css
 	function add_css($css)
 	{
+		$this->file_if_relative($css);
 		$this->_CSS[]=$css;
 	}
 	

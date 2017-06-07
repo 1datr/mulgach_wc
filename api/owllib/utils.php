@@ -44,6 +44,63 @@ function ximplode($delimeter,$array,$prefix,$suffix,$options=NULL)
 	return $str;
 }
 
+function xx_implode($arr,$delimeter,$template,$onelement=NULL)
+{
+	$ctr=0;
+	$str="";
+	foreach ($arr as $idx => $val)
+	{
+		$thetemplate = $template;		
+		
+		if(!is_array($val))
+		{			
+			$theval["%val"]=$val;
+		}
+		else 
+		{
+			$theval=$val;
+			
+		}
+		if($onelement!=NULL)
+		{
+			
+			$onelement($theval,$idx,$thetemplate,$ctr);
+		}
+		$theval["idx"]=$idx;
+		
+	//	print_r($theval);
+		
+		$newstr = x_make_str($thetemplate,$theval);
+		if($ctr>0)
+			$str=$str.$delimeter.$newstr;
+		else 
+			$str=$newstr;
+		$ctr++;
+	}
+	return $str;
+}
+
+function x_make_str($str,$ptrn)
+{
+	$ptrn2=array("{%0}"=>$ptrn);
+	if(is_array($ptrn))
+	{
+		foreach ($ptrn as $key => $val)
+		{
+			$ptrn2["{".$key."}"]=$val;
+		}
+	}
+	elseif(is_object($ptrn))
+	{
+		$vars = get_class_vars($ptrn);
+		foreach ($vars as $key => $val)
+		{
+			$ptrn2["{".$key."}"]=$val;
+		}
+	}
+	return strtr($str,$ptrn2);
+}
+
 function url_seg_add()
 {
 	$numargs = func_num_args();

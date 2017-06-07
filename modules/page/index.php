@@ -1,6 +1,7 @@
 <?php
 // модуль страница
 require_once __DIR__.'/inc/theme.php';
+session_start();
 
 class owl_page extends owl_Module 
 {

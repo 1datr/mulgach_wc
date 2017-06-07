@@ -32,6 +32,20 @@ class plg_drv_mysql extends mod_plugin
 		
 	}
 	
+	public function get_tables()
+	{
+		$res = $this->query("SHOW FULL TABLES");
+		$arr=array();
+		while($row = $this->get_row($res))
+		{
+			$keys = array_keys($row);
+			$tablename = $row[$keys[0]];
+			$tablename = substr($tablename,strlen($this->_DB_PARAMS['prefix']));
+			$arr[]= $tablename;
+		}
+		return $arr;
+	}
+	
 	public function query($sql)
 	{
 		$sql = QueryMaker::prepare_query($sql, $this->_DB_PARAMS['prefix']);
@@ -53,6 +67,40 @@ class plg_drv_mysql extends mod_plugin
 			$function_on_row($row,$rownumber);
 			$rownumber++;
 		}
+	}
+	
+	public function get_table_fields($tbl)
+	{
+		$res = $this->query("SHOW COLUMNS FROM `@+{$tbl}`");
+		$arr=array();
+		while($col = $this->get_row($res)){
+			//	print_r($col);
+				
+			$arr[$col['Field']]=$col;
+			//print_r($col); print "<br>\n";
+		}
+		return $arr;
+	}
+	
+	public function get_primary($var)
+	{
+		if(is_string($var))
+		{
+			$var = $this->get_table_fields($var);
+		}
+	
+		foreach($var as $fld => $fld_info )
+		{
+			if($fld_info['Key']=="PRI")
+			{
+				return $fld;
+			}
+		}
+	}
+	
+	public function get_constraints($table)
+	{
+		
 	}
 	
 	// row count in result

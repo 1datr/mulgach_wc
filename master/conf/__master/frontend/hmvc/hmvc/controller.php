@@ -30,7 +30,8 @@ class HmvcController extends BaseController
 		if($dbparams!=NULL)	// конфа подключена к базе
 		{
 
-			$tables = $this->get_All_tables($dbparams);
+			$tables = $this->_ENV['_CONNECTION']->get_tables();
+			
 			$this->out_view('tables',array('tables'=>$tables,'config'=>$cfg));
 		}	
 		else 
@@ -40,37 +41,52 @@ class HmvcController extends BaseController
 		
 		
 	}
-	// Все таблицы текущей базы
-	function get_All_tables($db_params)
-	{
-		$res = $this->_ENV['_CONNECTION']->query("SHOW FULL TABLES");
-		$arr=array();
-		while($row = $this->_ENV['_CONNECTION']->get_row($res))
-		{
-			$keys = array_keys($row);
-			$tablename = $row[$keys[0]];
-			$tablename = substr($tablename,strlen($db_params['prefix']));
-			$arr[]= $tablename;
-		}
-		return $arr;
-	}
 	
-	function get_table_fields($tbl)
+	public function ActionFields($cfg='main',$table)
 	{
-		$res = $this->_ENV['_CONNECTION']->query("SHOW COLUMNS FROM `@+{$tbl}`");
-		$arr=array();
-		while($col = $this->_ENV['_CONNECTION']->get_row($res)){
-			//	print_r($col);
-			
-			$arr[$col['Field']]=$col;
-			//print_r($col); print "<br>\n";
+		$dbparams = $this->ConnectDBIfExists($cfg);
+		if($dbparams!=NULL)	// конфа подключена к базе
+		{		
+			$fields = $this->_ENV['_CONNECTION']->get_table_fields($table);
+			$this->out_json($fields);
 		}
-		return $arr;
 	}
 		
-	public function ActionMake()
+	public function ActionMake($step=1)
 	{
-		//print_r($_POST);
+		$this->add_block('BASE_MENU', 'site', 'menu');
+		
+		switch($step){
+		case 1: {
+					$_SESSION['makeinfo']=array();
+				
+					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+					
+					$dbparams = $this->ConnectDBIfExists($_POST['conf']);
+					
+					$fields = $this->_ENV['_CONNECTION']->get_table_fields($_POST['table']);
+					$tables = $this->_ENV['_CONNECTION']->get_tables();
+					$this->add_js('#js/constraints.js');
+					$this->out_view('constraints',array('fields'=>$fields,'tables'=>$tables));
+				};break;
+		case 2: {
+					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+					$this->make_hmvc();
+				};break;
+		}
+		/*
+		 ALTER TABLE crm_projects 
+ADD CONSTRAINT `fk_worker` 
+FOREIGN KEY (`creator_id`)
+REFERENCES `crm_workers` (`id`)
+ON DELETE SET NULL
+ON UPDATE SET NULL;
+		 * */
+	}
+	
+	
+	private function make_hmvc()
+	{
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
 		
@@ -103,17 +119,16 @@ class HmvcController extends BaseController
 				file_put_contents($file_model, $this->parse_code_template('model',$vars));
 			}
 			// Файлик
-			$file_baseinfo= url_seg_add( $hmvc_dir,'baseinfo.php');
-			
+			$file_baseinfo= url_seg_add( $hmvc_dir,'baseinfo.php');			
 				
 				$vars=array();
 				$vars['table']=$_POST['table'];
-				$tbl_fields = $this->get_table_fields($_POST['table']);
+				$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_POST['table']);
 			//	print_r($tbl_fields);
 				$vars['array_fields']='array('.ximplode(',', array_keys($tbl_fields), "'", "'").')';
 				$vars['array_constraints']='array()';
 				$vars['array_rules']='array()';
-				$_primary = $this->get_primary($tbl_fields);
+				$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
 				$vars['primary']=$_primary;
 				file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			

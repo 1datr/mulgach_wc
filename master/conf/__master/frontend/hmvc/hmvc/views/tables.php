@@ -1,4 +1,4 @@
-<form action="?r=hmvc/make" method="post">
+<form action="?r=hmvc/make/" method="post">
 <label for="thetable">Table</label>
 <select name="table">
 <?php 
@@ -17,5 +17,5 @@ foreach ($tables as $table)
 <label>Install&nbsp;</label><input type="checkbox" name="ep[install]" >
 <label>REST&nbsp;</label><input type="checkbox" name="ep[rest]" >
 <br />
-<input type="submit" value="MAKE HMVC" >
+<input type="submit" value="NEXT >" >
 </form>

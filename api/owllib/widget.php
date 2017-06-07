@@ -21,6 +21,14 @@ class Widget {
 		$this->_JS[]=$js;
 	}
 	
+	function get_attr_str($attrlist)
+	{
+		return xx_implode($attrlist,' ','{idx}="{%val}"',
+				function(&$val,&$idx,&$thetemplate,&$ctr){
+	
+				});
+	}
+	
 	// add css
 	function add_css($css)
 	{
