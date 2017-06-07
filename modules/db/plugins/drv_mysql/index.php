@@ -9,7 +9,7 @@ class plg_drv_mysql extends mod_plugin
 	function __construct($_PARAMS)
 	{
 		$this->_DB_PARAMS = $_PARAMS;
-	//	print_r($_PARAMS);
+	//print_r($_PARAMS);
 		$this->connection = mysql_pconnect($_PARAMS['host'], $_PARAMS['user'], $_PARAMS['passw']);
 		if (!($this->connection === false))
 		{
