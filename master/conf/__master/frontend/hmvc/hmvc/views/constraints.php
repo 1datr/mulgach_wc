@@ -3,20 +3,53 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 </table>
 
-<form action="?r=hmvc/make/2" method="post">
-<div id="constraints_block">
-
-<div id="multiform_block" class="multiform_block">
+<div class="multiform_block" style="visibility: hidden;">
 <label>Field:</label>
-<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'fldname'=>'constraints[][field]','htmlattrs'=>array('class'=>'fld_select'))); ?>
+<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[field][]','htmlattrs'=>array('class'=>'fld_select'))); ?>
 <label>Table:</label>
-<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'fldname'=>'constraints[][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
+<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'name'=>'constraints[table][]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
 <label>field to:</label>
-<?php $this->usewidget(new ComboboxWidget(),array('fldname'=>'constraints[][field_to]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+<?php $this->usewidget(new ComboboxWidget(),array('data'=>$first_table_fields,'name'=>'constraints[field_to][]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+<button type="button" onclick="drop_block(this)">x</button>
 </div>
 
+<form action="?r=hmvc/make/2" method="post">
+<h3>DEFINE THE BINDINGS FOR TRIADA <?=$_SESSION['makeinfo']['table']?></h3>
+<div id="constraints_block">
+<!-- десь все связки -->
+<?php 
+if(!empty($settings))
+{
+	foreach ($settings['constraints'] as $fld_from => $con)
+	{
+		?>
+		<div class="multiform_block">
+		<label>Field:</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
+					'name'=>'constraints[field][]',
+					'htmlattrs'=>array('class'=>'fld_select'),
+					'value'=>$fld_from,
+				)); ?>
+		<label>Table:</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,
+				'name'=>'constraints[table][]',
+				'value'=>$con['model'],
+				'htmlattrs'=>array('class'=>'table_to_select',
+					'onchange'=>'load_fields(this)'))
+				); ?>
+		<label>field to:</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
+				'name'=>'constraints[field_to][]',
+				'value'=>$con['fld'],
+				'htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+		<button type="button" onclick="drop_block(this)">x</button>
+		</div>
+		<?php 
+	}
+}
+?>
 </div>
-<button type="button" onclick="add_block()">+</button>
+<button type="button" onclick="add_block()" title="Добавить связку">+</button>
 <div id="console"></div>
 <input type="hidden" name="conf" id="config" value="<?=$_POST['conf']?>" >
 <input type="submit" value="MAKE HMVC" >

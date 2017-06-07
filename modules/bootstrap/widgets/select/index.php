@@ -53,8 +53,14 @@ namespace BootstrapCombobox
 				{
 					$val = $row[$params['value_key']];
 				}
+				$selected="";
+				if(!empty($params['value']))
+				{
+					if($val==$params['value'])
+						$selected="selected";
+				}
 				?>
-				<option value="<?=$val?>"><?=x_make_str($params['caption_template'],$row)?></option>
+				<option value="<?=$val?>" <?=$selected?>><?=x_make_str($params['caption_template'],$row)?></option>
 				<?php 
 				$ctr++;
 			}

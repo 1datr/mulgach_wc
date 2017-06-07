@@ -30,6 +30,13 @@ function load_fields(select_element)
 
 function add_block()
 {
-	$('#constraints_block').append($('#multiform_block').clone());
+	new_data_block = $('.multiform_block').first().clone();
+	new_data_block.css('visibility', 'visible' );
+	$('#constraints_block').append(new_data_block);
 } 
+
+function drop_block(this_button)
+{
+	$(this_button).parent(".multiform_block").remove();
+}
 

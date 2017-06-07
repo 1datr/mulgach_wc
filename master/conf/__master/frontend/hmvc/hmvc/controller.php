@@ -18,6 +18,20 @@ class HmvcController extends BaseController
 		return NULL;
 	}
 	
+	private function getExistingModelInfo($cfg,$triada,$ep="frontend")
+	{
+		GLOBAL $_BASEDIR;
+		$baseinfo_file=url_seg_add($_BASEDIR,"conf",$cfg,$ep,"hmvc",$triada,"baseinfo.php");
+		//echo $baseinfo_file;
+		if(file_exists($baseinfo_file))
+		{
+			include $baseinfo_file;
+			return $settings;
+		}
+		
+		return NULL;
+	}
+	
 	public function ActionIndex($cfg='main',$ep='frontend')
 	{
 		$this->_TITLE="HMVC";
@@ -65,13 +79,23 @@ class HmvcController extends BaseController
 					$dbparams = $this->ConnectDBIfExists($_POST['conf']);
 					
 					$fields = $this->_ENV['_CONNECTION']->get_table_fields($_POST['table']);
-					$tables = $this->_ENV['_CONNECTION']->get_tables();
+					$tables = $this->_ENV['_CONNECTION']->get_tables();					
+					$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
 					$this->add_js('#js/constraints.js');
-					$this->out_view('constraints',array('fields'=>$fields,'tables'=>$tables));
+					$settings = $this->getExistingModelInfo($_POST['conf'],$_POST['table']);					 
+					$this->out_view('constraints',array(
+							'fields'=>$fields,
+							'tables'=>$tables,
+							'first_table_fields'=>$first_table_fields,
+							'settings'=>$settings,
+					));
 				};break;
 		case 2: {
 					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
-					$this->make_hmvc();
+					//print_r($_POST);
+					$this->make_hmvc($_SESSION['makeinfo']);
+					unset($_SESSION['makeinfo']);
+					$this->redirect('?/r=hmvc/configs');
 				};break;
 		}
 		/*
@@ -85,16 +109,16 @@ ON UPDATE SET NULL;
 	}
 	
 	
-	private function make_hmvc()
+	private function make_hmvc($_params)
 	{
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
 		
-		$dbparams = $this->ConnectDBIfExists($_POST['conf']);
+		$dbparams = $this->ConnectDBIfExists($_params['conf']);
 		
-		foreach($_POST['ep'] as $ep => $offon)
+		foreach($_params['ep'] as $ep => $offon)
 		{
-			$hmvc_dir=url_seg_add($conf_dir,$_POST['conf'],$ep,'hmvc',$_POST['table']);
+			$hmvc_dir=url_seg_add($conf_dir,$_params['conf'],$ep,'hmvc',$_params['table']);
 			//создаем папку триады
 			if(!file_exists($hmvc_dir) || !is_dir($hmvc_dir))
 			{
@@ -105,8 +129,8 @@ ON UPDATE SET NULL;
 			if(!file_exists($file_controller))
 			{
 				$vars=array();
-				$vars['table_uc_first']=UcaseFirst($_POST['table']);
-				$vars['TABLE_UC']=strtoupper($_POST['table']);
+				$vars['table_uc_first']=UcaseFirst($_params['table']);
+				$vars['TABLE_UC']=strtoupper($_params['table']);
 				file_put_contents($file_controller, $this->parse_code_template('controller',$vars));
 			}
 			// Модель
@@ -114,19 +138,28 @@ ON UPDATE SET NULL;
 			if(!file_exists($file_model))
 			{
 				$vars=array();
-				$vars['table_uc_first']=UcaseFirst($_POST['table']);
-				$vars['TABLE_UC']=strtoupper($_POST['table']);
+				$vars['table_uc_first']=UcaseFirst($_params['table']);
+				$vars['TABLE_UC']=strtoupper($_params['table']);
 				file_put_contents($file_model, $this->parse_code_template('model',$vars));
 			}
 			// Файлик
 			$file_baseinfo= url_seg_add( $hmvc_dir,'baseinfo.php');			
 				
 				$vars=array();
-				$vars['table']=$_POST['table'];
-				$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_POST['table']);
+				$vars['table']=$_params['table'];
+				$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);
 			//	print_r($tbl_fields);
 				$vars['array_fields']='array('.ximplode(',', array_keys($tbl_fields), "'", "'").')';
-				$vars['array_constraints']='array()';
+				
+				//print_r($_params['constraints']);
+				$con_str="";
+				foreach ($_params['constraints']['field'] as $idx => $fld)
+				{
+					$con_str = $con_str."'{$fld}'=>array('model'=>'".$_params['constraints']['table'][$idx]."','fld'=>'".$_params['constraints']['field_to'][$idx]."'),";
+				}
+				$constraints="";
+				
+				$vars['array_constraints']="array($con_str)";
 				$vars['array_rules']='array()';
 				$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
 				$vars['primary']=$_primary;

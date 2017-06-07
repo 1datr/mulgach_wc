@@ -1,7 +1,7 @@
 <?php
 $settings = array(
 	'table'=>'workers',
-//	'constraints'=>array('id_otdel_papa'=>array('model'=>'otdel','fld'=>'id_otdel')),
+	'constraints'=>array(),
 	'rules'=>array('fio'=>'required'),	
 );
 
