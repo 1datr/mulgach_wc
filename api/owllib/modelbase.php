@@ -53,6 +53,8 @@ class BaseModel
 		$ds =new  DataSet($res,$this->_ENV);
 		return $ds;
 	}
+	
+	
 	// find as DataPager
 	function findAsPager($options=array(),$page=1,$where=1,$orderby=NULL)
 	{

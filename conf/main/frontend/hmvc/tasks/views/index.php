@@ -4,14 +4,21 @@ use BootstrapPager\PagerWidget as PagerWidget;
 ?>
 <table>
 <?php
-$ds->walk(function($row,$number)
+$ds->walk(function($rec,$number)
 {
 	echo "<tr>";
-	foreach ($row as $key => $val)
-	{
-		echo "<td>{$val}</td>";
-	}
+	$rec->foreach_fields(
+		function($fld,$val)
+			{
+				if(! is_object($val))
+					echo "<td>{$val}</td>";				 					
+			}	
+		);
+	echo "<td>".$rec->getField('proj_id')->getField('name')."</td>";
+	echo "<td>".$rec->getField('otv_sotr')->getView()."</td>";
 	echo "</tr>";
+
+	//print_r($rec);
 });
 ?>
 </table>

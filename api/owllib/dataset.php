@@ -4,6 +4,7 @@ class DataRecord	// запись из БД
 	VAR $_TABLE;
 	VAR $_ENV;
 	VAR $_MODEL;
+	VAR $_FIELDS=array();
 	
 	function __construct($model,$row_from_db=NULL,$env=array())
 	{
@@ -17,33 +18,62 @@ class DataRecord	// запись из БД
 				$fld_base = $this->contains_fld($key);
 				if($fld_base!=NULL)	// составное поле через ->
 				{
-					if( !property_exists($this, $fld_base['fld']))
+					$rewrite_nested=false;
+					if(empty($this->_FIELDS[$fld_base['fld']])) 
+						$rewrite_nested = true;
+					if(is_object($this->_FIELDS[$fld_base['fld']]))	
+					{
+						if( get_class($this->_FIELDS[$fld_base['fld']])!='DataRecord')  // не добавлен в поля либо он не запись 
+							$rewrite_nested = true;
+					}
+					else 
+						$rewrite_nested = true;
+					
+					if($rewrite_nested)	
 					{
 						if(!empty($this->_MODEL->_SETTINGS['constraints'][$fld_base['fld']]))
 						{
 							$constraint = $this->_MODEL->_SETTINGS['constraints'][$fld_base['fld']];
-							$model_nested = $this->_MODEL->get_model($constraint['table']);
+							$model_nested = $this->_MODEL->get_model($constraint['model']);
 							$dr_nested = new DataRecord($model_nested,NULL,$env); 
-							
+								
 							$_fld_nested = $fld_base['fld_nested'];
-							$dr_nested->$_fld_nested = $val;
-							
+							$dr_nested->set_field($_fld_nested,$val);
+								
 							$_fld_base = $fld_base['fld'];
-							$this->$_fld_base=$dr_nested;
+							$this->set_field($_fld_base,$dr_nested);
 						}						
 					}
 					else 
 					{
 						$_fld_base = $fld_base['fld'];
 						$_fld_nested = $fld_base['fld_nested'];
-						$this->$_fld_base->$_fld_nested = $val;
+						$this->_FIELDS[$_fld_base]->set_field($_fld_nested,$val);
 					}
 				}
 				else 
 				{
-					$this->key=$val;
+					$this->set_field($key,$val);
 				}
 			}
+		}
+	}
+	
+	function set_field($fld,$val)
+	{
+		$this->_FIELDS[$fld]=$val;
+	}
+	
+	function getField($fld)
+	{
+		return $this->_FIELDS[$fld];
+	}
+	
+	function foreach_fields($onfield)
+	{
+		foreach ($this->_FIELDS as $fld => $val)
+		{
+			$onfield($fld,$val);
 		}
 	}
 	
@@ -61,6 +91,13 @@ class DataRecord	// запись из БД
 	function save()
 	{
 
+	}
+	
+	function getView()
+	{
+		//print_r($this->_MODEL);
+
+		return x_make_str( $this->_MODEL->_SETTINGS['view'], $this->_FIELDS);
 	}
 
 	function query_insert()
@@ -85,16 +122,17 @@ class DataSet
 	{
 		//print_r($this);
 		$row = $this->_ENV['_CONNECTION']->get_row($this->res);
-		return $row;
+		$dr = new DataRecord($this->_ENV['model'],$row,$this->_ENV);
+		return $dr;
 	}
 
 	function walk($event_onrow)
 	{
 		$rowctr=0;
-		while($row = $this->next_rec())
+		while($rec = $this->next_rec())
 		{
 			
-			$event_onrow($row,$rowctr);
+			$event_onrow($rec,$rowctr);
 			$rowctr++;
 		}
 	}
@@ -121,16 +159,18 @@ class PageDataSet extends DataSet
 	{
 		//print_r($this);
 		$row = $this->_ENV['_CONNECTION']->get_row($this->res);
+		if($row==false)
+			return NULL;
 		$dr = new DataRecord($this->_ENV['model'],$row,$this->_ENV);		
-		return $row;
+		return $dr;
 	}
 	// пробежка по строкам текущей страницы
 	function walk($event_onrow)
 	{
 		$rowctr=0;
-		while($row = $this->next_rec())
+		while($rec = $this->next_rec())
 		{
-			$event_onrow($row,$rowctr);
+			$event_onrow($rec,$rowctr);
 			$rowctr++;
 		}
 	}
