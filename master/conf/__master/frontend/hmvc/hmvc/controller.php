@@ -190,6 +190,20 @@ ON UPDATE SET NULL;
 				$vars['view']=$_params['view'];
 				file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			
+				$dir_views = url_seg_add($hmvc_dir,'views');
+				echo $dir_views;
+				if(!file_exists($dir_views))
+				{
+					mkdir($dir_views);
+				}
+				
+				$index_view = url_seg_add($dir_views,'index.php');
+				if(!file_exists($index_view))
+				{
+					$vars=array();
+				//	echo $this->parse_code_template('view_index',$vars);
+					file_put_contents($index_view, $this->parse_code_template('view_index',$vars));
+				}
 		}
 	}
 	
