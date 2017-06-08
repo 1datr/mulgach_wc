@@ -13,7 +13,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <button type="button" onclick="drop_block(this)">x</button>
 </div>
 
-<form action="?r=hmvc/make/2" method="post">
+<form action="?r=hmvc/make/makefiles" method="post">
 <h3>DEFINE THE BINDINGS FOR TRIADA <?=$_SESSION['makeinfo']['table']?></h3>
 <div id="constraints_block">
 <!-- десь все связки -->
@@ -50,7 +50,18 @@ if(!empty($settings))
 ?>
 </div>
 <button type="button" onclick="add_block()" title="Добавить связку">+</button>
-<div id="console"></div>
-<input type="hidden" name="conf" id="config" value="<?=$_POST['conf']?>" >
+<div>
+<label for="_view">View:&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
+<p><label>Fields:&nbsp;</label><?php 
+foreach($fields as $fld => $fldinfo)
+{
+	?>
+	<div style="display: inline-block" class="drg_view">{<?=$fld?>}</div>
+	<?php 
+}
+?></p>
+</div>
+<input type="hidden" name="conf" id="config" value="<?=$_SESSION['makeinfo']['conf']?>" >
 <input type="submit" value="MAKE HMVC" >
 </form>
+<div id="console"></div>

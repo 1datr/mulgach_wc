@@ -5,4 +5,5 @@ $settings = array(
 	'primary'=>'id_project',
 	'constraints'=>array('otv_ruk'=>array('model'=>'workers','fld'=>'id'),'creator_id'=>array('model'=>'workers','fld'=>'id'),'id_otdel'=>array('model'=>'otdel','fld'=>'id_otdel'),),	
 	'rules'=>array(),	
+	'view'=>'{name}',
 );

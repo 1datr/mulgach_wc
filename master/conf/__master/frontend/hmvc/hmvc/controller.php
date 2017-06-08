@@ -65,24 +65,47 @@ class HmvcController extends BaseController
 			$this->out_json($fields);
 		}
 	}
+	
+	private function SearchViewFld($fieldlist)
+	{
+		foreach ($fieldlist as $fld => $fldinfo)
+		{
+			if( ($fldinfo['Type']=='text') || (strstr($fldinfo['Type'],"varchar")!=false) )
+			{
+				return "{".$fld."}";
+			}			
+		}
+		$primary = $this->_ENV['_CONNECTION']->get_primary($fieldlist);
+		return "#{".$primary."}";
+	}
 		
-	public function ActionMake($step=1)
+	public function ActionMake($step='begin')
 	{
 		$this->add_block('BASE_MENU', 'site', 'menu');
-		
+
 		switch($step){
-		case 1: {
-					$_SESSION['makeinfo']=array();
-				
-					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+		case 'begin': {
+						$_SESSION['makeinfo']=array();				
+						$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+						
+						$this->redirect('?r=hmvc/make/binds');
+					};break;
+		case 'binds': {			
+					$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);
 					
-					$dbparams = $this->ConnectDBIfExists($_POST['conf']);
-					
-					$fields = $this->_ENV['_CONNECTION']->get_table_fields($_POST['table']);
+					$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
 					$tables = $this->_ENV['_CONNECTION']->get_tables();					
 					$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
 					$this->add_js('#js/constraints.js');
-					$settings = $this->getExistingModelInfo($_POST['conf'],$_POST['table']);					 
+					$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
+					
+					
+					if(empty($settings['view']))
+					{
+						
+						$settings['view']=$this->SearchViewFld($fields);
+					}
+					
 					$this->out_view('constraints',array(
 							'fields'=>$fields,
 							'tables'=>$tables,
@@ -90,12 +113,13 @@ class HmvcController extends BaseController
 							'settings'=>$settings,
 					));
 				};break;
-		case 2: {
+		case 'makefiles': {
 					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
-					//print_r($_POST);
+				//	print_r($_SESSION['makeinfo']);
 					$this->make_hmvc($_SESSION['makeinfo']);
 					unset($_SESSION['makeinfo']);
-					$this->redirect('?/r=hmvc/configs');
+					echo "MAKE SUCCESSED ";
+					$this->redirect('?r=configs');
 				};break;
 		}
 		/*
@@ -113,9 +137,9 @@ ON UPDATE SET NULL;
 	{
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
-		
+		print_r($_params);
 		$dbparams = $this->ConnectDBIfExists($_params['conf']);
-		
+		//print_r($_params);
 		foreach($_params['ep'] as $ep => $offon)
 		{
 			$hmvc_dir=url_seg_add($conf_dir,$_params['conf'],$ep,'hmvc',$_params['table']);
@@ -163,6 +187,7 @@ ON UPDATE SET NULL;
 				$vars['array_rules']='array()';
 				$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
 				$vars['primary']=$_primary;
+				$vars['view']=$_params['view'];
 				file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			
 		}

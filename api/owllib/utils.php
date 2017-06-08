@@ -24,6 +24,7 @@ function def_options($defs,&$opt_array)
 	}
 }
 
+
 function ximplode($delimeter,$array,$prefix,$suffix,$options=NULL)
 {
 	$i=0;

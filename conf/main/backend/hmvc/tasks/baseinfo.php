@@ -5,4 +5,5 @@ $settings = array(
 	'primary'=>'id_task',
 	'constraints'=>array('proj_id'=>array('model'=>'projects','fld'=>'id_project'),'otv_sotr'=>array('model'=>'workers','fld'=>'id'),'creator_id'=>array('model'=>'workers','fld'=>'id'),),	
 	'rules'=>array(),	
+	'view'=>'{name}',
 );

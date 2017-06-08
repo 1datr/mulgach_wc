@@ -5,4 +5,5 @@ $settings = array(
 	'primary'=>'{primary}',
 	'constraints'=>{array_constraints},	
 	'rules'=>{array_rules},	
+	'view'=>'{view}',
 );

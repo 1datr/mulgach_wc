@@ -40,3 +40,12 @@ function drop_block(this_button)
 	$(this_button).parent(".multiform_block").remove();
 }
 
+$( document ).ready(function() {
+	/*$('.drg_view').click( function(){
+        $(this).select()
+    })*/
+	
+    $('.drg_view').draggable({cursor: 'crosshair'});
+});
+
+
