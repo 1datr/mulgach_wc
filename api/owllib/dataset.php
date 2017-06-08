@@ -93,6 +93,11 @@ class DataRecord	// запись из БД
 
 	}
 	
+	function getFieldNames()
+	{
+		return array_keys($this->_FIELDS);
+	}
+	
 	function getView()
 	{
 		//print_r($this->_MODEL);
@@ -122,16 +127,22 @@ class DataSet
 	{
 		//print_r($this);
 		$row = $this->_ENV['_CONNECTION']->get_row($this->res);
-		$dr = new DataRecord($this->_ENV['model'],$row,$this->_ENV);
+		if($row==false)
+			return NULL;
+		$dr = new DataRecord($this->_ENV['model'],$row,$this->_ENV);		
 		return $dr;
 	}
 
-	function walk($event_onrow)
+	function walk($event_onrow,$event_onhead=NULL)
 	{
 		$rowctr=0;
 		while($rec = $this->next_rec())
 		{
-			
+			if($rowctr==0)
+			{
+				if($event_onhead!=NULL)
+					$event_onhead($rec->getFieldNames());
+			}
 			$event_onrow($rec,$rowctr);
 			$rowctr++;
 		}
@@ -155,21 +166,17 @@ class PageDataSet extends DataSet
 		$this->total_count=$params['total_count'];
 	}
 
-	function next_rec()
-	{
-		//print_r($this);
-		$row = $this->_ENV['_CONNECTION']->get_row($this->res);
-		if($row==false)
-			return NULL;
-		$dr = new DataRecord($this->_ENV['model'],$row,$this->_ENV);		
-		return $dr;
-	}
 	// пробежка по строкам текущей страницы
-	function walk($event_onrow)
+	function walk($event_onrow,$event_onhead=NULL)
 	{
 		$rowctr=0;
 		while($rec = $this->next_rec())
 		{
+			if($rowctr==0)
+			{
+				if($event_onhead!=NULL)
+					$event_onhead($rec->getFieldNames());
+			}
 			$event_onrow($rec,$rowctr);
 			$rowctr++;
 		}

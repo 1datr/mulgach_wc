@@ -14,7 +14,7 @@ class Widget {
 	function out($params=array())
 	{
 		
-	}
+	}	
 	
 	function add_js($js)
 	{
@@ -39,5 +39,17 @@ class Widget {
 	function add_meta($meta)
 	{
 		$this->_META[]=$meta;
+	}
+	
+	function usewidget($wid_object,$params=array())
+	{
+		//	ob_start();
+		$wid_object->out($params);
+		//	$html = ob_end_clean();
+	
+		$this->_JS = array_merge($this->_JS,$wid_object->_JS);
+		$this->_CSS = array_merge($this->_CSS,$wid_object->_CSS);
+		$this->_META = array_merge($this->_META,$wid_object->_META);
+		//	echo $html;
 	}
 }

@@ -1,6 +1,8 @@
 <table>
 <?php
+use BootstrapListView\ListViewWidget as ListViewWidget;
 use BootstrapPager\PagerWidget as PagerWidget;
+
 $ds->walk(function($row,$number)
 {
 	echo "<tr>";
@@ -14,5 +16,6 @@ $ds->walk(function($row,$number)
 </table>
 <?php
 //$pw = new Widget();
+$this->usewidget(new ListViewWidget(),array('ds'=>$ds));
 $this->usewidget(new PagerWidget(),array('ds'=>$ds));
 ?>

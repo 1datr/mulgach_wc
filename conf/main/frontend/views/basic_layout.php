@@ -10,15 +10,18 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-2">
-          <h2>Heading</h2>
+      
+      	<div class="col-xs-12 col-md-4">
           <p><?= $_BLOCK_LEFT ?></p>
           <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
         </div>
-        <div class="col-md-10">
-          <h2>Heading</h2>
+      
+       <div class="col-xs-12 col-md-6">
           <p><?= $_BODY_MAIN ?></p>
           <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
        </div>
+      
+        
+       
         
       </div>
