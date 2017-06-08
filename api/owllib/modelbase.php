@@ -92,7 +92,7 @@ class BaseModel
 			//	print_r($model->_SETTINGS['fields']);
 				foreach($model->_SETTINGS['fields'] as $_fld)
 				{
-					$selects[]="`$cfld`.`$_fld` as `$cfld.$_fld`";
+					$selects[]="`$cfld`.`$_fld` as `$cfld->$_fld`";
 				}
 				$joins = "{$joins} LEFT OUTER JOIN @+".$constraint['model']." as `$cfld` ON {$this->_TABLE}.`{$cfld}`=`$cfld`.`".$constraint['fld']."`";
 				//$selects[]="`$cfld`.*";

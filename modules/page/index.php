@@ -625,7 +625,6 @@ class owl_page extends owl_Module
 		$controller_name = $con_info['_CONTROLLER_CLASS'];
 	
 		// получить страницу из контроллера
-		ob_start();
 	
 		$this->_ENV_INFO['page_module']=$this;
 		$controller_object = new $controller_name(

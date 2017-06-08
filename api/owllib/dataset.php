@@ -5,18 +5,57 @@ class DataRecord	// запись из БД
 	VAR $_ENV;
 	VAR $_MODEL;
 	
-	function __construct($table,$row_from_db=NULL,$env=array())
+	function __construct($model,$row_from_db=NULL,$env=array())
 	{
 	//	$this->res = $res;	
-		$this->_TABLE=$table;
+		$this->_MODEL=$model;
 		$this->_ENV = $env;
 		if($row_from_db!=NULL)
-		{
+		{			
 			foreach ($row_from_db as $key => $val)
 			{
-				
+				$fld_base = $this->contains_fld($key);
+				if($fld_base!=NULL)	// составное поле через ->
+				{
+					if( !property_exists($this, $fld_base['fld']))
+					{
+						if(!empty($this->_MODEL->_SETTINGS['constraints'][$fld_base['fld']]))
+						{
+							$constraint = $this->_MODEL->_SETTINGS['constraints'][$fld_base['fld']];
+							$model_nested = $this->_MODEL->get_model($constraint['table']);
+							$dr_nested = new DataRecord($model_nested,NULL,$env); 
+							
+							$_fld_nested = $fld_base['fld_nested'];
+							$dr_nested->$_fld_nested = $val;
+							
+							$_fld_base = $fld_base['fld'];
+							$this->$_fld_base=$dr_nested;
+						}						
+					}
+					else 
+					{
+						$_fld_base = $fld_base['fld'];
+						$_fld_nested = $fld_base['fld_nested'];
+						$this->$_fld_base->$_fld_nested = $val;
+					}
+				}
+				else 
+				{
+					$this->key=$val;
+				}
 			}
 		}
+	}
+	
+	function contains_fld($fldname)
+	{
+		$splitted = explode('->', $fldname);
+		if(count($splitted)>1)
+		{
+			return array('fld'=>$splitted[0],'fld_nested'=>$splitted[1]);
+		}
+		return NULL; 
+			
 	}
 	
 	function save()
@@ -82,7 +121,7 @@ class PageDataSet extends DataSet
 	{
 		//print_r($this);
 		$row = $this->_ENV['_CONNECTION']->get_row($this->res);
-		$dr = new DataRecord($this->_ENV['model']->_TABLE->_TABLE,$row);
+		$dr = new DataRecord($this->_ENV['model'],$row,$this->_ENV);		
 		return $row;
 	}
 	// пробежка по строкам текущей страницы

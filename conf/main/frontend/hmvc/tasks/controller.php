@@ -14,7 +14,7 @@ class TasksController extends BaseController
 		//print_r($_REQUEST);
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
-		echo "<h3>tasks</h3>";
+		//echo "<h3>tasks</h3>";
 		$this->out_view('index',array('ds'=>$ds));
 	}
 	
