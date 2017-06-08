@@ -9,7 +9,8 @@ class SiteController extends BaseController
 		$this->add_block('LEFT', 'site', 'Blockx');
 		$this->add_keyword('xxx');
 		
-		
+	/*	$sql = QueryMaker::query_insert('forum', array(array('name'=>'forum1','descr'=>'f1','date'=>'#NOW()'),array('name'=>'forum2','descr'=>'f2','date'=>'#NOW()'),));
+		echo $sql;*/
 		//print_r($otdel);
 		$this->out_view('index',array('i'=>'xXXXx'));
 		

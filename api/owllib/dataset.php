@@ -5,6 +5,7 @@ class DataRecord	// запись из БД
 	VAR $_ENV;
 	VAR $_MODEL;
 	VAR $_FIELDS=array();
+	VAR $_MODIFIED=false;
 	
 	function __construct($model,$row_from_db=NULL,$env=array())
 	{
@@ -90,7 +91,14 @@ class DataRecord	// запись из БД
 	
 	function save()
 	{
-
+		if($this->getField($this->_MODEL['_SETTINGS']['primary'])!=NULL)
+		{
+			
+		}
+		else 
+		{
+			
+		}
 	}
 	
 	function getFieldNames()
@@ -109,6 +117,7 @@ class DataRecord	// запись из БД
 	{
 
 	}
+	
 }
 
 class DataSet
