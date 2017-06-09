@@ -14,8 +14,16 @@ namespace BootstrapCombobox
 				$params['htmlattrs']['name']=$params['name'];
 				unset($params['name']);
 			}
-			?>
-			<select <?=$this->get_attr_str($params['htmlattrs'])?>>
+			
+			if(!empty($params['data']))
+				$this->out_array_data($params);
+			elseif(!empty($params['ds'])) 
+				$this->out_dataset($params);
+		}
+		
+		function out_array_data($params)
+		{
+		?><select <?=$this->get_attr_str($params['htmlattrs'])?>>
 			<?php 
 			$ctr=0;
 			foreach($params['data'] as $idx => $row)
@@ -64,12 +72,53 @@ namespace BootstrapCombobox
 				<?php 
 				$ctr++;
 			}
+			
+			
 			?>
 			</select>	
 			
 			<?php
-			
 		}
+		
+		function out_dataset($params)
+		{
+			?>
+			<select <?=$this->get_attr_str($params['htmlattrs'])?>>
+					<?php 
+					//print_r($params);
+					$params['ds']->walk(
+							function($dr,$numrow) use ($params) 
+							{						
+								$checked="";
+								// field
+								if(!empty($params['field_value']))
+									$val = $dr->getField($params['field_value']);
+								else	
+									$val = $dr->getPrimary();
+																							
+								if(!empty($params['value']))
+								{								
+									if($val==$params['value'])
+										$checked="selected";
+								}
+								// caption 	
+								if(!empty($params['field_caption']))
+									$caption = $dr->getField($params['field_value']);
+								elseif(!empty($params['caption_template']))
+									$caption = x_make_str($params['caption_template'], $dr);
+								else
+									$caption = $dr->getView();
+						?>
+						<option value="<?=$val?>" <?=$checked?> ><?=$caption?></option>
+						<?php 
+								
+							}
+							);
+				?>
+			</select>					
+			<?php
+		}
+			
 	}
 
 }

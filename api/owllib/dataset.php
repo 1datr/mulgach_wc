@@ -70,6 +70,11 @@ class DataRecord	// запись из БД
 		return $this->_FIELDS[$fld];
 	}
 	
+	function getPrimary()
+	{
+		return $this->_FIELDS[$this->_MODEL->_SETTINGS['primary']];
+	}
+	
 	function foreach_fields($onfield)
 	{
 		foreach ($this->_FIELDS as $fld => $val)

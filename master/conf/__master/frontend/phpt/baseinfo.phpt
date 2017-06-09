@@ -1,4 +1,4 @@
-<?php
+<#php
 $settings = array(
 	'table'=>'{table}',
 	'fields'=>{array_fields},

@@ -12,6 +12,12 @@ class OtdelController extends BaseController
 		echo "<h3>OTDEL LIST</h3>";
 		$this->out_view('index',array('ds'=>$ds));
 	}
+	
+	public function ActionCreate()
+	{
+		$this->_TITLE="CREATE OTDEL";
+		$this->out_view('itemform',array());
+	}
 		
 }
 ?>

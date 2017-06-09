@@ -1,4 +1,4 @@
-<?php 
+<#php 
 class {table_uc_first}Controller extends BaseController
 {
 		
@@ -12,6 +12,12 @@ class {table_uc_first}Controller extends BaseController
 		echo "<h3>{TABLE_UC} LIST</h3>";
 		$this->out_view('index',array('ds'=>$ds));
 	}
+	
+	public function ActionCreate()
+	{
+		$this->_TITLE="CREATE {TABLE_UC}";
+		$this->out_view('itemform',array());
+	}
 		
 }
-?>
+#>

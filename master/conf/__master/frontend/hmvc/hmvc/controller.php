@@ -120,7 +120,7 @@ class HmvcController extends BaseController
 					unset($_SESSION['makeinfo']);
 					echo "MAKE SUCCESSED ";
 					
-					$this->redirect('?r=configs');
+			//		$this->redirect('?r=configs');
 				};break;
 		}
 		/*
@@ -171,6 +171,7 @@ ON UPDATE SET NULL;
 				$vars['TABLE_UC']=strtoupper($_params['table']);
 				file_put_contents($file_model, $this->parse_code_template('model',$vars));
 			}
+			
 			// Ôàéëèê
 			$file_baseinfo= url_seg_add( $hmvc_dir,'baseinfo.php');			
 				
@@ -187,9 +188,12 @@ ON UPDATE SET NULL;
 				
 				$vars['array_fields']="array({$fields_code})";				
 				$con_str="";
-				foreach ($_params['constraints']['field'] as $idx => $fld)
+				if(!empty($_params['constraints']))
 				{
-					$con_str = $con_str."'{$fld}'=>array('model'=>'".$_params['constraints']['table'][$idx]."','fld'=>'".$_params['constraints']['field_to'][$idx]."'),";
+					foreach ($_params['constraints']['field'] as $idx => $fld)
+					{
+						$con_str = $con_str."'{$fld}'=>array('model'=>'".$_params['constraints']['table'][$idx]."','fld'=>'".$_params['constraints']['field_to'][$idx]."'),";
+					}
 				}
 				$constraints="";
 				
@@ -200,6 +204,7 @@ ON UPDATE SET NULL;
 				$vars['view']=$_params['view'];
 				file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			
+				// make views
 				$dir_views = url_seg_add($hmvc_dir,'views');
 				//echo $dir_views;
 				if(!file_exists($dir_views))
@@ -207,12 +212,30 @@ ON UPDATE SET NULL;
 					mkdir($dir_views);
 				}
 				
+				include $file_baseinfo;
+				
 				$index_view = url_seg_add($dir_views,'index.php');
 				if(!file_exists($index_view))
 				{
 					$vars=array();
+					$vars['table'] = $_params['table'];
+					$vars['TABLE_UC']=strtoupper($_params['table']);
 				//	echo $this->parse_code_template('view_index',$vars);
 					file_put_contents($index_view, $this->parse_code_template('view_index',$vars));
+				}
+				
+				$itemform_view = url_seg_add($dir_views,'itemform.php');
+				if(!file_exists($itemform_view))
+				{
+					$vars=array();
+					
+					$vars['table'] = $_params['table'];
+					$vars['TABLE_UC']=strtoupper($_params['table']);
+					$vars['fld_primary']=$_primary;
+					$vars['fields']=$tbl_fields;
+					$vars['settings']=$settings;
+					//	echo $this->parse_code_template('view_index',$vars);
+					file_put_contents($itemform_view, $this->parse_code_template('view_itemform',$vars));
 				}
 		}
 	}
@@ -249,7 +272,20 @@ ON UPDATE SET NULL;
 	function parse_code_template($tpl,$var_array)
 	{
 		$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
-		$code = file_get_contents($tpl_file);
+		
+		
+		foreach ($var_array as $var => $val)
+		{
+			$$var=$val;
+		}
+		
+		ob_start();
+		if(file_exists($tpl_file))
+			include $tpl_file;
+		$code = ob_get_clean();
+		// php tags
+		$code = strtr($code,array('<#'=>'<?','#>'=>'?>'));
+		
 		$var_array2=array();
 		foreach ($var_array as $var => $val)
 		{

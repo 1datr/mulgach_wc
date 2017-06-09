@@ -44,7 +44,10 @@ class BaseModel
 		
 	}
 	
-	
+	function CreateNew()
+	{
+		
+	}
 	// find as default dataset
 	function find($where=1,$orderby=NULL)
 	{
@@ -54,6 +57,7 @@ class BaseModel
 		return $ds;
 	}
 	
+		
 	
 	// find as DataPager
 	function findAsPager($options=array(),$page=1,$where=1,$orderby=NULL)
