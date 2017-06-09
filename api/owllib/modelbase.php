@@ -152,7 +152,7 @@ class BaseModel
 				$model = $this->get_model($constraint['model']);
 				foreach($model->_SETTINGS['fields'] as $_fld => $_fldinfo)
 				{
-					$selects[]="$cfld.$_fld as `$cfld.$_fld`";
+					$selects[]="`$cfld`.`$_fld` as `$cfld.$_fld`";
 				}
 				$joins = "{$joins} LEFT OUTER JOIN @+".$constraint['model']." as `$cfld` ON {$this->_TABLE}.`{$cfld}`=`$cfld`.`".$constraint['fld']."`";
 				//$selects[]="`$cfld`.*";
@@ -162,6 +162,7 @@ class BaseModel
 		if($sql_selects!="")
 			$sql_selects=",$sql_selects";
 		$query="SELECT `{$this->_TABLE}`.*{$sql_selects} FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where";
+		//echo $query;
 		return $query;
 	}
 	

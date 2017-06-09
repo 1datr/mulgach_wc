@@ -5,5 +5,5 @@ $settings = array(
 	'primary'=>'id',
 	'constraints'=>array(),	
 	'rules'=>array(),	
-	'view'=>'{number}',
+	'view'=>'{fio}',
 );
