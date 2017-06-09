@@ -37,6 +37,11 @@ class TasksController extends BaseController
 			$this->redirect('/?r=tasks');
 		
 	}
-		
+	
+	public function ActionDelete($id)
+	{
+		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
+		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
 }
 ?>

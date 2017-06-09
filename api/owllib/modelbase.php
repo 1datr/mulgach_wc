@@ -72,6 +72,12 @@ class BaseModel
 		return $this->_SETTINGS['primary'];
 	}
 	
+	function Delete($where) {
+		$sql=QueryMaker::query_delete($this->_TABLE,$where);
+		$res = $this->_ENV['_CONNECTION']->query($sql);
+		return $res;
+	}
+	
 	function findOne($where=1,$orderby=NULL)
 	{
 		$sql=$this->select_query($where,$orderby);

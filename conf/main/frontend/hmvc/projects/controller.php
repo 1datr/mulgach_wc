@@ -37,6 +37,11 @@ class ProjectsController extends BaseController
 			$this->redirect('/?r=projects');
 		
 	}
-		
+	
+	public function ActionDelete($id)
+	{
+		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
+		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
 }
 ?>
