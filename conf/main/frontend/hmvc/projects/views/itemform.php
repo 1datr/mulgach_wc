@@ -1,6 +1,6 @@
 <?php 
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
-?><form method="post" >
+?><form method="post"  action="/?r=projects/save">
 <input type="hidden" name="projects[id_project]" value="<?=((!empty($projects)) ? $projects->getField('id_project') : '')?>" />
 <input type="submit" value="SUBMIT" />
 <table>

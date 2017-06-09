@@ -170,6 +170,7 @@ ON UPDATE SET NULL;
 				$vars=array();
 				$vars['table_uc_first']=UcaseFirst($_params['table']);
 				$vars['TABLE_UC']=strtoupper($_params['table']);
+				$vars['table'] = $_params['table'];
 				file_put_contents($file_model, $this->parse_code_template('model',$vars));
 			}
 			
@@ -220,6 +221,7 @@ ON UPDATE SET NULL;
 				{
 					$vars=array();
 					$vars['table'] = $_params['table'];
+					$vars['primary']=$_primary;
 					$vars['TABLE_UC']=strtoupper($_params['table']);
 				//	echo $this->parse_code_template('view_index',$vars);
 					file_put_contents($index_view, $this->parse_code_template('view_index',$vars));

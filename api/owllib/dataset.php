@@ -111,6 +111,12 @@ class DataRecord	// запись из БД
 		return array_keys($this->_FIELDS);
 	}
 	
+	
+	function getFields()
+	{
+		return $this->_FIELDS;
+	}
+	
 	function getView()
 	{
 		//print_r($this->_MODEL);
@@ -121,6 +127,11 @@ class DataRecord	// запись из БД
 	function query_insert()
 	{
 
+	}
+	
+	function __toString()
+	{
+		return $this->getView();
 	}
 	
 }

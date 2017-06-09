@@ -1,6 +1,6 @@
 <?php 
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
-?><form method="post" >
+?><form method="post"  action="/?r=otdel/save">
 <input type="hidden" name="otdel[id_otdel]" value="<?=((!empty($otdel)) ? $otdel->getField('id_otdel') : '')?>" />
 <input type="submit" value="SUBMIT" />
 <table>

@@ -88,7 +88,7 @@ function x_make_str($str,$ptrn)
 	{
 		foreach ($ptrn as $key => $val)
 		{
-			$ptrn2["{".$key."}"]=$val;
+			$ptrn2["{".$key."}"]= (string)$val;
 		}
 	}
 	elseif(is_object($ptrn))

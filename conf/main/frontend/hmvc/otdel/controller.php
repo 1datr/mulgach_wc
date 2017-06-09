@@ -30,6 +30,11 @@ class OtdelController extends BaseController
 	{
 	
 	}
+	
+	public function ActionDelete()
+	{
+	
+	}
 		
 }
 ?>

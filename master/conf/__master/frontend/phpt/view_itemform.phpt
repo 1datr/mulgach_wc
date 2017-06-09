@@ -1,6 +1,6 @@
 <#php 
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
-#><form method="post" >
+#><form method="post"  action="/?r={table}/save">
 <input type="hidden" name="{table}[{fld_primary}]" value="<#=((!empty(${table})) ? ${table}->getField('{fld_primary}') : '')#>" />
 <input type="submit" value="SUBMIT" />
 <table>
