@@ -1,31 +1,17 @@
 <?php 
-
-
 class WorkersController extends BaseController
 {
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="Workers";
-		$this->add_css($this->get_current_dir()."/css/style.css");
-		$this->add_block('LEFT', 'site', 'Blockx');
-		$this->add_keyword('workers');
-			
-		//print_r($_REQUEST);
+		$this->_TITLE="WORKERS";
+	
+		$conn = get_connection();
+
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		
-		echo "<h3>workers</h3>";
+		echo "<h3>WORKERS LIST</h3>";
 		$this->out_view('index',array('ds'=>$ds));
 	}
-	
-	public function ActionBlockx()
-	{
-		$this->out_view('blocks/block1',array('i'=>'xXXXx'));
-	}
-	
-	public function ActionWorkers()
-	{
 		
-	}
 }
 ?>

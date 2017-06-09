@@ -92,7 +92,7 @@ class BaseModel
 			{
 				$model = $this->get_model($constraint['model']);
 			//	print_r($model->_SETTINGS['fields']);
-				foreach($model->_SETTINGS['fields'] as $_fld)
+				foreach($model->_SETTINGS['fields'] as $_fld => $_fld_info)
 				{
 					$selects[]="`$cfld`.`$_fld` as `$cfld->$_fld`";
 				}
@@ -121,7 +121,7 @@ class BaseModel
 			foreach ($this->_SETTINGS['constraints'] as $cfld => $constraint)
 			{
 				$model = $this->get_model($constraint['model']);
-				foreach($model->_SETTINGS['fields'] as $_fld)
+				foreach($model->_SETTINGS['fields'] as $_fld => $_fldinfo)
 				{
 					$selects[]="$cfld.$_fld as `$cfld.$_fld`";
 				}

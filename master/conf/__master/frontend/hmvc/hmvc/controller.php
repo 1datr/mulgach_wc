@@ -119,6 +119,7 @@ class HmvcController extends BaseController
 					$this->make_hmvc($_SESSION['makeinfo']);
 					unset($_SESSION['makeinfo']);
 					echo "MAKE SUCCESSED ";
+					
 					$this->redirect('?r=configs');
 				};break;
 		}
@@ -137,7 +138,11 @@ ON UPDATE SET NULL;
 	{
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
-		print_r($_params);
+		
+		$cur_conf_dir = url_seg_add($conf_dir,$_params['conf']);
+		if(!file_exists($cur_conf_dir))
+			mkdir($cur_conf_dir);
+	//	print_r($_params);
 		$dbparams = $this->ConnectDBIfExists($_params['conf']);
 		//print_r($_params);
 		foreach($_params['ep'] as $ep => $offon)
@@ -171,11 +176,16 @@ ON UPDATE SET NULL;
 				
 				$vars=array();
 				$vars['table']=$_params['table'];
-				$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);
-			//	print_r($tbl_fields);
-				$vars['array_fields']='array('.ximplode(',', array_keys($tbl_fields), "'", "'").')';
+				$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);	
 				
-				//print_r($_params['constraints']);
+				//print_r($tbl_fields);
+				$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
+						function(&$theval,&$idx,&$thetemplate,&$ctr){
+						//	$theval['TypeInfo']=strtr($theval['TypeInfo'],array("'"=>"'"));
+						});
+				//echo $fields_code;
+				
+				$vars['array_fields']="array({$fields_code})";				
 				$con_str="";
 				foreach ($_params['constraints']['field'] as $idx => $fld)
 				{
@@ -191,7 +201,7 @@ ON UPDATE SET NULL;
 				file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			
 				$dir_views = url_seg_add($hmvc_dir,'views');
-				echo $dir_views;
+				//echo $dir_views;
 				if(!file_exists($dir_views))
 				{
 					mkdir($dir_views);

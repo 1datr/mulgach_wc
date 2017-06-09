@@ -73,12 +73,32 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function get_table_fields($tbl)
 	{
-		$res = $this->query("SHOW COLUMNS FROM `@+{$tbl}`");
+		$res = $this->query("SHOW FULL COLUMNS FROM `@+{$tbl}`");
 		$arr=array();
 		while($col = $this->get_row($res)){
 			//	print_r($col);
+			$Field = $col['Field'];
+		//	unset($col['Field']);
+			
+			$matches = array();
+			$col['TypeInfo']=NULL;
+			if(preg_match_all('/(.+)\((.+)\)/Uis', $col['Type'],$matches))
+			{
+				//print_r($matches);
+				$col['Type']=$matches[1][0];
+				$col['TypeInfo']=$matches[2][0];
+				/*
+				try
+				{
+					$intval = (int)$col['TypeInfo'];
+					$col['TypeInfo']=$intval;
+				}
+				catch (Exception $ex){}
+				*/
 				
-			$arr[$col['Field']]=$col;
+			}
+			
+			$arr[$Field]=$col;			
 			//print_r($col); print "<br>\n";
 		}
 		return $arr;

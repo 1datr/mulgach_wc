@@ -20,31 +20,34 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <?php 
 if(!empty($settings))
 {
-	foreach ($settings['constraints'] as $fld_from => $con)
+	if(!empty($settings['constraints']))
 	{
-		?>
-		<div class="multiform_block">
-		<label>Field:</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
-					'name'=>'constraints[field][]',
-					'htmlattrs'=>array('class'=>'fld_select'),
-					'value'=>$fld_from,
-				)); ?>
-		<label>Table:</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,
-				'name'=>'constraints[table][]',
-				'value'=>$con['model'],
-				'htmlattrs'=>array('class'=>'table_to_select',
-					'onchange'=>'load_fields(this)'))
-				); ?>
-		<label>field to:</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
-				'name'=>'constraints[field_to][]',
-				'value'=>$con['fld'],
-				'htmlattrs'=>array('class'=>'fld_to_select'))); ?>
-		<button type="button" onclick="drop_block(this)">x</button>
-		</div>
-		<?php 
+		foreach ($settings['constraints'] as $fld_from => $con)
+		{
+			?>
+			<div class="multiform_block">
+			<label>Field:</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
+						'name'=>'constraints[field][]',
+						'htmlattrs'=>array('class'=>'fld_select'),
+						'value'=>$fld_from,
+					)); ?>
+			<label>Table:</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,
+					'name'=>'constraints[table][]',
+					'value'=>$con['model'],
+					'htmlattrs'=>array('class'=>'table_to_select',
+						'onchange'=>'load_fields(this)'))
+					); ?>
+			<label>field to:</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
+					'name'=>'constraints[field_to][]',
+					'value'=>$con['fld'],
+					'htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+			<button type="button" onclick="drop_block(this)">x</button>
+			</div>
+			<?php 
+		}
 	}
 }
 ?>
@@ -52,14 +55,16 @@ if(!empty($settings))
 <button type="button" onclick="add_block()" title="Добавить связку">+</button>
 <div>
 <label for="_view">View:&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
-<p><label>Fields:&nbsp;</label><?php 
+<p><label>Fields:&nbsp;</label>
+<?php 
 foreach($fields as $fld => $fldinfo)
 {
 	?>
 	<div style="display: inline-block" class="drg_view">{<?=$fld?>}</div>
 	<?php 
 }
-?></p>
+?>
+</p>
 </div>
 <input type="hidden" name="conf" id="config" value="<?=$_SESSION['makeinfo']['conf']?>" >
 <input type="submit" value="MAKE HMVC" >
