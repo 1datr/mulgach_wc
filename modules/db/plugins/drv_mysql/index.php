@@ -104,6 +104,18 @@ class plg_drv_mysql extends mod_plugin
 		return $arr;
 	}
 	
+	function get_enum_field_values($table,$column)
+	{
+		$result = $this->query("SHOW COLUMNS FROM `@+$table`  LIKE '$column'");
+		if ($result)
+		{
+			$row = $this->get_row($result);
+			$option_array = explode("','",preg_replace("/(enum|set)\('(.+?)'\)/","\\2", $row['Type']));
+			return $option_array;
+		}
+		return null;
+	}
+	
 	public function get_primary($var)
 	{
 		if(is_string($var))

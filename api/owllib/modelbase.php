@@ -39,6 +39,15 @@ class BaseModel
 		return $res;
 	}
 	
+	// Список возможных значений поля если ENUM или SET
+	function get_field_value_list($field)
+	{
+		if(in_array($this->_SETTINGS['fields'][$field]['Type'],array('enum','set')))
+			return $this->_ENV['_CONNECTION']->get_enum_field_values($this->_SETTINGS['table'],$field);
+		else 
+			return $this->_SETTINGS['fields'][$field]['Type'];
+	}
+	
 	private function make_dbrec($row)
 	{
 		
@@ -57,7 +66,21 @@ class BaseModel
 		return $ds;
 	}
 	
-		
+	function getPrimaryName()
+	{
+		return $this->_SETTINGS['primary'];
+	}
+	
+	function findOne($where=1,$orderby=NULL)
+	{
+		$sql=$this->select_query($where,$orderby);
+		$res = $this->db_query($sql);
+		$row = $this->_ENV['_CONNECTION']->get_row($res);
+		//$this->_ENV
+		$dr = new DataRecord($this->_MODEL,$row,$this->_ENV);
+		//$ds =new  DataSet($res,$this->_ENV);
+		return $dr;
+	}	
 	
 	// find as DataPager
 	function findAsPager($options=array(),$page=1,$where=1,$orderby=NULL)
@@ -90,6 +113,7 @@ class BaseModel
 	{
 		$joins="";
 		$selects=array();
+		$where = strtr($where,array('*.'=>'`'.$this->_SETTINGS['table'].'`.'));
 		if(count($this->_SETTINGS['constraints']))
 		{
 			foreach ($this->_SETTINGS['constraints'] as $cfld => $constraint)
@@ -120,6 +144,7 @@ class BaseModel
 	{
 		$joins="";
 		$selects=array();
+		$where = strtr($where,array('*.'=>'`'.$this->_SETTINGS['table'].'`.'));
 		if(count($this->_SETTINGS['constraints']))
 		{
 			foreach ($this->_SETTINGS['constraints'] as $cfld => $constraint)

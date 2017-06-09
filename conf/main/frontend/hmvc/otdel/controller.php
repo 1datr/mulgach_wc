@@ -18,6 +18,18 @@ class OtdelController extends BaseController
 		$this->_TITLE="CREATE OTDEL";
 		$this->out_view('itemform',array());
 	}
+	
+	public function ActionEdit($id)
+	{
+		$this->_TITLE="EDIT OTDEL";
+		$otdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->out_view('itemform',array('otdel'=>$otdel));
+	}
+	
+	public function ActionSave()
+	{
+	
+	}
 		
 }
 ?>

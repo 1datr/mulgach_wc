@@ -18,6 +18,18 @@ class {table_uc_first}Controller extends BaseController
 		$this->_TITLE="CREATE {TABLE_UC}";
 		$this->out_view('itemform',array());
 	}
+	
+	public function ActionEdit($id)
+	{
+		$this->_TITLE="EDIT {TABLE_UC}";
+		${table} = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->out_view('itemform',array('{table}'=>${table}));
+	}
+	
+	public function ActionSave()
+	{
+	
+	}
 		
 }
 #>

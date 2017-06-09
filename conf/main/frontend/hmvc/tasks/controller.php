@@ -1,30 +1,35 @@
 <?php 
-
 class TasksController extends BaseController
 {
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="Tasks";
-		$this->add_css($this->get_current_dir()."/css/style.css");
-		$this->add_block('LEFT', 'site', 'Blockx');
-		$this->add_keyword('tasks');
-			
-		//print_r($_REQUEST);
+		$this->_TITLE="TASKS";
+	
+		$conn = get_connection();
+
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		
-		//echo "<h3>tasks</h3>";
+		echo "<h3>TASKS LIST</h3>";
 		$this->out_view('index',array('ds'=>$ds));
 	}
 	
-	public function ActionBlockx()
+	public function ActionCreate()
 	{
-		$this->out_view('blocks/block1',array('i'=>'xXXXx'));
+		$this->_TITLE="CREATE TASKS";
+		$this->out_view('itemform',array());
 	}
 	
-	public function ActionWorkers()
+	public function ActionEdit($id)
 	{
-		
+		$this->_TITLE="EDIT TASKS";
+		$tasks = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->out_view('itemform',array('tasks'=>$tasks));
 	}
+	
+	public function ActionSave()
+	{
+	
+	}
+		
 }
 ?>

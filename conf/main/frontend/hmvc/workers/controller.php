@@ -12,6 +12,24 @@ class WorkersController extends BaseController
 		echo "<h3>WORKERS LIST</h3>";
 		$this->out_view('index',array('ds'=>$ds));
 	}
+	
+	public function ActionCreate()
+	{
+		$this->_TITLE="CREATE WORKERS";
+		$this->out_view('itemform',array());
+	}
+	
+	public function ActionEdit($id)
+	{
+		$this->_TITLE="EDIT WORKERS";
+		$workers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->out_view('itemform',array('workers'=>$workers));
+	}
+	
+	public function ActionSave()
+	{
+	
+	}
 		
 }
 ?>

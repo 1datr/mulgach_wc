@@ -160,6 +160,7 @@ ON UPDATE SET NULL;
 				$vars=array();
 				$vars['table_uc_first']=UcaseFirst($_params['table']);
 				$vars['TABLE_UC']=strtoupper($_params['table']);
+				$vars['table'] = $_params['table'];
 				file_put_contents($file_controller, $this->parse_code_template('controller',$vars));
 			}
 			// Модель
