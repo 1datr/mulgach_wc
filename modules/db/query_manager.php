@@ -17,6 +17,11 @@ class QueryMaker {
 		return "DELETE FROM `@+{$tbl}` WHERE $where";
 	}
 	
+	static function query_update($tbl,$arr,$WHERE=1)
+	{
+		return "UPDATE `@+{$tbl}` SET ".xx_implode($arr, ',', "`{idx}`='{%val}'") ." WHERE {$WHERE}";
+	}
+	
 	static function query_insert($tbl,$_arr_to_insert)
 	{
 		function one_block_query($arr)

@@ -53,9 +53,10 @@ class BaseModel
 		
 	}
 	
-	function CreateNew()
+	function CreateNew($row)
 	{
-		
+		$dr = new DataRecord($this,$row,$this->_ENV);
+		return $dr;
 	}
 	// find as default dataset
 	function find($where=1,$orderby=NULL)

@@ -28,7 +28,14 @@ class TasksController extends BaseController
 	
 	public function ActionSave()
 	{
-	
+		$newitem = $this->_MODEL->CreateNew($_POST['tasks']);
+		$newitem->save();
+		
+		if(!empty($_POST['back_url']))
+			$this->redirect($_POST['back_url']);
+		else 
+			$this->redirect('/?r=tasks');
+		
 	}
 		
 }

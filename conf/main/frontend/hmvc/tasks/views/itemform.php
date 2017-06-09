@@ -124,4 +124,5 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		?>	</td>
 	</tr>
 	</table>
+<input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
 </form>

@@ -62,4 +62,5 @@ foreach($fields as $fld => $fldinfo)
 }
 ?>
 </table>
+<input type="hidden" name="back_url" value="<#=$_SERVER['HTTP_REFERER']; #>" />
 </form>

@@ -28,7 +28,14 @@ class WorkersController extends BaseController
 	
 	public function ActionSave()
 	{
-	
+		$newitem = $this->_MODEL->CreateNew($_POST['workers']);
+		$newitem->save();
+		
+		if(!empty($_POST['back_url']))
+			$this->redirect($_POST['back_url']);
+		else 
+			$this->redirect('/?r=workers');
+		
 	}
 		
 }

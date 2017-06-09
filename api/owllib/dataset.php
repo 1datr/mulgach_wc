@@ -96,14 +96,21 @@ class DataRecord	// запись из БД
 	
 	function save()
 	{
-		if($this->getField($this->_MODEL['_SETTINGS']['primary'])!=NULL)
+		if($this->getField($this->_MODEL->_SETTINGS['primary'])!=NULL)
 		{
-			
+			$fld_values = $this->getFields();
+			$primary = $this->_MODEL->getPrimaryName();
+			$WHERE="`{$primary}`='".$this->getPrimary()."'";
+			unset($fld_values[$primary]);			
+			$sql = QueryMaker::query_update($this->_MODEL->_TABLE,$fld_values,$WHERE);
 		}
 		else 
 		{
-			
+			$fld_values = $this->getFields();
+			unset($fld_values[$this->_MODEL->getPrimaryName()]);
+			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
+		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
 	}
 	
 	function getFieldNames()
