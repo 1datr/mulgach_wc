@@ -17,13 +17,27 @@ foreach($fields as $fld => $fldinfo)
 		{
 		?>
 		<#php 
-			$params = array('ds'=> $this->get_controller('<?=$settings['constraints'][$fld]['model']?>')->_MODEL->find() ,'name'=>'{table}[<?=$fld?>]');
-			if(!empty(${table}))
-			{
-				$params['value']=${table}->getField('<?=$fld?>',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		#><?
+		<?php
+		if(!empty($constraints['required'][$fld]))
+		{
+		?>
+			$params = array('ds'=> $this->get_controller('<?=$settings['constraints'][$fld]['model']?>')->_MODEL->find() ,'required'=>true, 'name'=>'{table}[<?=$fld?>]');
+		<?php
+		}
+		else
+		{
+		?>
+			$params = array('ds'=> $this->get_controller('<?=$settings['constraints'][$fld]['model']?>')->_MODEL->find() ,'name'=>'{table}[<?=$fld?>]');			
+		<?php
+		}
+		?>
+		if(!empty(${table}))
+		{
+			$params['value']=${table}->getField('<?=$fld?>',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		#>
+		<?
 		}
 		elseif($fldinfo['Type']=='enum')
 		{

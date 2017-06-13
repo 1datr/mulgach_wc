@@ -17,13 +17,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>otv_ruk</label></th><td>
 			<?php 
-			$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'projects[otv_ruk]');
-			if(!empty($projects))
-			{
-				$params['value']=$projects->getField('otv_ruk',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>	</td>
+					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'projects[otv_ruk]');			
+				if(!empty($projects))
+		{
+			$params['value']=$projects->getField('otv_ruk',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+			</td>
 	</tr>
 		<tr>
 	<th><label>date_generate</label></th><td>
@@ -48,13 +49,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>id_otdel</label></th><td>
 			<?php 
-			$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'name'=>'projects[id_otdel]');
-			if(!empty($projects))
-			{
-				$params['value']=$projects->getField('id_otdel',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>	</td>
+					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'name'=>'projects[id_otdel]');			
+				if(!empty($projects))
+		{
+			$params['value']=$projects->getField('id_otdel',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+			</td>
 	</tr>
 		<tr>
 	<th><label>sostoyanie</label></th><td>
@@ -76,13 +78,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>creator_id</label></th><td>
 			<?php 
-			$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'projects[creator_id]');
-			if(!empty($projects))
-			{
-				$params['value']=$projects->getField('creator_id',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>	</td>
+					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'projects[creator_id]');			
+				if(!empty($projects))
+		{
+			$params['value']=$projects->getField('creator_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+			</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

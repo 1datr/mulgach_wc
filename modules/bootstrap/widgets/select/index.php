@@ -85,6 +85,13 @@ namespace BootstrapCombobox
 			?>
 			<select <?=$this->get_attr_str($params['htmlattrs'])?>>
 					<?php 
+					if(empty($params['required']))
+					{
+						?>
+						<option value="" ></option>
+						<?php 
+					}
+					
 					//print_r($params);
 					$params['ds']->walk(
 							function($dr,$numrow) use ($params) 

@@ -5,11 +5,13 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 
 <div class="multiform_block" style="visibility: hidden;">
 <label>Field:</label>
-<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[field][]','htmlattrs'=>array('class'=>'fld_select'))); ?>
+<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[$idx][field]','htmlattrs'=>array('class'=>'fld_select'))); ?>
 <label>Table:</label>
-<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'name'=>'constraints[table][]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
+<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'name'=>'constraints[$idx][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
 <label>field to:</label>
-<?php $this->usewidget(new ComboboxWidget(),array('data'=>$first_table_fields,'name'=>'constraints[field_to][]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+<?php $this->usewidget(new ComboboxWidget(),array('data'=>$first_table_fields,'name'=>'constraints[$idx][field_to]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+<label>Required:</label>		
+<input type="checkbox" name="constraints[][required]" />	
 <button type="button" onclick="drop_block(this)">x</button>
 </div>
 
@@ -22,19 +24,20 @@ if(!empty($settings))
 {
 	if(!empty($settings['constraints']))
 	{
+		$idx=0;
 		foreach ($settings['constraints'] as $fld_from => $con)
 		{
 			?>
 			<div class="multiform_block">
 			<label>Field:</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
-						'name'=>'constraints[field][]',
+						'name'=>"constraints[{$idx}][field]",
 						'htmlattrs'=>array('class'=>'fld_select'),
 						'value'=>$fld_from,
 					)); ?>
 			<label>Table:</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,
-					'name'=>'constraints[table][]',
+					'name'=>"constraints[{$idx}][table]",
 					'value'=>$con['model'],
 					'htmlattrs'=>array('class'=>'table_to_select',
 						'onchange'=>'load_fields(this)'))
@@ -42,14 +45,15 @@ if(!empty($settings))
 							
 			<label>field to:</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
-					'name'=>'constraints[field_to][]',
+					'name'=>"constraints[{$idx}][field_to]",
 					'value'=>$con['fld'],
 					'htmlattrs'=>array('class'=>'fld_to_select'))); ?>
 			<label>Required:</label>		
-			<input type="checkbox" name="constraints[required][]" />	
+			<input type="checkbox" name="constraints[][required]" />	
 			<button type="button" onclick="drop_block(this)">x</button>
 			</div>
 			<?php 
+			$idx++;
 		}
 	}
 }

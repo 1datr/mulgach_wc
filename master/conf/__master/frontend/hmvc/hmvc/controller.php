@@ -136,6 +136,8 @@ ON UPDATE SET NULL;
 	
 	private function make_hmvc($_params)
 	{
+		print_r($_params['constraints']);
+		
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
 		
@@ -148,7 +150,6 @@ ON UPDATE SET NULL;
 		foreach($_params['ep'] as $ep => $offon)
 		{
 			$hmvc_dir=url_seg_add($conf_dir,$_params['conf'],$ep,'hmvc',$_params['table']);
-			//echo $hmvc_dir;
 			//создаем папку триады
 			if(!file_exists($hmvc_dir))
 			{
@@ -182,13 +183,11 @@ ON UPDATE SET NULL;
 			$vars['table']=$_params['table'];
 			$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);	
 				
-			//print_r($tbl_fields);
 			$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
 						function(&$theval,&$idx,&$thetemplate,&$ctr){
 						//	$theval['TypeInfo']=strtr($theval['TypeInfo'],array("'"=>"'"));
 						});
-				//echo $fields_code;
-				
+			
 			$vars['array_fields']="array({$fields_code})";				
 			$con_str="";
 			if(!empty($_params['constraints']))
@@ -228,7 +227,7 @@ ON UPDATE SET NULL;
 				file_put_contents($index_view, $this->parse_code_template('view_index',$vars));
 			}
 				
-				$itemform_view = url_seg_add($dir_views,'itemform.php');
+			$itemform_view = url_seg_add($dir_views,'itemform.php');
 			if(!file_exists($itemform_view) || $_params['rewrite_all'])
 			{
 				$vars=array();
@@ -238,6 +237,8 @@ ON UPDATE SET NULL;
 				$vars['fld_primary']=$_primary;
 				$vars['fields']=$tbl_fields;
 				$vars['settings']=$settings;
+				$vars['constraints']=$_params['constraints'];
+				print_r($_params['constraints']);
 					//	echo $this->parse_code_template('view_index',$vars);
 				file_put_contents($itemform_view, $this->parse_code_template('view_itemform',$vars));
 			}

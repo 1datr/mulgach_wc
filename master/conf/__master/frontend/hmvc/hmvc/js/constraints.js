@@ -32,6 +32,7 @@ function add_block()
 {
 	new_data_block = $('.multiform_block').first().clone();
 	new_data_block.css('visibility', 'visible' );
+	var nb_html = new_data_block.html();
 	$('#constraints_block').append(new_data_block);
 } 
 
