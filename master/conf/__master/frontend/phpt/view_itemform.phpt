@@ -20,7 +20,7 @@ foreach($fields as $fld => $fldinfo)
 			$params = array('ds'=> $this->get_controller('<?=$settings['constraints'][$fld]['model']?>')->_MODEL->find() ,'name'=>'{table}[<?=$fld?>]');
 			if(!empty(${table}))
 			{
-				$params['value']=${table}->getField('<?=$fld?>');
+				$params['value']=${table}->getField('<?=$fld?>',true);
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		#><?
@@ -32,7 +32,7 @@ foreach($fields as $fld => $fldinfo)
 			$params = array('data'=> $this->_MODEL->get_field_value_list('<?=$fld ?>'),'name'=>'{table}[<?=$fld?>]');
 			if(!empty(${table}))
 			{
-				$params['value']=${table}->getField('<?=$fld?>');
+				$params['value']=${table}->getField('<?=$fld?>',true);
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		#>
@@ -45,13 +45,13 @@ foreach($fields as $fld => $fldinfo)
 		elseif($fldinfo['Type']=='longtext')
 		{
 		?>
-			<textarea name="{table}[<?=$fld?>]" ><#=((!empty(${table})) ? ${table}->getField('<?=$fld?>') : '')#></textarea>
+			<textarea name="{table}[<?=$fld?>]" ><#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#></textarea>
 		<?	
 		}
 		else
 		{
 		?>
-			<input type="text" name="{table}[<?=$fld?>]" value="<#=((!empty(${table})) ? ${table}->getField('<?=$fld?>') : '')#>" />
+			<input type="text" name="{table}[<?=$fld?>]" value="<#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#>" />
 		<?	
 		}
 	?>

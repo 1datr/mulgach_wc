@@ -10,6 +10,20 @@ class TasksController extends BaseController
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		echo "<h3>TASKS LIST</h3>";
+		
+		$this->inline_script("
+		    $( document ).ready(function() {
+        		$('.ref_delete').click(function() 
+        		{
+        			if(confirm('Удалить объект?'))
+        			{
+        				return true;
+        			}
+        			return false;
+        		});
+    		});
+		");
+		
 		$this->out_view('index',array('ds'=>$ds));
 	}
 	

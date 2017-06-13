@@ -6,12 +6,12 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <table>
 	<tr>
 	<th><label>name</label></th><td>
-				<input type="text" name="otdel[name]" value="<?=((!empty($otdel)) ? $otdel->getField('name') : '')?>" />
+				<input type="text" name="otdel[name]" value="<?=((!empty($otdel)) ? $otdel->getField('name',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
 	<th><label>function</label></th><td>
-				<input type="text" name="otdel[function]" value="<?=((!empty($otdel)) ? $otdel->getField('function') : '')?>" />
+				<input type="text" name="otdel[function]" value="<?=((!empty($otdel)) ? $otdel->getField('function',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
@@ -20,7 +20,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'name'=>'otdel[id_otdel_papa]');
 			if(!empty($otdel))
 			{
-				$params['value']=$otdel->getField('id_otdel_papa');
+				$params['value']=$otdel->getField('id_otdel_papa',true);
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		?>	</td>
@@ -31,12 +31,12 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			$params = array('data'=> $this->_MODEL->get_field_value_list('cvet'),'name'=>'otdel[cvet]');
 			if(!empty($otdel))
 			{
-				$params['value']=$otdel->getField('cvet');
+				$params['value']=$otdel->getField('cvet',true);
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		?>
 			</td>
 	</tr>
 	</table>
-	<input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
+<input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
 </form>

@@ -65,9 +65,21 @@ class DataRecord	// запись из БД
 		$this->_FIELDS[$fld]=$val;
 	}
 	
-	function getField($fld)
+	function format_html($fldval,$flags=NULL)
 	{
-		return $this->_FIELDS[$fld];
+		if($flags==NULL) $flags=(ENT_COMPAT | ENT_HTML401);
+		return htmlentities($fldval,$flags);
+	}
+	
+	function getField($fld,$format_val=true,$format=NULL)
+	{
+		if($format==NULL) $format = (ENT_COMPAT | ENT_HTML401);
+		$val = $this->_FIELDS[$fld];
+		if($format_val==true)
+		{
+			$val = $this->format_html($val,$format);
+		}
+		return $val;
 	}
 	
 	function getPrimary()
@@ -124,11 +136,14 @@ class DataRecord	// запись из БД
 		return $this->_FIELDS;
 	}
 	
-	function getView()
+	function getView($format_val=true,$format=NULL)
 	{
-		//print_r($this->_MODEL);
-
-		return x_make_str( $this->_MODEL->_SETTINGS['view'], $this->_FIELDS);
+		if($format==NULL) $format = (ENT_COMPAT | ENT_HTML401);
+		$view = x_make_str( $this->_MODEL->_SETTINGS['view'], $this->_FIELDS);
+		if($format_val)
+			$view = $this->format_html($view,$format);
+		
+		return $view;
 	}
 
 	function query_insert()

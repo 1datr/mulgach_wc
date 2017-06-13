@@ -148,14 +148,15 @@ ON UPDATE SET NULL;
 		foreach($_params['ep'] as $ep => $offon)
 		{
 			$hmvc_dir=url_seg_add($conf_dir,$_params['conf'],$ep,'hmvc',$_params['table']);
+			//echo $hmvc_dir;
 			//создаем папку триады
-			if(!file_exists($hmvc_dir) || !is_dir($hmvc_dir))
+			if(!file_exists($hmvc_dir))
 			{
-				mkdir($hmvc_dir);
+				x_mkdir($hmvc_dir);
 			}
 			// Контроллер
 			$file_controller = url_seg_add( $hmvc_dir,'controller.php'); 
-			if(!file_exists($file_controller))
+			if(!file_exists($file_controller) || $_params['rewrite_all'])
 			{
 				$vars=array();
 				$vars['table_uc_first']=UcaseFirst($_params['table']);
@@ -165,7 +166,7 @@ ON UPDATE SET NULL;
 			}
 			// Модель
 			$file_model = url_seg_add( $hmvc_dir,'model.php');
-			if(!file_exists($file_model))
+			if(!file_exists($file_model) || $_params['rewrite_all'])
 			{
 				$vars=array();
 				$vars['table_uc_first']=UcaseFirst($_params['table']);
@@ -177,69 +178,69 @@ ON UPDATE SET NULL;
 			// Файлик
 			$file_baseinfo= url_seg_add( $hmvc_dir,'baseinfo.php');			
 				
-				$vars=array();
-				$vars['table']=$_params['table'];
-				$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);	
+			$vars=array();
+			$vars['table']=$_params['table'];
+			$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);	
 				
-				//print_r($tbl_fields);
-				$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
+			//print_r($tbl_fields);
+			$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
 						function(&$theval,&$idx,&$thetemplate,&$ctr){
 						//	$theval['TypeInfo']=strtr($theval['TypeInfo'],array("'"=>"'"));
 						});
 				//echo $fields_code;
 				
-				$vars['array_fields']="array({$fields_code})";				
-				$con_str="";
-				if(!empty($_params['constraints']))
+			$vars['array_fields']="array({$fields_code})";				
+			$con_str="";
+			if(!empty($_params['constraints']))
 				{
 					foreach ($_params['constraints']['field'] as $idx => $fld)
 					{
 						$con_str = $con_str."'{$fld}'=>array('model'=>'".$_params['constraints']['table'][$idx]."','fld'=>'".$_params['constraints']['field_to'][$idx]."'),";
 					}
 				}
-				$constraints="";
+			$constraints="";
 				
-				$vars['array_constraints']="array($con_str)";
-				$vars['array_rules']='array()';
-				$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
-				$vars['primary']=$_primary;
-				$vars['view']=$_params['view'];
-				file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
+			$vars['array_constraints']="array($con_str)";
+			$vars['array_rules']='array()';
+			$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
+			$vars['primary']=$_primary;
+			$vars['view']=$_params['view'];
+			file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			
 				// make views
-				$dir_views = url_seg_add($hmvc_dir,'views');
+			$dir_views = url_seg_add($hmvc_dir,'views');
 				//echo $dir_views;
-				if(!file_exists($dir_views))
-				{
-					mkdir($dir_views);
-				}
+			if(!file_exists($dir_views))
+			{
+				x_mkdir($dir_views);
+			}
 				
-				include $file_baseinfo;
+			include $file_baseinfo;
 				
-				$index_view = url_seg_add($dir_views,'index.php');
-				if(!file_exists($index_view))
-				{
-					$vars=array();
-					$vars['table'] = $_params['table'];
-					$vars['primary']=$_primary;
-					$vars['TABLE_UC']=strtoupper($_params['table']);
+			$index_view = url_seg_add($dir_views,'index.php');
+			if(!file_exists($index_view) || $_params['rewrite_all'])
+			{
+				$vars=array();
+				$vars['table'] = $_params['table'];
+				$vars['primary']=$_primary;
+				$vars['TABLE_UC']=strtoupper($_params['table']);
 				//	echo $this->parse_code_template('view_index',$vars);
-					file_put_contents($index_view, $this->parse_code_template('view_index',$vars));
-				}
+				file_put_contents($index_view, $this->parse_code_template('view_index',$vars));
+			}
 				
 				$itemform_view = url_seg_add($dir_views,'itemform.php');
-				if(!file_exists($itemform_view))
-				{
-					$vars=array();
+			if(!file_exists($itemform_view) || $_params['rewrite_all'])
+			{
+				$vars=array();
 					
-					$vars['table'] = $_params['table'];
-					$vars['TABLE_UC']=strtoupper($_params['table']);
-					$vars['fld_primary']=$_primary;
-					$vars['fields']=$tbl_fields;
-					$vars['settings']=$settings;
+				$vars['table'] = $_params['table'];
+				$vars['TABLE_UC']=strtoupper($_params['table']);
+				$vars['fld_primary']=$_primary;
+				$vars['fields']=$tbl_fields;
+				$vars['settings']=$settings;
 					//	echo $this->parse_code_template('view_index',$vars);
-					file_put_contents($itemform_view, $this->parse_code_template('view_itemform',$vars));
-				}
+				file_put_contents($itemform_view, $this->parse_code_template('view_itemform',$vars));
+			}
 		}
 	}
 	

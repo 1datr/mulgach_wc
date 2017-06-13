@@ -26,10 +26,10 @@ namespace BootstrapListView
 			{
 				if(is_object($thefield))
 				{
-					echo $thefield->getView();
+					echo $thefield->getView(true);
 				}
 				else
-					echo $dr->getField($this->datafld);
+					echo $dr->getField($this->datafld,true);
 			}
 		}
 		

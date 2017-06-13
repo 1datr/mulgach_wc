@@ -132,6 +132,20 @@ function url_seg_add()
 	return $resstr;
 	
 }
+
+function x_mkdir($path)
+{
+	//echo ">> $path >>";
+	$parent_path = dirname($path);
+	if(file_exists($parent_path))
+	{		
+		mkdir($path);
+	}
+	else 
+	{
+		x_mkdir($parent_path);
+	}
+}
 // добавить точку перед директорией 
 function dir_dotted($dir)
 {
