@@ -1,6 +1,18 @@
 <?php 
 class TasksController extends BaseController
 {
+
+	public function Rules()
+	{
+		return array(
+			'action_args'=>array(
+				'index'=>['page'=>'integer'],	
+				'edit'=>['id'=>'integer'],	
+				'delete'=>['id'=>'integer'],
+			),			
+				
+		);
+	}
 		
 	public function ActionIndex($page=1)
 	{

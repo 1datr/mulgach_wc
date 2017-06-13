@@ -32,6 +32,16 @@ class plg_drv_mysql extends mod_plugin
 		
 	}
 	
+	public function escape_val($value,$type='text')
+	{
+		return mysql_real_escape_string($value);
+	}
+	
+	public function escape_sql_string($sql_text)
+	{
+		return mysql_real_escape_string($sql_text);
+	}
+	
 	public function get_tables()
 	{
 		$res = $this->query("SHOW FULL TABLES");

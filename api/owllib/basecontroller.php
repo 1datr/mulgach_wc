@@ -41,6 +41,12 @@ class BaseController
 		}
 	}
 	
+	public function Rules()
+	{
+		return array(	
+		);
+	}
+	
 	function connect_db($dbparams)
 	{
 		$res = connect_db($dbparams);

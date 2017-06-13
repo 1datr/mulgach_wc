@@ -73,6 +73,7 @@ class BaseModel
 	}
 	
 	function Delete($where) {
+		//$where = $this->_ENV['_CONNECTION']->escape_sql_string($where);
 		$sql=QueryMaker::query_delete($this->_TABLE,$where);
 		$res = $this->_ENV['_CONNECTION']->query($sql);
 		return $res;

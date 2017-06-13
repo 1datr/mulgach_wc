@@ -16,8 +16,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 	</tr>
 		<tr>
 	<th><label>forum_id</label></th><td>
-				<input type="text" name="forum[forum_id]" value="<?=((!empty($forum)) ? $forum->getField('forum_id',true) : '')?>" />
-			</td>
+			<?php 
+			$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'name'=>'forum[forum_id]');
+			if(!empty($forum))
+			{
+				$params['value']=$forum->getField('forum_id',true);
+			}
+			$this->usewidget(new ComboboxWidget(),$params);
+		?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

@@ -106,11 +106,23 @@ class DataRecord	// запись из БД
 			
 	}
 	
+	function escape_array(&$fields,$fld_map)
+	{
+		foreach ($fields as $key => $val)
+		{
+			//
+			$fields[$key]=$this->_MODEL->_ENV['_CONNECTION']->escape_val($val,$fld_map[$key]);
+		}
+	}
+	
 	function save()
 	{
+		$fld_values = $this->getFields();
+		$fld_map = $this->_MODEL->_SETTINGS['fields'];
+		$this->escape_array($fld_values,$fld_map);
+		
 		if($this->getField($this->_MODEL->_SETTINGS['primary'])!=NULL)
-		{
-			$fld_values = $this->getFields();
+		{			
 			$primary = $this->_MODEL->getPrimaryName();
 			$WHERE="`{$primary}`='".$this->getPrimary()."'";
 			unset($fld_values[$primary]);			
@@ -118,10 +130,10 @@ class DataRecord	// запись из БД
 		}
 		else 
 		{
-			$fld_values = $this->getFields();
 			unset($fld_values[$this->_MODEL->getPrimaryName()]);
 			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
+		//echo $sql;
 		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
 	}
 	

@@ -42,7 +42,7 @@ foreach($fields as $fld => $fldinfo)
 		{
 		
 		}
-		elseif($fldinfo['Type']=='longtext')
+		elseif(($fldinfo['Type']=='longtext') || (stristr($fldinfo['Type'],"varchar")))
 		{
 		?>
 			<textarea name="{table}[<?=$fld?>]" ><#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#></textarea>

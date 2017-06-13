@@ -135,7 +135,6 @@ function url_seg_add()
 
 function x_mkdir($path)
 {
-	//echo ">> $path >>";
 	$parent_path = dirname($path);
 	if(file_exists($parent_path))
 	{		

@@ -6,12 +6,12 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <table>
 	<tr>
 	<th><label>name</label></th><td>
-				<input type="text" name="otdel[name]" value="<?=((!empty($otdel)) ? $otdel->getField('name',true) : '')?>" />
+				<textarea name="otdel[name]" ><?=((!empty($otdel)) ? $otdel->getField('name',true) : '')?></textarea>
 			</td>
 	</tr>
 		<tr>
 	<th><label>function</label></th><td>
-				<input type="text" name="otdel[function]" value="<?=((!empty($otdel)) ? $otdel->getField('function',true) : '')?>" />
+				<textarea name="otdel[function]" ><?=((!empty($otdel)) ? $otdel->getField('function',true) : '')?></textarea>
 			</td>
 	</tr>
 		<tr>

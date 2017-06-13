@@ -36,6 +36,7 @@ class owl_page extends owl_Module
 		
 		$res = array(
 			'_DIR_CONFIG' => dir_dotted(url_seg_add($_CONFIGS_AREA,$_CONFIG)),
+			'_ACTION_NAME' => $_ACTION,
 		);
 				
 		$_CONTROLLER_SLICES=explode('.', $_CONTROLLER);
@@ -554,19 +555,45 @@ class owl_page extends owl_Module
 		$method_params = $method->getParameters();
 		$method_args=array();
 		
-		//print_r($_REQUEST);
-		
+		// Проход по параметрам
 		$idx_in_req_args=0;
+		
+		$_RULES = $controller_object->Rules();
+		$arg_info = array();
+		if(!empty($_RULES['action_args']))
+		{
+			$arg_info = $_RULES['action_args'][$con_info['_ACTION_NAME']];
+		}
+		//print_r($arg_info);
 		foreach ($method_params as $idx => $arg)
 		{
 			if(!empty($_REQUEST[$arg->name]))
 			{
-				$method_args[] = $_REQUEST[$arg->name];
+				$_val = $_REQUEST[$arg->name];
+				if(!empty($arg_info[$arg->name]))
+				{
+					eval('$_val=('.$arg_info[$arg->name].')$_REQUEST[$arg->name];');
+				}
+				else
+				{
+					$_val=$_REQUEST[$arg->name];
+				}
+				$method_args[] = $_val;
 			}
 			elseif(!empty($_REQUEST['args'][$idx_in_req_args])) 
 			{				
-				$method_args[]=$_REQUEST['args'][$idx_in_req_args];
-				$_REQUEST[$arg->name]=$_REQUEST['args'][$idx_in_req_args];
+				
+				
+				if(!empty($arg_info[$arg->name]))
+				{
+					eval('$_REQUEST[$arg->name]=('.$arg_info[$arg->name].')$_REQUEST["args"][$idx_in_req_args];');
+				}
+				else 
+				{
+					$_REQUEST[$arg->name]=$_REQUEST['args'][$idx_in_req_args];
+				}
+				$method_args[]=$_REQUEST[$arg->name];
+				//getType				
 				$idx_in_req_args++;
 			}
 			else 
@@ -574,10 +601,10 @@ class owl_page extends owl_Module
 				$defval = $arg->getDefaultValue();
 				$method_args[]=$defval;
 				$_REQUEST[$arg->name]=$defval;
+				
 			}
 		}
 		
-		//print_r($method_args);
 		call_user_func_array(array($controller_object,$_action_name), $method_args);
 		//$controller_object->$_action_name();
 		
