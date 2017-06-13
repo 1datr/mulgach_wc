@@ -39,11 +39,14 @@ if(!empty($settings))
 					'htmlattrs'=>array('class'=>'table_to_select',
 						'onchange'=>'load_fields(this)'))
 					); ?>
+							
 			<label>field to:</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
 					'name'=>'constraints[field_to][]',
 					'value'=>$con['fld'],
 					'htmlattrs'=>array('class'=>'fld_to_select'))); ?>
+			<label>Required:</label>		
+			<input type="checkbox" name="constraints[required][]" />	
 			<button type="button" onclick="drop_block(this)">x</button>
 			</div>
 			<?php 
