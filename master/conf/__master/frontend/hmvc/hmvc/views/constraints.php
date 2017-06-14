@@ -3,7 +3,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 </table>
 
-<div class="multiform_block" style="visibility: hidden;">
+<div class="multiform_block" id="bindings_item" style="visibility: hidden;">
 	<div class="multiform_block">
 	<label>Required:</label>		
 	<input type="checkbox" name="constraints[{idx}][required]" />	
@@ -19,7 +19,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 
 <form action="?r=hmvc/make/makefiles" id="bindings" method="post">
 <h3>DEFINE THE BINDINGS FOR TRIADA <?=$_SESSION['makeinfo']['table']?></h3>
-<div id="items_block">
+<div id="items_block"  itemtemplate="bindings_item">
 <!-- десь все связки -->
 <?php 
 if(!empty($settings))

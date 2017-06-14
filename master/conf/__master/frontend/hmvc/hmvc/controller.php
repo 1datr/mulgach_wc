@@ -99,6 +99,7 @@ class HmvcController extends BaseController
 					$this->add_js('#js/constraints.js');
 					$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 					
+					$this->_TITLE="Bindings and settings";
 					
 					if(empty($settings['view']))
 					{
@@ -136,6 +137,13 @@ ON UPDATE SET NULL;
 		 * */
 	}
 	
+	private function gather_fields_captions($tbl_fields)
+	{
+		foreach ($tbl_fields as $fld => $fldinfo)
+		{
+			
+		}
+	}
 	
 	private function make_hmvc($_params)
 	{
@@ -185,6 +193,8 @@ ON UPDATE SET NULL;
 			$vars=array();
 			$vars['table']=$_params['table'];
 			$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);	
+			
+			$this->gather_fields_captions($tbl_fields);
 				
 			$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
 						function(&$theval,&$idx,&$thetemplate,&$ctr){

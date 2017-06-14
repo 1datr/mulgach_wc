@@ -31,8 +31,9 @@ function load_fields(select_element)
 // add item to list
 function add_block()
 {
-	block_one_sel = '.multiform_block';
+	
 	block_list_sel = '#items_block';
+	block_one_sel = '.multiform_block';
 	
 	new_data_block = $(block_one_sel).first().clone();
 	new_data_block.css('visibility', 'visible' );

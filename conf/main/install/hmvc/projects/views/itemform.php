@@ -78,7 +78,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>creator_id</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'projects[creator_id]');			
+					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'required'=>true, 'name'=>'projects[creator_id]');
 				if(!empty($projects))
 		{
 			$params['value']=$projects->getField('creator_id',true);
