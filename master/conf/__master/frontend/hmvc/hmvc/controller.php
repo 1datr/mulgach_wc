@@ -105,19 +105,20 @@ class HmvcController extends BaseController
 						
 						$settings['view']=$this->SearchViewFld($fields);
 					}
-					
-					$dynaform = use_jq_plugin('dynaform',array('controller'=>$this));
-					
+				//		print_r($_SESSION);						
 					$this->out_view('constraints',array(
 							'fields'=>$fields,
-							'tables'=>$tables,
+							'tables'=>$tables,							
 							'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
 					));
 				};break;
 		case 'makefiles': {
+				
 					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
-				//	print_r($_SESSION['makeinfo']);
+					
+					//print_r($_SESSION['makeinfo']);
+					
 					$this->make_hmvc($_SESSION['makeinfo']);
 					unset($_SESSION['makeinfo']);
 					echo "MAKE SUCCESSED ";
@@ -138,7 +139,7 @@ ON UPDATE SET NULL;
 	
 	private function make_hmvc($_params)
 	{
-		print_r($_params['constraints']);
+		//print_r($_params['constraints']);
 		
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
@@ -194,9 +195,10 @@ ON UPDATE SET NULL;
 			$con_str="";
 			if(!empty($_params['constraints']))
 				{
-					foreach ($_params['constraints']['field'] as $idx => $fld)
-					{
-						$con_str = $con_str."'{$fld}'=>array('model'=>'".$_params['constraints']['table'][$idx]."','fld'=>'".$_params['constraints']['field_to'][$idx]."'),";
+					foreach ($_params['constraints'] as $idx => $binding)
+					{						
+						$required = ((!empty($binding['required'])) ? true : false);
+						$con_str = $con_str."'".$binding['field']."'=>array('model'=>'".$binding['table']."','fld'=>'".$binding['field_to']."','required'=>".json_encode($required)."),";
 					}
 				}
 			$constraints="";
@@ -240,8 +242,7 @@ ON UPDATE SET NULL;
 				$vars['fields']=$tbl_fields;
 				$vars['settings']=$settings;
 				$vars['constraints']=$_params['constraints'];
-				print_r($_params['constraints']);
-					//	echo $this->parse_code_template('view_index',$vars);
+
 				file_put_contents($itemform_view, $this->parse_code_template('view_itemform',$vars));
 			}
 		}

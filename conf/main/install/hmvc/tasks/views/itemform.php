@@ -31,7 +31,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 	</tr>
 		<tr>
 	<th><label>proj_id</label></th><td>
-				<input type="text" name="tasks[proj_id]" value="<?=((!empty($tasks)) ? $tasks->getField('proj_id',true) : '')?>" />
+			<?php 
+					$params = array('ds'=> $this->get_controller('projects')->_MODEL->find() ,'name'=>'tasks[proj_id]');			
+				if(!empty($tasks))
+		{
+			$params['value']=$tasks->getField('proj_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
 			</td>
 	</tr>
 		<tr>
@@ -60,7 +67,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 	</tr>
 		<tr>
 	<th><label>otv_sotr</label></th><td>
-				<input type="text" name="tasks[otv_sotr]" value="<?=((!empty($tasks)) ? $tasks->getField('otv_sotr',true) : '')?>" />
+			<?php 
+					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'tasks[otv_sotr]');			
+				if(!empty($tasks))
+		{
+			$params['value']=$tasks->getField('otv_sotr',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
 			</td>
 	</tr>
 		<tr>
@@ -102,7 +116,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 	</tr>
 		<tr>
 	<th><label>creator_id</label></th><td>
-				<input type="text" name="tasks[creator_id]" value="<?=((!empty($tasks)) ? $tasks->getField('creator_id',true) : '')?>" />
+			<?php 
+					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'required'=>true, 'name'=>'tasks[creator_id]');
+				if(!empty($tasks))
+		{
+			$params['value']=$tasks->getField('creator_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
 			</td>
 	</tr>
 	</table>

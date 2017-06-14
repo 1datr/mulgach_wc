@@ -18,7 +18,7 @@ foreach($fields as $fld => $fldinfo)
 		?>
 		<#php 
 		<?php
-		if(!empty($constraints['required'][$fld]))
+		if($settings['constraints'][$fld]['required'])
 		{
 		?>
 			$params = array('ds'=> $this->get_controller('<?=$settings['constraints'][$fld]['model']?>')->_MODEL->find() ,'required'=>true, 'name'=>'{table}[<?=$fld?>]');

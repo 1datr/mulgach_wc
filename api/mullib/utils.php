@@ -174,6 +174,17 @@ function get_files_in_folder($dir_path)
 	return $result;
 }
 
+function string_diff($str1,$str2)
+{
+	return strtr($str1,array($str2=>''));
+}
+
+function filepath2url($path)
+{
+	global $_BASEDIR;
+	return url_seg_add($_BASEDIR,string_diff( strtr($path,array('\\'=>'/')), strtr($_SERVER['DOCUMENT_ROOT'],array('\\'=>'/')) ));
+}
+
 function unlink_folder($fldr)
 {
 	$nested_files=get_files_in_folder($fldr);

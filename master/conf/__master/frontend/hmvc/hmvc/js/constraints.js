@@ -13,7 +13,8 @@ function load_fields(select_element)
 	    processData: false,
 	    success: function( data, textStatus, jQxhr ){
 	       // $('#response pre').html( JSON.stringify( data ) );
-	    	var fields_to_element = $(select_element).parent('div.multiform_block').find('select.fld_to_select');
+	    	//var fields_to_element = $(select_element).parent('div.multiform_block').find('select.fld_to_select');
+	    	var fields_to_element = $(select_element).parent().find('select.fld_to_select');
 	    	fields_to_element.html('');
 	    	for (var key in data) 
 	    	{
@@ -30,10 +31,19 @@ function load_fields(select_element)
 
 function add_block()
 {
-	new_data_block = $('.multiform_block').first().clone();
+	block_one_sel = '.multiform_block';
+	block_list_sel = '#items_block';
+	new_data_block = $(block_one_sel).first().clone();
 	new_data_block.css('visibility', 'visible' );
+	
 	var nb_html = new_data_block.html();
-	$('#constraints_block').append(new_data_block);
+	// сколько элементов в списке 
+	var childs = $(block_list_sel+" "+block_one_sel);
+	
+	nb_html = nb_html.replace(/{idx}/g, childs.length.toString());
+
+	$(block_list_sel).append(nb_html);
+	//$('#constraints_block').append(new_data_block);
 } 
 
 function drop_block(this_button)
@@ -42,11 +52,10 @@ function drop_block(this_button)
 }
 
 $( document ).ready(function() {
-	/*$('.drg_view').click( function(){
-        $(this).select()
-    })*/
 	
     $('.drg_view').draggable({cursor: 'crosshair'});
+    
+   // $('#bindings').jqDynaForm();
 });
 
 

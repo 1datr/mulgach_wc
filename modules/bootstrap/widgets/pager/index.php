@@ -15,7 +15,7 @@ namespace BootstrapPager
 					<?php 
 					if($params['ds']->_PAGE>1)
 					{
-						$url_prev = \owl_route::make_url(array('page'=>$params['ds']->_PAGE-1));
+						$url_prev = \mul_route::make_url(array('page'=>$params['ds']->_PAGE-1));
 						?>
 						<li class="page-item"><a class="page-link" href="?r=<?=$url_prev?>">Previous</a></li>	
 						<?php 
@@ -26,7 +26,7 @@ namespace BootstrapPager
 		//			print_r($params);
 					$params['ds']->draw_pager(function($page,$info)
 					{
-						$url = \owl_route::make_url(array('page'=>$page));
+						$url = \mul_route::make_url(array('page'=>$page));
 						if($info['current_page']==$page)
 						{
 							?><li class="page-item  active"><a class="page-link" href="#"><?=$page?></a></li><?php 
@@ -43,7 +43,7 @@ namespace BootstrapPager
 					<?php 
 					if($params['ds']->_PAGE < $params['ds']->pages_count )
 					{
-						$url_next = \owl_route::make_url(array('page'=>$params['ds']->_PAGE+1));
+						$url_next = \mul_route::make_url(array('page'=>$params['ds']->_PAGE+1));
 						?>
 						<li class="page-item"><a class="page-link" href="?r=<?=$url_next?>">Next</a></li>	
 						<?php 
