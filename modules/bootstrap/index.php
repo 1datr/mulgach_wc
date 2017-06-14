@@ -1,7 +1,7 @@
 <?php
 // модуль страница
 
-class owl_bootstrap extends owl_Module 
+class mul_bootstrap extends mul_Module 
 {
 	function __construct($_PARAMS)
 	{

@@ -3,7 +3,7 @@
 define('__request_descr__', 'r');
 
 
-class owl_route extends owl_Module 
+class mul_route extends mul_Module 
 {
 	VAR $_DIR_CONFIG;
 	VAR $_DIR_EP;

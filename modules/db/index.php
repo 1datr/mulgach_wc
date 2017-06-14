@@ -14,7 +14,7 @@ function connect_db($params)
 	return $db_module->connect($params);
 }
 
-class owl_db extends owl_Module 
+class mul_db extends mul_Module 
 {
 	VAR $dbparams;
 	VAR $drv;

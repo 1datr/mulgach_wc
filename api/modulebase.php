@@ -1,5 +1,5 @@
 <?php
-class owl_Module 
+class mul_Module 
 {
 	function __construct($_PARAMS)
 	{

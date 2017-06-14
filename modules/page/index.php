@@ -3,7 +3,7 @@
 require_once __DIR__.'/inc/theme.php';
 session_start();
 
-class owl_page extends owl_Module 
+class mul_page extends mul_Module 
 {
 	VAR $_DIR_CONFIG;
 	VAR $_DIR_EP;
@@ -511,7 +511,7 @@ class owl_page extends owl_Module
 			GLOBAL $_EP;
 		}
 		
-		require_once "{$_BASEDIR}api/owllib/basecontroller.php";
+		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
 
 		require_once $con_info['_CONTROLLER_FILE'];
 		
@@ -645,7 +645,7 @@ class owl_page extends owl_Module
 			GLOBAL $_EP;
 		}
 	
-		require_once "{$_BASEDIR}api/owllib/basecontroller.php";
+		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
 	
 		require_once $con_info['_CONTROLLER_FILE'];
 	

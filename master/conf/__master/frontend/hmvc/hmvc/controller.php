@@ -106,6 +106,8 @@ class HmvcController extends BaseController
 						$settings['view']=$this->SearchViewFld($fields);
 					}
 					
+					$dynaform = use_jq_plugin('dynaform',array('controller'=>$this));
+					
 					$this->out_view('constraints',array(
 							'fields'=>$fields,
 							'tables'=>$tables,
