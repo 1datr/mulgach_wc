@@ -98,7 +98,7 @@ class HmvcController extends BaseController
 					$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
 					$this->add_js('#js/constraints.js');
 					$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
-					
+					$sbplugin = use_jq_plugin('structblock',$this);
 					$this->_TITLE="Bindings and settings";
 					
 					if(empty($settings['view']))
@@ -106,12 +106,18 @@ class HmvcController extends BaseController
 						
 						$settings['view']=$this->SearchViewFld($fields);
 					}
+					$this->inline_script("
+							$( document ).ready(function() {
+								$('#items_block').jqStructBlock();
+							});
+							");
 				//		print_r($_SESSION);						
 					$this->out_view('constraints',array(
 							'fields'=>$fields,
 							'tables'=>$tables,							
 							'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
+							'sbplugin'=>$sbplugin,
 					));
 				};break;
 		case 'makefiles': {
