@@ -19,6 +19,23 @@ $sbplugin->template_start('bindings_item');
 $sbplugin->template_end();
 ?>
 
+<?php 
+$sbplugin->template_start('subfld_item');
+?>
+	<input type="text" name="fields[{idx}][subflds][{idx2}]" />
+<?php 
+$sbplugin->template_end();
+?>
+
+<?php 
+$sbplugin->template_table_start('field_item');
+?>
+	<td><input type="text" name="fields[{idx}][name]" /></td>			
+	<td><input type="checkbox" name="fields[{idx}][required]" /></td>
+<?php 
+$sbplugin->template_table_end();
+?>
+
 <form action="?r=hmvc/make/makefiles" id="bindings" method="post">
 <h3>DEFINE THE BINDINGS FOR TRIADA <?=$_SESSION['makeinfo']['table']?></h3>
 <?php 
@@ -65,13 +82,49 @@ if(!empty($settings))
 	}
 }
 
-$sbplugin->template_end(function(){
+$sbplugin->block_end(function(){
 	?>
 	<button type="button" class="bindings_item_add" title="Добавить связку">+</button>
 	<?php 
-})
+});
 ?>
-
+<h4>FIELDS SETTINGS FOR MODEL</h4>
+<?php 
+// Блок с полями
+$sbplugin->table_block_start('field_item',array('id'=>'fields_block'),array(),'
+		<thead>
+		<tr><th>Field</th><th>Required</th></tr>
+		</thead>
+		');
+/*
+ <input type="text" name="fields[{idx}][name]" />			
+	<input type="checkbox" name="fields[{idx}][required]" />
+	<button type="button" class="field_item_drop">x</button>
+ * */
+$idx=0;
+foreach($fields as $fld => $finfo)
+{
+	//print_r($finfo);
+	?>
+	<tr class="multiform_block" role="item">
+	<td><input type="text" name="fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>			
+	<td><input type="checkbox" name="fields[<?=$idx?>][required]" <?=(($finfo['Null']=='NO') ? "checked" : "")?> /></td>
+	</tr>
+	<?php 
+	$idx++;
+}
+$sbplugin->table_block_end(function(){
+	?>
+	<tfooot>
+	<tr>
+	<td colspan="2">
+	
+	</td>
+	</tr>
+	</tfooot>
+	<?php 
+});
+?>
 
 <div>
 <label for="_view">View:&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />

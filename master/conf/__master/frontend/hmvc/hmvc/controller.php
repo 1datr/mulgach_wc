@@ -106,9 +106,10 @@ class HmvcController extends BaseController
 						
 						$settings['view']=$this->SearchViewFld($fields);
 					}
-					$this->inline_script("
+					jq_onready($this,"
 							$( document ).ready(function() {
 								$('#items_block').jqStructBlock();
+								$('#fields_block').jqStructBlock();
 							});
 							");
 				//		print_r($_SESSION);						

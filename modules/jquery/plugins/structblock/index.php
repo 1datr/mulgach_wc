@@ -100,12 +100,30 @@ class plg_structblock extends mod_plugin
 	{
 		?>
 		</div>	
+		</div>
 		<?php 
-		if($fun_add_button!=NULL)
-		{
-			$fun_add_button();
-		}
-		?>	
+	}
+	
+	function template_table_start($blockname,$attrs=array())
+	{
+		if(empty($attrs['class']))
+			$attrs['class']='multiform_block';
+		elseif( strstr($attrs['class'],"multiform_block")==false)
+			$attrs['class']=$attrs['class'].' multiform_block';
+				
+		$attrs['id']=$blockname;
+		?>
+		<div style="visibility: hidden;">
+		<table>
+		<tr <?=xx_implode($attrs, ' ', "{idx}=\"{%val}\"") ?> >
+		<?php 
+	}
+		
+	function template_table_end($fun_add_button=NULL)
+	{
+		?>
+		</tr>	
+		</table>
 		</div>
 		<?php 
 	}
@@ -118,12 +136,49 @@ class plg_structblock extends mod_plugin
 		<?php 
 	}
 	
-	function block_end()
+	function block_end($fun_add_button=NULL)
 	{
 	?>
 		</div>
+		<?php 
+		if($fun_add_button!=NULL)
+		{
+			$fun_add_button();
+		}
+		?>	
 		</div>
 	<?php 
 	}
+	
+	function table_block_start($blockname,$attrs=array(),$itemsattrs=array(),$THEAD=NULL)
+	{
+		?>
+			<table <?=xx_implode($attrs, ' ', "{idx}=\"{%val}\"") ?>  itemtemplate="<?=$blockname?>">
+			<?php 
+			if($THEAD!=NULL)
+			{
+				if(is_string($THEAD))
+					echo $THEAD;
+				else 
+					$THEAD();
+			}
+			?>
+			<tbody class="items">
+			<?php 
+		}
+		
+	function table_block_end($fun_add_button=NULL)
+		{
+		?>
+			</tbody>
+			<?php 
+			if($fun_add_button!=NULL)
+			{
+				$fun_add_button();
+			}
+			?>	
+			</table>
+		<?php 
+		}
 	
 }

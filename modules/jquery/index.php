@@ -30,3 +30,11 @@ function use_jq_plugin($plg,$params=array())
 		return NULL;
 	}
 }
+
+function jq_onready($_controller,$code) {
+	$_controller->inline_script("
+	$( document ).ready(function() {
+		{$code}
+	});
+	");
+}
