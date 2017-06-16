@@ -29,6 +29,24 @@ function load_fields(select_element)
 	
 }
 
+function check_required(el)
+{
+	field = $(el).val();
+	if($('#field_'+field+'_required').is(':checked'))//.attr('checked')=='checked')
+	{
+		cb_req = $(el).parent().find('.cb_required');
+		cb_req.attr('checked',true);
+		$(cb_req).bind("click",function()
+			{
+				return false;
+			});
+	}
+	else
+	{
+		cb_req.off('click');
+	}
+}
+
 
 $( document ).ready(function() {
 	

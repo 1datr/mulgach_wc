@@ -125,8 +125,6 @@ class HmvcController extends BaseController
 				
 					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
 					
-					//print_r($_SESSION['makeinfo']);
-					
 					$this->make_hmvc($_SESSION['makeinfo']);
 					unset($_SESSION['makeinfo']);
 					echo "MAKE SUCCESSED ";
@@ -204,7 +202,7 @@ ON UPDATE SET NULL;
 			$this->gather_fields_captions($tbl_fields);
 				
 			$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
-						function(&$theval,&$idx,&$thetemplate,&$ctr){
+						function(&$theval,&$idx,&$thetemplate,&$ctr,&$thedelimeter){
 						//	$theval['TypeInfo']=strtr($theval['TypeInfo'],array("'"=>"'"));
 						});
 			
@@ -225,6 +223,15 @@ ON UPDATE SET NULL;
 			$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
 			$vars['primary']=$_primary;
 			$vars['view']=$_params['view'];
+			//print_r($_params);
+			$vars['required']='array('.xx_implode($_params['model_fields'], ',', "'{name}'",function($theval,&$idx,&$thetemplate,&$ctr,&$thedelimeter)
+			{
+				if(empty($theval['required']))
+				{
+					$thetemplate='';
+					$thedelimeter='';
+				}
+			}).')';
 			file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
 			
 				// make views

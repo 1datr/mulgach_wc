@@ -44,14 +44,20 @@ function ximplode($delimeter,$array,$prefix,$suffix,$options=NULL)
 	}
 	return $str;
 }
-
+/*
+ *    $arr - массив, возможно ассоциативный, возможно структур
+ * 	  $delimeter - разделитель
+ *    $template - шаблон. ключи - индексы из струтуры, специальные ключи - {%val} - значение (если не структурами) {idx} - индекс
+ *    $onelement - событие с параметрами &$theval,&$idx,&$thetemplate,&$ctr 
+ * */
 function xx_implode($arr,$delimeter,$template,$onelement=NULL)
 {
 	$ctr=0;
 	$str="";
 	foreach ($arr as $idx => $val)
 	{
-		$thetemplate = $template;		
+		$thetemplate = $template;
+		$thedelimeter = $delimeter;
 		
 		if(!is_array($val))
 		{			
@@ -65,7 +71,7 @@ function xx_implode($arr,$delimeter,$template,$onelement=NULL)
 		if($onelement!=NULL)
 		{
 			
-			$onelement($theval,$idx,$thetemplate,$ctr);
+			$onelement($theval,$idx,$thetemplate,$ctr,$thedelimeter);
 		}
 		$theval["idx"]=$idx;
 		
@@ -73,7 +79,7 @@ function xx_implode($arr,$delimeter,$template,$onelement=NULL)
 		
 		$newstr = x_make_str($thetemplate,$theval);
 		if($ctr>0)
-			$str=$str.$delimeter.$newstr;
+			$str=$str.$thedelimeter.$newstr;
 		else 
 			$str=$newstr;
 		$ctr++;

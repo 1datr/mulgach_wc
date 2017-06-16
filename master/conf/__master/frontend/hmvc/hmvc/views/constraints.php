@@ -7,9 +7,9 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $sbplugin->template_start('bindings_item');
 ?>
 	<label>Required:</label>		
-	<input type="checkbox" name="constraints[{idx}][required]" />	
+	<input type="checkbox" name="constraints[{idx}][required]"  class="cb_required" />	
 	<label>Field:</label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[{idx}][field]','htmlattrs'=>array('class'=>'fld_select'))); ?>
+	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[{idx}][field]','htmlattrs'=>array('class'=>'fld_select','onchange'=>'check_required(this)'))); ?>
 	<label>Table:</label>
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'name'=>'constraints[{idx}][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
 	<label>field to:</label>
@@ -53,11 +53,15 @@ if(!empty($settings))
 			?>
 			<div class="multiform_block" role="item">
 			<label>Required:</label>
-			<input type="checkbox" name="constraints[<?=$idx?>][required]" nametemplate="constraints[#idx#][required]", <?=(($con['required']) ? "checked" : "")?> />			
+			<input type="checkbox" name="constraints[<?=$idx?>][required]" class="cb_required" nametemplate="constraints[#idx#][required]", <?=(($con['required']) ? "checked" : "")?> />			
 			<label>Field:</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
 						'name'=>"constraints[".$idx."][field]",						
-						'htmlattrs'=>array('class'=>'fld_select','nametemplate'=>"constraints[#idx#][field]",),
+						'htmlattrs'=>array(
+								'class'=>'fld_select',
+								'nametemplate'=>"constraints[#idx#][field]",
+								'onchange'=>'check_required(this)',
+			),
 						'value'=>$fld_from,
 					)); ?>
 			<label>Table:</label>
@@ -107,8 +111,17 @@ foreach($fields as $fld => $finfo)
 	//print_r($finfo);
 	?>
 	<tr class="multiform_block" role="item">
-	<td><input type="text" name="fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>			
-	<td><input type="checkbox" name="fields[<?=$idx?>][required]" <?=(($finfo['Null']=='NO') ? "checked" : "")?> /></td>
+	<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>			
+	<td>
+	<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=(($finfo['Null']=='NO') ? "checked disabled" : "")?> />
+	<?php if($finfo['Null']=='NO') 
+			{
+				?>
+				<input type="hidden" name="model_fields[<?=$idx?>][required]" value="on" />
+				<?php 
+			}
+	?>
+	</td>
 	</tr>
 	<?php 
 	$idx++;

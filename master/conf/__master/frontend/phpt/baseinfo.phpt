@@ -4,6 +4,7 @@ $settings = array(
 	'fields'=>{array_fields},
 	'primary'=>'{primary}',
 	'constraints'=>{array_constraints},	
+	'required'=>{required},
 	'rules'=>{array_rules},	
 	'view'=>'{view}',
 );

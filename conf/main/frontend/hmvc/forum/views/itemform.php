@@ -17,13 +17,14 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>forum_id</label></th><td>
 			<?php 
-			$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'name'=>'forum[forum_id]');
-			if(!empty($forum))
-			{
-				$params['value']=$forum->getField('forum_id',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>	</td>
+					$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'name'=>'forum[forum_id]');			
+				if(!empty($forum))
+		{
+			$params['value']=$forum->getField('forum_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+			</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
