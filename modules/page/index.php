@@ -2,6 +2,7 @@
 // модуль страница
 require_once __DIR__.'/inc/theme.php';
 session_start();
+$_EP_PATH = NULL;
 
 class mul_page extends mul_Module 
 {
@@ -215,7 +216,8 @@ class mul_page extends mul_Module
 		
 		$this->_DIR_EP = url_seg_add($this->_DIR_CONFIG, $_EP);	// директория точки входа
 			
-
+		GLOBAL $_EP_PATH; 
+		$_EP_PATH = $this->_DIR_EP;
 		
 		$conf_info = $this->controller_info();
 		$this->CFG_INFO = $conf_info;
@@ -665,3 +667,4 @@ class mul_page extends mul_Module
 	}
 	
 }
+

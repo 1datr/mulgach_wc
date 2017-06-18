@@ -32,18 +32,53 @@ function load_fields(select_element)
 function check_required(el)
 {
 	field = $(el).val();
+	cb_req = $(el).parent().find('.cb_required');
 	if($('#field_'+field+'_required').is(':checked'))//.attr('checked')=='checked')
 	{
-		cb_req = $(el).parent().find('.cb_required');
+		
 		cb_req.attr('checked',true);
+		cb_req.attr('disabled',true);
+		
+		prev_element=cb_req.prev('input[type=hidden]');
+		doubler_exists = false;
+		if(prev_element.length>0)
+			{
+			if(prev_element.attr('name')==cb_req.attr('name'))
+				{
+				doubler_exists = true;
+				}
+			}
+		if(!doubler_exists)
+			{
+			hidden_req = $('<input type="hidden" />');
+			hidden_req.attr('name',cb_req.attr('name'));
+			cb_req.before(hidden_req);
+			}
+		/*
 		$(cb_req).bind("click",function()
 			{
 				return false;
 			});
+			*/
 	}
 	else
 	{
-		cb_req.off('click');
+		cb_req.attr('disabled',false);
+		
+		prev_element=cb_req.prev('input[type=hidden]');
+		doubler_exists = false;
+		if(prev_element.length>0)
+			{
+			if(prev_element.attr('name')==cb_req.attr('name'))
+				{
+				doubler_exists = true;
+				}
+			}
+		
+		if(doubler_exists)
+		{
+			$(prev_element).remove();
+		}
 	}
 }
 
