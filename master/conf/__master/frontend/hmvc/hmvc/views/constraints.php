@@ -36,8 +36,18 @@ $sbplugin->template_table_start('field_item');
 $sbplugin->template_table_end();
 ?>
 
-<form action="?r=hmvc/make/makefiles" id="bindings" method="post">
-<h3>#{DEFINE THE BINDINGS FOR TRIADA }<?=$_SESSION['makeinfo']['table']?></h3>
+<?php 
+$form = new mulForm("?r=hmvc/make/makefiles");
+?>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link  active" href="#main">#{tabMain}</a></li>
+  <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link" href="#capts">#{tabCapts}</a></li>  
+</ul>
+
+<div class="tab-content">
+  <div id="main" class="tab-pane active" role="tabpanel">
+	<h3>#{DEFINE THE BINDINGS FOR TRIADA }<?=$_SESSION['makeinfo']['table']?></h3>
 <?php 
 $sbplugin->block_start('bindings_item',array('id'=>'items_block'));
 ?>
@@ -106,68 +116,77 @@ $sbplugin->block_end(function(){
 	<?php 
 });
 ?>
-<h4>#{FIELDS SETTINGS FOR MODEL}</h4>
+	<h4>#{FIELDS SETTINGS FOR MODEL}</h4>
 <?php 
 // Блок с полями
-$sbplugin->table_block_start('field_item',array('id'=>'fields_block'),array(),'
+	$sbplugin->table_block_start('field_item',array('id'=>'fields_block'),array(),'
 		<thead>
 		<tr><th>#{Field}</th><th>#{Required}</th></tr>
 		</thead>
 		');
-/*
- <input type="text" name="fields[{idx}][name]" />			
-	<input type="checkbox" name="fields[{idx}][required]" />
-	<button type="button" class="field_item_drop">x</button>
- * */
-$idx=0;
-foreach($fields as $fld => $finfo)
-{
-	//print_r($finfo);
-	?>
-	<tr class="multiform_block" role="item">
-	<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>			
-	<td>
-	<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=(($finfo['Null']=='NO') ? "checked disabled" : "")?> />
-	<?php if($finfo['Null']=='NO') 
-			{
-				?>
-				<input type="hidden" name="model_fields[<?=$idx?>][required]" value="on" />
-				<?php 
-			}
-	?>
-	</td>
-	</tr>
-	<?php 
-	$idx++;
-}
-$sbplugin->table_block_end(function(){
-	?>
-	<tfooot>
-	<tr>
-	<td colspan="2">
-	
-	</td>
-	</tr>
-	</tfooot>
-	<?php 
-});
+
+	$idx=0;
+	foreach($fields as $fld => $finfo)
+	{
+		//print_r($finfo);
+		?>
+		<tr class="multiform_block" role="item">
+		<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>			
+		<td>
+		<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=(($finfo['Null']=='NO') ? "checked disabled" : "")?> />
+		<?php if($finfo['Null']=='NO') 
+				{
+					?>
+					<input type="hidden" name="model_fields[<?=$idx?>][required]" value="on" />
+					<?php 
+				}
+		?>
+		</td>
+		</tr>
+		<?php 
+		$idx++;
+	}
+	$sbplugin->table_block_end(function(){
+		?>
+		<tfooot>
+		<tr>
+		<td colspan="2">
+		
+		</td>
+		</tr>
+		</tfooot>
+		<?php 
+	});
 ?>
 
-<div>
-<label for="_view">#{View:}&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
-<p><label>#{Fields:}&nbsp;</label>
-<?php 
-foreach($fields as $fld => $fldinfo)
-{
-	?>
-	<div style="display: inline-block" class="drg_view">{<?=$fld?>}</div>
+	<div>
+	<label for="_view">#{View:}&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
+	<p><label>#{Fields:}&nbsp;</label>
 	<?php 
-}
-?>
-</p>
+	foreach($fields as $fld => $fldinfo)
+	{
+		?>
+		<div style="display: inline-block" class="drg_view">{<?=$fld?>}</div>
+		<?php 
+	}
+	?>
+	</p>
+	</div>
+
 </div>
+	
+  <div id="capts" class="tab-pane" role="tabpanel">
+  <?php 
+  $this->out_view('captions',array(
+							'fields'=>$fields,
+							'tables'=>$tables,							
+							'first_table_fields'=>$first_table_fields,
+							'settings'=>$settings,
+							'sbplugin'=>$sbplugin,));
+  ?>
+  </div>
 
-
+</div>
 
 <input type="hidden" name="conf" id="config" value="<?=$_SESSION['makeinfo']['conf']?>" >
 <input type="submit" value="#{MAKE HMVC}" >

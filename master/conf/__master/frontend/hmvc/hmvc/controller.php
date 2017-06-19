@@ -84,53 +84,53 @@ class HmvcController extends BaseController
 		$this->add_block('BASE_MENU', 'site', 'menu');
 
 		switch($step){
-		case 'begin': {
-						$_SESSION['makeinfo']=array();				
+			case 'begin': {
+							$_SESSION['makeinfo']=array();				
+							$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+							
+							$this->redirect('?r=hmvc/make/binds');
+						};break;
+			case 'binds': {			
+						$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);
+						
+						$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
+						$tables = $this->_ENV['_CONNECTION']->get_tables();					
+						$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
+						$this->add_js('#js/constraints.js');
+						$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
+						$sbplugin = use_jq_plugin('structblock',$this);
+						$this->_TITLE="Bindings and settings";
+						
+						if(empty($settings['view']))
+						{
+							
+							$settings['view']=$this->SearchViewFld($fields);
+						}
+						jq_onready($this,"
+								$( document ).ready(function() {
+									$('#items_block').jqStructBlock();
+									$('#fields_block').jqStructBlock();
+								});
+								");
+					//		print_r($_SESSION);						
+						$this->out_view('constraints',array(
+								'fields'=>$fields,
+								'tables'=>$tables,							
+								'first_table_fields'=>$first_table_fields,
+								'settings'=>$settings,
+								'sbplugin'=>$sbplugin,
+						));
+					};break;
+			case 'makefiles': {
+					
 						$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
 						
-						$this->redirect('?r=hmvc/make/binds');
-					};break;
-		case 'binds': {			
-					$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);
-					
-					$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
-					$tables = $this->_ENV['_CONNECTION']->get_tables();					
-					$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
-					$this->add_js('#js/constraints.js');
-					$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
-					$sbplugin = use_jq_plugin('structblock',$this);
-					$this->_TITLE="Bindings and settings";
-					
-					if(empty($settings['view']))
-					{
+						$this->make_hmvc($_SESSION['makeinfo']);
+						unset($_SESSION['makeinfo']);
+						echo "MAKE SUCCESSED ";
 						
-						$settings['view']=$this->SearchViewFld($fields);
-					}
-					jq_onready($this,"
-							$( document ).ready(function() {
-								$('#items_block').jqStructBlock();
-								$('#fields_block').jqStructBlock();
-							});
-							");
-				//		print_r($_SESSION);						
-					$this->out_view('constraints',array(
-							'fields'=>$fields,
-							'tables'=>$tables,							
-							'first_table_fields'=>$first_table_fields,
-							'settings'=>$settings,
-							'sbplugin'=>$sbplugin,
-					));
-				};break;
-		case 'makefiles': {
-				
-					$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
-					
-					$this->make_hmvc($_SESSION['makeinfo']);
-					unset($_SESSION['makeinfo']);
-					echo "MAKE SUCCESSED ";
-					
-			//		$this->redirect('?r=configs');
-				};break;
+				//		$this->redirect('?r=configs');
+					};break;
 		}
 		/*
 		 ALTER TABLE crm_projects 
@@ -268,6 +268,15 @@ ON UPDATE SET NULL;
 				$vars['constraints']=$_params['constraints'];
 // //	$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
 				file_put_contents($itemform_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_itemform.phpt'),$vars));
+			}
+			// прокачиваем надписи
+			if(!empty($_params['captions'][$ep]))
+			{
+				$thelang=new Lang(NULL, $_SESSION['makeinfo']['conf'],$ep);
+				foreach ($_params['captions'][$ep] as $fld_key => $val)
+				{
+					$thelang->add_key($fld_key,$val);
+				}
 			}
 		}
 	}

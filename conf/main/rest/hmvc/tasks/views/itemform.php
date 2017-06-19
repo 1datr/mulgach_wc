@@ -5,32 +5,32 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <input type="submit" value="SUBMIT" />
 <table>
 	<tr>
-	<th><label>name</label></th><td>
+	<th><label>#{tasks.name}</label></th><td>
 				<input type="text" name="tasks[name]" value="<?=((!empty($tasks)) ? $tasks->getField('name',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>vhod_dannye</label></th><td>
+	<th><label>#{tasks.vhod_dannye}</label></th><td>
 				<input type="text" name="tasks[vhod_dannye]" value="<?=((!empty($tasks)) ? $tasks->getField('vhod_dannye',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>vihod_resultat</label></th><td>
+	<th><label>#{tasks.vihod_resultat}</label></th><td>
 				<input type="text" name="tasks[vihod_resultat]" value="<?=((!empty($tasks)) ? $tasks->getField('vihod_resultat',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>upravlenie</label></th><td>
+	<th><label>#{tasks.upravlenie}</label></th><td>
 				<input type="text" name="tasks[upravlenie]" value="<?=((!empty($tasks)) ? $tasks->getField('upravlenie',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>resursy_spisok</label></th><td>
+	<th><label>#{tasks.resursy_spisok}</label></th><td>
 				<input type="text" name="tasks[resursy_spisok]" value="<?=((!empty($tasks)) ? $tasks->getField('resursy_spisok',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>proj_id</label></th><td>
+	<th><label>#{tasks.proj_id}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('projects')->_MODEL->find() ,'name'=>'tasks[proj_id]');			
 				if(!empty($tasks))
@@ -42,7 +42,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>vazhnost</label></th><td>
+	<th><label>#{tasks.vazhnost}</label></th><td>
 			<?php 
 			$params = array('data'=> $this->_MODEL->get_field_value_list('vazhnost'),'name'=>'tasks[vazhnost]');
 			if(!empty($tasks))
@@ -54,7 +54,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>srochnost</label></th><td>
+	<th><label>#{tasks.srochnost}</label></th><td>
 			<?php 
 			$params = array('data'=> $this->_MODEL->get_field_value_list('srochnost'),'name'=>'tasks[srochnost]');
 			if(!empty($tasks))
@@ -66,7 +66,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>otv_sotr</label></th><td>
+	<th><label>#{tasks.otv_sotr}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'tasks[otv_sotr]');			
 				if(!empty($tasks))
@@ -78,7 +78,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>sostoyanie_zadachi</label></th><td>
+	<th><label>#{tasks.sostoyanie_zadachi}</label></th><td>
 			<?php 
 			$params = array('data'=> $this->_MODEL->get_field_value_list('sostoyanie_zadachi'),'name'=>'tasks[sostoyanie_zadachi]');
 			if(!empty($tasks))
@@ -90,32 +90,32 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>date_plan</label></th><td>
+	<th><label>#{tasks.date_plan}</label></th><td>
 				<input type="text" name="tasks[date_plan]" value="<?=((!empty($tasks)) ? $tasks->getField('date_plan',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>date_start</label></th><td>
+	<th><label>#{tasks.date_start}</label></th><td>
 				<input type="text" name="tasks[date_start]" value="<?=((!empty($tasks)) ? $tasks->getField('date_start',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>data_zaversheniya</label></th><td>
+	<th><label>#{tasks.data_zaversheniya}</label></th><td>
 				<input type="text" name="tasks[data_zaversheniya]" value="<?=((!empty($tasks)) ? $tasks->getField('data_zaversheniya',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>data_prinyatiya</label></th><td>
+	<th><label>#{tasks.data_prinyatiya}</label></th><td>
 				<input type="text" name="tasks[data_prinyatiya]" value="<?=((!empty($tasks)) ? $tasks->getField('data_prinyatiya',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>number_task</label></th><td>
+	<th><label>#{tasks.number_task}</label></th><td>
 				<input type="text" name="tasks[number_task]" value="<?=((!empty($tasks)) ? $tasks->getField('number_task',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>creator_id</label></th><td>
+	<th><label>#{tasks.creator_id}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'required'=>true, 'name'=>'tasks[creator_id]');
 				if(!empty($tasks))

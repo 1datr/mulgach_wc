@@ -39,14 +39,18 @@ class Lang {
 	VAR $EP_PATH;
 	VAR $_BUFFER;
 	
-	function __construct($_lang=NULL)
-	{			
+	function __construct($_lang=NULL,$conf=NULL,$ep=NULL)
+	{		
+		GLOBAL $_BASEDIR;
 		if($_lang==NULL)
 			$_lang='ru';		
 		
 		GLOBAL $_EP_PATH;
 		$this->EP_PATH = $EP_PATH;
-		$this->lang_dir = url_seg_add($_EP_PATH,"lang/{$_lang}.php");
+		if(($conf==NULL)&&($ep==NULL))
+			$this->lang_dir = url_seg_add($_EP_PATH,"lang/{$_lang}.php");
+		else 
+			$this->lang_dir = url_seg_add($_BASEDIR,"conf",$conf,$ep,"lang/{$_lang}.php");
 		if(!file_exists($this->lang_dir))
 		{
 			x_file_put_contents($this->lang_dir, '<?php

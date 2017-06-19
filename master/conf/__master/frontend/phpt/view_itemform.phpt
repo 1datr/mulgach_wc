@@ -11,7 +11,7 @@ foreach($fields as $fld => $fldinfo)
 	{
 	?>
 	<tr>
-	<th><label><?=$fld?></label></th><td>
+	<th><label>#{{table}.<?=$fld?>}</label></th><td>
 	<?php
 		if(!empty($settings['constraints'][$fld]))
 		{

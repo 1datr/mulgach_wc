@@ -5,17 +5,17 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <input type="submit" value="SUBMIT" />
 <table>
 	<tr>
-	<th><label>name</label></th><td>
+	<th><label>#{projects.name}</label></th><td>
 				<input type="text" name="projects[name]" value="<?=((!empty($projects)) ? $projects->getField('name',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>full_name</label></th><td>
+	<th><label>#{projects.full_name}</label></th><td>
 				<input type="text" name="projects[full_name]" value="<?=((!empty($projects)) ? $projects->getField('full_name',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>otv_ruk</label></th><td>
+	<th><label>#{projects.otv_ruk}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'projects[otv_ruk]');			
 				if(!empty($projects))
@@ -27,27 +27,27 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>date_generate</label></th><td>
+	<th><label>#{projects.date_generate}</label></th><td>
 				<input type="text" name="projects[date_generate]" value="<?=((!empty($projects)) ? $projects->getField('date_generate',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>date_start</label></th><td>
+	<th><label>#{projects.date_start}</label></th><td>
 				<input type="text" name="projects[date_start]" value="<?=((!empty($projects)) ? $projects->getField('date_start',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>date_end</label></th><td>
+	<th><label>#{projects.date_end}</label></th><td>
 				<input type="text" name="projects[date_end]" value="<?=((!empty($projects)) ? $projects->getField('date_end',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>teh_zad</label></th><td>
+	<th><label>#{projects.teh_zad}</label></th><td>
 				<input type="text" name="projects[teh_zad]" value="<?=((!empty($projects)) ? $projects->getField('teh_zad',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>id_otdel</label></th><td>
+	<th><label>#{projects.id_otdel}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'required'=>true, 'name'=>'projects[id_otdel]');
 				if(!empty($projects))
@@ -59,7 +59,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>sostoyanie</label></th><td>
+	<th><label>#{projects.sostoyanie}</label></th><td>
 			<?php 
 			$params = array('data'=> $this->_MODEL->get_field_value_list('sostoyanie'),'name'=>'projects[sostoyanie]');
 			if(!empty($projects))
@@ -71,12 +71,12 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			</td>
 	</tr>
 		<tr>
-	<th><label>current-task-number</label></th><td>
+	<th><label>#{projects.current-task-number}</label></th><td>
 				<input type="text" name="projects[current-task-number]" value="<?=((!empty($projects)) ? $projects->getField('current-task-number',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>creator_id</label></th><td>
+	<th><label>#{projects.creator_id}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'required'=>true, 'name'=>'projects[creator_id]');
 				if(!empty($projects))

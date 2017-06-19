@@ -17,4 +17,9 @@ $_LANG['DEFINE THE BINDINGS FOR TRIADA ']='DEFINE THE BINDINGS FOR TRIADA ';
 $_LANG['hmvc']='hmvc';
 $_LANG['Modules and plugins']='Modules and plugins';
 $_LANG['Configs']='Configs';
+$_LANG['tabMain']='Main';
+$_LANG['tabCapts']='Captions';
+$_LANG['FieldName']='FieldName';
+$_LANG['FieldCaption']='FieldCaption';
+$_LANG['CAPTIONS']='CAPTIONS';
 ?>

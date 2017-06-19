@@ -7,11 +7,18 @@ namespace BootstrapListView
 	class LVW_Column
 	{
 		VAR $datafld;
+		VAR $owner_widget;
 		VAR $settings=array();
-		function __construct($fld,$settings=array())
+		VAR $caption_template="";
+		function __construct($fld,$owner,$settings=array())
 		{
 			$this->datafld = $fld;
+			$this->owner_widget = $owner;
 			$this->settings = $settings;
+			if(!empty($settings['caption_template']))
+				$this->caption_template = $settings['caption_template'];
+			else 
+				$this->caption_template = "{caption}";
 		}
 		
 		function draw(&$dr,&$numrow)
@@ -35,25 +42,34 @@ namespace BootstrapListView
 		
 		function draw_col_head()
 		{
-			
+			echo isset($this->settings['caption']);
 			if(isset($this->settings['caption']))
 			{
-				
 				echo $this->settings['caption'];
 				
 			}
 			else
-				echo $this->datafld;
+			{
+			
+				if($this->caption_template=='')
+				{
+					
+				}
+				else 
+					echo \Lang::__t( $this->owner_widget->_table.'.'.$this->datafld);
+			}
 		}
 		
-		static function ref_column($template)
+		static function ref_column($template,$caption_template='')
 		{
-			return array('caption'=>'','html_template'=>$template);
+			return array('caption'=>'','html_template'=>$template,'caption_template'=>$caption_template);
 		}
 	}
 	
 	class ListViewWidget extends \Widget 
 	{
+		VAR $_table;
+		
 		static function init_column($key,$val)
 		{
 			if(is_string($key) && is_array($val))
@@ -82,12 +98,9 @@ namespace BootstrapListView
 		function out($params=array())
 		{
 			def_options(array('tableclass'=>'table'),$params);
-			/*
-			if(!empty($params['columns']))
-			{
-				$params['columns'] = $this->make_columns($params);
-			}*/
 			
+			$this->_table = $params['ds']->_ENV['_CONTROLLER']->_MODEL->_TABLE;
+				
 			//print_r($params['columns']);
 			?><table class="<?=$params['tableclass']?>">
 			<?php
@@ -109,7 +122,7 @@ namespace BootstrapListView
 					$params['columns']=array();
 					foreach($keys as $fldname)
 					{
-						$params['columns'][] = new LVW_Column($fldname);
+						$params['columns'][] = new LVW_Column($fldname,$this);
 					}
 				}
 				else 
@@ -123,7 +136,7 @@ namespace BootstrapListView
 							
 							foreach($keys as $fldname)
 							{
-								$collist[] = new LVW_Column($fldname);
+								$collist[] = new LVW_Column($fldname,$this);
 							}
 
 						}

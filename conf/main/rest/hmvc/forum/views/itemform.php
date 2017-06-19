@@ -5,17 +5,17 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <input type="submit" value="SUBMIT" />
 <table>
 	<tr>
-	<th><label>name</label></th><td>
+	<th><label>#{forum.name}</label></th><td>
 				<input type="text" name="forum[name]" value="<?=((!empty($forum)) ? $forum->getField('name',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>description</label></th><td>
+	<th><label>#{forum.description}</label></th><td>
 				<input type="text" name="forum[description]" value="<?=((!empty($forum)) ? $forum->getField('description',true) : '')?>" />
 			</td>
 	</tr>
 		<tr>
-	<th><label>forum_id</label></th><td>
+	<th><label>#{forum.forum_id}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'name'=>'forum[forum_id]');			
 				if(!empty($forum))
