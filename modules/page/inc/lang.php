@@ -15,8 +15,29 @@ class Lang {
 		return $langfile->getkey($key);
 	}
 	
+	static function translate_str($str,$_lang=NULL)
+	{
+		$langfile=new Lang($_lang);
+		$langfile->read();
+		$strtr_buf=array();
+		
+		$matches=array();
+		
+		preg_match_all('/\#\{(.+)\}/Uis', $str, $matches);
+		$to_strtr=array();
+		foreach ($matches[1] as $idx => $key)
+		{
+			$lng_val = Lang::__t($key);
+			$to_strtr[$matches[0][$idx]]=$lng_val;
+		}
+		//$str = preg_match() ('/\#\{(.+)\}/', '=Lang::__t()', $str);
+		
+		return strtr($str,$to_strtr);
+	}
+	
 	VAR $lang_dir;
 	VAR $EP_PATH;
+	VAR $_BUFFER;
 	
 	function __construct($_lang=NULL)
 	{			
@@ -36,6 +57,12 @@ class Lang {
 		{
 			
 		}
+	}
+	
+	function read()
+	{
+		include $this->lang_dir;
+		$this->_BUFFER=$_LANG;
 	}
 	
 	function getkey($key)

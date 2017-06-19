@@ -17,7 +17,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>id_otdel_papa</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'name'=>'otdel[id_otdel_papa]');			
+					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'required'=>true, 'name'=>'otdel[id_otdel_papa]');
 				if(!empty($otdel))
 		{
 			$params['value']=$otdel->getField('id_otdel_papa',true);

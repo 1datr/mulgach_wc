@@ -150,7 +150,9 @@ class BaseController
 		{
 			$$var = $val;
 		}
+		
 		include url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
+				
 	}
 	
 	function out_json($object,$json_opts=JSON_UNESCAPED_UNICODE)

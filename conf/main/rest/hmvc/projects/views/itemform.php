@@ -49,7 +49,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		<tr>
 	<th><label>id_otdel</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'name'=>'projects[id_otdel]');			
+					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'required'=>true, 'name'=>'projects[id_otdel]');
 				if(!empty($projects))
 		{
 			$params['value']=$projects->getField('id_otdel',true);

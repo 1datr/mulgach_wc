@@ -277,6 +277,7 @@ class mul_page extends mul_Module
 				$_META = merge_arrays($_META, $res_item['META']);
 			}
 		}
+		ob_start();
 		?>
 		<html>
 		<head>
@@ -391,6 +392,9 @@ class mul_page extends mul_Module
 		</body>
 		</html>
 		<?php 
+		$the_content = ob_get_clean();
+		$the_content =	Lang::translate_str($the_content);
+		echo $the_content;
 	}
 	
 	function get_layout($info)

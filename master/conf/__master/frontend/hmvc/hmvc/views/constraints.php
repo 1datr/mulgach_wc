@@ -6,13 +6,13 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <?php 
 $sbplugin->template_start('bindings_item');
 ?>
-	<label>Required:</label>		
+	<label><?=Lang::__t('Required:') ?></label>		
 	<input type="checkbox" name="constraints[{idx}][required]"  class="cb_required" />	
-	<label>Field:</label>
+	<label><?=Lang::__t('Field:') ?></label>
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[{idx}][field]','htmlattrs'=>array('class'=>'fld_select','onchange'=>'check_required(this)'))); ?>
-	<label>Table:</label>
+	<label><?=Lang::__t('Table:') ?></label>
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'name'=>'constraints[{idx}][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
-	<label>field to:</label>
+	<label><?=Lang::__t('field to:') ?></label>
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$first_table_fields,'name'=>'constraints[{idx}][field_to]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>	
 	<button type="button" class="bindings_item_drop">x</button>
 <?php 
@@ -37,7 +37,7 @@ $sbplugin->template_table_end();
 ?>
 
 <form action="?r=hmvc/make/makefiles" id="bindings" method="post">
-<h3>DEFINE THE BINDINGS FOR TRIADA <?=$_SESSION['makeinfo']['table']?></h3>
+<h3>#{DEFINE THE BINDINGS FOR TRIADA }<?=$_SESSION['makeinfo']['table']?></h3>
 <?php 
 $sbplugin->block_start('bindings_item',array('id'=>'items_block'));
 ?>
@@ -52,9 +52,23 @@ if(!empty($settings))
 		{
 			?>
 			<div class="multiform_block" role="item">
-			<label>Required:</label>
-			<input type="checkbox" name="constraints[<?=$idx?>][required]" class="cb_required" nametemplate="constraints[#idx#][required]", <?=(($con['required']) ? "checked" : "")?> />			
-			<label>Field:</label>
+			<label><?=Lang::__t('Required:')?></label>
+			<?php 
+			if($fields[$fld_from]['Null']=='NO')
+			{
+				?>
+				<input type="hidden" name="constraints[<?=$idx?>][required]" value="on" />
+				<input disabled type="checkbox" name="constraints[<?=$idx?>][required]" class="cb_required" nametemplate="constraints[#idx#][required]", <?=(($con['required']) ? "checked" : "")?> />
+				<?php 
+			}
+			else 
+			{
+				?>
+				<input type="checkbox" name="constraints[<?=$idx?>][required]" class="cb_required" nametemplate="constraints[#idx#][required]", <?=(($con['required']) ? "checked" : "")?> />
+				<?php 
+			}
+			?>			
+			<label><?=Lang::__t('Field:')?></label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
 						'name'=>"constraints[".$idx."][field]",						
 						'htmlattrs'=>array(
@@ -64,7 +78,7 @@ if(!empty($settings))
 			),
 						'value'=>$fld_from,
 					)); ?>
-			<label>Table:</label>
+			<label><?=Lang::__t('Table:')?></label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,
 					'name'=>"constraints[".$idx."][table]",					
 					'value'=>$con['model'],
@@ -72,7 +86,7 @@ if(!empty($settings))
 						'onchange'=>'load_fields(this)'))
 					); ?>
 							
-			<label>field to:</label>
+			<label><?=Lang::__t('field to:')?></label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
 					'name'=>"constraints[".$idx."][field_to]",					
 					'value'=>$con['fld'],
@@ -92,12 +106,12 @@ $sbplugin->block_end(function(){
 	<?php 
 });
 ?>
-<h4>FIELDS SETTINGS FOR MODEL</h4>
+<h4>#{FIELDS SETTINGS FOR MODEL}</h4>
 <?php 
 // Блок с полями
 $sbplugin->table_block_start('field_item',array('id'=>'fields_block'),array(),'
 		<thead>
-		<tr><th>Field</th><th>Required</th></tr>
+		<tr><th>#{Field}</th><th>#{Required}</th></tr>
 		</thead>
 		');
 /*
@@ -140,8 +154,8 @@ $sbplugin->table_block_end(function(){
 ?>
 
 <div>
-<label for="_view">View:&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
-<p><label>Fields:&nbsp;</label>
+<label for="_view">#{View:}&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
+<p><label>#{Fields:}&nbsp;</label>
 <?php 
 foreach($fields as $fld => $fldinfo)
 {
@@ -156,6 +170,6 @@ foreach($fields as $fld => $fldinfo)
 
 
 <input type="hidden" name="conf" id="config" value="<?=$_SESSION['makeinfo']['conf']?>" >
-<input type="submit" value="MAKE HMVC" >
+<input type="submit" value="#{MAKE HMVC}" >
 </form>
 <div id="console"></div>

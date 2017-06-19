@@ -36,7 +36,7 @@ function check_required(el)
 	if($('#field_'+field+'_required').is(':checked'))//.attr('checked')=='checked')
 	{
 		
-		cb_req.attr('checked',true);
+		cb_req.attr('checked',"checked");
 		cb_req.attr('disabled',true);
 		
 		prev_element=cb_req.prev('input[type=hidden]');
@@ -52,14 +52,9 @@ function check_required(el)
 			{
 			hidden_req = $('<input type="hidden" />');
 			hidden_req.attr('name',cb_req.attr('name'));
+			hidden_req.attr('value','on');
 			cb_req.before(hidden_req);
 			}
-		/*
-		$(cb_req).bind("click",function()
-			{
-				return false;
-			});
-			*/
 	}
 	else
 	{
