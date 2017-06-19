@@ -253,7 +253,9 @@ class mul_page extends mul_Module
 	function draw_html($info)
 	{
 		$_CSS=array();
-		$_JS=array();
+		$_JS=array(
+							
+		);
 		$_META=array();
 		
 		$event_res = array();
@@ -270,6 +272,8 @@ class mul_page extends mul_Module
 			if(!empty($res_item['JS']))
 			{
 				$_JS = merge_arrays($_JS, $res_item['JS']);
+				
+				
 			}
 		
 			if(!empty($res_item['META']))
@@ -324,6 +328,7 @@ class mul_page extends mul_Module
 					if(empty($_CACHE_CSS)) $_CACHE_CSS = false;
 					$_CSS=merge_arrays($_CSS, $info['css']);
 					$_CSS=merge_arrays($_CSS,$_LAYOUT_INFO['css']);
+					$_CSS=merge_arrays($_CSS,array(filepath2url(url_seg_add(__DIR__,'css/base.css'))));
 					
 					$this->out_css($_CSS,$_CACHE_CSS);
 					
@@ -331,6 +336,8 @@ class mul_page extends mul_Module
 					// вывод скриптов
 					$_JS=merge_arrays($_JS, $info['js']);
 					$_JS=merge_arrays($_JS,$_LAYOUT_INFO['js']);
+					$_JS=merge_arrays($_JS,array(filepath2url(url_seg_add(__DIR__,'js/validate.js'))));
+					
 					global $_CACHE_JS;
 					if(empty($_CACHE_JS)) $_CACHE_JS = false;
 					$this->out_js($_JS,$_CACHE_JS);

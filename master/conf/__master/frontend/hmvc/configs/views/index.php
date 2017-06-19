@@ -23,8 +23,12 @@ foreach ($files as $the_file)
 }
 ?>
 </ul>
-<form method="post" action="?r=configs/new">
-<label for="newcfg">New config name</label>
+<?php 
+$frm=new mulForm("?r=configs/new");
+?>
+<label for="newcfg">#{New config name}</label>
 <input type="text" id="newcfg" name="newcfg">
 <input type="submit" value="Create new config" />
-</form>
+<?php 
+$frm->close();
+?>

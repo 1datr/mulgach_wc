@@ -231,6 +231,15 @@ function unlink_folder($fldr)
 	//if(file_exists($fldr)) echo ";;;";
 	unlink($fldr);
 }
+
+function add_keypair(&$arr,$key,$val)
+{
+	if(empty($arr[$key]))
+	{
+		$arr[$key]=array();		
+	}
+	$arr[$key][]=$val;
+}
 // Найти файл
 function find_file($search, $dir_path=".", $rootonly=FALSE)
 {

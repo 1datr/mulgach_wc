@@ -33,6 +33,30 @@ class BaseModel
 		}
 	}
 	
+	function validate($data)
+	{
+		$res = array();
+		if(isset($data[$this->_TABLE]))
+		{
+			foreach ($this->_SETTINGS['required'] as $idx => $fld)
+			{
+				if($this->getPrimaryName()==$fld)
+					continue;
+				if(empty($data[$this->_TABLE][$fld]))
+				{
+					add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+				}
+			}
+			$this->OnValidate($data[$this->_TABLE], $res);
+		}
+		return $res;
+	}
+	
+	function OnValidate($row,&$res)
+	{
+		
+	}
+	
 	private function db_query($query)
 	{
 		$res = $this->_ENV['_CONNECTION']->query($query);

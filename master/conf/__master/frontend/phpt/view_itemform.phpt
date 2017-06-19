@@ -1,6 +1,9 @@
 <#php 
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
-#><form method="post"  action="/?r={table}/save">
+#>
+<#php
+$form = new mulForm("/?r={table}/save");
+#>
 <input type="hidden" name="{table}[{fld_primary}]" value="<#=((!empty(${table})) ? ${table}->getField('{fld_primary}') : '')#>" />
 <input type="submit" value="SUBMIT" />
 <table>
@@ -37,7 +40,8 @@ foreach($fields as $fld => $fldinfo)
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		#>
-		<?
+		<div class="error" id='err_<?=$fld?>' role="alert"></div>
+		<?php
 		}
 		elseif($fldinfo['Type']=='enum')
 		{
@@ -50,6 +54,7 @@ foreach($fields as $fld => $fldinfo)
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		#>
+		<div class="error" id='err_<?=$fld?>' role="alert"></div>
 		<?php
 		}
 		elseif($fldinfo['Type']=='set')
@@ -60,12 +65,14 @@ foreach($fields as $fld => $fldinfo)
 		{
 		?>
 			<textarea name="{table}[<?=$fld?>]" ><#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#></textarea>
+			<div class="error" id='err_<?=$fld?>' role="alert"></div>
 		<?	
 		}
 		else
 		{
 		?>
 			<input type="text" name="{table}[<?=$fld?>]" value="<#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#>" />
+			<div class="error" id='err_<?=$fld?>' role="alert"></div>
 		<?	
 		}
 	?>

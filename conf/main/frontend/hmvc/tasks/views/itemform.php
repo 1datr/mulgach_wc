@@ -1,32 +1,40 @@
 <?php 
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
-?><form method="post"  action="/?r=tasks/save">
+?>
+<?php
+$form = new mulForm("/?r=tasks/save");
+?>
 <input type="hidden" name="tasks[id_task]" value="<?=((!empty($tasks)) ? $tasks->getField('id_task') : '')?>" />
 <input type="submit" value="SUBMIT" />
 <table>
 	<tr>
 	<th><label>#{tasks.name}</label></th><td>
 				<input type="text" name="tasks[name]" value="<?=((!empty($tasks)) ? $tasks->getField('name',true) : '')?>" />
+			<div class="error" id='err_name' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.vhod_dannye}</label></th><td>
 				<input type="text" name="tasks[vhod_dannye]" value="<?=((!empty($tasks)) ? $tasks->getField('vhod_dannye',true) : '')?>" />
+			<div class="error" id='err_vhod_dannye' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.vihod_resultat}</label></th><td>
 				<input type="text" name="tasks[vihod_resultat]" value="<?=((!empty($tasks)) ? $tasks->getField('vihod_resultat',true) : '')?>" />
+			<div class="error" id='err_vihod_resultat' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.upravlenie}</label></th><td>
 				<input type="text" name="tasks[upravlenie]" value="<?=((!empty($tasks)) ? $tasks->getField('upravlenie',true) : '')?>" />
+			<div class="error" id='err_upravlenie' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.resursy_spisok}</label></th><td>
 				<input type="text" name="tasks[resursy_spisok]" value="<?=((!empty($tasks)) ? $tasks->getField('resursy_spisok',true) : '')?>" />
+			<div class="error" id='err_resursy_spisok' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -39,6 +47,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_proj_id' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -51,6 +60,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_vazhnost' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -63,6 +73,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_srochnost' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -75,6 +86,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_otv_sotr' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -87,31 +99,37 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_sostoyanie_zadachi' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.date_plan}</label></th><td>
 				<input type="text" name="tasks[date_plan]" value="<?=((!empty($tasks)) ? $tasks->getField('date_plan',true) : '')?>" />
+			<div class="error" id='err_date_plan' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.date_start}</label></th><td>
 				<input type="text" name="tasks[date_start]" value="<?=((!empty($tasks)) ? $tasks->getField('date_start',true) : '')?>" />
+			<div class="error" id='err_date_start' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.data_zaversheniya}</label></th><td>
 				<input type="text" name="tasks[data_zaversheniya]" value="<?=((!empty($tasks)) ? $tasks->getField('data_zaversheniya',true) : '')?>" />
+			<div class="error" id='err_data_zaversheniya' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.data_prinyatiya}</label></th><td>
 				<input type="text" name="tasks[data_prinyatiya]" value="<?=((!empty($tasks)) ? $tasks->getField('data_prinyatiya',true) : '')?>" />
+			<div class="error" id='err_data_prinyatiya' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{tasks.number_task}</label></th><td>
 				<input type="text" name="tasks[number_task]" value="<?=((!empty($tasks)) ? $tasks->getField('number_task',true) : '')?>" />
+			<div class="error" id='err_number_task' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -124,6 +142,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_creator_id' role="alert"></div>
 			</td>
 	</tr>
 	</table>

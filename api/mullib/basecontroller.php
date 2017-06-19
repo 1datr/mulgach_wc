@@ -93,6 +93,17 @@ class BaseController
 		return $_DATA;
 	}
 	
+	function ActionValidate()
+	{
+		$res = array();
+		if(!empty($this->_MODEL))
+		{	
+			// валидуем по модели
+			$res = $this->_MODEL->validate($_POST);
+		}
+		$this->out_json($res);
+	}
+	
 	function inline_script($script)
 	{
 		$this->_INLINE_SCRIPT=$script;

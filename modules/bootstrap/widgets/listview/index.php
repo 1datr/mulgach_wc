@@ -42,7 +42,7 @@ namespace BootstrapListView
 		
 		function draw_col_head()
 		{
-			echo isset($this->settings['caption']);
+	//		echo isset($this->settings['caption']);
 			if(isset($this->settings['caption']))
 			{
 				echo $this->settings['caption'];
@@ -70,16 +70,16 @@ namespace BootstrapListView
 	{
 		VAR $_table;
 		
-		static function init_column($key,$val)
+		static function init_column($key,$widg,$val)
 		{
 			if(is_string($key) && is_array($val))
 			{
-				$col_obj = new LVW_Column($key,$val);
+				$col_obj = new LVW_Column($key,$widg,$val);
 					
 			}
 			elseif(is_int($key) && is_string($val))
 			{
-				$col_obj = new LVW_Column($val);
+				$col_obj = new LVW_Column($val,$widg);
 			}
 			return $col_obj;
 		}
@@ -142,7 +142,7 @@ namespace BootstrapListView
 						}
 						else 
 						{
-							$collist[] = ListViewWidget::init_column($key,$col);
+							$collist[] = ListViewWidget::init_column($key,$this,$col);
 						}
 					}
 					$params['columns'] = $collist;

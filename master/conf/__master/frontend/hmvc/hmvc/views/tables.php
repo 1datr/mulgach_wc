@@ -1,4 +1,6 @@
-<form action="?r=hmvc/make/" method="post">
+<?php 
+$frm=new mulForm("?r=hmvc/make/");
+?>
 <label for="thetable">Table</label>
 <select name="table">
 <?php 

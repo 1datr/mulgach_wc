@@ -22,4 +22,5 @@ $_LANG['tabCapts']='Captions';
 $_LANG['FieldName']='FieldName';
 $_LANG['FieldCaption']='FieldCaption';
 $_LANG['CAPTIONS']='CAPTIONS';
+$_LANG['New config name']='New config name';
 ?>

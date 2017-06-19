@@ -1,17 +1,22 @@
 <?php 
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
-?><form method="post"  action="/?r=projects/save">
+?>
+<?php
+$form = new mulForm("/?r=projects/save");
+?>
 <input type="hidden" name="projects[id_project]" value="<?=((!empty($projects)) ? $projects->getField('id_project') : '')?>" />
 <input type="submit" value="SUBMIT" />
 <table>
 	<tr>
 	<th><label>#{projects.name}</label></th><td>
 				<input type="text" name="projects[name]" value="<?=((!empty($projects)) ? $projects->getField('name',true) : '')?>" />
+			<div class="error" id='err_name' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{projects.full_name}</label></th><td>
 				<input type="text" name="projects[full_name]" value="<?=((!empty($projects)) ? $projects->getField('full_name',true) : '')?>" />
+			<div class="error" id='err_full_name' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -24,26 +29,31 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_otv_ruk' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{projects.date_generate}</label></th><td>
 				<input type="text" name="projects[date_generate]" value="<?=((!empty($projects)) ? $projects->getField('date_generate',true) : '')?>" />
+			<div class="error" id='err_date_generate' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{projects.date_start}</label></th><td>
 				<input type="text" name="projects[date_start]" value="<?=((!empty($projects)) ? $projects->getField('date_start',true) : '')?>" />
+			<div class="error" id='err_date_start' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{projects.date_end}</label></th><td>
 				<input type="text" name="projects[date_end]" value="<?=((!empty($projects)) ? $projects->getField('date_end',true) : '')?>" />
+			<div class="error" id='err_date_end' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{projects.teh_zad}</label></th><td>
 				<input type="text" name="projects[teh_zad]" value="<?=((!empty($projects)) ? $projects->getField('teh_zad',true) : '')?>" />
+			<div class="error" id='err_teh_zad' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -56,6 +66,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_id_otdel' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -68,11 +79,13 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 			}
 			$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_sostoyanie' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{projects.current-task-number}</label></th><td>
 				<input type="text" name="projects[current-task-number]" value="<?=((!empty($projects)) ? $projects->getField('current-task-number',true) : '')?>" />
+			<div class="error" id='err_current-task-number' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
@@ -85,6 +98,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 		}
 		$this->usewidget(new ComboboxWidget(),$params);
 		?>
+		<div class="error" id='err_creator_id' role="alert"></div>
 			</td>
 	</tr>
 	</table>
