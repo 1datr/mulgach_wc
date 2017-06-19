@@ -138,9 +138,20 @@ function url_seg_add()
 	return $resstr;
 	
 }
-
+// создать файл рекурсивно полностью
+function x_file_put_contents($filename,$data,$flags=0,$context=null)
+{
+	$parent_path = dirname($filename);
+	if(!file_exists($parent_path))
+	{
+		x_mkdir($parent_path);
+	}
+	file_put_contents($filename, $data,$flags,$context);
+}
+// создать папку рекурсивно полностью
 function x_mkdir($path)
 {
+	
 	$parent_path = dirname($path);
 	if(file_exists($parent_path))
 	{		
@@ -178,6 +189,20 @@ function get_files_in_folder($dir_path)
 	}
 	$d->close();
 	return $result;
+}
+
+function get_nested_dirs($the_dir)
+{
+	$filelist = get_files_in_folder($the_dir);
+	$the_dirs=array();
+	foreach ($filelist as $the_file)
+	{
+		if(is_dir($the_file))
+		{
+			$the_dirs[]=$the_file;
+		}
+	}
+	return $the_dirs;
 }
 
 function string_diff($str1,$str2)
@@ -239,6 +264,29 @@ function find_file($search, $dir_path=".", $rootonly=FALSE)
 	}
 	$d->close();
 	return $result;
+}
+
+function parse_code_template($tpl_file,$var_array)
+{
+	foreach ($var_array as $var => $val)
+	{
+		$$var=$val;
+	}
+
+	ob_start();
+	if(file_exists($tpl_file))
+		include $tpl_file;
+	
+	$code = ob_get_clean();
+		// php tags
+	$code = strtr($code,array('<#'=>'<?','#>'=>'?>'));
+
+	$var_array2=array();
+	foreach ($var_array as $var => $val)
+		{
+			$var_array2['{'.$var.'}']=$val;
+		}
+	return strtr($code,$var_array2);
 }
 
 function UcaseFirst($str)

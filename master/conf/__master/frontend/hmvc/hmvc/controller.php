@@ -178,8 +178,8 @@ ON UPDATE SET NULL;
 				$vars=array();
 				$vars['table_uc_first']=UcaseFirst($_params['table']);
 				$vars['TABLE_UC']=strtoupper($_params['table']);
-				$vars['table'] = $_params['table'];
-				file_put_contents($file_controller, $this->parse_code_template('controller',$vars));
+				$vars['table'] = $_params['table'];				
+				file_put_contents($file_controller, parse_code_template(url_seg_add(__DIR__,'../../phpt/controller.phpt'),$vars));
 			}
 			// Модель
 			$file_model = url_seg_add( $hmvc_dir,'model.php');
@@ -189,7 +189,7 @@ ON UPDATE SET NULL;
 				$vars['table_uc_first']=UcaseFirst($_params['table']);
 				$vars['TABLE_UC']=strtoupper($_params['table']);
 				$vars['table'] = $_params['table'];
-				file_put_contents($file_model, $this->parse_code_template('model',$vars));
+				file_put_contents($file_model, parse_code_template(url_seg_add(__DIR__,'../../phpt/model.phpt'),$vars));
 			}
 			
 			// Файлик
@@ -232,7 +232,7 @@ ON UPDATE SET NULL;
 					$thedelimeter='';
 				}
 			}).')';
-			file_put_contents($file_baseinfo, $this->parse_code_template('baseinfo',$vars));
+			file_put_contents($file_baseinfo, parse_code_template(url_seg_add(__DIR__,'../../phpt/baseinfo.phpt'),$vars));
 			
 				// make views
 			$dir_views = url_seg_add($hmvc_dir,'views');
@@ -252,7 +252,7 @@ ON UPDATE SET NULL;
 				$vars['primary']=$_primary;
 				$vars['TABLE_UC']=strtoupper($_params['table']);
 				//	echo $this->parse_code_template('view_index',$vars);
-				file_put_contents($index_view, $this->parse_code_template('view_index',$vars));
+				file_put_contents($index_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_index.phpt'),$vars));
 			}
 				
 			$itemform_view = url_seg_add($dir_views,'itemform.php');
@@ -266,8 +266,8 @@ ON UPDATE SET NULL;
 				$vars['fields']=$tbl_fields;
 				$vars['settings']=$settings;
 				$vars['constraints']=$_params['constraints'];
-
-				file_put_contents($itemform_view, $this->parse_code_template('view_itemform',$vars));
+// //	$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
+				file_put_contents($itemform_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_itemform.phpt'),$vars));
 			}
 		}
 	}
@@ -301,30 +301,7 @@ ON UPDATE SET NULL;
 		}
 	}
 	
-	function parse_code_template($tpl,$var_array)
-	{
-		$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
-		
-		
-		foreach ($var_array as $var => $val)
-		{
-			$$var=$val;
-		}
-		
-		ob_start();
-		if(file_exists($tpl_file))
-			include $tpl_file;
-		$code = ob_get_clean();
-		// php tags
-		$code = strtr($code,array('<#'=>'<?','#>'=>'?>'));
-		
-		$var_array2=array();
-		foreach ($var_array as $var => $val)
-		{
-			$var_array2['{'.$var.'}']=$val;
-		}
-		return strtr($code,$var_array2);
-	}
+	
 	
 }
 ?>

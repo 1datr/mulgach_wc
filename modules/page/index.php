@@ -1,7 +1,12 @@
 <?php
-// модуль страница
-require_once __DIR__.'/inc/theme.php';
 session_start();
+// модуль страница
+$inc_files = get_files_in_folder( url_seg_add(__DIR__,'/inc/'));
+foreach ($inc_files as $inc_module)
+{
+	require_once $inc_module;
+}
+
 $_EP_PATH = NULL;
 
 class mul_page extends mul_Module 

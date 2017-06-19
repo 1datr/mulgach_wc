@@ -55,4 +55,36 @@ class mod_plugin {
 	{
 		
 	}
+	
+	function js_files()
+	{
+		$js_array=array();
+		GLOBAL $_BASEDIR;
+		$js_files = get_files_in_folder( url_seg_add(__DIR__,'js') );
+			
+		//echo $_SERVER['DOCUMENT_ROOT'];
+		foreach ($js_files as $js_script)
+		{
+			//echo $js_script;
+			$str_js = filepath2url($js_script);
+			$js_array[] = $str_js;
+		}
+		return $js_array;
+	}
+	
+	function css_files()
+	{
+		$css_array=array();
+		GLOBAL $_BASEDIR;
+		$css_files = get_files_in_folder( url_seg_add(__DIR__,'css') );
+			
+		//echo $_SERVER['DOCUMENT_ROOT'];
+		foreach ($css_files as $css_file)
+		{
+			//echo $js_script;
+			$str_css = filepath2url($css_file);
+			$css_array[] = $str_css;
+		}
+		return $css_array;
+	}
 }

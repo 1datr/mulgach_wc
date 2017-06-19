@@ -1,5 +1,5 @@
 <?php
-// ìîäóëü ñòðàíèöà
+// Ã¬Ã®Ã¤Ã³Ã«Ã¼ Ã±Ã²Ã°Ã Ã­Ã¨Ã¶Ã 
 
 class mul_bootstrap extends mul_Module 
 {
