@@ -287,8 +287,8 @@ class mul_page extends mul_Module
 		<head>
 		<?php 
 					GLOBAL $_BASEDIR;		
-					
-								
+
+					include url_seg_add($this->_DIR_EP,"/config.php");
 					
 					if(empty($_FAVICO))
 						$_FAVICO = "favico.ico";
