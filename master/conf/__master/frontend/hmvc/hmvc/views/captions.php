@@ -28,7 +28,7 @@ foreach ($eps as $idx => $_ep)
 foreach ($eps as $idx => $_ep)
 {
 	?>
-	<div class="tab-pane <?=(($idx==0)?'active':'')?>" id="capts_<?=$_ep?>" role="tabpanel">
+	<div class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" id="capts_<?=$_ep?>" role="tabpanel">
 	<table>
   	<tr>
     	<th>#{FieldName}</th>

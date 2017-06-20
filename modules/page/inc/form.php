@@ -11,7 +11,7 @@ class mulForm
 	
 	function submit($caption,$name='',$htmlattrs=array())
 	{
-		def_options(array('type'=>'submit'),$htmlattrs );
+		def_options(array('type'=>'submit','class'=>'btn btn-primary'),$htmlattrs );
 		if($name!='')
 		{
 			$htmlattrs['name']=$name;

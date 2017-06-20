@@ -12,13 +12,6 @@ class SiteController extends BaseController
 		$this->out_view('index',array());
 	}
 	
-	public function ActionBlockx()
-	{
-		echo "<p>12121212
-				12212313
-				123213</p>";
-	}
-	
 	public function ActionMenu()
 	{
 		$menu = $this->getinfo('basemenu');
@@ -26,13 +19,20 @@ class SiteController extends BaseController
 		$this->out_view('menu',array('menu'=>$menu));
 	}
 	
-	public function ActionWorkers()
+	public function ActionLogin()
 	{
-		$this->_TITLE="Workers";
-		$this->add_css($this->get_current_dir()."/css/style.css");
-		$this->add_block('LEFT', 'site', 'Blockx');
-		$this->add_keyword('workers');
-		echo "<h3>workers</h3>";
+		$this->out_view('loginform',array());
+	}
+	
+	public function ActionAuth()
+	{
+		//$this->out_view('loginform',array());
+	}
+	
+	public function Logout()
+	{
+		unset($_SESSION['user']);
+		$this->redirect('login');
 	}
 }
 ?>

@@ -63,6 +63,18 @@ class XTheme
 				}
 			}
 		}
+		
+		$this->_CONFIG['_FAVICO']= url_seg_add($this->_PATH,$this->_CONFIG['_FAVICO']);
+	}
+	
+	function get_view($theview)
+	{
+		$thepath = url_seg_add($this->_PATH,'views',"$theview.php");
+		if(!file_exists($thepath))
+		{
+			return NULL;
+		}
+		return $thepath;
 	}
 	
 	function get_css_def()

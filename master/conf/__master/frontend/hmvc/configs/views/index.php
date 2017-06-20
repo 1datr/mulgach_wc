@@ -28,7 +28,7 @@ $frm=new mulForm("?r=configs/new");
 ?>
 <label for="newcfg">#{New config name}</label>
 <input type="text" id="newcfg" name="newcfg">
-<input type="submit" value="Create new config" />
+<input type="submit" class="btn btn-primary" value="#{Create new config}" />
 <?php 
 $frm->close();
 ?>

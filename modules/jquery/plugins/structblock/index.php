@@ -91,7 +91,7 @@ class plg_structblock extends mod_plugin
 			
 		$attrs['id']=$blockname;
 		?>
-		<div style="visibility: hidden;">
+		<div style="display: none;">
 		<div <?=xx_implode($attrs, ' ', "{idx}=\"{%val}\"") ?> >
 		<?php 
 	}

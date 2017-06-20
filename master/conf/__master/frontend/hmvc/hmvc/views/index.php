@@ -5,7 +5,7 @@
 <form method="post" action="?r=configs/new">
 <table>
 <tr>
-<th><label>Table</label></th>
+<th><label>#{Table}</label></th>
 <td>
 
 </td>

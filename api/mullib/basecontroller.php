@@ -9,7 +9,8 @@ class BaseController
 	VAR $_TITLE="";
 	VAR $_LAYOUT;
 	VAR $_META=array();
-	VAR $_INLINE_SCRIPT=NULL;
+	VAR $_INLINE_SCRIPT='';
+	VAR $_INLINE_STYLE='';
 	VAR $_RESULT_TYPE="text/html";
 	VAR $_CONTROLLER_DIR=NULL; // директория контроллера (заполняется из модуля page)
 	VAR $_ENV;
@@ -106,7 +107,12 @@ class BaseController
 	
 	function inline_script($script)
 	{
-		$this->_INLINE_SCRIPT=$script;
+		$this->_INLINE_SCRIPT=$this->_INLINE_SCRIPT.$script;
+	}
+	
+	function inline_css($css)
+	{
+		$this->_INLINE_STYLE=$this->_INLINE_STYLE.$css;
 	}
 	
 	protected function file_if_relative(&$thefile_name)
@@ -162,7 +168,9 @@ class BaseController
 			$$var = $val;
 		}
 		
-		include url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
+		$_view_path = $this->get_view_path($view);
+		include $_view_path;
+		//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
 				
 	}
 	
@@ -206,6 +214,18 @@ class BaseController
 	function redirect_back()
 	{
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	function get_view_path($view)
+	{
+		$path_from_theme = $this->_ENV['page_module']->get_template_from_theme($view);
+		//echo $path_from_theme;
+		if($path_from_theme==NULL)
+		{
+			$path_native = url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
+			return $path_native;
+		}
+		return $path_from_theme;
 	}
 	
 	function query($controller,$method,$args=array())

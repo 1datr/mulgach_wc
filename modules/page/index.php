@@ -17,6 +17,11 @@ class mul_page extends mul_Module
 	VAR $CFG_INFO;
 	VAR $_ENV_INFO=array();
 	
+	VAR $CONF_BASE=array();
+	VAR $CONF_EP=array();
+	VAR $theme_obj;
+	
+	
 	function __construct($_PARAMS)
 	{
 		
@@ -184,6 +189,55 @@ class mul_page extends mul_Module
 		
 	}
 	
+	function inc_ep_config($conf_info)
+	{
+		include url_seg_add($conf_info['_DIR_EP'],"/config.php");
+			
+		$this->CONF_EP = $conf;
+		
+		def_options(array(
+				'_HTML_CHARSET'=>'utf-8',
+				'_FAVICO'=>'favico.ico',
+				'_FAVICO_FORMAT'=>"image/x-icon",
+		), $this->CONF_EP);
+		
+		// фавико привязать к директории
+		GLOBAL $_BASEDIR;
+		
+		//include url_seg_add($this->_DIR_EP,"/config.php");
+			
+		$conf_url =	url_seg_add($_BASEDIR,$_CONFIGS_AREA);
+		
+		$ico_file_path = url_seg_add($this->_DIR_EP,$this->CONF_EP['_FAVICO']);
+		$ico_file_ref = filepath2url($ico_file_path);
+		if(file_exists($ico_file_ref))
+			$this->CONF_EP['_FAVICO']=$ico_file_path;
+		
+		if(empty($this->CONF_EP['_APPLE_TOUCH_ICONS']))
+			$this->CONF_EP['_APPLE_TOUCH_ICONS']=array($this->CONF_EP['_FAVICO']);
+		
+		if(!empty($this->CONF_EP['_THEME']))
+		{
+			$this->_THEME=$this->CONF_EP['_THEME'];
+			$this->theme_obj = $this->get_theme($this->_THEME);
+			
+			if(!empty($this->theme_obj->_CONFIG['_FAVICO']))
+			{
+				$this->CONF_EP['_FAVICO'] = $this->theme_obj->_CONFIG['_FAVICO'];
+			}
+			
+			if(!empty($this->theme_obj->_CONFIG['_FAVICO_FORMAT']))
+			{
+				$this->CONF_EP['_FAVICO_FORMAT'] = $this->theme_obj->_CONFIG['_FAVICO_FORMAT'];
+			}
+			
+			$this->CONF_EP['_APPLE_TOUCH_ICONS'] = $this->theme_obj->_CONFIG['_APPLE_TOUCH_ICONS'];
+			if(empty($this->CONF_EP['_APPLE_TOUCH_ICONS']))
+				$this->CONF_EP['_APPLE_TOUCH_ICONS'] = array($this->CONF_EP['_FAVICO']);
+		}			
+				
+	}
+	
 	function draw()
 	{
 		$event_res = array();
@@ -228,12 +282,8 @@ class mul_page extends mul_Module
 		$this->CFG_INFO = $conf_info;
 		//print_r($conf_info);
 		//echo url_seg_add($conf_info['_DIR_EP'],"/config.php");
-		include url_seg_add($conf_info['_DIR_EP'],"/config.php");
-		
-		if(!empty($_THEME))
-		{
-			$this->_THEME=$_THEME;
-		}
+		$this->inc_ep_config($conf_info);
+			
 	//	echo $_THEME;
 		$info = $this->call_action($conf_info);
 		//print_r($info);
@@ -286,31 +336,17 @@ class mul_page extends mul_Module
 		<html>
 		<head>
 		<?php 
-					GLOBAL $_BASEDIR;		
 
-					include url_seg_add($this->_DIR_EP,"/config.php");
-					
-					if(empty($_FAVICO))
-						$_FAVICO = "favico.ico";
-					if(empty($_FAVICO_FORMAT))
-						$_FAVICO_FORMAT="image/x-icon";
-					
-					$conf_url =	url_seg_add($_BASEDIR,$_CONFIGS_AREA);
-						
-					$ico_file_ref = url_seg_add($this->_DIR_EP,$_FAVICO);
-					$ico_file_path = url_seg_add("./",url_seg_add($this->_DIR_EP ,$_FAVICO));
-					if(file_exists($ico_file_path))
+					//$ico_file_path = url_seg_add("./",url_seg_add($this->_DIR_EP ,$_FAVICO));
+					if(!empty($this->CONF_EP['_FAVICO']))
 					{
 						?>
-						<link href="<?=$ico_file_ref?>" rel='shortcut icon' type="<?=$_FAVICO_FORMAT?>"/>
-						<link href="<?=$ico_file_ref?>" rel='icon' type="<?=$_FAVICO_FORMAT?>"/>
+						<link href="<?=$this->CONF_EP['_FAVICO']?>" rel='shortcut icon' type="<?=$this->CONF_EP['_FAVICO_FORMAT']?>"/>
+						<link href="<?=$this->CONF_EP['_FAVICO']?>" rel='icon' type="<?=$this->CONF_EP['_FAVICO_FORMAT']?>"/>
 						<?php 
 					}
-											
-					if(empty($_APPLE_TOUCH_ICONS))
-						$_APPLE_TOUCH_ICONS=array($ico_file_ref);
 					
-					foreach ($_APPLE_TOUCH_ICONS as $idx => $icofile)
+					foreach ($this->CONF_EP['_APPLE_TOUCH_ICONS'] as $idx => $icofile)
 					{
 						$size_code="";
 						if(is_string($idx))
@@ -364,10 +400,8 @@ class mul_page extends mul_Module
 						}
 					}
 												
-					if(empty($_HTML_CHARSET))
-						$_HTML_CHARSET = "utf-8";
 					?>
-					<meta http-equiv="Content-Type" content="text/html; charset=<?=$_HTML_CHARSET?>" />
+					<meta http-equiv="Content-Type" content="text/html; charset=<?=$this->CONF_EP['_HTML_CHARSET']?>" />
 					<?php 
 					$_META=merge_arrays($_META, $info['meta']);
 					
@@ -389,6 +423,15 @@ class mul_page extends mul_Module
 						</script>
 						<?php 
 					}
+					
+					if(!empty($info['_INLINE_CSS']))
+					{
+						?>
+						<style  type="text/css" >
+						<?=$info['_INLINE_CSS']?>
+						</style>
+						<?php 
+					}
 					?>
 		</head>
 		<body>
@@ -404,30 +447,43 @@ class mul_page extends mul_Module
 		echo $the_content;
 	}
 	
+	function get_theme($theme)
+	{
+		$found=false;
+		
+		//	echo ":: $_THEME ::";		
+		$themes = XTheme::find($theme,$this->CFG_INFO['_DIR_CONFIG']);
+		if(count($themes)>0)
+		{
+			return new XTheme($themes[0]);				
+		}				
+		
+		return NULL;
+					
+	}
+	
+	function get_template_from_theme($page_path)
+	{
+		if(empty($this->theme_obj))
+			return $this->theme_obj;
+		return $this->theme_obj->get_view($page_path);
+	}
+	
 	function get_layout($info)
 	{
 		GLOBAL $_THEME;
 		
 		$found=false;
-		if(!empty($this->_THEME))
+		if(!empty($this->theme_obj))
 		{
-		//	echo ":: $_THEME ::";
-			$layout_info = array('basic_layout'=>'','css'=>array(),'js'=>array());
-			$themes = XTheme::find($this->_THEME,$this->CFG_INFO['_DIR_CONFIG']);
-			if(count($themes)>0)
-			{
-				$theme = new XTheme($themes[0]);
-				$layout_info['basic_layout']= url_seg_add($themes[0],'index.php');
-				$layout_info['css']=$theme->_CONFIG['css'];
-				$layout_info['js']=$theme->_CONFIG['js'];
-				$found=true;
-			}
-			
+			$layout_info['basic_layout']= url_seg_add($this->theme_obj->_PATH,'basic_layout.php');
+			$layout_info['css']=$theme->_CONFIG['css'];
+			$layout_info['js']=$theme->_CONFIG['js'];
+			$found=true;			
 		}		
 		
 		if($found==false)
-		{			
-						
+		{								
 			$_BASE_LAYOUT= url_seg_add($this->_DIR_EP,"/views/basic_layout.php");
 			if(empty($info['basic_layout']))
 			{
@@ -639,6 +695,7 @@ class mul_page extends mul_Module
 			'_BLOCKS'=>$controller_object->_BLOCKS,
 			'meta'=>$controller_object->_META,
 			'_INLINE_SCRIPT'=>$controller_object->_INLINE_SCRIPT,
+			'_INLINE_CSS'=>$controller_object->_INLINE_STYLE,
 			'_RESULT_TYPE'=>$controller_object->_RESULT_TYPE,
 		);
 	}
