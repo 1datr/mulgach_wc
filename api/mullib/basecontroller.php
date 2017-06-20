@@ -73,14 +73,17 @@ class BaseController
 		return $this->_CONTROLLER_DIR;
 	}
 	
-	function add_block($area,$controller,$action)
+	function add_block($area,$controller,$action=NULL,$args=array())
 	{
 		if(empty($this->_BLOCKS[$area]))
 		{
 			$this->_BLOCKS[$area]=array();
 		}
 		
-		$this->_BLOCKS[$area][]=array('controller'=>$controller,'action'=>$action);
+		if($action==NULL)
+			$this->_BLOCKS[$area][]=array($controller);
+		else
+			$this->_BLOCKS[$area][]=array('controller'=>$controller,'action'=>$action,'args'=>$args);
 	}
 	
 	function MethodEnable($user=NULL)

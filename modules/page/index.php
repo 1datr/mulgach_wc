@@ -277,48 +277,58 @@ class mul_page extends mul_Module
 		
 		$info = $this->hmvc_request($_REQUEST['r']);
 
-		$info = $this->call_action($conf_info,$_REQUEST['args']);
-
-		$_MODE_HTML = true;
-		if($info['_RESULT_TYPE']=='text/html')
+		//$info = $this->call_action($conf_info,$_REQUEST['args']);
+		if(!$info['ok'])
 		{
-			$this->draw_html($info);
+			//print_r($info);
+			$this->Error($info['error']);
 		}
 		else 
 		{
-			header("Content-type: ".$info['_RESULT_TYPE']);
-			echo $info['content'];
+			$_MODE_HTML = true;
+			if($info['_RESULT_TYPE']=='text/html')
+			{
+				$this->draw_html($info);
+			}
+			else 
+			{
+				header("Content-type: ".$info['_RESULT_TYPE']);
+				echo $info['content'];
+			}
 		}
-
 	}
 	
 	function hmvc_request($reqstr)
 	{
 		$req_obj = new HMVCRequest($reqstr);
+		//print_r($req_obj);
 		$con_info = $this->controller_info($req_obj->_controller,$req_obj->_action);
 		$info = $this->call_action($con_info,$req_obj->_args);
-		if($info==NULL)
+		if(!$info['ok'])
 		{
 		//	print_r($info);
 			//	print_r($con_info);
 			$req_obj_alter = $req_obj->get_alternative();
 			$con_info= $this->controller_info($req_obj_alter->_controller,$req_obj_alter->_action);
 			$info = $this->call_action($con_info,$req_obj_alter->_args);
-			if($info==NULL)
+			if(!$info['ok'])
 			{
-				$this->Error(404);
+				//$this->Error(404);
 			}
 			else 
 			{
-				$this->draw_html($info);
+				
+			
 			}
 		//	print_r($info);
 		}
 		else 
 		{
-			$this->draw_html($info);
+			//return $info;
+		
 		}
 	//	print_r($con_info);
+		return $info;
 	}
 	
 	function draw_html($info)
@@ -415,8 +425,16 @@ class mul_page extends mul_Module
 							foreach ($items as $item )
 							{
 								$varname="_BLOCK_".$position;
-								$block_con_info=$this->controller_info($item['controller'], $item['action']);
-								$_info=$this->call_action($block_con_info, $item['action']);
+								if(is_array($item))
+								{
+									$block_con_info=$this->controller_info($item['controller'], $item['action']);
+									$_info=$this->call_action($block_con_info, $item['args']);
+									
+								}
+								else 
+								{
+									$_info=$this->hmvc_request($item);
+								}
 								$$varname=$$varname.$_info['content'];
 							}
 						}
@@ -600,7 +618,7 @@ class mul_page extends mul_Module
 				array(
 						'controller'=>'site',
 						'method'=>'error',
-						'args'=>array('args'=>array($errno)),
+						'args'=>array($errno),
 				)
 				);
 		$this->draw_html($res);
@@ -688,6 +706,8 @@ class mul_page extends mul_Module
 		{
 			GLOBAL $_EP;
 		}
+		
+		$bad_result = array('ok'=>false);
 			
 		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
 			
@@ -697,7 +717,7 @@ class mul_page extends mul_Module
 		}
 		else
 		{
-			return NULL;
+			return array_merge($bad_result,array('error'=>'404'));
 		}
 			
 		$controller_name = $con_info['_CONTROLLER_CLASS'];
@@ -717,7 +737,7 @@ class mul_page extends mul_Module
 			
 		if(!method_exists($controller_object, $_action_name))
 		{
-				return NULL;
+			return array_merge($bad_result,array('error'=>'404'));
 		}
 						
 		// Параметры метода
@@ -744,6 +764,7 @@ class mul_page extends mul_Module
 			'_INLINE_SCRIPT'=>$controller_object->_INLINE_SCRIPT,
 			'_INLINE_CSS'=>$controller_object->_INLINE_STYLE,
 			'_RESULT_TYPE'=>$controller_object->_RESULT_TYPE,
+			'ok'=>true,
 		);
 	}		
 			

@@ -15,6 +15,23 @@ function merge_arrays($array1,$array2)
 	return $res;
 }
 
+function array_order_num($arr)
+{
+	$pos=0;
+	$newarray=array();
+	foreach($arr as $idx => $val)
+	{
+		if(is_int($idx))
+		{
+			$newarray[$pos]=$val;
+			$pos++;
+		}
+		else
+			$newarray[$pos]=$val;
+	}
+	return $newarray;
+}
+
 function array_insert(&$array, $position, $insert)
 {
 	if (is_int($position)) {

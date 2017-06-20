@@ -102,7 +102,7 @@ class HMVCRequest
 		}
 		
 		
-		$this->_args = $_result;
+		$this->_args = array_order_num($_result);
 	}
 
 	function get_alternative()
