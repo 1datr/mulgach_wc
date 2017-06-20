@@ -259,17 +259,7 @@ class mul_page extends mul_Module
 		GLOBAL $_EP, $_CONTROLLER, $_ACTION, $_THEME;
 		GLOBAL $_CONFIGS_AREA, $_CONFIG, $_BASEDIR;
 		if(empty($_EP))
-			$_EP="frontend";
-		
-		if(empty( $_REQUEST['controller']))						
-			$_CONTROLLER="site";
-		else 
-			$_CONTROLLER=$_REQUEST['controller'];
-		
-		if(empty( $_REQUEST['action']))
-			$_ACTION="index";
-		else 
-			$_ACTION= $_REQUEST['action'];
+			$_EP="frontend";			
 		
 		$this->_DIR_CONFIG = url_seg_add($_CONFIGS_AREA,$_CONFIG); // директори€ конфигурации		
 		
@@ -280,16 +270,15 @@ class mul_page extends mul_Module
 		
 		$conf_info = $this->controller_info();
 		$this->CFG_INFO = $conf_info;
-		//print_r($conf_info);
-		//echo url_seg_add($conf_info['_DIR_EP'],"/config.php");
+
 		$this->inc_ep_config($conf_info);
-			
-		//	вызываем само действие 
-		if(empty($_REQUEST['args']))
-			$_REQUEST['args']=array();
-	//	var_dump($_REQUEST);
+		
+		if(empty($_REQUEST['r'])) $_REQUEST['r']='';
+		
+		$info = $this->hmvc_request($_REQUEST['r']);
+
 		$info = $this->call_action($conf_info,$_REQUEST['args']);
-		//print_r($info);
+
 		$_MODE_HTML = true;
 		if($info['_RESULT_TYPE']=='text/html')
 		{
@@ -301,6 +290,35 @@ class mul_page extends mul_Module
 			echo $info['content'];
 		}
 
+	}
+	
+	function hmvc_request($reqstr)
+	{
+		$req_obj = new HMVCRequest($reqstr);
+		$con_info = $this->controller_info($req_obj->_controller,$req_obj->_action);
+		$info = $this->call_action($con_info,$req_obj->_args);
+		if($info==NULL)
+		{
+		//	print_r($info);
+			//	print_r($con_info);
+			$req_obj_alter = $req_obj->get_alternative();
+			$con_info= $this->controller_info($req_obj_alter->_controller,$req_obj_alter->_action);
+			$info = $this->call_action($con_info,$req_obj_alter->_args);
+			if($info==NULL)
+			{
+				$this->Error(404);
+			}
+			else 
+			{
+				$this->draw_html($info);
+			}
+		//	print_r($info);
+		}
+		else 
+		{
+			$this->draw_html($info);
+		}
+	//	print_r($con_info);
 	}
 	
 	function draw_html($info)
@@ -589,72 +607,9 @@ class mul_page extends mul_Module
 		die('');
 		
 	}
-	// вызвать действие контроллера
-/*	function call_action($con_info,$ARGS=array(),$_CONFIG=NULL,$_EP=NULL)
+	
+	function make_args($controller_name,$controller_object,$_action_name,$ARGS)
 	{
-		GLOBAL $_BASEDIR;
-		GLOBAL $_CONFIGS_AREA;
-		if($_CONFIG==NULL)
-		{
-			GLOBAL $_CONFIG;
-		}
-		
-		if($_EP==NULL)
-		{
-			GLOBAL $_EP;
-		}
-		
-		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
-
-		if( file_exists($con_info['_CONTROLLER_FILE']))
-		{
-			require_once $con_info['_CONTROLLER_FILE'];
-		}
-		else 
-		{
-			$this->Error(404);
-		}
-		
-		$controller_name = $con_info['_CONTROLLER_CLASS'];
-		
-		// получить страницу из контроллера
-		ob_start();
-		
-		$this->_ENV_INFO['page_module']=$this;
-		$controller_object = new $controller_name(
-				array(
-					'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],					
-					'_ENV'=>$this->_ENV_INFO,
-				));
-		$_action_name = $con_info['_ACTION'];
-		
-		
-		// “акого метода нет в контроллере попытка 1
-		if(!method_exists($controller_object, $_action_name))
-		{
-			$_action_name="ActionIndex";
-			// смещаем параметры не св€занные с контроллером и действием
-		//	print_r($_REQUEST['args']);
-			$args2 = array($_REQUEST['action']);
-			
-			$_REQUEST['action']='index';
-			
-			if(!empty($_REQUEST['args']))
-			foreach ($_REQUEST['args'] as $idx => $arg)
-			{
-				$args2[]=$arg;
-			}
-			//
-			$_REQUEST['args']=$args2;
-		}
-		
-		if(!method_exists($controller_object, $_action_name))
-		{
-			die('Error 404');
-		}
-		
-		
-		// ѕараметры метода
 		$class = new ReflectionClass($controller_name);
 		$method = $class->getMethod($_action_name);
 		$method_params = $method->getParameters();
@@ -670,57 +625,116 @@ class mul_page extends mul_Module
 			$arg_info = $_RULES['action_args'][$con_info['_ACTION_NAME']];
 		}
 		//print_r($arg_info);
+	//	print_r($ARGS);
+		
 		foreach ($method_params as $idx => $arg)
 		{
-			if(!empty($_REQUEST[$arg->name]))
+		//	print_r($arg);
+			if(!empty($ARGS[$arg->name]))
 			{
-				$_val = $_REQUEST[$arg->name];
+				$_val = $ARGS[$arg->name];
 				if(!empty($arg_info[$arg->name]))
 				{
-					eval('$_val=('.$arg_info[$arg->name].')$_REQUEST[$arg->name];');
+					eval('$_val=('.$arg_info[$arg->name].')$ARGS[$arg->name];');
 				}
 				else
 				{
-					$_val=$_REQUEST[$arg->name];
+					$_val=$ARGS[$arg->name];
 				}
 				$method_args[] = $_val;
 			}
-			elseif(!empty($_REQUEST['args'][$idx_in_req_args])) 
-			{				
-				
+			elseif(!empty($ARGS[$idx_in_req_args]))
+			{
+			//	echo "+ $idx_in_req_args +";
 				
 				if(!empty($arg_info[$arg->name]))
 				{
-					eval('$_REQUEST[$arg->name]=('.$arg_info[$arg->name].')$_REQUEST["args"][$idx_in_req_args];');
+					eval('$ARGS[$arg->name]=('.$arg_info[$arg->name].')$ARGS[$idx_in_req_args];');
 				}
-				else 
+				else
 				{
-					$_REQUEST[$arg->name]=$_REQUEST['args'][$idx_in_req_args];
+					$ARGS[$arg->name]=$ARGS[$idx_in_req_args];
 				}
-				$method_args[]=$_REQUEST[$arg->name];
-				//getType				
+				
+				$method_args[]=$ARGS[$arg->name];
+			//	print_r($method_args);
+				//getType
 				$idx_in_req_args++;
 			}
-			else 
+			else
 			{
 				if($arg->isDefaultValueAvailable())
 				{
 					$defval = $arg->getDefaultValue();
 					$method_args[]=$defval;
-					$_REQUEST[$arg->name]=$defval;
+					//$ARGS[$arg->name]=$defval;
 				}
 			}
 		}
 		//print_r($method_args);
-		call_user_func_array(array($controller_object,$_action_name), $method_args);
-		//$controller_object->$_action_name();
+		return $method_args;
+	}
+	// вызвать действие контроллера
+	function call_action($con_info,$ARGS=array(),$_CONFIG=NULL,$_EP=NULL)
+	{
+		GLOBAL $_BASEDIR;
+		GLOBAL $_CONFIGS_AREA;
+		if($_CONFIG==NULL)
+		{
+			GLOBAL $_CONFIG;
+		}
+			
+		if($_EP==NULL)
+		{
+			GLOBAL $_EP;
+		}
+			
+		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
+			
+		if( file_exists($con_info['_CONTROLLER_FILE']))
+		{
+			require_once $con_info['_CONTROLLER_FILE'];
+		}
+		else
+		{
+			return NULL;
+		}
+			
+		$controller_name = $con_info['_CONTROLLER_CLASS'];
+			
+				// получить страницу из контроллера
+		ob_start();
+			
+		$this->_ENV_INFO['page_module']=$this;
+		$controller_object = new $controller_name(
+						array(
+								'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],
+								'_ENV'=>$this->_ENV_INFO,
+						));
+		$_action_name = $con_info['_ACTION'];
+						
+		// “акого метода нет в контроллере попытка 1
+			
+		if(!method_exists($controller_object, $_action_name))
+		{
+				return NULL;
+		}
+						
+		// ѕараметры метода
 		
+		$method_args = $this->make_args($controller_name, $controller_object, $_action_name, $ARGS);
+		
+		//print_r($method_args);
+		
+		call_user_func_array(array($controller_object,$_action_name), $method_args);
+				//$controller_object->$_action_name();
+			
 		$content = ob_get_contents();
 		ob_end_clean();
-		
-		
+			
+			
 		return array(
-			'content'=>$content, 
+			'content'=>$content,
 			'css'=>$controller_object->_CSS,
 			'js'=>$controller_object->_JS,
 			'title'=>$controller_object->_TITLE,
@@ -731,156 +745,7 @@ class mul_page extends mul_Module
 			'_INLINE_CSS'=>$controller_object->_INLINE_STYLE,
 			'_RESULT_TYPE'=>$controller_object->_RESULT_TYPE,
 		);
-	}*/
-
-	function call_action($con_info,$ARGS=array(),$_CONFIG=NULL,$_EP=NULL)
-	{
-				GLOBAL $_BASEDIR;
-				GLOBAL $_CONFIGS_AREA;
-				if($_CONFIG==NULL)
-				{
-					GLOBAL $_CONFIG;
-				}
-			
-				if($_EP==NULL)
-				{
-					GLOBAL $_EP;
-				}
-			
-				require_once "{$_BASEDIR}api/mullib/basecontroller.php";
-			
-				if( file_exists($con_info['_CONTROLLER_FILE']))
-				{
-					require_once $con_info['_CONTROLLER_FILE'];
-				}
-				else
-				{
-					$this->Error(404);
-				}
-			
-				$controller_name = $con_info['_CONTROLLER_CLASS'];
-			
-				// получить страницу из контроллера
-				ob_start();
-			
-				$this->_ENV_INFO['page_module']=$this;
-				$controller_object = new $controller_name(
-						array(
-								'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],
-								'_ENV'=>$this->_ENV_INFO,
-						));
-				$_action_name = $con_info['_ACTION'];
-			
-			
-				// “акого метода нет в контроллере попытка 1
-		if(!method_exists($controller_object, $_action_name))
-				{
-					$_action_name="ActionIndex";
-					// смещаем параметры не св€занные с контроллером и действием
-					//	print_r($ARGS['args']);
-				//	print_r($con_info);
-					$args2 = array($con_info['_ACTION_NAME']);
-						
-					$con_info['_ACTION_NAME']='index';
-						
-					if(!empty($ARGS['args']))
-						foreach ($ARGS['args'] as $idx => $arg)
-						{
-							$args2[]=$arg;
-						}
-					//
-					$ARGS['args']=$args2;
-				//	$_REQUEST=array('controller'=>$con_info['_CONTROLLER_NAME'],'action'=>$con_info['_ACTION_NAME']);
-				//	$_REQUEST['args']=$args2;
-				}
-			
-		if(!method_exists($controller_object, $_action_name))
-		{
-					die('Error 404');
-		}
-			
-			
-				// ѕараметры метода
-		$class = new ReflectionClass($controller_name);
-		$method = $class->getMethod($_action_name);
-		$method_params = $method->getParameters();
-		$method_args=array();
-			
-				// ѕроход по параметрам
-		$idx_in_req_args=0;
-			
-		$_RULES = $controller_object->Rules();
-		$arg_info = array();
-		if(!empty($_RULES['action_args']))
-		{
-			$arg_info = $_RULES['action_args'][$con_info['_ACTION_NAME']];
-		}
-				//print_r($arg_info);
-		//print_r($ARGS);		
-		
-		foreach ($method_params as $idx => $arg)
-				{
-					if(!empty($ARGS[$arg->name]))
-					{
-						$_val = $ARGS[$arg->name];
-						if(!empty($arg_info[$arg->name]))
-						{
-							eval('$_val=('.$arg_info[$arg->name].')$ARGS[$arg->name];');
-						}
-						else
-						{
-							$_val=$ARGS[$arg->name];
-						}
-						$method_args[] = $_val;
-					}
-					elseif(!empty($ARGS['args'][$idx_in_req_args]))
-					{
-			
-			
-						if(!empty($arg_info[$arg->name]))
-						{
-							eval('$ARGS[$arg->name]=('.$arg_info[$arg->name].')$ARGS["args"][$idx_in_req_args];');
-						}
-						else
-						{
-							$ARGS[$arg->name]=$ARGS['args'][$idx_in_req_args];
-						}
-						$method_args[]=$ARGS[$arg->name];
-						//getType
-						$idx_in_req_args++;
-					}
-					else
-					{
-						if($arg->isDefaultValueAvailable())
-						{
-							$defval = $arg->getDefaultValue();
-							$method_args[]=$defval;
-							$ARGS[$arg->name]=$defval;
-						}
-					}
-				}
-				//print_r($method_args);
-		call_user_func_array(array($controller_object,$_action_name), $method_args);
-				//$controller_object->$_action_name();
-			
-		$content = ob_get_contents();
-		ob_end_clean();
-			
-			
-		return array(
-						'content'=>$content,
-						'css'=>$controller_object->_CSS,
-						'js'=>$controller_object->_JS,
-						'title'=>$controller_object->_TITLE,
-						'basic_layout'=>$controller_object->_LAYOUT,
-						'_BLOCKS'=>$controller_object->_BLOCKS,
-						'meta'=>$controller_object->_META,
-						'_INLINE_SCRIPT'=>$controller_object->_INLINE_SCRIPT,
-						'_INLINE_CSS'=>$controller_object->_INLINE_STYLE,
-						'_RESULT_TYPE'=>$controller_object->_RESULT_TYPE,
-		);
-	}
-				
+	}		
 			
 	function get_controller($conname)
 	{
