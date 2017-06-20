@@ -5,17 +5,25 @@ class HmvcController extends BaseController
 	private function ConnectDBIfExists($cfg)
 	{
 		GLOBAL $_BASEDIR;
-		$conffile=url_seg_add($_BASEDIR,"conf",$cfg,"config.php");
-		include $conffile;
-		
-		if(!empty($_MODULES['db']))	// конфа подключена к базе
+		try
 		{
+			$conffile=url_seg_add($_BASEDIR,"conf",$cfg,"config.php");
+			include $conffile;
 			
-			$this->connect_db($_MODULES['db']);
-			
-			return $_MODULES['db'];
+			if(!empty($_MODULES['db']))	// конфа подключена к базе
+			{
+				
+				$this->connect_db($_MODULES['db']);
+				
+				return $_MODULES['db'];
+			}
+			return NULL;
 		}
-		return NULL;
+		catch (Exception $exc)
+		{
+			echo "<h4>This configuration does not exists</h4>";
+			//die();
+		}
 	}
 	
 	private function getExistingModelInfo($cfg,$triada,$ep="frontend")
@@ -83,6 +91,8 @@ class HmvcController extends BaseController
 	{
 		$this->add_block('BASE_MENU', 'site', 'menu');
 
+		//print_r($step);
+		
 		switch($step){
 			case 'begin': {
 							$_SESSION['makeinfo']=array();				
@@ -91,7 +101,7 @@ class HmvcController extends BaseController
 							$this->redirect('?r=hmvc/make/binds');
 						};break;
 			case 'binds': {			
-						$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);
+						$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);											
 						
 						$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
 						$tables = $this->_ENV['_CONNECTION']->get_tables();					

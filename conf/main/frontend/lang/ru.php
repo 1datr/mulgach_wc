@@ -66,4 +66,6 @@ $_LANG['date_start']='date_start';
 $_LANG['date_end']='date_end';
 $_LANG['teh_zad']='teh_zad';
 $_LANG['full_name']='full_name';
+$_LANG['Error']='Error';
+$_LANG['No such page']='No such page';
 ?>

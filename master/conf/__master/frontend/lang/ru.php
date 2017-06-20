@@ -28,7 +28,9 @@ $_LANG['Table']='Таблица';
 $_LANG['NEXT >']='Далее >';
 $_LANG['Create new config']='Создать новую конфигурацию';
 $_LANG['Logout']='Выйти';
-$_LANG['Login']='Login';
-$_LANG['Password']='Password';
-$_LANG['Log_in']='Log_in';
+$_LANG['Login']='Логин';
+$_LANG['Password']='Пароль';
+$_LANG['Log_in']='Войти';
+$_LANG['Error']='Error';
+$_LANG['No such page']='No such page';
 ?>

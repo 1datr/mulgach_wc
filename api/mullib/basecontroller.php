@@ -7,7 +7,7 @@ class BaseController
 	VAR $_CSS=array();
 	VAR $_BLOCKS=array();
 	VAR $_TITLE="";
-	VAR $_LAYOUT;
+	VAR $_LAYOUT='basic_layout.php';
 	VAR $_META=array();
 	VAR $_INLINE_SCRIPT='';
 	VAR $_INLINE_STYLE='';
@@ -81,6 +81,17 @@ class BaseController
 		}
 		
 		$this->_BLOCKS[$area][]=array('controller'=>$controller,'action'=>$action);
+	}
+	
+	function MethodEnable($user=NULL)
+	{
+		
+	}
+	
+	public function ActionError($ErrorNo)
+	{
+		$this->out_view('error'.$ErrorNo,array());
+		//echo "<h3>".Lang::__t('Error').' '.$ErrorNo."</h3>";
 	}
 	
 	function getinfo($infodescr)
@@ -161,6 +172,12 @@ class BaseController
 		
 	}
 	
+	// переключить лейаут
+	function use_layout($newlayout)
+	{
+		$this->_LAYOUT=$newlayout.'.php';
+	}
+	
 	function out_view($view,$vars=array())
 	{
 		foreach ($vars as $var => $val)
@@ -219,6 +236,7 @@ class BaseController
 	function get_view_path($view)
 	{
 		$path_from_theme = $this->_ENV['page_module']->get_template_from_theme($view);
+	//	echo ">>{$path_from_theme} {$view} >>";
 		//echo $path_from_theme;
 		if($path_from_theme==NULL)
 		{

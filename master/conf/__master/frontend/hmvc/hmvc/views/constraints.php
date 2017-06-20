@@ -51,6 +51,8 @@ $this->inline_css('
 	border-left: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
 	border-right: 1px solid #ddd;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
 }		
 ');
 ?>

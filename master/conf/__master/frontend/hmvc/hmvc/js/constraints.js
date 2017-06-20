@@ -36,7 +36,7 @@ function check_required(el)
 	if($('#field_'+field+'_required').is(':checked'))//.attr('checked')=='checked')
 	{
 		
-		cb_req.attr('checked',"checked");
+		cb_req.prop('checked',"checked");
 		cb_req.attr('disabled',true);
 		
 		prev_element=cb_req.prev('input[type=hidden]');

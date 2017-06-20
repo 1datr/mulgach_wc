@@ -1,9 +1,8 @@
 
   <!--Шапка-->
-  <?=$_BLOCK_BASE_MENU ?>
   <header>
     <div class="container">
-    
+   
     </div>
   </header>
   <!--Основной блок-->
@@ -16,4 +15,3 @@
   <footer>
     <div class="container"></div>
   </footer>
-

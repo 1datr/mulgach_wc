@@ -21,6 +21,7 @@ class SiteController extends BaseController
 	
 	public function ActionLogin()
 	{
+		$this->use_layout('layout_login');
 		$this->out_view('loginform',array());
 	}
 	
@@ -28,6 +29,8 @@ class SiteController extends BaseController
 	{
 		//$this->out_view('loginform',array());
 	}
+	
+	
 	
 	public function Logout()
 	{
