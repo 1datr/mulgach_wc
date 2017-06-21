@@ -208,6 +208,11 @@ class BaseController
 		echo $req['content'];
 	}
 	
+	function getRequest()
+	{
+		return $this->_ENV['page_module']->_REQUEST;
+	}
+	
 	function usewidget($wid_object,$params=array())
 	{
 	//	ob_start();

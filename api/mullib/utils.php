@@ -27,7 +27,7 @@ function array_order_num($arr)
 			$pos++;
 		}
 		else
-			$newarray[$pos]=$val;
+			$newarray[$idx]=$val;
 	}
 	return $newarray;
 }

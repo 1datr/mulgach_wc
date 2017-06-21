@@ -9,6 +9,8 @@ foreach ($inc_files as $inc_module)
 
 $_EP_PATH = NULL;
 
+
+
 class mul_page extends mul_Module 
 {
 	VAR $_DIR_CONFIG;
@@ -20,6 +22,7 @@ class mul_page extends mul_Module
 	VAR $CONF_BASE=array();
 	VAR $CONF_EP=array();
 	VAR $theme_obj;
+	VAR $_REQUEST=NULL;
 	
 	
 	function __construct($_PARAMS)
@@ -300,17 +303,23 @@ class mul_page extends mul_Module
 	
 	function hmvc_request($reqstr)
 	{
-		$req_obj = new HMVCRequest($reqstr);
+		$this->_REQUEST = new HMVCRequest($reqstr);
 		//print_r($req_obj);
-		$con_info = $this->controller_info($req_obj->_controller,$req_obj->_action);
-		$info = $this->call_action($con_info,$req_obj->_args);
+		$con_info = $this->controller_info($this->_REQUEST->_controller,$this->_REQUEST->_action);
+		$info = $this->call_action($con_info,$this->_REQUEST);
+		
+	//	print_r($this->_REQUEST);
+		
 		if(!$info['ok'])
 		{
-		//	print_r($info);
-			//	print_r($con_info);
-			$req_obj_alter = $req_obj->get_alternative();
-			$con_info= $this->controller_info($req_obj_alter->_controller,$req_obj_alter->_action);
-			$info = $this->call_action($con_info,$req_obj_alter->_args);
+			//print_r($info);
+			
+			$this->_REQUEST = $this->_REQUEST->get_alternative();
+			
+			//print_r($this->_REQUEST);
+			
+			$con_info= $this->controller_info($this->_REQUEST->_controller,$this->_REQUEST->_action);
+			$info = $this->call_action($con_info,$this->_REQUEST);
 			if(!$info['ok'])
 			{
 				//$this->Error(404);
@@ -428,7 +437,8 @@ class mul_page extends mul_Module
 								if(is_array($item))
 								{
 									$block_con_info=$this->controller_info($item['controller'], $item['action']);
-									$_info=$this->call_action($block_con_info, $item['args']);
+									$block_req = new HMVCRequest($item['controller'], $item['action'], $item['args']);
+									$_info=$this->call_action($block_con_info,$block_req);
 									
 								}
 								else 
@@ -607,7 +617,7 @@ class mul_page extends mul_Module
 	function controller_request($req)
 	{
 		$_info = $this->controller_info($req['controller'],$req['method']);
-		$res = $this->call_action($_info,$req['args']);
+		$res = $this->call_action($_info,$req);
 		return $res;
 	}
 	
@@ -626,7 +636,7 @@ class mul_page extends mul_Module
 		
 	}
 	
-	function make_args($controller_name,$controller_object,$_action_name,$ARGS)
+	function make_args($controller_name,$controller_object,$_action_name,&$request)
 	{
 		$class = new ReflectionClass($controller_name);
 		$method = $class->getMethod($_action_name);
@@ -643,38 +653,41 @@ class mul_page extends mul_Module
 			$arg_info = $_RULES['action_args'][$con_info['_ACTION_NAME']];
 		}
 		//print_r($arg_info);
-	//	print_r($ARGS);
-		
+		//print_r($ARGS);
+		$_fun_map = array();
 		foreach ($method_params as $idx => $arg)
 		{
 		//	print_r($arg);
-			if(!empty($ARGS[$arg->name]))
+			$_fun_map[]=$arg->name;
+			if(!empty($request->_args[$arg->name]))
 			{
-				$_val = $ARGS[$arg->name];
+				$_val = $request->_args[$arg->name];
 				if(!empty($arg_info[$arg->name]))
 				{
-					eval('$_val=('.$arg_info[$arg->name].')$ARGS[$arg->name];');
+					eval('$_val=('.$arg_info[$arg->name].')$request->_args[$arg->name];');
 				}
 				else
 				{
-					$_val=$ARGS[$arg->name];
+					$_val=$request->_args[$arg->name];
 				}
 				$method_args[] = $_val;
 			}
-			elseif(!empty($ARGS[$idx_in_req_args]))
+			elseif(!empty($request->_args[$idx_in_req_args]))
 			{
 			//	echo "+ $idx_in_req_args +";
 				
 				if(!empty($arg_info[$arg->name]))
 				{
-					eval('$ARGS[$arg->name]=('.$arg_info[$arg->name].')$ARGS[$idx_in_req_args];');
+					eval('$request->_args[$arg->name]=('.$arg_info[$arg->name].')$request->_args[$idx_in_req_args];');
 				}
 				else
 				{
-					$ARGS[$arg->name]=$ARGS[$idx_in_req_args];
+					$request->_args[$arg->name]=$request->_args[$idx_in_req_args];
 				}
 				
-				$method_args[]=$ARGS[$arg->name];
+				$request->delete_arg($idx_in_req_args);
+				$method_args[$arg->name]=$request->_args[$arg->name];
+			
 			//	print_r($method_args);
 				//getType
 				$idx_in_req_args++;
@@ -684,16 +697,21 @@ class mul_page extends mul_Module
 				if($arg->isDefaultValueAvailable())
 				{
 					$defval = $arg->getDefaultValue();
-					$method_args[]=$defval;
-					//$ARGS[$arg->name]=$defval;
+					$method_args[$arg->name]=$defval;
+					$request->_args[$arg->name]=$defval;
 				}
 			}
 		}
+		
+		//print_r($_fun_map);
+		$request->setmap($_fun_map);
+		
+		//print_r($request);
 		//print_r($method_args);
 		return $method_args;
 	}
 	// вызвать действие контроллера
-	function call_action($con_info,$ARGS=array(),$_CONFIG=NULL,$_EP=NULL)
+	function call_action($con_info,$request,$_CONFIG=NULL,$_EP=NULL)
 	{
 		GLOBAL $_BASEDIR;
 		GLOBAL $_CONFIGS_AREA;
@@ -706,6 +724,8 @@ class mul_page extends mul_Module
 		{
 			GLOBAL $_EP;
 		}
+		
+		//print_r($request);
 		
 		$bad_result = array('ok'=>false);
 			
@@ -742,7 +762,7 @@ class mul_page extends mul_Module
 						
 		// Параметры метода
 		
-		$method_args = $this->make_args($controller_name, $controller_object, $_action_name, $ARGS);
+		$method_args = $this->make_args($controller_name, $controller_object, $_action_name, $request);
 		
 		//print_r($method_args);
 		

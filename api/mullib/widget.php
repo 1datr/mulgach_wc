@@ -8,7 +8,14 @@ class Widget {
 	
 	function __construct($_PARAMS=array())
 	{
-		$this->_PARAMS=$_PARAMS;
+		if(is_object($_PARAMS))
+		{
+			$this->_PARAMS=array('controller'=>$_PARAMS);
+		}
+		else 
+		{
+			$this->_PARAMS=$_PARAMS;
+		}
 	}
 	
 	function out($params=array())

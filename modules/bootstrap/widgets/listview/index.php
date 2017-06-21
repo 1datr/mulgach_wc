@@ -166,7 +166,7 @@ namespace BootstrapListView
 			});
 ?>
 </table><?php 
-$this->usewidget(new PagerWidget(),array('ds'=>$params['ds']));
+$this->usewidget(new PagerWidget($this->_PARAMS['controller']),array('ds'=>$params['ds']));
 			}
 	}
 
