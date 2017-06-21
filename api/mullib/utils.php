@@ -46,6 +46,19 @@ function array_insert(&$array, $position, $insert)
 	}
 }
 
+function _array_diff($arrA,$arrB)
+{
+	$newarray=array();
+	foreach ($arrA as $El_A)
+	{
+		if(!in_array($El_A, $arrB))
+		{
+			$newarray[]=$El_A;
+		}
+	}
+	return $newarray;
+}
+
 function def_options($defs,&$opt_array)
 {
 	foreach ($defs as $defkey => $defval)

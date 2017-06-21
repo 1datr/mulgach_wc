@@ -5,9 +5,6 @@ $conf = array(
 		'_FAVICO_FORMAT'=>"image/gif",
 		'_THEME'=>"master_base",
 		
-		'_USERS'=>array(
-				array('login'=>'root','password'=>'123456',),
-		),
 );
 
 

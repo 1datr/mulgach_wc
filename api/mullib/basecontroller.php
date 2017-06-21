@@ -86,14 +86,42 @@ class BaseController
 			$this->_BLOCKS[$area][]=array('controller'=>$controller,'action'=>$action,'args'=>$args);
 	}
 	
-	function ActionEnable($action,$user=NULL)
+	function IsActionEnable($_action,$user=NULL)
 	{
-		if($action=='error')
+		if($_action=='error')
 			return true;
 		$res = true;
 		$rules=$this->Rules();
-		
+		if(!empty($rules['action_access']))
+		{
+			foreach ($rules['action_access'] as $idx => $rule)
+			{
+				$rule_res = $rule->calc_for($this,$_action);
+				$res = $res && $rule_res;
+			}
+		}
 		return $res;
+	}
+	
+	public function getActions()
+	{
+		$methods = get_class_methods(get_class($this));
+		$methodlist=array();
+		$method_not_to_include=array('validate','error');
+		foreach($methods as $method)
+		{
+			$matches = array();
+			preg_match_all('/^Action(.+)$/Uis', $method, $matches);
+			$newmethod = mb_strtolower($matches[1][0]);
+			if(($newmethod=='') || ( in_array($newmethod,$method_not_to_include)))
+				continue;
+			if(!in_array($newmethod,$methodlist))
+				{
+					$methodlist[]=$newmethod;
+				}
+	
+		}
+		return $methodlist;
 	}
 	
 	public function ActionError($ErrorNo)

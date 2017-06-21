@@ -10,7 +10,7 @@ class TasksController extends BaseController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+
 		);
 	}
 		

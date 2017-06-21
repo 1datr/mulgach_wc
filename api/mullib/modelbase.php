@@ -1,23 +1,7 @@
 <?php
 require_once url_seg_add(__DIR__,"dataset.php");
 
-class MethodAccessRule {
-	
-	VAR $_type;
-	VAR $_objects;
-	VAR $_roles;
-	function __construct($rule_type,$rule_objects,$roles)
-	{
-		$this->_type=$rule_type;
-		$this->_objects=$rule_objects;
-		$this->_roles=$roles;
-	}
-	
-	function calc_for($controller,$action)
-	{
-		
-	}
-}
+
 
 class BaseModel
 {

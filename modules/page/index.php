@@ -526,10 +526,14 @@ class mul_page extends mul_Module
 		$found=false;
 		if(!empty($this->theme_obj))
 		{
-			$layout_info['basic_layout']= url_seg_add($this->theme_obj->_PATH,$info['basic_layout']);
-			$layout_info['css']=$theme->_CONFIG['css'];
-			$layout_info['js']=$theme->_CONFIG['js'];
-			$found=true;			
+			$thefile = url_seg_add($this->theme_obj->_PATH,$info['basic_layout']);
+			if(file_exists($thefile))
+			{
+				$layout_info['basic_layout']= $thefile;
+				$layout_info['css']=$theme->_CONFIG['css'];
+				$layout_info['js']=$theme->_CONFIG['js'];
+				$found=true;
+			}
 		}		
 		
 		if($found==false)
@@ -768,7 +772,7 @@ class mul_page extends mul_Module
 			return array_merge($bad_result,array('error'=>'404',));
 		}
 		//print_r($con_info);
-		if(!$controller_object->ActionEnable($con_info['_ACTION_NAME']))
+		if(!$controller_object->IsActionEnable($con_info['_ACTION_NAME']))
 		{
 			return array_merge($bad_result,array('error'=>'403','notry'=>true));
 		}
