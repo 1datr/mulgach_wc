@@ -1,7 +1,16 @@
 <?php 
 class SiteController extends BaseController
 {
-		
+	public function Rules()
+	{
+		return array(
+			'actions'=>array(
+				'access'=>array(
+						
+			)),
+		);
+	}
+	
 	public function ActionIndex()
 	{
 		$this->_TITLE="Master";

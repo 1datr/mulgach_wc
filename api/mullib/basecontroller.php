@@ -86,13 +86,19 @@ class BaseController
 			$this->_BLOCKS[$area][]=array('controller'=>$controller,'action'=>$action,'args'=>$args);
 	}
 	
-	function MethodEnable($user=NULL)
+	function ActionEnable($action,$user=NULL)
 	{
+		if($action=='error')
+			return true;
+		$res = true;
+		$rules=$this->Rules();
 		
+		return $res;
 	}
 	
 	public function ActionError($ErrorNo)
 	{
+		$this->use_layout('error_layout');
 		$this->out_view('error'.$ErrorNo,array());
 		//echo "<h3>".Lang::__t('Error').' '.$ErrorNo."</h3>";
 	}
@@ -178,7 +184,9 @@ class BaseController
 	// переключить лейаут
 	function use_layout($newlayout)
 	{
-		$this->_LAYOUT=$newlayout.'.php';
+		//echo url_seg_add(__DIR__,'../../views',"{$newlayout}.php");
+		if( file_exists(url_seg_add($this->get_current_dir(),'../../views',"{$newlayout}.php")) )
+			$this->_LAYOUT=$newlayout.'.php';
 	}
 	
 	function out_view($view,$vars=array())

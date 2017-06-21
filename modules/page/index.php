@@ -310,7 +310,7 @@ class mul_page extends mul_Module
 		
 	//	print_r($this->_REQUEST);
 		
-		if(!$info['ok'])
+		if(!$info['ok'] && empty($info['notry']))
 		{
 			//print_r($info);
 			
@@ -322,7 +322,7 @@ class mul_page extends mul_Module
 			$info = $this->call_action($con_info,$this->_REQUEST);
 			if(!$info['ok'])
 			{
-				//$this->Error(404);
+				$this->Error($info['error']);
 			}
 			else 
 			{
@@ -617,7 +617,8 @@ class mul_page extends mul_Module
 	function controller_request($req)
 	{
 		$_info = $this->controller_info($req['controller'],$req['method']);
-		$res = $this->call_action($_info,$req);
+		$req_obj = new HMVCRequest($req['controller'],$req['method'],$req['args']);
+		$res = $this->call_action($_info,$req_obj);
 		return $res;
 	}
 	
@@ -650,10 +651,11 @@ class mul_page extends mul_Module
 		$arg_info = array();
 		if(!empty($_RULES['action_args']))
 		{
-			$arg_info = $_RULES['action_args'][$con_info['_ACTION_NAME']];
+			$arg_info = $_RULES['action_args'][$request->_action];
 		}
+		
 		//print_r($arg_info);
-		//print_r($ARGS);
+		
 		$_fun_map = array();
 		foreach ($method_params as $idx => $arg)
 		{
@@ -664,6 +666,7 @@ class mul_page extends mul_Module
 				$_val = $request->_args[$arg->name];
 				if(!empty($arg_info[$arg->name]))
 				{
+				//	echo '$_val=('.$arg_info[$arg->name].')$request->_args[$arg->name];';
 					eval('$_val=('.$arg_info[$arg->name].')$request->_args[$arg->name];');
 				}
 				else
@@ -678,6 +681,7 @@ class mul_page extends mul_Module
 				
 				if(!empty($arg_info[$arg->name]))
 				{
+				//	echo '$request->_args[$arg->name]=('.$arg_info[$arg->name].')$request->_args[$idx_in_req_args];';
 					eval('$request->_args[$arg->name]=('.$arg_info[$arg->name].')$request->_args[$idx_in_req_args];');
 				}
 				else
@@ -703,11 +707,15 @@ class mul_page extends mul_Module
 			}
 		}
 		
-		//print_r($_fun_map);
+		//  print_r($method_args);
 		$request->setmap($_fun_map);
 		
 		//print_r($request);
-		//print_r($method_args);
+		if(count($method_args)!=count($method_params))
+		{			
+		//	echo ";;xxx;;";
+			return NULL;
+		}
 		return $method_args;
 	}
 	// вызвать действие контроллера
@@ -757,18 +765,32 @@ class mul_page extends mul_Module
 			
 		if(!method_exists($controller_object, $_action_name))
 		{
-			return array_merge($bad_result,array('error'=>'404'));
+			return array_merge($bad_result,array('error'=>'404',));
+		}
+		//print_r($con_info);
+		if(!$controller_object->ActionEnable($con_info['_ACTION_NAME']))
+		{
+			return array_merge($bad_result,array('error'=>'403','notry'=>true));
 		}
 						
 		// Параметры метода
 		
 		$method_args = $this->make_args($controller_name, $controller_object, $_action_name, $request);
-		
 		//print_r($method_args);
-		
+		if($method_args==NULL && !is_array($method_args) )
+		{
+			return array_merge($bad_result,array('error'=>'404','notry'=>true));
+		}
+		//print_r($method_args);
+		try{
 		call_user_func_array(array($controller_object,$_action_name), $method_args);
 				//$controller_object->$_action_name();
 			
+		}
+		catch (Exception $exc)
+		{
+			echo $exc->getMessage().' '.$exc->getCode();
+		}
 		$content = ob_get_contents();
 		ob_end_clean();
 			

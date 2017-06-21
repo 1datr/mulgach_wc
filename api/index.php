@@ -22,6 +22,7 @@ require_once __DIR__."/mullib/utils.php";
 require_once __DIR__."/modulebase.php";
 require_once __DIR__."/mullib/basecontroller.php";
 require_once __DIR__."/mullib/modelbase.php";
+require_once __DIR__."/mullib/authmodel.php";
 
 require_once __DIR__."/mullib/module.php";
 

@@ -33,4 +33,5 @@ $_LANG['Password']='Пароль';
 $_LANG['Log_in']='Войти';
 $_LANG['Error']='Error';
 $_LANG['No such page']='No such page';
+$_LANG['Hello, this is a Mulgach master']='Hello, this is a Mulgach master';
 ?>
