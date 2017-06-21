@@ -1,7 +1,14 @@
 <?php 
 class ConfigsController extends BaseController
 {
-		
+	public function Rules()
+	{
+		return array(
+				'action_access'=>array(
+						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=site/login')
+				),
+		);
+	}
 	public function ActionIndex()
 	{
 		$this->_TITLE="CONFIGS";

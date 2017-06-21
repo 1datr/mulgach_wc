@@ -1,7 +1,14 @@
 <?php 
 class HmvcController extends BaseController
 {
-		
+	public function Rules()
+	{
+		return array(
+				'action_access'=>array(
+						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=site/login')
+				),
+		);
+	}
 	private function ConnectDBIfExists($cfg)
 	{
 		GLOBAL $_BASEDIR;
