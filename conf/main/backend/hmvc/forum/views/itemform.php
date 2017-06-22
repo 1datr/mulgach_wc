@@ -5,7 +5,20 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $form = new mulForm("/?r=forum/save");
 ?>
 <input type="hidden" name="forum[id]" value="<?=((!empty($forum)) ? $forum->getField('id') : '')?>" />
-<input type="submit" value="SUBMIT" />
+<h3><?php 
+if(!empty($forum))   
+{
+	?>
+	#{Edit FORUM} <?=$forum->getView()?>
+	<?php
+}
+else
+{
+	?>
+	#{Create FORUM}
+	<?php
+}
+?></h3>
 <table>
 	<tr>
 	<th><label>#{forum.name}</label></th><td>
@@ -34,4 +47,5 @@ $form = new mulForm("/?r=forum/save");
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
+<?php $form->submit('#{SAVE}'); ?>
 </form>

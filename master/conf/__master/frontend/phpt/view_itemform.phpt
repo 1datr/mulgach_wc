@@ -5,7 +5,20 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $form = new mulForm("/?r={table}/save");
 #>
 <input type="hidden" name="{table}[{fld_primary}]" value="<#=((!empty(${table})) ? ${table}->getField('{fld_primary}') : '')#>" />
-<input type="submit" value="SUBMIT" />
+<h3><#php 
+if(!empty(${table}))   
+{
+	#>
+	#{Edit {TABLE_UC}} <#=${table}->getView()#>
+	<#php
+}
+else
+{
+	#>
+	#{Create {TABLE_UC}}
+	<#php
+}
+#></h3>
 <table>
 <?php 
 foreach($fields as $fld => $fldinfo)
@@ -84,4 +97,5 @@ foreach($fields as $fld => $fldinfo)
 ?>
 </table>
 <input type="hidden" name="back_url" value="<#=$_SERVER['HTTP_REFERER']; #>" />
+<#php $form->submit('#{SAVE}'); #>
 </form>

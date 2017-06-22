@@ -216,8 +216,9 @@ function dir_dotted($dir)
 	return url_seg_add('./', $dir);
 }
 
-function get_files_in_folder($dir_path)
+function get_files_in_folder($dir_path,$opts=array())
 {
+	def_options(array('dirs'=>false,'basename'=>false), $opts);
 	$d = dir($dir_path);
 	$result=array();
 	//	echo "Дескриптор: " . $d->handle . "\n";
@@ -226,9 +227,24 @@ function get_files_in_folder($dir_path)
 		if(($entry!="..")&&($entry!="."))
 		{
 			$filename = url_seg_add($dir_path, $entry);
-			
-			$result[]=$filename;
-			
+			if(count($opts)==0)
+			{
+			}
+			else 
+			{
+				if($opts['dirs'])
+				{
+					if(!is_dir($filename))
+					{
+						continue;
+					}
+				}				
+			}
+			if($opts['basename'])
+				$result[]=basename($filename);
+			else
+				$result[]=$filename;
+					
 		}
 	}
 	$d->close();
@@ -247,6 +263,22 @@ function get_nested_dirs($the_dir)
 		}
 	}
 	return $the_dirs;
+}
+
+function generateCode($length=6) {
+
+	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+
+	$code = "";
+
+	$clen = strlen($chars) - 1;
+	while (strlen($code) < $length) {
+
+		$code .= $chars[mt_rand(0,$clen)];
+	}
+
+	return $code;
+
 }
 
 function string_diff($str1,$str2)

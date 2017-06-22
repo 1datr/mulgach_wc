@@ -108,4 +108,17 @@ class AuthModel extends BaseModel
 		}
 		return false;
 	}
+	
+	function auth_db($user,$passw,$auth_info)
+	{
+		
+	}
+	
+	function CreateNew($row)
+	{
+		$real_row = $row;
+		$real_row['password']=md5(md5(trim($real_row['password'])));
+		$dr = parent::CreateNew($real_row);		
+		return $dr;
+	}
 }

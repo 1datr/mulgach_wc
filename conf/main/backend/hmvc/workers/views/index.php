@@ -1,14 +1,16 @@
 <?php 
 use BootstrapListView\ListViewWidget as ListViewWidget;
 use BootstrapListView\LVW_Column as LVW_Column;
-
+?>
+<h3>#{WORKERS LIST}</h3>
+<a href="?r=workers/create" class="btn btn-primary" role="button">#{CREATE NEW}</a>
+<?
 $this->usewidget(new ListViewWidget($this),array('ds'=>$ds,
 		'columns'=>array(
 			'__default__',
-			'edit'=>LVW_Column::ref_column('<a href="\?r=workers/edit/{id}"><button>EDIT</button></a>'),
-			'delete'=>LVW_Column::ref_column('<a href="\?r=workers/delete/{id}" class="ref_delete"><button>DELETE</button></a>'),
+			'edit'=>LVW_Column::ref_column('<a href="?r=workers/edit/{id}" role="button" class="btn btn-secondary btn-sm">#{EDIT}</a>'),
+			'delete'=>LVW_Column::ref_column('<a href="?r=workers/delete/{id}" role="button" class="ref_delete btn btn-secondary btn-sm">#{DELETE}</a>'),
 		)
 ));
 
 ?>
-<a href="\?r=workers/create">NEW WORKERS</a>

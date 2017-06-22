@@ -5,7 +5,20 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $form = new mulForm("/?r=projects/save");
 ?>
 <input type="hidden" name="projects[id_project]" value="<?=((!empty($projects)) ? $projects->getField('id_project') : '')?>" />
-<input type="submit" value="SUBMIT" />
+<h3><?php 
+if(!empty($projects))   
+{
+	?>
+	#{Edit PROJECTS} <?=$projects->getView()?>
+	<?php
+}
+else
+{
+	?>
+	#{Create PROJECTS}
+	<?php
+}
+?></h3>
 <table>
 	<tr>
 	<th><label>#{projects.name}</label></th><td>
@@ -103,4 +116,5 @@ $form = new mulForm("/?r=projects/save");
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
+<?php $form->submit('#{SAVE}'); ?>
 </form>

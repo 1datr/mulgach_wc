@@ -2,6 +2,8 @@
 define('__module_class_prefix__','mul_');
 define('__module_class_suffix__','');
 
+require_once __DIR__."/mullib/utils.php";
+
 if(empty($_EP))
 	$_EP=NULL;
 if(empty($_CONTROLLER))
@@ -9,16 +11,16 @@ if(empty($_CONTROLLER))
 if(empty($_ACTION))
 	$_ACTION=NULL;
 if(empty($_CONFIGS_AREA))
-	$_CONFIGS_AREA="$_BASEDIR/conf/";
+	$_CONFIGS_AREA=url_seg_add($_BASEDIR,"/conf/");
 	
 
 if(empty($_NO_READ_CONFIG))
-	require_once __DIR__."/../config.php";
+	require_once url_seg_add(__DIR__,"/../config.php");
 if(!empty($_CONFIG))
 {
-	require_once "{$_CONFIGS_AREA}{$_CONFIG}/config.php";
+	require_once url_seg_add($_CONFIGS_AREA,$_CONFIG,"/config.php");
 }
-require_once __DIR__."/mullib/utils.php";
+
 require_once __DIR__."/modulebase.php";
 require_once __DIR__."/mullib/basecontroller.php";
 require_once __DIR__."/mullib/modelbase.php";

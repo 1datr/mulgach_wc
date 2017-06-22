@@ -5,7 +5,20 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $form = new mulForm("/?r=otdel/save");
 ?>
 <input type="hidden" name="otdel[id_otdel]" value="<?=((!empty($otdel)) ? $otdel->getField('id_otdel') : '')?>" />
-<input type="submit" value="SUBMIT" />
+<h3><?php 
+if(!empty($otdel))   
+{
+	?>
+	#{Edit OTDEL} <?=$otdel->getView()?>
+	<?php
+}
+else
+{
+	?>
+	#{Create OTDEL}
+	<?php
+}
+?></h3>
 <table>
 	<tr>
 	<th><label>#{otdel.name}</label></th><td>
@@ -47,4 +60,5 @@ $form = new mulForm("/?r=otdel/save");
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
+<?php $form->submit('#{SAVE}'); ?>
 </form>

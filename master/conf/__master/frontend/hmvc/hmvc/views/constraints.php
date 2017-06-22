@@ -42,7 +42,7 @@ $form = new mulForm("?r=hmvc/make/makefiles");
 
 <ul class="nav nav-tabs">
   <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link  active" href="#main">#{tabMain}</a></li>
-  <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link" href="#capts">#{tabCapts}</a></li>  
+  <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link" href="#capts">#{tabCaptsMenues}</a></li>  
 </ul>
 <?php 
 $this->inline_css('
@@ -75,7 +75,9 @@ $this->inline_css('
 							'tables'=>$tables,							
 							'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
-							'sbplugin'=>$sbplugin,));
+							'sbplugin'=>$sbplugin,
+  							'triads'=>$triads,
+  	));
   	?>
   	</div>
 

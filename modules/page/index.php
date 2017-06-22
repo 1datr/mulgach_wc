@@ -213,7 +213,7 @@ class mul_page extends mul_Module
 		
 		$ico_file_path = url_seg_add($this->_DIR_EP,$this->CONF_EP['_FAVICO']);
 		$ico_file_ref = filepath2url($ico_file_path);
-		if(file_exists($ico_file_ref))
+		if(file_exists($ico_file_path))
 			$this->CONF_EP['_FAVICO']=$ico_file_path;
 		
 		if(empty($this->CONF_EP['_APPLE_TOUCH_ICONS']))
@@ -262,12 +262,16 @@ class mul_page extends mul_Module
 		GLOBAL $_EP, $_CONTROLLER, $_ACTION, $_THEME;
 		GLOBAL $_CONFIGS_AREA, $_CONFIG, $_BASEDIR;
 		if(empty($_EP))
-			$_EP="frontend";			
+			$_EP="frontend";	
 		
+		
+			
 		$this->_DIR_CONFIG = url_seg_add($_CONFIGS_AREA,$_CONFIG); // директория конфигурации		
 		
 		$this->_DIR_EP = url_seg_add($this->_DIR_CONFIG, $_EP);	// директория точки входа
 			
+		//echo $this->_DIR_EP;
+		
 		GLOBAL $_EP_PATH; 
 		$_EP_PATH = $this->_DIR_EP;
 		

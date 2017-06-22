@@ -5,7 +5,20 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $form = new mulForm("/?r=tasks/save");
 ?>
 <input type="hidden" name="tasks[id_task]" value="<?=((!empty($tasks)) ? $tasks->getField('id_task') : '')?>" />
-<input type="submit" value="SUBMIT" />
+<h3><?php 
+if(!empty($tasks))   
+{
+	?>
+	#{Edit TASKS} <?=$tasks->getView()?>
+	<?php
+}
+else
+{
+	?>
+	#{Create TASKS}
+	<?php
+}
+?></h3>
 <table>
 	<tr>
 	<th><label>#{tasks.name}</label></th><td>
@@ -147,4 +160,5 @@ $form = new mulForm("/?r=tasks/save");
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
+<?php $form->submit('#{SAVE}'); ?>
 </form>

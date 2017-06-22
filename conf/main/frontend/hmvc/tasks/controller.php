@@ -10,7 +10,7 @@ class TasksController extends BaseController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-
+				
 		);
 	}
 		
@@ -19,9 +19,11 @@ class TasksController extends BaseController
 		$this->_TITLE="TASKS";
 	
 		$conn = get_connection();
+		
+		$this->add_block("BASE_MENU", "otdel", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		echo "<h3>TASKS LIST</h3>";
+		
 		
 		$this->inline_script("
 		    $( document ).ready(function() {
@@ -41,6 +43,7 @@ class TasksController extends BaseController
 	
 	public function ActionCreate()
 	{
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$this->_TITLE="CREATE TASKS";
 		$this->out_view('itemform',array());
 	}
@@ -48,6 +51,7 @@ class TasksController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT TASKS";
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$tasks = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('tasks'=>$tasks));
 	}
@@ -69,5 +73,7 @@ class TasksController extends BaseController
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
+	
+	
 }
 ?>

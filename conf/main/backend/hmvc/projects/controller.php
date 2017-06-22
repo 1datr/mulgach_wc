@@ -19,9 +19,11 @@ class ProjectsController extends BaseController
 		$this->_TITLE="PROJECTS";
 	
 		$conn = get_connection();
+		
+		$this->add_block("BASE_MENU", "otdel", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		echo "<h3>PROJECTS LIST</h3>";
+		
 		
 		$this->inline_script("
 		    $( document ).ready(function() {
@@ -41,6 +43,7 @@ class ProjectsController extends BaseController
 	
 	public function ActionCreate()
 	{
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$this->_TITLE="CREATE PROJECTS";
 		$this->out_view('itemform',array());
 	}
@@ -48,6 +51,7 @@ class ProjectsController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT PROJECTS";
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$projects = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('projects'=>$projects));
 	}
@@ -69,5 +73,7 @@ class ProjectsController extends BaseController
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
+	
+	
 }
 ?>

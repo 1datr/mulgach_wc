@@ -18,7 +18,7 @@ $_LANG['hmvc']='hmvc';
 $_LANG['Modules and plugins']='Модули и плагины';
 $_LANG['Configs']='Конфигурации';
 $_LANG['tabMain']='Главная';
-$_LANG['tabCapts']='Надписи';
+$_LANG['tabCaptsMenues']='Надписи и меню';
 $_LANG['FieldName']='FieldName';
 $_LANG['FieldCaption']='FieldCaption';
 $_LANG['CAPTIONS']='Надписи';
@@ -35,4 +35,8 @@ $_LANG['Error']='Error';
 $_LANG['No such page']='No such page';
 $_LANG['Hello, this is a Mulgach master']='Hello, this is a Mulgach master';
 $_LANG['Forbidden page']='Forbidden page';
+$_LANG['MAIN MENU IN CONTROLLER']='MAIN MENU IN CONTROLLER';
+$_LANG['MAIN MENU']='Главное меню';
+$_LANG['Generate main menu']='Главное меню в контроллере';
+$_LANG['Connect menu from :']='Подключить из меню :';
 ?>

@@ -1,8 +1,6 @@
 <?php
 require_once url_seg_add(__DIR__,"dataset.php");
 
-
-
 class BaseModel
 {
 	VAR $_TABLE;
@@ -111,7 +109,8 @@ class BaseModel
 		$res = $this->db_query($sql);
 		$row = $this->_ENV['_CONNECTION']->get_row($res);
 		//$this->_ENV
-		$dr = new DataRecord($this->_MODEL,$row,$this->_ENV);
+		//$dr = new DataRecord($this->_MODEL,$row,$this->_ENV);
+		$dr = new DataRecord($this,$row,$this->_ENV);
 		//$ds =new  DataSet($res,$this->_ENV);
 		return $dr;
 	}	

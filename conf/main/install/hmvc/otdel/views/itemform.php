@@ -5,7 +5,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 $form = new mulForm("/?r=otdel/save");
 ?>
 <input type="hidden" name="otdel[id_otdel]" value="<?=((!empty($otdel)) ? $otdel->getField('id_otdel') : '')?>" />
-<input type="submit" value="SUBMIT" />
+<?php $form->submit('#{SUBMIT}'); ?>
 <table>
 	<tr>
 	<th><label>#{otdel.name}</label></th><td>

@@ -19,9 +19,11 @@ class {table_uc_first}Controller extends BaseController
 		$this->_TITLE="{TABLE_UC}";
 	
 		$conn = get_connection();
+		
+		{menu_block_use}
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		echo "<h3>{TABLE_UC} LIST</h3>";
+		
 		
 		$this->inline_script("
 		    $( document ).ready(function() {
@@ -41,6 +43,7 @@ class {table_uc_first}Controller extends BaseController
 	
 	public function ActionCreate()
 	{
+		{menu_block_use}
 		$this->_TITLE="CREATE {TABLE_UC}";
 		$this->out_view('itemform',array());
 	}
@@ -48,6 +51,7 @@ class {table_uc_first}Controller extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT {TABLE_UC}";
+		{menu_block_use}
 		${table} = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('{table}'=>${table}));
 	}
@@ -69,5 +73,7 @@ class {table_uc_first}Controller extends BaseController
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
+	
+	{OTHER_METHODS}
 }
 #>
