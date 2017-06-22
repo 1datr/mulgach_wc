@@ -77,6 +77,7 @@ $this->inline_css('
 							'settings'=>$settings,
 							'sbplugin'=>$sbplugin,
   							'triads'=>$triads,
+  							
   	));
   	?>
   	</div>

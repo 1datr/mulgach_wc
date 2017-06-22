@@ -39,4 +39,13 @@ $_LANG['MAIN MENU IN CONTROLLER']='MAIN MENU IN CONTROLLER';
 $_LANG['MAIN MENU']='Главное меню';
 $_LANG['Generate main menu']='Главное меню в контроллере';
 $_LANG['Connect menu from :']='Подключить из меню :';
+$_LANG['CREATE HMVC']='CREATE HMVC';
+$_LANG['CREATE BY TABLE']='CREATE BY TABLE';
+$_LANG['CREATE FROM TABLE']='CREATE FROM TABLE';
+$_LANG['CREATE FROM ACTIONLIST']='CREATE FROM ACTIONLIST';
+$_LANG['ADD_ACTION']='ADD_ACTION';
+$_LANG['Enter actions of new controller']='Enter actions of new controller';
+$_LANG['New triada name']='New triada name';
+$_LANG['Action name']='Action name';
+$_LANG['Autogenerate view']='Autogenerate view';
 ?>

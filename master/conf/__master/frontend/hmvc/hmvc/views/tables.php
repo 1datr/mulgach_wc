@@ -1,6 +1,9 @@
-<?php 
+<div class="row">
+<div class="col-sm-4">
+<?php
 $form=new mulForm("?r=hmvc/make/");
 ?>
+<h3>#{CREATE FROM TABLE}</h3>
 <label for="thetable">#{Table}</label>
 <select name="table">
 <?php 
@@ -21,3 +24,12 @@ foreach ($tables as $table)
 <br />
 <?php $form->submit('#{NEXT >}'); ?>
 </form>
+</div>
+
+<div class="col-sm-4">
+<?php 
+$this->out_view('form_from_actionlist',array('tables'=>$tables,'config'=>$config,'sbplugin'=>$sbplugin));
+?>
+
+</div>
+</div>

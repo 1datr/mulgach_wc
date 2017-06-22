@@ -77,11 +77,15 @@ $_LANG['Create PROJECTS']='Create PROJECTS';
 $_LANG['Edit PROJECTS']='Edit PROJECTS';
 $_LANG['Create OTDEL']='Create OTDEL';
 $_LANG['Edit OTDEL']='Edit OTDEL';
-$_LANG['WORKERS LIST']='WORKERS LIST';
+$_LANG['WORKERS LIST']='Сотрудники';
 $_LANG['TASKS LIST']='TASKS LIST';
 $_LANG['Create TASKS']='Create TASKS';
 $_LANG['Edit TASKS']='Edit TASKS';
 $_LANG['FORUM LIST']='FORUM LIST';
 $_LANG['Create FORUM']='Create FORUM';
 $_LANG['Edit FORUM']='Edit FORUM';
+$_LANG['Login']='Логин';
+$_LANG['Password']='Пароль';
+$_LANG['Log_in']='Войти';
+$_LANG['Create WORKERS']='Create WORKERS';
 ?>

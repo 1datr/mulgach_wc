@@ -79,7 +79,7 @@ class AuthModel extends BaseModel
 			{
 				case 'info':
 						$data = $this->_ENV['_CONTROLLER']->getinfo($this->_SETTINGS['authdata']['src']);
-						
+						$auth_settings = array();
 					break;
 				case 'db': 
 					
@@ -87,7 +87,12 @@ class AuthModel extends BaseModel
 				
 			}
 		}
-		return array('data'=>$data,'type'=>$this->_SETTINGS['authdata']['type']);
+		else 
+		{
+			$auth_settings = array();
+		//	return array('data'=>$this->_SETTINGS['table'],'type'=>'db','settings'=>$auth_settings);
+		}
+		return array('data'=>$data,'type'=>$this->_SETTINGS['authdata']['type'],'settings'=>$auth_settings);
 	}
 	
 	function auth($user,$passw)
@@ -111,7 +116,9 @@ class AuthModel extends BaseModel
 	
 	function auth_db($user,$passw,$auth_info)
 	{
-		
+		$sql="SELECT * FROM ".$auth_info['']."";
+		$res = $this->db_query($sql);
+		//$row = $this->_ENV['_CONNECTION']->get_row($res);
 	}
 	
 	function CreateNew($row)

@@ -46,7 +46,7 @@ class HmvcController extends BaseController
 		
 		return NULL;
 	}
-	
+		
 	public function ActionIndex($cfg='main',$ep='frontend')
 	{
 		$this->_TITLE="HMVC";
@@ -55,13 +55,17 @@ class HmvcController extends BaseController
 		$this->add_block('BASE_MENU', 'site', 'menu');
 		$this->add_keyword('xxx');
 		
+		$sbplugin = use_jq_plugin('structblock',$this);
+		
 		$dbparams = $this->ConnectDBIfExists($cfg);
 		if($dbparams!=NULL)	// конфа подключена к базе
 		{
 
 			$tables = $this->_ENV['_CONNECTION']->get_tables();
 			
-			$this->out_view('tables',array('tables'=>$tables,'config'=>$cfg));
+			
+			
+			$this->out_view('tables',array('tables'=>$tables,'config'=>$cfg,'sbplugin'=>$sbplugin));
 		}	
 		else 
 		{
@@ -79,6 +83,63 @@ class HmvcController extends BaseController
 			$fields = $this->_ENV['_CONNECTION']->get_table_fields($table);
 			$this->out_json($fields);
 		}
+	}
+	
+	public function ActionMakepure()
+	{
+		if(!empty($_POST['triada']))
+		{
+			GLOBAL $_BASEDIR;
+			$cur_conf_dir=$opts['cur_conf_dir'];
+			$conf_dir= url_seg_add($_BASEDIR,"conf");
+			
+			foreach ($_POST['ep'] as $ep => $val)
+			{			
+				
+				$hmvc_dir=url_seg_add($conf_dir,$_POST['conf'],$ep,'hmvc',$_POST['triada']);
+				//echo $hmvc_dir;
+				//создаем папку триады
+				if(!file_exists($hmvc_dir))
+				{
+					x_mkdir($hmvc_dir);
+					echo "<p>".$hmvc_dir." created</p>";
+				}
+				
+				$code = parse_code_template(
+							url_seg_add(__DIR__,'../../phpt/customcontroller.phpt'), 
+							array(
+								'triada'=>$_POST['triada'],
+								'actions'=>$_POST['actions'],
+								));
+				$the_file = url_seg_add($hmvc_dir,'controller.php');
+				
+				foreach ($_POST['actions'] as $act)
+				{
+					if(!empty($act['automakeview']))
+					{
+						$the_view = url_seg_add($hmvc_dir,'views',$act['name'].".php");
+						if(!empty($_POST['rewrite_all']) || !file_exists($the_view) )
+						{
+							echo "<p>$the_view rewrited</p>";
+							x_file_put_contents($the_view, '');
+						}
+					}	
+				}
+				
+				if(!empty($_POST['rewrite_all']) || !file_exists($the_file) )
+				{
+					echo "<p>$the_file rewrited</p>"; 
+					x_file_put_contents($the_file, $code);
+				}
+				
+				if(!empty($_POST['actions']))
+				{
+					
+				}
+			}
+		}
+		//$this->add_block('BASE_MENU', 'site', 'menu');
+		$this->redirect_back();
 	}
 	
 	private function SearchViewFld($fieldlist)
