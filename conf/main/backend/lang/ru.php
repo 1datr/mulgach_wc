@@ -90,4 +90,5 @@ $_LANG['Log_in']='Войти';
 $_LANG['Create WORKERS']='Create WORKERS';
 $_LANG['Authorization']='Authorization';
 $_LANG['Edit WORKERS']='Edit WORKERS';
+$_LANG['BAD AUTORIZATION']='BAD AUTORIZATION';
 ?>

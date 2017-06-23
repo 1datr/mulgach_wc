@@ -295,6 +295,8 @@ ON UPDATE SET NULL;
 			$vars['table'] = $_params['table'];
 			$vars['OTHER_METHODS']='';
 			$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
+			$vars['ParentControllerClass']='BaseController';
+			if($_params['authcon']['frontend'])	$vars['ParentControllerClass']='AuthController';
 			x_file_put_contents($file_controller, parse_code_template(url_seg_add(__DIR__,'../../phpt/controller.phpt'),$vars));
 		}
 		// Модель
@@ -442,6 +444,8 @@ ON UPDATE SET NULL;
 			$vars['table'] = $_params['table'];			
 			$vars['OTHER_METHODS']=$menu_site_codes['menu_method'];
 			$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
+			$vars['ParentControllerClass']='BaseController';
+			if($_params['authcon']['backend'])	$vars['ParentControllerClass']='AuthController';
 			x_file_put_contents($file_controller, parse_code_template(url_seg_add(__DIR__,'../../phpt/controller.phpt'),$vars));
 		}
 		// Модель

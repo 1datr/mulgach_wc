@@ -22,7 +22,7 @@
 </ul>
 <ul class="navbar-nav">
 			<li class="nav-item">
-			<a class="nav-link" href="?r=site/logout">#{Logout}(<?=$this->get_user_info('login')?>)</a>
+			<a class="nav-link" href="?r=workers/logout">#{Logout}(<?=$this->get_user_info('login')?>)</a>
 			</li>
 </ul>
 </nav>

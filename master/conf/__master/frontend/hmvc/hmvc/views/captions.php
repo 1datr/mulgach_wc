@@ -57,7 +57,7 @@ foreach ($eps as $idx => $_ep)
 	<?php 
 }
 ?>
-<h3>#{MAIN MENU}</h3>
+<h3>#{MAIN MENU AND AUTH}</h3>
 
 <?php 
 $eps=array('frontend','backend');
@@ -80,6 +80,8 @@ $eps=array('frontend','backend');
 	{
 	?>
 	<div class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" id="mainmenu_<?=$_ep?>" role="tabpanel">
+	<label for="cb_usercon_<?=$_ep?>">#{Users and auth controller}</label>
+	<input type="checkbox" name="authcon[<?=$_ep?>]" /><br/>
 	<label for="cb_menu_<?=$_ep?>">#{Generate main menu}</label>
 	<input id="cb_menu_<?=$_ep?>" type="checkbox" onchange="$('#connect_from_<?=$_ep?>').toggle();" name="mainmenu[<?=$_ep?>]" />
 		<div id="connect_from_<?=$_ep?>">

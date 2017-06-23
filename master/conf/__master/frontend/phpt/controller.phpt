@@ -1,5 +1,5 @@
 <#php 
-class {table_uc_first}Controller extends BaseController
+class {table_uc_first}Controller extends {ParentControllerClass}
 {
 
 	public function Rules()

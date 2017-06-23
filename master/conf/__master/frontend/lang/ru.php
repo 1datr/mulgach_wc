@@ -36,7 +36,7 @@ $_LANG['No such page']='No such page';
 $_LANG['Hello, this is a Mulgach master']='Hello, this is a Mulgach master';
 $_LANG['Forbidden page']='Forbidden page';
 $_LANG['MAIN MENU IN CONTROLLER']='MAIN MENU IN CONTROLLER';
-$_LANG['MAIN MENU']='Главное меню';
+$_LANG['MAIN MENU AND AUTH']='Главное меню и авторизация';
 $_LANG['Generate main menu']='Главное меню в контроллере';
 $_LANG['Connect menu from :']='Подключить из меню :';
 $_LANG['CREATE HMVC']='CREATE HMVC';
@@ -48,4 +48,5 @@ $_LANG['Enter actions of new controller']='Enter actions of new controller';
 $_LANG['New triada name']='New triada name';
 $_LANG['Action name']='Action name';
 $_LANG['Autogenerate view']='Autogenerate view';
+$_LANG['Users and auth controller']='Контроллер пользователей и авторизации';
 ?>

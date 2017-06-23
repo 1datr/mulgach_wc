@@ -1,5 +1,5 @@
 <?php 
-class WorkersController extends BaseController
+class WorkersController extends AuthController
 {
 
 	public function Rules()
@@ -72,22 +72,6 @@ class WorkersController extends BaseController
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
-	public function ActionLogin()
-	{
-		$this->_TITLE=Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('login',array());
-	}
-	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['passw']);
-		if($auth_res!=false)
-		{
-			$user_descr = $this->get_ep_param('sess_user_descriptor');
-			$_SESSION[$user_descr] = $auth_res;
-			$this->redirect('?r=workers/');
-		}
-	}
+
 }
 ?>

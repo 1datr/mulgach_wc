@@ -22,6 +22,8 @@ class ActionAccessRule {
 
 	function calc_for($controller,$action)
 	{
+		//print_r($controller->_ENV);
+		
 		$res = $this->calc_availability($controller,$action);
 		
 		if($res==false)
@@ -131,7 +133,7 @@ class AuthModel extends BaseModel
 		//print_r($auth_info);
 		$sql="SELECT * FROM @+".$auth_info['data']['src']." WHERE `".$auth_info['data']['login_field']."`='{$user}' AND 
 		`".$auth_info['data']['passw_field']."`='".md5(md5($passw))."' AND ".$auth_info['data']['ADDITON_WHERE'];
-		echo $sql;
+	
 		$res = $this->db_query($sql);
 		// SELECT * FROM crm_workers WHERE `login`='adm' AND `password`='32ddd9055fd7f497d2a9c386e4775032'
 		if($res!=NULL)

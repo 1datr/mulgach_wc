@@ -58,7 +58,7 @@ class TasksController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->CreateNew($_POST['tasks']);
+		$newitem = $this->_MODEL->GetRow($_POST['tasks']);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
