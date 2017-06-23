@@ -77,6 +77,10 @@ function check_required(el)
 	}
 }
 
+function find_fields()
+{
+	
+}
 
 $( document ).ready(function() {
 	

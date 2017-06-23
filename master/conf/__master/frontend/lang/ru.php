@@ -49,4 +49,8 @@ $_LANG['New triada name']='New triada name';
 $_LANG['Action name']='Action name';
 $_LANG['Autogenerate view']='Autogenerate view';
 $_LANG['Users and auth controller']=' онтроллер пользователей и авторизации';
+$_LANG['Master. Authorization']='Master. Authorization';
+$_LANG['Login field']='Login field';
+$_LANG['Password field']='Password field';
+$_LANG['Hash field']='Hash field';
 ?>

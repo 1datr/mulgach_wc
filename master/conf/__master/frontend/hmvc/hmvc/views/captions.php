@@ -81,7 +81,20 @@ $eps=array('frontend','backend');
 	?>
 	<div class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" id="mainmenu_<?=$_ep?>" role="tabpanel">
 	<label for="cb_usercon_<?=$_ep?>">#{Users and auth controller}</label>
-	<input type="checkbox" name="authcon[<?=$_ep?>]" /><br/>
+	<input type="checkbox" name="authcon[<?=$_ep?>]" onchange="$('#authcon_settings_<?=$_ep?>').toggle();" /><br/>
+		<div id="authcon_settings_<?=$_ep?>" style="display: none; padding-left:20px;">
+			<label for="authcon_login_<?=$_ep?>">#{Login field}</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][login]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_'.$_ep,))); ?><br />
+			
+			<label for="authcon_passw_<?=$_ep?>">#{Password field}</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][passw]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_passw_'.$_ep,))); ?><br />
+			
+			<label for="authcon_hash_<?=$_ep?>">#{Hash field}</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][hash]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_'.$_ep,))); ?><br />
+			
+		
+		</div>
+	
 	<label for="cb_menu_<?=$_ep?>">#{Generate main menu}</label>
 	<input id="cb_menu_<?=$_ep?>" type="checkbox" onchange="$('#connect_from_<?=$_ep?>').toggle();" name="mainmenu[<?=$_ep?>]" />
 		<div id="connect_from_<?=$_ep?>">
