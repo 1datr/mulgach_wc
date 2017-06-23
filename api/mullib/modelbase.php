@@ -8,6 +8,7 @@ class BaseModel
 	VAR $_SETTINGS;
 	VAR $_LOCATION;
 	VAR $_ENV;	
+	VAR $_SCENARIO;
 	
 	function __construct($_LOCATION="",$the_ENV=array())
 	{
@@ -42,7 +43,7 @@ class BaseModel
 			{
 				if($this->getPrimaryName()==$fld)
 					continue;
-				if(empty($data[$this->_TABLE][$fld]))
+				if(!isset($data[$this->_TABLE][$fld]))
 				{
 					add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
 				}
@@ -57,7 +58,7 @@ class BaseModel
 		
 	}
 	
-	private function db_query($query)
+	protected function db_query($query)
 	{
 		$res = $this->_ENV['_CONNECTION']->query($query);
 		return $res;
@@ -75,6 +76,12 @@ class BaseModel
 	private function make_dbrec($row)
 	{
 		
+	}
+	
+	function GetRow($row)
+	{
+		$dr = new DataRecord($this,$row,$this->_ENV);
+		return $dr;
 	}
 	
 	function CreateNew($row)
@@ -171,6 +178,11 @@ class BaseModel
 		$query="SELECT `{$this->_TABLE}`.*{$sql_selects} FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where $_ORDER LIMIT $base,$pagesize";
 		$query_count="SELECT COUNT(*) as `COUNT` FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where";
 		return array('page_query'=>$query, 'query_count'=>$query_count);
+	}
+	
+	function OnSave(&$object)
+	{
+		
 	}
 	
 	function select_query($where=1,$orderby=NULL,$group=NULL,$having=NULL)

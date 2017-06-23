@@ -73,6 +73,29 @@ class BaseController
 		return $this->_CONTROLLER_DIR;
 	}
 	
+	function get_ep_param($key)
+	{
+		return $this->_ENV['page_module']->get_ep_conf_param($key);
+	}
+	
+	function get_user_info($param=NULL)
+	{
+		$descr = $this->get_ep_param('sess_user_descriptor');
+		if(isset($_SESSION[$descr]))
+		{
+			if($param==NULL)
+				return $_SESSION[$descr];
+			else 
+			{
+				if(isset($_SESSION[$descr][$param]))
+					return $_SESSION[$descr][$param];
+				
+				return NULL;
+			}
+		}
+		return NULL;
+	}
+	
 	function add_block($area,$controller,$action=NULL,$args=array())
 	{
 		if(empty($this->_BLOCKS[$area]))

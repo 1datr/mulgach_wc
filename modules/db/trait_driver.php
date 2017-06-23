@@ -7,4 +7,6 @@ trait dbDriver {
 	public function get_table_fields($tbl){}
 	public function get_primary($var){}
 	public function get_constraints($table){}
+	public function escape_val($value,$type='text'){}
+	public function create_table($table,$params){}
 }

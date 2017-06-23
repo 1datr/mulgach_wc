@@ -265,7 +265,7 @@ function get_nested_dirs($the_dir)
 	return $the_dirs;
 }
 
-function generateCode($length=6) {
+function GenRandStr($length=6) {
 
 	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
 

@@ -75,6 +75,8 @@ class AuthModel extends BaseModel
 	{
 		if(!empty($this->_SETTINGS['authdata']))
 		{
+			def_options(array('type'=>'db','src'=>$this->_SETTINGS['table'],'ADDITON_WHERE'=>'1'), $this->_SETTINGS['authdata']);
+			
 			switch($this->_SETTINGS['authdata']['type'])
 			{
 				case 'info':
@@ -82,7 +84,8 @@ class AuthModel extends BaseModel
 						$auth_settings = array();
 					break;
 				case 'db': 
-					
+						$data = $this->_SETTINGS['authdata'];
+						$auth_settings = $this->_SETTINGS['authdata'];
 					break;
 				
 			}
@@ -99,7 +102,7 @@ class AuthModel extends BaseModel
 	{
 		$the_data = $this->load_auth_data();
 		
-		if($the_data['type']=='info')
+		if($the_data['type']=='info')	// авторизация из инфо-файла
 		{
 			
 			foreach ($the_data['data'] as $idx => $userobj)
@@ -111,14 +114,42 @@ class AuthModel extends BaseModel
 			}
 			
 		}
+		else // авторизация из бд
+		{
+			$row = $this->auth_db($user, $passw, $the_data);
+			return $row;
+		}
 		return false;
 	}
 	
 	function auth_db($user,$passw,$auth_info)
 	{
-		$sql="SELECT * FROM ".$auth_info['']."";
+		$user = $this->_ENV['_CONNECTION']->escape_val(trim($user));
+		$passw = $this->_ENV['_CONNECTION']->escape_val(trim($passw));
+	//	echo md5(md5($passw));
+		$ADDITON_WHERE='1';
+		//print_r($auth_info);
+		$sql="SELECT * FROM @+".$auth_info['data']['src']." WHERE `".$auth_info['data']['login_field']."`='{$user}' AND 
+		`".$auth_info['data']['passw_field']."`='".md5(md5($passw))."' AND ".$auth_info['data']['ADDITON_WHERE'];
+		echo $sql;
 		$res = $this->db_query($sql);
-		//$row = $this->_ENV['_CONNECTION']->get_row($res);
+		// SELECT * FROM crm_workers WHERE `login`='adm' AND `password`='32ddd9055fd7f497d2a9c386e4775032'
+		if($res!=NULL)
+		{
+			$row = $this->_ENV['_CONNECTION']->get_row($res);
+			unset($row[$auth_info['data']['passw_field']]);
+			return $row;
+		}
+		return NULL;
+	}
+	
+	function OnSave(&$object)
+	{		
+		$the_data = $this->load_auth_data();
+		//print_r($object);
+		$passw = $object->getField($the_data['settings']['passw_field']);
+		echo $passw;
+		$object->set_field($the_data['settings']['passw_field'], md5(md5($passw)) );
 	}
 	
 	function CreateNew($row)

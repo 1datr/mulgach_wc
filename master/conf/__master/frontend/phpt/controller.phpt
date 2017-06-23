@@ -58,7 +58,7 @@ class {table_uc_first}Controller extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->CreateNew($_POST['{table}']);
+		$newitem = $this->_MODEL->GetRow($_POST['{table}']);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))

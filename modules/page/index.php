@@ -192,6 +192,15 @@ class mul_page extends mul_Module
 		
 	}
 	
+	function get_ep_conf_param($param)
+	{
+		if(isset($this->CONF_EP[$param]))
+		{
+			return $this->CONF_EP[$param];
+		}
+		return NULL;
+	}
+	
 	function inc_ep_config($conf_info)
 	{
 		include url_seg_add($conf_info['_DIR_EP'],"/config.php");
@@ -202,6 +211,8 @@ class mul_page extends mul_Module
 				'_HTML_CHARSET'=>'utf-8',
 				'_FAVICO'=>'favico.ico',
 				'_FAVICO_FORMAT'=>"image/x-icon",
+				'_APPLE_TOUCH_ICONS'=>array(),
+				'sess_user_descriptor'=>'user',
 		), $this->CONF_EP);
 		
 		// фавико привязать к директории
@@ -264,7 +275,16 @@ class mul_page extends mul_Module
 		if(empty($_EP))
 			$_EP="frontend";	
 		
-		
+		/*		CSRF CONTROL
+		if(!empty($_POST))
+		{
+			if(! mulForm::check_form($_POST))
+			{
+				echo ":: ERRORR :::";
+				$this->Error(403);
+			}
+		}
+		*/
 			
 		$this->_DIR_CONFIG = url_seg_add($_CONFIGS_AREA,$_CONFIG); // директория конфигурации		
 		

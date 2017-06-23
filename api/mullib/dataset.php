@@ -117,6 +117,7 @@ class DataRecord	// запись из БД
 	
 	function save()
 	{
+		$this->_MODEL->OnSave($this);
 		$fld_values = $this->getFields();
 		$fld_map = $this->_MODEL->_SETTINGS['fields'];
 		$this->escape_array($fld_values,$fld_map);
@@ -127,6 +128,7 @@ class DataRecord	// запись из БД
 			$WHERE="`{$primary}`='".$this->getPrimary()."'";
 			unset($fld_values[$primary]);			
 			$sql = QueryMaker::query_update($this->_MODEL->_TABLE,$fld_values,$WHERE);
+			//echo $sql;
 		}
 		else 
 		{

@@ -51,6 +51,10 @@ $( document ).ready(function()
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						console.log(XMLHttpRequest.statusText);
+						if(XMLHttpRequest.responseText!='')
+							{
+								$('body').append('<p>'+XMLHttpRequest.responseText+'</p>');
+							}
 						console.log(textStatus);
 						console.log(errorThrown);
 					}

@@ -88,4 +88,6 @@ $_LANG['Login']='Логин';
 $_LANG['Password']='Пароль';
 $_LANG['Log_in']='Войти';
 $_LANG['Create WORKERS']='Create WORKERS';
+$_LANG['Authorization']='Authorization';
+$_LANG['Edit WORKERS']='Edit WORKERS';
 ?>
