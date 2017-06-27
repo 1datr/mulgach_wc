@@ -1,5 +1,5 @@
 <?php 
-class OtdelController extends BaseController
+class OtdelController extends AuthController
 {
 
 	public function Rules()
@@ -58,7 +58,7 @@ class OtdelController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->CreateNew($_POST['otdel']);
+		$newitem = $this->_MODEL->GetRow($_POST['otdel']);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))

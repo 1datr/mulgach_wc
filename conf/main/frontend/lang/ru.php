@@ -77,4 +77,6 @@ $_LANG['OTDEL LIST']='OTDEL LIST';
 $_LANG['Create OTDEL']='Create OTDEL';
 $_LANG['SAVE']='SAVE';
 $_LANG['Edit OTDEL']='Edit OTDEL';
+$_LANG['FORUM LIST']='FORUM LIST';
+$_LANG['Edit FORUM']='Edit FORUM';
 ?>

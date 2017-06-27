@@ -1,5 +1,5 @@
 <?php 
-class OtdelController extends AuthController
+class ForumController extends AuthController
 {
 
 	public function Rules()
@@ -16,11 +16,11 @@ class OtdelController extends AuthController
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="OTDEL";
+		$this->_TITLE="FORUM";
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,28 +43,28 @@ class OtdelController extends AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "otdel", "menu");
-		$this->_TITLE="CREATE OTDEL";
+		$this->add_block("BASE_MENU", "forum", "menu");
+		$this->_TITLE="CREATE FORUM";
 		$this->out_view('itemform',array());
 	}
 	
 	public function ActionEdit($id)
 	{
-		$this->_TITLE="EDIT OTDEL";
-		$this->add_block("BASE_MENU", "otdel", "menu");
-		$otdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
-		$this->out_view('itemform',array('otdel'=>$otdel));
+		$this->_TITLE="EDIT FORUM";
+		$this->add_block("BASE_MENU", "forum", "menu");
+		$forum = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->out_view('itemform',array('forum'=>$forum));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['otdel']);
+		$newitem = $this->_MODEL->GetRow($_POST['forum']);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=otdel');
+			$this->redirect('/?r=forum');
 		
 	}
 	

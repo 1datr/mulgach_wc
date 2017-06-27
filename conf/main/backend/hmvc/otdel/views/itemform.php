@@ -2,7 +2,7 @@
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 <?php
-$form = new mulForm("/?r=otdel/save");
+$form = new mulForm("?r=otdel/save");
 ?>
 <input type="hidden" name="otdel[id_otdel]" value="<?=((!empty($otdel)) ? $otdel->getField('id_otdel') : '')?>" />
 <h3><?php 

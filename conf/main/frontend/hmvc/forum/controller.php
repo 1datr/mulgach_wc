@@ -1,5 +1,5 @@
 <?php 
-class ForumController extends BaseController
+class ForumController extends AuthController
 {
 
 	public function Rules()
@@ -20,7 +20,7 @@ class ForumController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,7 +43,7 @@ class ForumController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		
 		$this->_TITLE="CREATE FORUM";
 		$this->out_view('itemform',array());
 	}
@@ -51,14 +51,14 @@ class ForumController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT FORUM";
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		
 		$forum = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('forum'=>$forum));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->CreateNew($_POST['forum']);
+		$newitem = $this->_MODEL->GetRow($_POST['forum']);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
