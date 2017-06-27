@@ -199,7 +199,8 @@ function x_mkdir($path)
 	$parent_path = dirname($path);
 	if(file_exists($parent_path))
 	{		
-		mkdir($path);
+		if(!file_exists($path))
+			mkdir($path);
 	}
 	else 
 	{

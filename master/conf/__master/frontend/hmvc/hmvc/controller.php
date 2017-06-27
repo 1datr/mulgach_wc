@@ -252,7 +252,7 @@ ON UPDATE SET NULL;
 	
 	}
 	
-	private function make_mvc_frontend($_params,$opts)
+	private function make_hmvc_frontend($_params,$opts)
 	{
 		GLOBAL $_BASEDIR;
 		
@@ -264,16 +264,9 @@ ON UPDATE SET NULL;
 		$ep='frontend';
 		$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 		
-		$vars=array();
-		$vars['table_uc_first']=UcaseFirst($_params['table']);
-		$vars['TABLE_UC']=strtoupper($_params['table']);
-		$vars['table'] = $_params['table'];
-		$vars['OTHER_METHODS']='';
-		$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
-		$vars['ParentControllerClass']='BaseController';
-		if($_params['authcon']['frontend'])	$vars['ParentControllerClass']='AuthController';
+
 		// add controller file
-		$the_triada->make_controller($vars,'controller');
+		$the_triada->x_make_controller($vars,$rewrite_all);
 		
 		// коды для меню
 		$menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
@@ -305,12 +298,12 @@ ON UPDATE SET NULL;
 		
 	
 		// make views
-		$dir_views = url_seg_add($hmvc_dir,'views');
+	//	$dir_views = url_seg_add($hmvc_dir,'views');
 		//echo $dir_views;
 
-		include $file_baseinfo;
+	//	include $the_triada->_BASEFILE_PATH;
 		
-		$the_triada->add_std_data_views($_params,$this,$rewrite_all);
+		$the_triada->add_std_data_views($_params,$this);
 		
 		// прокачиваем надписи
 		if(!empty($_params['captions'][$ep]))
@@ -321,147 +314,64 @@ ON UPDATE SET NULL;
 				$thelang->add_key($fld_key,$val);
 			}
 		}
+		
 	}
 	
-	private function make_mvc_backend($_params,$opts)
+	private function make_hmvc_backend($_params,$opts)
 	{
 		GLOBAL $_BASEDIR;
 		
-		$conf_dir=$opts['conf_dir'];
-		$cur_conf_dir=$opts['cur_conf_dir'];
+		$conf_obj=$opts['conf_obj'];
 		
+		$rewrite_all=false;
+		if(isset($_params['rewrite_all']))
+			$rewrite_all=true;
+			
 		$ep='backend';
-		$hmvc_dir=url_seg_add($conf_dir,$_params['conf'],$ep,'hmvc',$_params['table']);
-		//создаем папку триады
-		if(!file_exists($hmvc_dir))
-		{
-			x_mkdir($hmvc_dir);
-		}
-		// коды для меню 
+		$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+			
+			
+			// add controller file
+		$the_triada->x_make_controller($vars,$rewrite_all);
+			
+			// коды для меню
 		$menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
-		if(!empty($_params['mainmenu']['backend']))
+		if(!empty($_params['mainmenu']['frontend']))
 		{
 			$vars_menu=array();
 			$menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/sitemenu.phpt'),$vars_menu);
-			
+				
 			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
-			
+				
 			$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 			x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);
-			
+				
 			$menu_info_file = url_seg_add($hmvc_dir,'../../info/basemenu.php');
-			x_file_put_contents($menu_info_file, 
+			x_file_put_contents($menu_info_file,
 						parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/basemenu.phpt'),array('tables'=>$this->_ENV['_CONNECTION']->get_tables()))
-					);
+						);
 		}
-		else 
+		else
 		{
-			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from']['backend'].'", "menu");';
+			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from']['frontend'].'", "menu");';
 		}
-		
-		// Контроллер
-		$file_controller = url_seg_add( $hmvc_dir,'controller.php');
-		if(!file_exists($file_controller) || $_params['rewrite_all'])
-		{
-			$vars=array();
-			$vars['table_uc_first']=UcaseFirst($_params['table']);
-			$vars['TABLE_UC']=strtoupper($_params['table']);
-			$vars['table'] = $_params['table'];			
-			$vars['OTHER_METHODS']=$menu_site_codes['menu_method'];
-			$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
-			$vars['ParentControllerClass']='BaseController';
-			if($_params['authcon']['backend'])	$vars['ParentControllerClass']='AuthController';
-			x_file_put_contents($file_controller, parse_code_template(url_seg_add(__DIR__,'../../phpt/controller.phpt'),$vars));
-		}
+			
 		// Модель
-		$file_model = url_seg_add( $hmvc_dir,'model.php');
-		if(!file_exists($file_model) || $_params['rewrite_all'])
-		{
-			$vars=array();
-			$vars['table_uc_first']=UcaseFirst($_params['table']);
-			$vars['TABLE_UC']=strtoupper($_params['table']);
-			$vars['table'] = $_params['table'];
-			x_file_put_contents($file_model, parse_code_template(url_seg_add(__DIR__,'../../phpt/model.phpt'),$vars));
-		}
+		$the_triada->make_model($_params,$rewrite_all);
 			
 		// Файлик
-		$file_baseinfo= url_seg_add( $hmvc_dir,'baseinfo.php');
-		
-		$vars=array();
-		$vars['table']=$_params['table'];
-		$tbl_fields = $this->_ENV['_CONNECTION']->get_table_fields($_params['table']);
+		$the_triada->make_baseinfo($_params,$this);
 			
-		$this->gather_fields_captions($tbl_fields);
-		
-		$fields_code = xx_implode($tbl_fields, ',', "'{idx}'=>array('Type'=>'{Type}','TypeInfo'=>\"{TypeInfo}\")",
-				function(&$theval,&$idx,&$thetemplate,&$ctr,&$thedelimeter){
-					//	$theval['TypeInfo']=strtr($theval['TypeInfo'],array("'"=>"'"));
-				});
 			
-		$vars['array_fields']="array({$fields_code})";
-		$con_str="";
-		if(!empty($_params['constraints']))
-		{
-			foreach ($_params['constraints'] as $idx => $binding)
-			{
-				$required = ((!empty($binding['required'])) ? true : false);
-				$con_str = $con_str."'".$binding['field']."'=>array('model'=>'".$binding['table']."','fld'=>'".$binding['field_to']."','required'=>".json_encode($required)."),";
-			}
-		}
-		$constraints="";
-		
-		$vars['array_constraints']="array($con_str)";
-		$vars['array_rules']='array()';
-		$_primary = $this->_ENV['_CONNECTION']->get_primary($tbl_fields);
-		$vars['primary']=$_primary;
-		$vars['view']=$_params['view'];
-		//print_r($_params);
-		$vars['required']='array('.xx_implode($_params['model_fields'], ',', "'{name}'",function($theval,&$idx,&$thetemplate,&$ctr,&$thedelimeter)
-		{
-			if(empty($theval['required']))
-			{
-				$thetemplate='';
-				$thedelimeter='';
-			}
-		}).')';
-		x_file_put_contents($file_baseinfo, parse_code_template(url_seg_add(__DIR__,'../../phpt/baseinfo.phpt'),$vars));
+			// make views
+			//	$dir_views = url_seg_add($hmvc_dir,'views');
+			//echo $dir_views;
 			
-		// make views
-		$dir_views = url_seg_add($hmvc_dir,'views');
-		//echo $dir_views;
-		if(!file_exists($dir_views))
-		{
-			x_mkdir($dir_views);
-		}
-		
-		include $file_baseinfo;
-		
-		$index_view = url_seg_add($dir_views,'index.php');
-		if(!file_exists($index_view) || $_params['rewrite_all'])
-		{
-			$vars=array();
-			$vars['table'] = $_params['table'];
-			$vars['primary']=$_primary;
-			$vars['TABLE_UC']=strtoupper($_params['table']);
-			//	echo $this->parse_code_template('view_index',$vars);
-			x_file_put_contents($index_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_index.phpt'),$vars));
-		}
-		
-		$itemform_view = url_seg_add($dir_views,'itemform.php');
-		if(!file_exists($itemform_view) || $_params['rewrite_all'])
-		{
-			$vars=array();
-				
-			$vars['table'] = $_params['table'];
-			$vars['TABLE_UC']=strtoupper($_params['table']);
-			$vars['fld_primary']=$_primary;
-			$vars['fields']=$tbl_fields;
-			$vars['settings']=$settings;
-			$vars['constraints']=$_params['constraints'];
-			// //	$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
-			x_file_put_contents($itemform_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_itemform.phpt'),$vars));
-		}
-		// прокачиваем надписи
+			//	include $the_triada->_BASEFILE_PATH;
+			
+		$the_triada->add_std_data_views($_params,$this);
+			
+			// прокачиваем надписи
 		if(!empty($_params['captions'][$ep]))
 		{
 			$thelang=new Lang(NULL, $_SESSION['makeinfo']['conf'],$ep);
@@ -470,6 +380,7 @@ ON UPDATE SET NULL;
 				$thelang->add_key($fld_key,$val);
 			}
 		}
+		
 	}
 	
 	private function make_hmvc($_params)
@@ -482,22 +393,23 @@ ON UPDATE SET NULL;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		$conf_obj = new scaff_conf($_params['conf']);
 		//print_r($conf_obj);
-		
+		/*
 		$cur_conf_dir = url_seg_add($conf_dir,$_params['conf']);
 		if(!file_exists($cur_conf_dir))
 			mkdir($cur_conf_dir);
+		*/
 	//	print_r($_params);
 		$dbparams = $conf_obj->connect_db_if_exists($this); 
 		
 		//print_r($_params);
 		if(!empty($_params['ep']['frontend']))
 		{
-			$this->make_mvc_frontend($_params,array('conf_obj'=>$conf_obj));
+			$this->make_hmvc_frontend($_params,array('conf_obj'=>$conf_obj));
 		}
 		
 		if(!empty($_params['ep']['backend']))
 		{
-			$this->make_mvc_backend($_params,array('conf_obj'=>$conf_obj));
+			$this->make_hmvc_backend($_params,array('conf_obj'=>$conf_obj));
 		}
 	}
 	

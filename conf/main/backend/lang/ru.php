@@ -91,4 +91,5 @@ $_LANG['Create WORKERS']='Create WORKERS';
 $_LANG['Authorization']='Authorization';
 $_LANG['Edit WORKERS']='Edit WORKERS';
 $_LANG['BAD AUTORIZATION']='BAD AUTORIZATION';
+$_LANG['forum.descr']='descr';
 ?>

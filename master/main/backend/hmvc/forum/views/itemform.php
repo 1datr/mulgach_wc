@@ -27,15 +27,22 @@ else
 			</td>
 	</tr>
 		<tr>
-	<th><label>#{forum.description}</label></th><td>
-				<input type="text" name="forum[description]" value="<?=((!empty($forum)) ? $forum->getField('description',true) : '')?>" />
-			<div class="error" id='err_description' role="alert"></div>
+	<th><label>#{forum.descr}</label></th><td>
+				<input type="text" name="forum[descr]" value="<?=((!empty($forum)) ? $forum->getField('descr',true) : '')?>" />
+			<div class="error" id='err_descr' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{forum.forum_id}</label></th><td>
-				<input type="text" name="forum[forum_id]" value="<?=((!empty($forum)) ? $forum->getField('forum_id',true) : '')?>" />
-			<div class="error" id='err_forum_id' role="alert"></div>
+			<?php 
+					$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'required'=>true, 'name'=>'forum[forum_id]');
+				if(!empty($forum))
+		{
+			$params['value']=$forum->getField('forum_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+		<div class="error" id='err_forum_id' role="alert"></div>
 			</td>
 	</tr>
 	</table>

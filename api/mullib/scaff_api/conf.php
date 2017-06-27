@@ -62,7 +62,8 @@ class scaff_conf
 	
 	function create_triada($ep,$hmvc)
 	{
-		if($tr = $this->get_triada($ep, $hmvc))
+		$tr = $this->get_triada($ep, $hmvc);
+		if($tr !=null)
 		{
 			return $tr;
 		}

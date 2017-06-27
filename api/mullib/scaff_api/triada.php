@@ -13,15 +13,18 @@ class scaff_triada
 	{
 		$this->_PARENT_CONF = $conf_obj;
 		$this->_PATH = url_seg_add( $conf_obj->_PATH, $ep, 'hmvc', $triada);
+	//	echo $this->_PATH;
 		if(!file_exists($this->_PATH) || $create)
 		{
 				x_mkdir($this->_PATH);
 		}
+
 		$this->_VIEWPATH = url_seg_add($this->_PATH,'views');
 		if(!file_exists($this->_VIEWPATH) || $create)
 		{
 			x_mkdir($this->_VIEWPATH);
 		}
+
 	}
 	
 	
@@ -63,38 +66,44 @@ class scaff_triada
 			x_file_put_contents($new_view_path, parse_code_template(url_seg_add(__DIR__,'/phpt/'.$_template.'.phpt'),$vars));
 	}
 	
-	function add_std_data_views($_params,$controller,$rewrite_all=true)
+	function has_view($_view)
 	{
-		$index_view = url_seg_add($dir_views,'index.php');
-		
+		$path=url_seg_add($this->_VIEWPATH,$_view);
+		return file_exists($path);
+	}
+	
+	function add_std_data_views($_params,$controller)
+	{
+		//echo $this->_BASEFILE_PATH;
+		include $this->_BASEFILE_PATH;
+		//print_r($settings);
+		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
 		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
 		
-		if(!file_exists($index_view) || $_params['rewrite_all'])
+		if( !($this->has_view('view_index')) || $_params['rewrite_all'])
 		{
 			$vars=array();
 			$vars['table'] = $_params['table'];
 			$vars['primary']=$_primary;
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			//	echo $this->parse_code_template('view_index',$vars);
-			$this->add_view('index','view_index',$vars);
-			//x_file_put_contents($index_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_index.phpt'),$vars));
+			$this->add_view('index','view_index',$vars,$rewrite_all);
 		}
 		
 		$itemform_view = url_seg_add($dir_views,'itemform.php');
-		if(!file_exists($itemform_view) || $_params['rewrite_all'])
+		if( !($this->has_view('view_itemform'))|| $_params['rewrite_all'])
 		{
-			$vars=array();
-		
+			$vars=array();		
 			$vars['table'] = $_params['table'];
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			$vars['fld_primary']=$_primary;
 			$vars['fields']=$tbl_fields;
 			$vars['settings']=$settings;
 			$vars['constraints']=$_params['constraints'];
-			$this->add_view('itemform','view_itemform',$vars);
+			$this->add_view('itemform','view_itemform',$vars,$rewrite_all);
 			// //	$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
-			//x_file_put_contents($itemform_view, parse_code_template(url_seg_add(__DIR__,'../../phpt/view_itemform.phpt'),$vars));
 		}
+		
 	}
 	
 	
@@ -156,6 +165,20 @@ class scaff_triada
 		{
 			x_file_put_contents($this->_CONTROLLER_PATH, parse_code_template($_template, $vars));
 		}
+	}
+	
+	function x_make_controller($_params,$rewrite,$template='controller')
+	{
+		$vars=array();
+		$vars['table_uc_first']=UcaseFirst($_params['table']);
+		$vars['TABLE_UC']=strtoupper($_params['table']);
+		$vars['table'] = $_params['table'];
+		$vars['OTHER_METHODS']='';
+		$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
+		$vars['ParentControllerClass']='BaseController';
+		if($_params['authcon']['frontend'])	$vars['ParentControllerClass']='AuthController';
+		// add controller file
+		$this->make_controller($vars,$rewrite_all,$template);
 	}
 	
 	function getExistingModelInfo($triada,$ep="frontend")

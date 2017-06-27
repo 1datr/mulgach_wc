@@ -79,4 +79,7 @@ $_LANG['SAVE']='SAVE';
 $_LANG['Edit OTDEL']='Edit OTDEL';
 $_LANG['FORUM LIST']='FORUM LIST';
 $_LANG['Edit FORUM']='Edit FORUM';
+$_LANG['forum.descr']='descr';
+$_LANG['PROJECTS LIST']='PROJECTS LIST';
+$_LANG['Create FORUM']='Create FORUM';
 ?>
