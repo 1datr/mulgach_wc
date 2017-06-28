@@ -84,13 +84,13 @@ $eps=array('frontend','backend');
 	<input type="checkbox" name="authcon[<?=$_ep?>][enable]" onchange="$('#authcon_settings_<?=$_ep?>').toggle();" /><br/>
 		<div id="authcon_settings_<?=$_ep?>" style="display: none; padding-left:20px;">
 			<label for="authcon_login_<?=$_ep?>">#{Login field}</label>
-			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][login]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_'.$_ep,))); ?><br />
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][login]','value'=>$fld_login_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_'.$_ep,))); ?><br />
 			
 			<label for="authcon_passw_<?=$_ep?>">#{Password field}</label>
-			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][passw]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_passw_'.$_ep,))); ?><br />
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][passw]','value'=>$fld_passw_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_passw_'.$_ep,))); ?><br />
 			
 			<label for="authcon_hash_<?=$_ep?>">#{Hash field}</label>
-			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][hash]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_'.$_ep,))); ?><br />
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][hash]','value'=>$fld_hash_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_'.$_ep,))); ?><br />
 			
 		
 		</div>

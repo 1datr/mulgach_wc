@@ -32,20 +32,6 @@ class HmvcController extends BaseController
 			//die();
 		}
 	}
-	
-	private function getExistingModelInfo($cfg,$triada,$ep="frontend")
-	{
-		GLOBAL $_BASEDIR;
-		$baseinfo_file=url_seg_add($_BASEDIR,"conf",$cfg,$ep,"hmvc",$triada,"baseinfo.php");
-		//echo $baseinfo_file;
-		if(file_exists($baseinfo_file))
-		{
-			include $baseinfo_file;
-			return $settings;
-		}
-		
-		return NULL;
-	}
 		
 	public function ActionIndex($cfg='main',$ep='frontend')
 	{
@@ -173,13 +159,22 @@ class HmvcController extends BaseController
 						require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 						$cfg = new scaff_conf($_SESSION['makeinfo']['conf']);
 						$cfg->connect_db_if_exists($this);
+						$_hmvc = $cfg->get_triada('frontend', $_SESSION['makeinfo']['table']);
+					//	mul_dbg($_hmvc);
 						//$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);											
 						
 						$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
 						$tables = $this->_ENV['_CONNECTION']->get_tables();					
 						$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
 						$this->add_js('#js/constraints.js');
-						$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
+						
+						if($_hmvc!=null)
+						{
+							$settings = $_hmvc->getModelInfo();
+						}
+						else 
+							$settings = array();
+						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 						$sbplugin = use_jq_plugin('structblock',$this);
 						$this->_TITLE="Bindings and settings";
 						
@@ -208,6 +203,27 @@ class HmvcController extends BaseController
 									$('#fields_block').jqStructBlock();
 								});
 								");
+						// подыскать поля
+						$fld_login_='';
+						$fld_passw_="";
+						$fld_hash_="";
+						foreach ($fields as $fld => $val)
+						{
+							if(strstr($fld,'login')!=false)
+							{
+								$fld_login_=$fld;
+							}
+							
+							if(strstr($fld,'passw')!=false)
+							{
+								$fld_passw_=$fld;
+							}
+							
+							if( (strstr($fld,'hash')!=false) || (strstr($fld,'token')!=false) )  
+							{
+								$fld_hash_=$fld;
+							}
+						}
 					
 						$this->out_view('constraints',array(
 								'fields'=>$fields,
@@ -216,6 +232,10 @@ class HmvcController extends BaseController
 								'settings'=>$settings,
 								'sbplugin'=>$sbplugin,
 								'triads'=>$triads,
+								
+								'fld_login_'=>$fld_login_,
+								'fld_passw_'=>$fld_passw_,
+								'fld_hash_'=>$fld_hash_,
 						));
 					};break;
 			case 'makefiles': {
@@ -310,14 +330,8 @@ class HmvcController extends BaseController
 			
 		// Файлик
 		$the_triada->make_baseinfo($_params,$this);
-			
-			
-			// make views
-			//	$dir_views = url_seg_add($hmvc_dir,'views');
-			//echo $dir_views;
-			
-			//	include $the_triada->_BASEFILE_PATH;
-			
+
+		// 
 		$the_triada->add_std_data_views($_params,$this);
 			
 			// прокачиваем надписи
@@ -341,12 +355,7 @@ class HmvcController extends BaseController
 		
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		$conf_obj = new scaff_conf($_params['conf']);
-		//print_r($conf_obj);
-		/*
-		$cur_conf_dir = url_seg_add($conf_dir,$_params['conf']);
-		if(!file_exists($cur_conf_dir))
-			mkdir($cur_conf_dir);
-		*/
+
 	//	print_r($_params);
 		$dbparams = $conf_obj->connect_db_if_exists($this); 
 		
@@ -359,8 +368,6 @@ class HmvcController extends BaseController
 			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 			
 			$the_triada->frontend_from_table($_params,$this,$opts);
-			
-		//	$this->make_hmvc_frontend($_params,array('conf_obj'=>$conf_obj));
 		}
 		
 		if(!empty($_params['ep']['backend']))
@@ -371,7 +378,6 @@ class HmvcController extends BaseController
 			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 				
 			$the_triada->backend_from_table($_params,$this,$opts);
-			//$this->make_hmvc_backend($_params,array('conf_obj'=>$conf_obj));
 		}
 	}
 	

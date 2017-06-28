@@ -37,6 +37,9 @@ class scaff_triada
 	static function exists(&$obj,$ep,$hmvc)
 	{
 		$triada_path = url_seg_add($obj->_PATH, $ep, 'hmvc', $hmvc);
+		
+		mul_dbg("path > ".$triada_path);
+		
 		if(file_exists($triada_path))
 		{
 			return true;
@@ -113,8 +116,7 @@ class scaff_triada
 		}
 		
 	}
-	
-	
+		
 	function make_baseinfo($_params,$controller,$template='baseinfo')
 	{
 		$_template = url_seg_add(__DIR__,'/phpt/',$template.'.phpt');		
@@ -198,6 +200,10 @@ class scaff_triada
 	
 		$conf_obj=$opts['conf_obj'];
 	
+	//	mul_dbg(__LINE__." went");
+	//	$dbparams = $this->_PARENT_CONF->connect_db_if_exists($controller);
+		
+		
 		$rewrite_all=false;
 		if(isset($_params['rewrite_all']))
 			$rewrite_all=true;
@@ -261,6 +267,8 @@ class scaff_triada
 		GLOBAL $_BASEDIR;
 	
 		$conf_obj=$opts['conf_obj'];
+ 
+	//	$dbparams = $this->_PARENT_CONF->connect_db_if_exists($controller);
 	
 		$rewrite_all=false;
 		if(isset($_params['rewrite_all']))
@@ -336,6 +344,18 @@ class scaff_triada
 	//	mul_dbg($vars);
 	//	mul_dbg($_params);
 		$this->make_controller($vars,$rewrite_all,$template);
+	}
+	
+	function getModelInfo()
+	{
+		$this->_BASEFILE_PATH=url_seg_add($this->_PATH,'baseinfo.php');
+		if(file_exists($this->_BASEFILE_PATH))
+		{
+			include $this->_BASEFILE_PATH;
+			return $settings;
+		}
+		
+		return NULL;
 	}
 	
 	function getExistingModelInfo($triada,$ep="frontend")
