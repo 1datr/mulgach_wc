@@ -81,7 +81,7 @@ $eps=array('frontend','backend');
 	?>
 	<div class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" id="mainmenu_<?=$_ep?>" role="tabpanel">
 	<label for="cb_usercon_<?=$_ep?>">#{Users and auth controller}</label>
-	<input type="checkbox" name="authcon[<?=$_ep?>]" onchange="$('#authcon_settings_<?=$_ep?>').toggle();" /><br/>
+	<input type="checkbox" name="authcon[<?=$_ep?>][enable]" onchange="$('#authcon_settings_<?=$_ep?>').toggle();" /><br/>
 		<div id="authcon_settings_<?=$_ep?>" style="display: none; padding-left:20px;">
 			<label for="authcon_login_<?=$_ep?>">#{Login field}</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][login]','htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_'.$_ep,))); ?><br />

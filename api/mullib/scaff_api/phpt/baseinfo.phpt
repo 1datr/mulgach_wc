@@ -7,4 +7,5 @@ $settings = array(
 	'required'=>{required},
 	'rules'=>{array_rules},	
 	'view'=>'{view}',
+	{authparams}
 );

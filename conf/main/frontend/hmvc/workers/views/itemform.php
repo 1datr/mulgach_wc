@@ -2,7 +2,7 @@
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 <?php
-$form = new mulForm("/?r=workers/save");
+$form = new mulForm("?r=workers/save");
 ?>
 <input type="hidden" name="workers[id]" value="<?=((!empty($workers)) ? $workers->getField('id') : '')?>" />
 <h3><?php 
@@ -20,6 +20,7 @@ else
 }
 ?></h3>
 <table>
+
 	<tr>
 	<th><label>#{workers.number}</label></th><td>
 				<textarea name="workers[number]" ><?=((!empty($workers)) ? $workers->getField('number',true) : '')?></textarea>

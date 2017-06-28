@@ -3,10 +3,12 @@ class scaff_conf
 {
 	VAR $_PATH;
 	VAR $_ERROR=false;
+	VAR $_NAME;
 	
 	function __construct($conf,$opts=array())
 	{
 		GLOBAL $_BASEDIR;
+		$this->_NAME=$conf;
 		def_options(array('conf_dir'=>'conf','rewrite'=>true), $opts);
 		$this->_PATH = url_seg_add($_BASEDIR,$opts['conf_dir'],$conf);
 		

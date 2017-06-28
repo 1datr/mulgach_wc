@@ -1,0 +1,26 @@
+<?php
+$_LANG['']='';
+$_LANG['forum.id']='id';
+$_LANG['forum.name']='name';
+$_LANG['forum.description']='description';
+$_LANG['forum.forum_id']='parent forum';
+$_LANG['workers.id']='id';
+$_LANG['workers.number']='number';
+$_LANG['workers.fio']='fio';
+$_LANG['workers.fio_eng']='fio_eng';
+$_LANG['workers.position']='position';
+$_LANG['workers.city']='city';
+$_LANG['workers.address1']='address1';
+$_LANG['workers.address2']='address2';
+$_LANG['workers.mail1']='mail1';
+$_LANG['workers.mail2']='mail2';
+$_LANG['workers.phone1']='phone1';
+$_LANG['workers.phone2']='phone2';
+$_LANG['workers.phone3']='phone3';
+$_LANG['workers.responsibility']='responsibility';
+$_LANG['workers.login']='login';
+$_LANG['workers.password']='password';
+$_LANG['workers.is_arhiv']='is_arhiv';
+$_LANG['workers.level']='level';
+$_LANG['workers.token']='token';
+?>

@@ -1,5 +1,5 @@
 <?php 
-class ForumController extends AuthController
+class ForumController extends BaseController
 {
 
 	public function Rules()
@@ -59,7 +59,6 @@ class ForumController extends AuthController
 	public function ActionSave()
 	{
 		$newitem = $this->_MODEL->GetRow($_POST['forum']);
-		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))

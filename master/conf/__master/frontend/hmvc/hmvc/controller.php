@@ -208,7 +208,7 @@ class HmvcController extends BaseController
 									$('#fields_block').jqStructBlock();
 								});
 								");
-					//		print_r($_SESSION);						
+					
 						$this->out_view('constraints',array(
 								'fields'=>$fields,
 								'tables'=>$tables,							
@@ -227,14 +227,10 @@ class HmvcController extends BaseController
 						unset($_SESSION['makeinfo']);
 						
 						$this->redirect('?r=hmvc/make/success');
-				//		$this->redirect('?r=configs');
 					};break;
 			case 'success': {
 						$this->_TITLE=Lang::__t('HMVC made successed');
 						$this->x_out_view('success',array('hmvc_name'=>$_SESSION['hmvc_name']));
-						
-					
-						//		$this->redirect('?r=configs');
 					};break;
 		}
 
@@ -256,67 +252,19 @@ class HmvcController extends BaseController
 	private function make_hmvc_frontend($_params,$opts)
 	{
 		GLOBAL $_BASEDIR;
-		
+	
 		$conf_obj=$opts['conf_obj'];
 	
 		$rewrite_all=false;
 		if(isset($_params['rewrite_all']))
 			$rewrite_all=true;
+		
 		$ep='frontend';
 		$the_triada = $conf_obj->create_triada($ep,$_params['table']);
-		
-
-		// add controller file
-		$the_triada->x_make_controller($vars,$rewrite_all);
-		
-		// коды для меню
-		$menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
-		if(!empty($_params['mainmenu']['frontend']))
-		{
-			$vars_menu=array();
-			$menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/sitemenu.phpt'),$vars_menu);
-				
-			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
-				
-			$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
-			x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);
-				
-			$menu_info_file = url_seg_add($hmvc_dir,'../../info/basemenu.php');
-			x_file_put_contents($menu_info_file,
-					parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/basemenu.phpt'),array('tables'=>$this->_ENV['_CONNECTION']->get_tables()))
-					);
-		}
-		else
-		{
-			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from']['frontend'].'", "menu");';
-		}
 	
-		// Модель
-		$the_triada->make_model($_params,$rewrite_all);
-			
-		// Файлик
-		$the_triada->make_baseinfo($_params,$this);
-		
-	
-		// make views
-	//	$dir_views = url_seg_add($hmvc_dir,'views');
-		//echo $dir_views;
-
-	//	include $the_triada->_BASEFILE_PATH;
-		
-		$the_triada->add_std_data_views($_params,$this);
-		
-		// прокачиваем надписи
-		if(!empty($_params['captions'][$ep]))
-		{
-			$thelang=new Lang(NULL, $_SESSION['makeinfo']['conf'],$ep);
-			foreach ($_params['captions'][$ep] as $fld_key => $val)
-			{
-				$thelang->add_key($fld_key,$val);
-			}
-		}
-		
+		$the_triada->frontend_from_table($_params,$this,$opts);			
 	}
+	
 	
 	private function make_hmvc_backend($_params,$opts)
 	{
@@ -404,13 +352,26 @@ class HmvcController extends BaseController
 		
 		//print_r($_params);
 		if(!empty($_params['ep']['frontend']))
-		{
-			$this->make_hmvc_frontend($_params,array('conf_obj'=>$conf_obj));
+		{					
+			GLOBAL $_BASEDIR;
+			
+			$ep='frontend';
+			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+			
+			$the_triada->frontend_from_table($_params,$this,$opts);
+			
+		//	$this->make_hmvc_frontend($_params,array('conf_obj'=>$conf_obj));
 		}
 		
 		if(!empty($_params['ep']['backend']))
 		{
-			$this->make_hmvc_backend($_params,array('conf_obj'=>$conf_obj));
+			GLOBAL $_BASEDIR;
+				
+			$ep='backend';
+			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+				
+			$the_triada->backend_from_table($_params,$this,$opts);
+			//$this->make_hmvc_backend($_params,array('conf_obj'=>$conf_obj));
 		}
 	}
 	

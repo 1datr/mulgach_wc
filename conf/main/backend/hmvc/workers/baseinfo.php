@@ -8,9 +8,11 @@ $settings = array(
 	'rules'=>array(),	
 	'view'=>'{fio}',
 	'authdata'=>array(
-		//	'type'=>'db',
-		//	'src'=>'workers',
-			'login_field'=>'login',
-			'passw_field'=>'password',
-		),
+		'type'=>'db',
+		'src'=>'workers',
+		// fields
+		'login_field'=>'login',
+		'passw_field'=>'password',
+		'hash_tag'=>'token',
+	),
 );

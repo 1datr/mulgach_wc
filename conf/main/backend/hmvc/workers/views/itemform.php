@@ -20,6 +20,7 @@ else
 }
 ?></h3>
 <table>
+
 	<tr>
 	<th><label>#{workers.number}</label></th><td>
 				<textarea name="workers[number]" ><?=((!empty($workers)) ? $workers->getField('number',true) : '')?></textarea>

@@ -7,4 +7,5 @@ $settings = array(
 	'required'=>array('id','number','fio','fio_eng','position','city','address1','address2','mail1','mail2','phone1','phone2','phone3','responsibility','login','password','is_arhiv','level','token'),
 	'rules'=>array(),	
 	'view'=>'{fio}',
+	
 );
