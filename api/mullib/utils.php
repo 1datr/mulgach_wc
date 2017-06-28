@@ -207,6 +207,36 @@ function x_mkdir($path)
 		x_mkdir($parent_path);
 	}
 }
+
+function mul_dbg($var,$print_r=true)
+{
+	$file_dbg = url_seg_add(__DIR__,'debug.txt');
+	
+	if(is_string($var))
+	{
+		$newstr=$var;
+	}
+	else 
+	{
+		ob_start();
+		if($print_r)
+			print_r($var);
+		else
+			var_dump($var);
+		$newstr = ob_get_clean();
+	}
+	
+	$content="";
+	if(file_exists($file_dbg))
+	{
+		$content = file_get_contents($file_dbg);
+	}
+	$content=$content."
+			
+".date("m-d-Y H:i:s.u").": {$newstr}";
+	
+	x_file_put_contents($file_dbg, $content);
+}
 // добавить точку перед директорией 
 function dir_dotted($dir)
 {

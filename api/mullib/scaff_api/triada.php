@@ -16,7 +16,7 @@ class scaff_triada
 	//	echo $this->_PATH;
 		if(!file_exists($this->_PATH) || $create)
 		{
-				x_mkdir($this->_PATH);
+			x_mkdir($this->_PATH);
 		}
 
 		$this->_VIEWPATH = url_seg_add($this->_PATH,'views');
@@ -52,9 +52,9 @@ class scaff_triada
 			$vars['table_uc_first']=UcaseFirst($_params['table']);
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			$vars['table'] = $_params['table'];
-			if(!isset($_params['ModelClass']))
-				$_params['ModelClass']='BaseModel';
-			$vars['BaseModelClass'] = $_params['ModelClass'];
+			$vars['BaseModelClass'] = 'BaseModel';
+			if(isset($_params['authcon'][$this->_EP]))				
+				$vars['BaseModelClass'] = 'AuthModel';
 			x_file_put_contents($this->_MODEL_PATH, parse_code_template(url_seg_add(__DIR__,'/phpt/model.phpt'),$vars));
 		}
 	}
@@ -76,7 +76,9 @@ class scaff_triada
 	{
 		//echo $this->_BASEFILE_PATH;
 		include $this->_BASEFILE_PATH;
+		
 		//print_r($settings);
+		
 		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
 		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
 		
@@ -87,12 +89,14 @@ class scaff_triada
 			$vars['primary']=$_primary;
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			//	echo $this->parse_code_template('view_index',$vars);
-			$this->add_view('index','view_index',$vars,$rewrite_all);
+			$this->add_view('index','view_index',$vars,$_params['rewrite_all']);
 		}
 		
 		$itemform_view = url_seg_add($dir_views,'itemform.php');
 		if( !($this->has_view('view_itemform'))|| $_params['rewrite_all'])
 		{
+			
+			
 			$vars=array();		
 			$vars['table'] = $_params['table'];
 			$vars['TABLE_UC']=strtoupper($_params['table']);
@@ -100,7 +104,7 @@ class scaff_triada
 			$vars['fields']=$tbl_fields;
 			$vars['settings']=$settings;
 			$vars['constraints']=$_params['constraints'];
-			$this->add_view('itemform','view_itemform',$vars,$rewrite_all);
+			$this->add_view('itemform','view_itemform',$vars,$_params['rewrite_all']);
 			// //	$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
 		}
 		
@@ -176,7 +180,7 @@ class scaff_triada
 		$vars['OTHER_METHODS']='';
 		$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
 		$vars['ParentControllerClass']='BaseController';
-		if($_params['authcon']['frontend'])	$vars['ParentControllerClass']='AuthController';
+		if($_params['authcon'][$this->_EP])	$vars['ParentControllerClass']='AuthController';
 		// add controller file
 		$this->make_controller($vars,$rewrite_all,$template);
 	}

@@ -1,0 +1,32 @@
+
+			
+06-28-2017 11:36:10.000000: Array
+(
+    [id] => 
+    [name] => xWDWx
+    [description] => xXx xXx
+    [forum_id] => 
+)
+
+			
+06-28-2017 11:36:28.000000: Array
+(
+    [id] => 
+    [name] => xWDWx
+    [description] => xXx xXx
+    [forum_id] => 
+)
+
+			
+06-28-2017 11:36:28.000000: INSERT INTO `@+forum`(`name`,`description`,`forum_id`,``) VALUES('xWDWx','xXx xXx','','74be16979710d4c4e7c6647856088456')
+			
+06-28-2017 11:43:59.000000: Array
+(
+    [id] => 
+    [name] => xWDWx
+    [description] => xXx xXx
+    [forum_id] => 
+)
+
+			
+06-28-2017 11:43:59.000000: INSERT INTO `@+forum`(`name`,`description`,`forum_id`) VALUES('xWDWx','xXx xXx','')

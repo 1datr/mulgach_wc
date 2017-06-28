@@ -59,6 +59,7 @@ class ForumController extends AuthController
 	public function ActionSave()
 	{
 		$newitem = $this->_MODEL->GetRow($_POST['forum']);
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))

@@ -53,4 +53,7 @@ $_LANG['Master. Authorization']='Master. Authorization';
 $_LANG['Login field']='Login field';
 $_LANG['Password field']='Password field';
 $_LANG['Hash field']='Hash field';
+$_LANG['MAKE SUCCESSED']='MAKE SUCCESSED';
+$_LANG['HMVC made successed']='HMVC made successed';
+$_LANG['made successed']='made successed';
 ?>

@@ -253,6 +253,22 @@ class BaseController
 				
 	}
 	
+	function x_out_view($view,$vars=array())
+	{
+		foreach ($vars as $var => $val)
+		{
+			$$var = $val;
+		}
+	
+		$_view_path = $this->get_view_path($view);
+		if(!file_exists($_view_path))
+			x_file_put_contents($_view_path, '
+');
+		include $_view_path;
+		//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
+	
+	}
+	
 	function out_json($object,$json_opts=JSON_UNESCAPED_UNICODE)
 	{
 		$this->_RESULT_TYPE="application/json";

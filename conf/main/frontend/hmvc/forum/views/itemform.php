@@ -20,6 +20,7 @@ else
 }
 ?></h3>
 <table>
+
 	<tr>
 	<th><label>#{forum.name}</label></th><td>
 				<input type="text" name="forum[name]" value="<?=((!empty($forum)) ? $forum->getField('name',true) : '')?>" />
@@ -27,16 +28,16 @@ else
 			</td>
 	</tr>
 		<tr>
-	<th><label>#{forum.descr}</label></th><td>
-				<input type="text" name="forum[descr]" value="<?=((!empty($forum)) ? $forum->getField('descr',true) : '')?>" />
-			<div class="error" id='err_descr' role="alert"></div>
+	<th><label>#{forum.description}</label></th><td>
+				<input type="text" name="forum[description]" value="<?=((!empty($forum)) ? $forum->getField('description',true) : '')?>" />
+			<div class="error" id='err_description' role="alert"></div>
 			</td>
 	</tr>
 		<tr>
 	<th><label>#{forum.forum_id}</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'required'=>true, 'name'=>'forum[forum_id]');
-				if(!empty($forum))
+					$params = array('ds'=> $this->get_controller('forum')->_MODEL->find() ,'name'=>'forum[forum_id]');			
+					if(!empty($forum))
 		{
 			$params['value']=$forum->getField('forum_id',true);
 		}

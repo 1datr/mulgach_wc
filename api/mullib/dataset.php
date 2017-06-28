@@ -128,13 +128,14 @@ class DataRecord	// запись из БД
 			$WHERE="`{$primary}`='".$this->getPrimary()."'";
 			unset($fld_values[$primary]);			
 			$sql = QueryMaker::query_update($this->_MODEL->_TABLE,$fld_values,$WHERE);
-			//echo $sql;
+			
 		}
 		else 
 		{
 			unset($fld_values[$this->_MODEL->getPrimaryName()]);
 			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
+		mul_dbg($sql);
 		//echo $sql;
 		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
 	}

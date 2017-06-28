@@ -221,22 +221,23 @@ class HmvcController extends BaseController
 			case 'makefiles': {
 					
 						$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+						$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
 						
 						$this->make_hmvc($_SESSION['makeinfo']);
 						unset($_SESSION['makeinfo']);
-						echo "MAKE SUCCESSED ";
 						
+						$this->redirect('?r=hmvc/make/success');
 				//		$this->redirect('?r=configs');
 					};break;
+			case 'success': {
+						$this->_TITLE=Lang::__t('HMVC made successed');
+						$this->x_out_view('success',array('hmvc_name'=>$_SESSION['hmvc_name']));
+						
+					
+						//		$this->redirect('?r=configs');
+					};break;
 		}
-		/*
-		 ALTER TABLE crm_projects 
-ADD CONSTRAINT `fk_worker` 
-FOREIGN KEY (`creator_id`)
-REFERENCES `crm_workers` (`id`)
-ON DELETE SET NULL
-ON UPDATE SET NULL;
-		 * */
+
 	}
 	
 	private function gather_fields_captions($tbl_fields)
