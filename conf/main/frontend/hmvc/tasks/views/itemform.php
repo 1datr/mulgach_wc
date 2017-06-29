@@ -20,6 +20,7 @@ else
 }
 ?></h3>
 <table>
+
 	<tr>
 	<th><label>#{tasks.name}</label></th><td>
 				<input type="text" name="tasks[name]" value="<?=((!empty($tasks)) ? $tasks->getField('name',true) : '')?>" />
@@ -54,7 +55,7 @@ else
 	<th><label>#{tasks.proj_id}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('projects')->_MODEL->find() ,'name'=>'tasks[proj_id]');			
-				if(!empty($tasks))
+					if(!empty($tasks))
 		{
 			$params['value']=$tasks->getField('proj_id',true);
 		}
@@ -93,7 +94,7 @@ else
 	<th><label>#{tasks.otv_sotr}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'name'=>'tasks[otv_sotr]');			
-				if(!empty($tasks))
+					if(!empty($tasks))
 		{
 			$params['value']=$tasks->getField('otv_sotr',true);
 		}
@@ -149,7 +150,7 @@ else
 	<th><label>#{tasks.creator_id}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('workers')->_MODEL->find() ,'required'=>true, 'name'=>'tasks[creator_id]');
-				if(!empty($tasks))
+					if(!empty($tasks))
 		{
 			$params['value']=$tasks->getField('creator_id',true);
 		}

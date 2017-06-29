@@ -1,5 +1,5 @@
 <?php 
-class OtdelController extends AuthController
+class OtdelController extends BaseController
 {
 
 	public function Rules()

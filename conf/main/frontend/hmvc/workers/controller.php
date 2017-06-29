@@ -20,7 +20,7 @@ class WorkersController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,7 +43,7 @@ class WorkersController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 		$this->_TITLE="CREATE WORKERS";
 		$this->out_view('itemform',array());
 	}
@@ -51,14 +51,14 @@ class WorkersController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT WORKERS";
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 		$workers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('workers'=>$workers));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->CreateNew($_POST['workers']);
+		$newitem = $this->_MODEL->GetRow($_POST['workers']);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))

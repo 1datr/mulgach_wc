@@ -213,6 +213,7 @@ class mul_page extends mul_Module
 				'_FAVICO_FORMAT'=>"image/x-icon",
 				'_APPLE_TOUCH_ICONS'=>array(),
 				'sess_user_descriptor'=>'user',
+				'_URL_FORMAT'=>'folder_like',
 		), $this->CONF_EP);
 		
 		// фавико привязать к директории
@@ -225,7 +226,7 @@ class mul_page extends mul_Module
 		$ico_file_path = url_seg_add($this->_DIR_EP,$this->CONF_EP['_FAVICO']);
 		$ico_file_ref = filepath2url($ico_file_path);
 		if(file_exists($ico_file_path))
-			$this->CONF_EP['_FAVICO']=$ico_file_path;
+			$this->CONF_EP['_FAVICO']=$ico_file_ref;
 		
 		if(empty($this->CONF_EP['_APPLE_TOUCH_ICONS']))
 			$this->CONF_EP['_APPLE_TOUCH_ICONS']=array($this->CONF_EP['_FAVICO']);
@@ -237,7 +238,7 @@ class mul_page extends mul_Module
 			
 			if(!empty($this->theme_obj->_CONFIG['_FAVICO']))
 			{
-				$this->CONF_EP['_FAVICO'] = $this->theme_obj->_CONFIG['_FAVICO'];
+				$this->CONF_EP['_FAVICO'] = url_seg_add("/",$this->theme_obj->_CONFIG['_FAVICO']);
 			}
 			
 			if(!empty($this->theme_obj->_CONFIG['_FAVICO_FORMAT']))
@@ -410,16 +411,21 @@ class mul_page extends mul_Module
 						<?php 
 					}
 					
-					foreach ($this->CONF_EP['_APPLE_TOUCH_ICONS'] as $idx => $icofile)
+					//mul_dbg($this->CONF_EP);
+					
+					if(is_array($this->CONF_EP['_APPLE_TOUCH_ICONS']))
 					{
-						$size_code="";
-						if(is_string($idx))
+						foreach ($this->CONF_EP['_APPLE_TOUCH_ICONS'] as $idx => $icofile)
 						{
-							$size_code="size=\"{$idx}\"";
+							$size_code="";
+							if(is_string($idx))
+							{
+								$size_code="size=\"{$idx}\"";
+							}
+							?>
+							<link rel="apple-touch-icon" <?=$size_code?>  href="<?=$icofile?>"/>
+							<?php 
 						}
-						?>
-						<link rel="apple-touch-icon" <?=$size_code?>  href="<?=$icofile?>"/>
-						<?php 
 					}
 		
 					$_LAYOUT_INFO = $this->get_layout($info);
@@ -582,7 +588,7 @@ class mul_page extends mul_Module
 			foreach ($_CSS as $css)
 			{
 				?>				
-				<link rel="stylesheet" type="text/css" href="<?=$css?>">
+				<link rel="stylesheet" type="text/css" href="<?=as_url($css)?>">
 				<?php 
 				}
 			}
@@ -605,7 +611,7 @@ class mul_page extends mul_Module
 			foreach ($_JS as $js)
 			{
 			?>
-			<script src="<?=$js?>"></script>
+			<script src="<?=as_url($js)?>"></script>
 			<?php 
 			}
 		}

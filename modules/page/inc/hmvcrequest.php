@@ -5,9 +5,11 @@ class HMVCRequest
 	VAR $_action='index';
 	VAR $_args=array();
 	VAR $_fun_map=array();
+	VAR $_URL_FORMAT='folder_like';
 
-	function __construct($req_str,$action=NULL,$args=NULL)
+	function __construct($req_str,$action=NULL,$args=NULL,$_URL_FORMAT='folder_like')
 	{
+		$this->_URL_FORMAT = $_URL_FORMAT;
 		if(($action==NULL)&&($args==NULL))
 			$this->from_str($req_str);
 			else
@@ -130,6 +132,22 @@ class HMVCRequest
 		}
 	}
 
+	function make_url($url_content)
+	{
+		switch($this->_URL_FORMAT)
+		{
+		case 'folder_like': 
+				return as_url($url_content);
+			break;
+		case 'oldschool_url': 
+				return "?r=".$url_content;
+			break;
+			
+		}
+		return "";
+		//'_URL_FORMAT'=>'folder_like'
+	}
+	
 	function url_modified($args_change,$args_delete=array(),$_controller=null,$_action=null)
 	{
 		if($_controller!=null)
@@ -178,7 +196,7 @@ class HMVCRequest
 			}
 		}
 		
-		return $newstr;
+		return $this->make_url($newstr);
 	}
 }
 

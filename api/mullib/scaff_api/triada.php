@@ -8,6 +8,7 @@ class scaff_triada
 	VAR $_CONTROLLER_PATH;
 	VAR $_MODEL_PATH;
 	VAR $_BASEFILE_PATH;
+	VAR $menu_site_codes;
 
 	function __construct(&$conf_obj,$ep,$triada,$create=true)
 	{
@@ -38,7 +39,7 @@ class scaff_triada
 	{
 		$triada_path = url_seg_add($obj->_PATH, $ep, 'hmvc', $hmvc);
 		
-		mul_dbg("path > ".$triada_path);
+		//mul_dbg("path > ".$triada_path);
 		
 		if(file_exists($triada_path))
 		{
@@ -81,10 +82,7 @@ class scaff_triada
 	
 	function add_std_data_views($_params,$controller)
 	{
-		//echo $this->_BASEFILE_PATH;
 		include $this->_BASEFILE_PATH;
-		
-		
 		
 		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
 		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
@@ -95,15 +93,13 @@ class scaff_triada
 			$vars['table'] = $_params['table'];
 			$vars['primary']=$_primary;
 			$vars['TABLE_UC']=strtoupper($_params['table']);
-			//	echo $this->parse_code_template('view_index',$vars);
 			$this->add_view('index','view_index',$vars,$_params['rewrite_all']);
 		}
 		
 		$itemform_view = url_seg_add($dir_views,'itemform.php');
 		if( !($this->has_view('view_itemform'))|| $_params['rewrite_all'])
 		{
-			
-			
+						
 			$vars=array();		
 			$vars['table'] = $_params['table'];
 			$vars['TABLE_UC']=strtoupper($_params['table']);
@@ -112,7 +108,6 @@ class scaff_triada
 			$vars['settings']=$settings;
 			$vars['constraints']=$_params['constraints'];
 			$this->add_view('itemform','view_itemform',$vars,$_params['rewrite_all']);
-			// //	$tpl_file= url_seg_add(__DIR__,"../../phpt",$tpl).".phpt";
 		}
 		
 	}
@@ -154,8 +149,7 @@ class scaff_triada
 	//	mul_dbg($_params['authcon']);
 	//	mul_dbg($_params['authcon'][$this->_EP]['enable']);
 		if(isset($_params['authcon'][$this->_EP]['enable']))
-		{
-			
+		{			
 			
 			$vars['authparams']=parse_code_template(url_seg_add(__DIR__,'phpt/authparams.phpt') , 
 					array(
@@ -180,7 +174,7 @@ class scaff_triada
 		$this->_BASEFILE_PATH=url_seg_add($this->_PATH,'baseinfo.php');
 		/*if(!file_exists($this->_CONTROLLER_PATH) || $rewrite)
 		{*/
-			x_file_put_contents($this->_BASEFILE_PATH, parse_code_template($_template, $vars));
+		x_file_put_contents($this->_BASEFILE_PATH, parse_code_template($_template, $vars));
 		//}
 	}
 	
@@ -210,22 +204,20 @@ class scaff_triada
 			
 		$ep='frontend';
 	
-			// add controller file
-		//	$vars=array();
-		$this->x_make_controller($_params,$rewrite_all);
 		//	mul_dbg($vars);
 	
 			// коды для меню
-		$menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
-		if(!empty($_params['mainmenu']['frontend']))
+		$this->menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
+		if(!empty($_params['mainmenu'][$this->_EP]))
 		{
 			$vars_menu=array();
-			$menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
+			$this->menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
 	
-			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
+			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
 	
 			$this->add_view('menu', 'backend/menu', array());
 				
+		//	mul_dbg($this->menu_site_codes);
 			/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 				x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);*/
 				
@@ -238,9 +230,11 @@ class scaff_triada
 		}
 		else
 		{
-			$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from']['frontend'].'", "menu");';
+			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from'][$this->_EP].'", "menu");';
 		}
-	
+		
+		// add controller file
+		$this->x_make_controller($_params,$rewrite_all);
 		
 		// Модель
 		$this->make_model($_params,$rewrite_all);
@@ -274,22 +268,19 @@ class scaff_triada
 		if(isset($_params['rewrite_all']))
 			$rewrite_all=true;
 				
-			$ep='backend';
-	
-			// add controller file
-			//	$vars=array();
-			$this->x_make_controller($_params,$rewrite_all);
-			//	mul_dbg($vars);
+			$ep='backend';		
 	
 			// коды для меню
-			$menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
-			if(!empty($_params['mainmenu']['frontend']))
+			$this->menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
+			if(isset($_params['mainmenu'][$this->_EP]))
 			{
 				$vars_menu=array();
-				$menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
+				$this->menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
 	
-				$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
-	
+				$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
+				
+				
+			//	mul_dbg($this->menu_site_codes);
 				$this->add_view('menu', 'backend/menu', array());
 	
 				/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
@@ -304,9 +295,13 @@ class scaff_triada
 			}
 			else
 			{
-				$menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from']['frontend'].'", "menu");';
+				$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from'][$this->_EP].'", "menu");';
 			}
+			
+			//mul_dbg($this->menu_site_codes);
 	
+			$this->x_make_controller($_params,$rewrite_all);
+			//	mul_dbg($vars);
 	
 			// Модель
 			$this->make_model($_params,$rewrite_all);
@@ -329,14 +324,20 @@ class scaff_triada
 	}
 	
 	
-	function x_make_controller($_params,$rewrite,$template='controller')
+	function x_make_controller($_params,$rewrite_all,$template='controller')
 	{
 		$vars=array();
 		$vars['table_uc_first']=UcaseFirst($_params['table']);
 		$vars['TABLE_UC']=strtoupper($_params['table']);
 		$vars['table'] = $_params['table'];
 		$vars['OTHER_METHODS']='';
-		$vars['menu_block_use']=$menu_site_codes['menu_block_use'];
+		
+	//	mul_dbg('menu site codes');
+	//	mul_dbg($this->menu_site_codes);
+		
+		$vars['menu_block_use']=$this->menu_site_codes['menu_block_use'];
+		$vars['OTHER_METHODS']=$vars['OTHER_METHODS'].$this->menu_site_codes['menu_method'];
+		
 		$vars['ParentControllerClass']='BaseController';
 		if(isset($_params['authcon'][$this->_EP]['enable']))	
 			$vars['ParentControllerClass']='AuthController';

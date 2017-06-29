@@ -7,4 +7,5 @@ $settings = array(
 	'required'=>array('id_otdel','name','function','id_otdel_papa','cvet'),
 	'rules'=>array(),	
 	'view'=>'{name}',
+	
 );

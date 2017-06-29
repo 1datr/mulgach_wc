@@ -1,5 +1,5 @@
 <?php
-class ModelTasks extends BaseModel
+class ModelTasks extends AuthModel
 {
 	
 }

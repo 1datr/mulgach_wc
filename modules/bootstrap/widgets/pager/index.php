@@ -18,7 +18,7 @@ namespace BootstrapPager
 					{
 						$url_prev = $request->url_modified(array('page'=>$params['ds']->_PAGE-1))
 						?>
-						<li class="page-item"><a class="page-link" href="?r=<?=$url_prev?>">Previous</a></li>	
+						<li class="page-item"><a class="page-link" href="<?=$url_prev?>">Previous</a></li>	
 						<?php 
 					}
 					?>
@@ -35,7 +35,7 @@ namespace BootstrapPager
 						else 
 						{
 							?>
-							<li class="page-item"><a class="page-link" href="?r=<?=$url?>"><?=$page?></a></li>
+							<li class="page-item"><a class="page-link" href="<?=$url?>"><?=$page?></a></li>
 							<?php 
 						}
 					});
@@ -46,7 +46,7 @@ namespace BootstrapPager
 					{
 						$url_next = $request->url_modified(array('page'=>$params['ds']->_PAGE+1))
 						?>
-						<li class="page-item"><a class="page-link" href="?r=<?=$url_next?>">Next</a></li>	
+						<li class="page-item"><a class="page-link" href="<?=$url_next?>">Next</a></li>	
 						<?php 
 					}
 					?>			    	

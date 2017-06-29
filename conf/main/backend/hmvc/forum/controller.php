@@ -19,6 +19,8 @@ class ForumController extends BaseController
 		$this->_TITLE="FORUM";
 	
 		$conn = get_connection();
+		
+		$this->add_block("BASE_MENU", "otdel", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -41,7 +43,7 @@ class ForumController extends BaseController
 	
 	public function ActionCreate()
 	{
-		
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$this->_TITLE="CREATE FORUM";
 		$this->out_view('itemform',array());
 	}
@@ -49,7 +51,7 @@ class ForumController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT FORUM";
-		
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$forum = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('forum'=>$forum));
 	}

@@ -20,7 +20,7 @@ class TasksController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,7 +43,7 @@ class TasksController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 		$this->_TITLE="CREATE TASKS";
 		$this->out_view('itemform',array());
 	}
@@ -51,7 +51,7 @@ class TasksController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT TASKS";
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "forum", "menu");
 		$tasks = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('tasks'=>$tasks));
 	}

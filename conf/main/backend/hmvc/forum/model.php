@@ -1,5 +1,5 @@
 <?php
-class ModelForum extends BaseModel
+class ModelForum extends AuthModel
 {
 	
 }

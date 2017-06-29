@@ -16,10 +16,14 @@ class WorkersController extends AuthController
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="WORKERS";	
-		$conn = get_connection();		
+		$this->_TITLE="WORKERS";
+	
+		$conn = get_connection();
+		
 		$this->add_block("BASE_MENU", "otdel", "menu");
+
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
+		
 		
 		$this->inline_script("
 		    $( document ).ready(function() {
@@ -54,15 +58,13 @@ class WorkersController extends AuthController
 	
 	public function ActionSave()
 	{
-		//var_dump($_POST['workers']);
 		$newitem = $this->_MODEL->GetRow($_POST['workers']);
-		//var_dump($newitem->_FIELDS);
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('?r=workers');
+			$this->redirect('/?r=workers');
 		
 	}
 	
@@ -72,6 +74,6 @@ class WorkersController extends AuthController
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
-
+	
 }
 ?>

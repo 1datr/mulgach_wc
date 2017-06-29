@@ -1,5 +1,5 @@
 <?php
-class ModelOtdel extends BaseModel
+class ModelOtdel extends AuthModel
 {
 	
 }

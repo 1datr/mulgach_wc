@@ -7,4 +7,5 @@ $settings = array(
 	'required'=>array('id','name','description'),
 	'rules'=>array(),	
 	'view'=>'{name}',
+	
 );

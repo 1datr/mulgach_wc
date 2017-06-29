@@ -178,6 +178,8 @@ function url_seg_add()
 			$resstr=$resstr."/".$arg;
 		}
 	}
+	
+	$resstr = strtr($resstr,array('//'=>'/'));
 
 	return $resstr;
 	
@@ -320,7 +322,17 @@ function string_diff($str1,$str2)
 function filepath2url($path)
 {
 	global $_BASEDIR;
-	return url_seg_add($_BASEDIR,string_diff( strtr($path,array('\\'=>'/')), strtr($_SERVER['DOCUMENT_ROOT'],array('\\'=>'/')) ));
+	$str = url_seg_add($_BASEDIR,string_diff( strtr($path,array('\\'=>'/')), strtr($_SERVER['DOCUMENT_ROOT'],array('\\'=>'/')) ));	
+	return as_url($str);
+}
+
+function as_url($str)
+{
+			
+	$script_path = realpath($_SERVER['SCRIPT_NAME']);
+	//mul_dbg($_SERVER['SERVER_NAME']);
+	
+	return url_seg_add('/', dirname($_SERVER['SCRIPT_NAME']), $str);
 }
 
 function unlink_folder($fldr)

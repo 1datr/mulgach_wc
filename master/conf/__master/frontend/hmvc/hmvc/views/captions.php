@@ -4,11 +4,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <h3>#{CAPTIONS}</h3>
 <?php 
 $table = $_SESSION['makeinfo']['table'];
-?>
 
-  
-
-<?php 
 $eps = $_SESSION['makeinfo']['ep'];
 unset($eps['rest']);
 $eps = array_keys($eps);
@@ -76,6 +72,7 @@ $eps=array('frontend','backend');
 </ul>
 <div class="tab-content">
 <?php 
+
 	foreach ($eps as $idx => $_ep)
 	{
 	?>

@@ -82,4 +82,8 @@ $_LANG['Edit FORUM']='Edit FORUM';
 $_LANG['forum.descr']='descr';
 $_LANG['PROJECTS LIST']='PROJECTS LIST';
 $_LANG['Create FORUM']='Create FORUM';
+$_LANG['TASKS LIST']='TASKS LIST';
+$_LANG['Edit TASKS']='Edit TASKS';
+$_LANG['Create PROJECTS']='Create PROJECTS';
+$_LANG['Create TASKS']='Create TASKS';
 ?>

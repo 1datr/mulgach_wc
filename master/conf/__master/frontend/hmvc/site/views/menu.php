@@ -14,7 +14,7 @@
 		{
 			?>
 			<li class="nav-item">
-			<a class="nav-link" href="./<?=$punct['url'] ?>"><?=$punct['capt'] ?></a>
+			<a class="nav-link" href="<?=as_url($punct['url']) ?>"><?=$punct['capt'] ?></a>
 			</li>
 			<?php 
 		}
@@ -22,7 +22,7 @@
 </ul>
 <ul class="navbar-nav">
 			<li class="nav-item">
-			<a class="nav-link" href="?r=site/logout">#{Logout}(<?=$_SESSION['user']['login']?>)</a>
+			<a class="nav-link" href="<?=as_url('site/logout')?>">#{Logout}(<?=$_SESSION['user']['login']?>)</a>
 			</li>
 </ul>
 </nav>

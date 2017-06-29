@@ -64,7 +64,7 @@ class XTheme
 			}
 		}
 		
-		$this->_CONFIG['_FAVICO']= url_seg_add($this->_PATH,$this->_CONFIG['_FAVICO']);
+		$this->_CONFIG['_FAVICO']= as_url(url_seg_add($this->_PATH,$this->_CONFIG['_FAVICO']));
 	}
 	
 	function get_view($theview)

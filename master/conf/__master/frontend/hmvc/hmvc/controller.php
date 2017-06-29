@@ -207,6 +207,7 @@ class HmvcController extends BaseController
 						$fld_login_='';
 						$fld_passw_="";
 						$fld_hash_="";
+					//	mul_dbg($fields);
 						foreach ($fields as $fld => $val)
 						{
 							if(strstr($fld,'login')!=false)
@@ -225,6 +226,7 @@ class HmvcController extends BaseController
 							}
 						}
 					
+											
 						$this->out_view('constraints',array(
 								'fields'=>$fields,
 								'tables'=>$tables,							

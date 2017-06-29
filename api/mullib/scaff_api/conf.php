@@ -32,8 +32,8 @@ class scaff_conf
 		{
 			$conffile=url_seg_add($this->_PATH,"config.php");
 		//	mul_dbg($conffile);
-			include $conffile;
-				
+		
+			include $conffile;				
 		//	mul_dbg($_MODULES);
 			
 			if(!empty($_MODULES['db']))	// конфа подключена к базе

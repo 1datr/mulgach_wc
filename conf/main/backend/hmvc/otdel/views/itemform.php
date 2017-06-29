@@ -20,6 +20,7 @@ else
 }
 ?></h3>
 <table>
+
 	<tr>
 	<th><label>#{otdel.name}</label></th><td>
 				<textarea name="otdel[name]" ><?=((!empty($otdel)) ? $otdel->getField('name',true) : '')?></textarea>
@@ -36,7 +37,7 @@ else
 	<th><label>#{otdel.id_otdel_papa}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('otdel')->_MODEL->find() ,'required'=>true, 'name'=>'otdel[id_otdel_papa]');
-				if(!empty($otdel))
+					if(!empty($otdel))
 		{
 			$params['value']=$otdel->getField('id_otdel_papa',true);
 		}

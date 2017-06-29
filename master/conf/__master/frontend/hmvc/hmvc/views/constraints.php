@@ -77,6 +77,10 @@ $this->inline_css('
 							'settings'=>$settings,
 							'sbplugin'=>$sbplugin,
   							'triads'=>$triads,
+  							// def fields
+				  			'fld_login_'=>$fld_login_,
+				  			'fld_passw_'=>$fld_passw_,
+				  			'fld_hash_'=>$fld_hash_,
   							
   	));
   	?>

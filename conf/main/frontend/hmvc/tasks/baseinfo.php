@@ -7,4 +7,5 @@ $settings = array(
 	'required'=>array('id_task','vhod_dannye','vihod_resultat','upravlenie','resursy_spisok','date_plan','data_zaversheniya','data_prinyatiya','number_task','creator_id'),
 	'rules'=>array(),	
 	'view'=>'{name}',
+	
 );

@@ -1,7 +1,7 @@
 <?php 
 $conf = array(
 		'_HTML_CHARSET'=>"windows-1251",
-		//'_THEME'=>'rockcastle',	
+//		'_URL_FORMAT'=>'folder_like',	
 );
 
 //$
