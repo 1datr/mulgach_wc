@@ -1,0 +1,3 @@
+
+			
+06-29-2017 22:50:39.000000: UPDATE `@+workers` SET `number`='',`fio`='Васянин Александр',`fio_eng`='VVP',`position`='Админ',`city`='Moscow',`address1`='',`address2`='',`mail1`='',`mail2`='',`phone1`='',`phone2`='',`phone3`='',`responsibility`='',`login`='adm',`password`='32ddd9055fd7f497d2a9c386e4775032',`is_arhiv`='0',`level`='3',`token`='557af5165f7075baa7150cc8fcdf2457' WHERE `id`='91'

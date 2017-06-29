@@ -74,6 +74,34 @@ class WorkersController extends AuthController
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
+		public function ActionLogin()
+	{
+		$this->_TITLE=Lang::__t('Authorization');
+		$this->use_layout('layout_login');
+		$this->out_view('loginform',array());
+	}
 	
+	public function ActionAuth()
+	{
+		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
+		if($auth_res)
+		{
+			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
+
+			$this->redirect('workers');
+		}
+		else 
+			$this->redirect_back();
+
+		//$this->out_view('loginform',array());
+	}
+	
+	
+	
+	public function ActionLogout()
+	{
+		unset($_SESSION[$this->get_ep_param('sess_user_descriptor')]);
+		$this->redirect(as_url('workers/login'));
+	}
 }
 ?>

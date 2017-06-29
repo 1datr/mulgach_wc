@@ -1,5 +1,5 @@
 <#php
-$frm=new mulForm(as_url('{triada_name}/auth'));
+$frm=new mulForm(as_url('{this_controller}/auth'));
 #>
 <table>
 <tr><th>#{Login}</th><td><input type="text" name="{login_fld}" /></td></tr>

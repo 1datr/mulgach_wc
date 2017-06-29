@@ -96,7 +96,7 @@ class scaff_triada
 			$this->add_view('index','view_index',$vars,$_params['rewrite_all']);
 		}
 		
-		$itemform_view = url_seg_add($dir_views,'itemform.php');
+	//	$itemform_view = url_seg_add($dir_views,'itemform.php');
 		if( !($this->has_view('view_itemform'))|| $_params['rewrite_all'])
 		{
 						
@@ -110,6 +110,22 @@ class scaff_triada
 			$this->add_view('itemform','view_itemform',$vars,$_params['rewrite_all']);
 		}
 		
+	//	$itemform_view = url_seg_add($dir_views,'itemform.php');
+		if($_params['authcon'][$this->_EP]['enable'])
+		{
+			if( !($this->has_view('loginform'))|| $_params['rewrite_all'])
+			{
+				
+				$vars=array();
+				$vars['this_controller'] = $_params['table'];
+				$vars['login_fld']=$_params['authcon']['backend']['login'];
+				$vars['passw_fld']=$_params['authcon']['backend']['passw'];
+			
+			//	$vars['settings']=$settings;
+			//	$vars['constraints']=$_params['constraints'];
+				$this->add_view('loginform','login/form',$vars,$_params['rewrite_all']);
+			}
+		}
 	}
 		
 	function make_baseinfo($_params,$controller,$template='baseinfo')
@@ -241,10 +257,11 @@ class scaff_triada
 				
 		// Файлик		
 		$this->make_baseinfo($_params,$controller);
-			// Стандартные вьюхи
+		
+		// Стандартные вьюхи
 		$this->add_std_data_views($_params,$controller);
 	
-			// прокачиваем надписи
+		// прокачиваем надписи
 		if(!empty($_params['captions'][$ep]))
 		{
 			$thelang=new Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
@@ -268,58 +285,58 @@ class scaff_triada
 		if(isset($_params['rewrite_all']))
 			$rewrite_all=true;
 				
-			$ep='backend';		
+		$ep='backend';		
 	
 			// коды для меню
-			$this->menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
-			if(isset($_params['mainmenu'][$this->_EP]))
-			{
-				$vars_menu=array();
-				$this->menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
+		$this->menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
+		if(isset($_params['mainmenu'][$this->_EP]))
+		{
+			$vars_menu=array();
+			$this->menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
 	
-				$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
+			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
 				
 				
 			//	mul_dbg($this->menu_site_codes);
-				$this->add_view('menu', 'backend/menu', array());
+			$this->add_view('menu', 'backend/menu', array());
 	
 				/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 					x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);*/
 	
-				$this->add_view('views/menu','backend/menu',array());
+			$this->add_view('views/menu','backend/menu',array());
 	
-				$menu_info_file = url_seg_add($this->_PATH,'../../info/basemenu.php');
-				x_file_put_contents($menu_info_file,
+			$menu_info_file = url_seg_add($this->_PATH,'../../info/basemenu.php');
+			x_file_put_contents($menu_info_file,
 						parse_code_template(url_seg_add(__DIR__,'phpt/backend/basemenu.phpt'),array('tables'=>$controller->_ENV['_CONNECTION']->get_tables()))
 						);
-			}
-			else
-			{
-				$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from'][$this->_EP].'", "menu");';
-			}
+		}
+		else
+		{
+			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params['connect_from'][$this->_EP].'", "menu");';
+		}
 			
-			//mul_dbg($this->menu_site_codes);
+		//mul_dbg($this->menu_site_codes);
 	
-			$this->x_make_controller($_params,$rewrite_all);
-			//	mul_dbg($vars);
+		$this->x_make_controller($_params,$rewrite_all);
+		//	mul_dbg($vars);
 	
-			// Модель
-			$this->make_model($_params,$rewrite_all);
+		// Модель
+		$this->make_model($_params,$rewrite_all);
 	
-			// Файлик
-			$this->make_baseinfo($_params,$controller);
-			// Стандартные вьюхи
-			$this->add_std_data_views($_params,$controller);
+		// Файлик
+		$this->make_baseinfo($_params,$controller);
+		// Стандартные вьюхи
+		$this->add_std_data_views($_params,$controller);
 	
-			// прокачиваем надписи
-			if(!empty($_params['captions'][$ep]))
+		// прокачиваем надписи
+		if(!empty($_params['captions'][$ep]))
+		{
+			$thelang=new Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
+			foreach ($_params['captions'][$ep] as $fld_key => $val)
 			{
-				$thelang=new Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
-				foreach ($_params['captions'][$ep] as $fld_key => $val)
-				{
-					$thelang->add_key($fld_key,$val);
-				}
+				$thelang->add_key($fld_key,$val);
 			}
+		}
 	
 	}
 	
@@ -342,6 +359,24 @@ class scaff_triada
 		if(isset($_params['authcon'][$this->_EP]['enable']))	
 			$vars['ParentControllerClass']='AuthController';
 		// add controller file
+		if($_params['authcon'][$this->_EP]['enable'])
+		{
+			if( !($this->has_view('loginform'))|| $_params['rewrite_all'])
+			{
+				$vars['this_controller'] = $_params['table'];
+				$vars['login_fld']=$_params['authcon']['backend']['login'];
+				$vars['passw_fld']=$_params['authcon']['backend']['passw'];
+					
+				//	$vars['settings']=$settings;
+				//	$vars['constraints']=$_params['constraints'];
+				$vars['OTHER_METHODS']= $vars['OTHER_METHODS'] . parse_code_template( url_seg_add(__DIR__,'phpt/login/action.phpt' ), array(
+						'login_fld' => $_params['authcon']['backend']['login'],
+						'passw_fld' => $_params['authcon']['backend']['passw'],
+						'this_controller' => $_params['table'],
+				));
+			//	$this->add_view('loginform','login/action',$vars,$_params['rewrite_all']);
+			}
+		}
 	//	mul_dbg($vars);
 	//	mul_dbg($_params);
 		$this->make_controller($vars,$rewrite_all,$template);
