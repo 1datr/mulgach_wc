@@ -3,7 +3,7 @@ use BootstrapListView\ListViewWidget as ListViewWidget;
 use BootstrapListView\LVW_Column as LVW_Column;
 #>
 <h3>#{{TABLE_UC} LIST}</h3>
-<a href="?r={table}/create" class="btn btn-primary" role="button">#{CREATE NEW}</a>
+<a href="<#=as_url('{table}/create')#>" class="btn btn-primary" role="button">#{CREATE NEW}</a>
 <#
 $this->usewidget(new ListViewWidget($this),array('ds'=>$ds,
 		'columns'=>array(

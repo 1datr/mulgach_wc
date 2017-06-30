@@ -2,6 +2,8 @@
 define('__module_class_prefix__','mul_');
 define('__module_class_suffix__','');
 
+$_MUL_DBG_WORK=true;
+
 require_once __DIR__."/mullib/utils.php";
 
 if(empty($_EP))

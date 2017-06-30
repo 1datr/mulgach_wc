@@ -1,2 +1,3 @@
 <?php
-$_CONFIG='main';
+//$_CONFIG='main';
+$_CONFIG='kursy';

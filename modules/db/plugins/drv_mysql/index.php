@@ -44,13 +44,18 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function get_tables()
 	{
-		$res = $this->query("SHOW FULL TABLES");
+		$sql="SHOW FULL TABLES LIKE '".$this->_DB_PARAMS['prefix']."%'";
+		//mul_dbg($sql);
+		$res = $this->query($sql);
 		$arr=array();
 		while($row = $this->get_row($res))
 		{
 			$keys = array_keys($row);
 			$tablename = $row[$keys[0]];
-			$tablename = substr($tablename,strlen($this->_DB_PARAMS['prefix']));
+			
+			//$tablename = substr($tablename,strlen($this->_DB_PARAMS['prefix']));
+			
+			
 			$arr[]= $tablename;
 		}
 		return $arr;

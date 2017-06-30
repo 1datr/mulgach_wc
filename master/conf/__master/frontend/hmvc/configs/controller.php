@@ -28,6 +28,8 @@ class ConfigsController extends BaseController
 		if(!empty($_POST['newcfg']))
 		{
 			GLOBAL $_BASEDIR;
+			/*
+			
 			$cfgdir = url_seg_add($_BASEDIR,"/conf");
 			$newcfg = url_seg_add($cfgdir,$_POST['newcfg']);					
 			mkdir($newcfg);
@@ -38,7 +40,9 @@ class ConfigsController extends BaseController
 				$ep_dir = url_seg_add($newcfg,$ep);
 				mkdir($ep_dir);
 			}
-			
+			*/
+			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			$cnf = new scaff_conf($_POST['newcfg'],array('rewrite'=>true));
 		}
 		$this->redirect_back();
 	}

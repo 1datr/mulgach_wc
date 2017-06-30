@@ -588,7 +588,7 @@ class mul_page extends mul_Module
 			foreach ($_CSS as $css)
 			{
 				?>				
-				<link rel="stylesheet" type="text/css" href="<?=as_url($css)?>">
+				<link rel="stylesheet" type="text/css" href="<?=as_uri($css)?>">
 				<?php 
 				}
 			}
@@ -611,7 +611,7 @@ class mul_page extends mul_Module
 			foreach ($_JS as $js)
 			{
 			?>
-			<script src="<?=as_url($js)?>"></script>
+			<script src="<?=as_uri($js)?>"></script>
 			<?php 
 			}
 		}

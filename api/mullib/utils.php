@@ -194,50 +194,64 @@ function x_file_put_contents($filename,$data,$flags=0,$context=null)
 	}
 	file_put_contents($filename, $data,$flags,$context);
 }
+
+function file_put_contents_ifne($filename,$data,$flags=0,$context=null)
+{
+	if(!file_exists($filename))
+		x_file_put_contents($filename, $data,$flags,$context);
+}
 // создать папку рекурсивно полностью
 function x_mkdir($path)
 {
-	
+		
 	$parent_path = dirname($path);
 	if(file_exists($parent_path))
 	{		
 		if(!file_exists($path))
+		{
 			mkdir($path);
+		//	mul_dbg("creating dir ".$path);
+		}
 	}
 	else 
 	{
 		x_mkdir($parent_path);
+		mkdir($path);
 	}
 }
 
 function mul_dbg($var,$print_r=true)
 {
-	$file_dbg = url_seg_add(__DIR__,'debug.txt');
-	
-	if(is_string($var))
+	GLOBAL $_MUL_DBG_WORK;
+	if($_MUL_DBG_WORK)
 	{
-		$newstr=$var;
+		$file_dbg = url_seg_add(__DIR__,'debug.txt');
+		
+		if(is_string($var))
+		{
+			$newstr=$var;
+		}
+		else 
+		{
+			ob_start();
+			if($print_r)
+				print_r($var);
+			else
+				var_dump($var);
+			$newstr = ob_get_clean();
+		}
+		
+		$content="";
+		if(file_exists($file_dbg))
+		{
+			$content = file_get_contents($file_dbg);
+		}
+		$content=$content."
+				
+	".date("m-d-Y H:i:s.u").": {$newstr}";
+		
+		x_file_put_contents($file_dbg, $content);
 	}
-	else 
-	{
-		ob_start();
-		if($print_r)
-			print_r($var);
-		else
-			var_dump($var);
-		$newstr = ob_get_clean();
-	}
-	
-	$content="";
-	if(file_exists($file_dbg))
-	{
-		$content = file_get_contents($file_dbg);
-	}
-	$content=$content."
-			
-".date("m-d-Y H:i:s.u").": {$newstr}";
-	
-	x_file_put_contents($file_dbg, $content);
 }
 // добавить точку перед директорией 
 function dir_dotted($dir)
@@ -324,6 +338,11 @@ function filepath2url($path)
 	global $_BASEDIR;
 	$str = url_seg_add($_BASEDIR,string_diff( strtr($path,array('\\'=>'/')), strtr($_SERVER['DOCUMENT_ROOT'],array('\\'=>'/')) ));	
 	return as_url($str);
+}
+
+function as_uri($str)
+{
+	return url_seg_add('/', $str);
 }
 
 function as_url($str)
