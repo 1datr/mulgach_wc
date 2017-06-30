@@ -12,7 +12,7 @@
 		{
 			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('{login_fld}'=>$_POST['{login_fld}']);
 
-			$this->redirect('{this_controller}');
+			$this->redirect(as_url('{this_controller}'));
 		}
 		else 
 			$this->redirect_back();

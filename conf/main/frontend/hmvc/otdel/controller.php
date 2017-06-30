@@ -20,7 +20,7 @@ class OtdelController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "forum", "menu");
+		$this->add_block("BASE_MENU", "otdel", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,7 +43,7 @@ class OtdelController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "forum", "menu");
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$this->_TITLE="CREATE OTDEL";
 		$this->out_view('itemform',array());
 	}
@@ -51,7 +51,7 @@ class OtdelController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT OTDEL";
-		$this->add_block("BASE_MENU", "forum", "menu");
+		$this->add_block("BASE_MENU", "otdel", "menu");
 		$otdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('otdel'=>$otdel));
 	}
@@ -74,6 +74,11 @@ class OtdelController extends BaseController
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
-	
+	public function ActionMenu()
+	{
+		$menu = $this->getinfo('basemenu');
+		//print_r($menu);
+		$this->out_view('menu',array('menu'=>$menu));
+	}
 }
 ?>

@@ -9,20 +9,20 @@
 <!-- Links -->
 <div class="collapse navbar-collapse" id="nav-content">   
 <ul class="navbar-nav" style="margin-right: auto!important">
-<#php       
+<?php       
         foreach ($menu as $punct)
 		{
 			#?>
 			<li class="nav-item">
-			<a class="nav-link" href="<#=as_url($punct['url'])#>"><#=$punct['capt'] #></a>
+			<a class="nav-link" href="<?=as_url($punct['url'])?>"><?=$punct['capt'] ?></a>
 			</li>
-			<#php 
+			<?php 
 		}
-#>
+?>
 </ul>
 <ul class="navbar-nav">
 			<li class="nav-item">
-			<a class="nav-link" href="<#=as_url('{auth_con}/logout')#>">#{Logout}(<#=$this->get_user_info('login')#>)</a>
+			<a class="nav-link" href="<?=as_url('workers/logout')?>">#{Logout}(<?=$this->get_user_info('login')?>)</a>
 			</li>
 </ul>
 </nav>

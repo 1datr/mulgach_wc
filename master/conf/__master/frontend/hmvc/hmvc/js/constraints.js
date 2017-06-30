@@ -82,6 +82,12 @@ function find_fields()
 	
 }
 
+function toggle_ep_divs(_ep)
+{
+	$('#authcon_settings_'+_ep).toggle();
+	$('#con_for_auth_div_'+_ep).toggle();
+}
+
 $( document ).ready(function() {
 	
   //  $('.drg_view').draggable({cursor: 'crosshair'});

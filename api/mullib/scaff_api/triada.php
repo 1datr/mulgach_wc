@@ -226,7 +226,7 @@ class scaff_triada
 		$this->menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
 		if(!empty($_params['mainmenu'][$this->_EP]))
 		{
-			$vars_menu=array();
+			$vars_menu=array('auth_con'=>$_params['con_auth'][$this->_EP]);
 			$this->menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
 	
 			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
@@ -237,7 +237,7 @@ class scaff_triada
 			/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 				x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);*/
 				
-			$this->add_view('views/menu','backend/menu',array());
+			$this->add_view('views/menu','backend/menu',array('auth_con'=>$_params['con_auth'][$this->_EP]));
 	
 			$menu_info_file = url_seg_add($this->_PATH,'../../info/basemenu.php');
 			x_file_put_contents($menu_info_file,
@@ -348,6 +348,7 @@ class scaff_triada
 		$vars['TABLE_UC']=strtoupper($_params['table']);
 		$vars['table'] = $_params['table'];
 		$vars['OTHER_METHODS']='';
+		$vars['ADV_RULES']='';
 		
 	//	mul_dbg('menu site codes');
 	//	mul_dbg($this->menu_site_codes);
@@ -356,11 +357,12 @@ class scaff_triada
 		$vars['OTHER_METHODS']=$vars['OTHER_METHODS'].$this->menu_site_codes['menu_method'];
 		
 		$vars['ParentControllerClass']='BaseController';
-		if(isset($_params['authcon'][$this->_EP]['enable']))	
-			$vars['ParentControllerClass']='AuthController';
+
 		// add controller file
-		if($_params['authcon'][$this->_EP]['enable'])
+		if(isset($_params['authcon'][$this->_EP]['enable']))
 		{
+			$vars['ParentControllerClass']='AuthController';
+			
 			if( !($this->has_view('loginform'))|| $_params['rewrite_all'])
 			{
 				$vars['this_controller'] = $_params['table'];
@@ -374,13 +376,32 @@ class scaff_triada
 						'passw_fld' => $_params['authcon']['backend']['passw'],
 						'this_controller' => $_params['table'],
 				));
+				
+				if($this->_EP=='backend')
+				{
+					$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/login/backend_rules_auth.phpt' ), array(		
+						'auth_con' => $_params['table'],
+					));
+				}
+				
 			//	$this->add_view('loginform','login/action',$vars,$_params['rewrite_all']);
+			}
+		}
+		else 
+		{
+			if($this->_EP=='backend')
+			{
+				$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/login/backend_rules.phpt' ), array(
+						'auth_con' => $_params['con_auth'][$this->_EP],
+				));
 			}
 		}
 	//	mul_dbg($vars);
 	//	mul_dbg($_params);
 		$this->make_controller($vars,$rewrite_all,$template);
 	}
+	
+	
 	
 	function getModelInfo()
 	{

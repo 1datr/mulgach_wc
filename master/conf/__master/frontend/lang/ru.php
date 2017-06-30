@@ -56,4 +56,5 @@ $_LANG['Hash field']='Hash field';
 $_LANG['MAKE SUCCESSED']='MAKE SUCCESSED';
 $_LANG['HMVC made successed']='HMVC made successed';
 $_LANG['made successed']='made successed';
+$_LANG['Controller using for authorize:']='Контроллер, используемый для авторизации:';
 ?>

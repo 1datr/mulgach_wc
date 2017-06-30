@@ -88,7 +88,7 @@ class WorkersController extends AuthController
 		{
 			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
 
-			$this->redirect('workers');
+			$this->redirect(as_url('workers'));
 		}
 		else 
 			$this->redirect_back();

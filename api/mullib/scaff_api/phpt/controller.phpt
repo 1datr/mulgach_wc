@@ -10,7 +10,7 @@ class {table_uc_first}Controller extends {ParentControllerClass}
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			{ADV_RULES}	
 		);
 	}
 		

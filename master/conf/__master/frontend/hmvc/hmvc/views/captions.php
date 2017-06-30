@@ -78,7 +78,7 @@ $eps=array('frontend','backend');
 	?>
 	<div class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" id="mainmenu_<?=$_ep?>" role="tabpanel">
 	<label for="cb_usercon_<?=$_ep?>">#{Users and auth controller}</label>
-	<input type="checkbox" name="authcon[<?=$_ep?>][enable]" onchange="$('#authcon_settings_<?=$_ep?>').toggle();" /><br/>
+	<input type="checkbox" name="authcon[<?=$_ep?>][enable]" onclick="toggle_ep_divs('<?=$_ep?>');" /><br/>
 		<div id="authcon_settings_<?=$_ep?>" style="display: none; padding-left:20px;">
 			<label for="authcon_login_<?=$_ep?>">#{Login field}</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][login]','value'=>$fld_login_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_'.$_ep,))); ?><br />
@@ -92,8 +92,19 @@ $eps=array('frontend','backend');
 		
 		</div>
 	
+	<div id="con_for_auth_div_<?=$_ep?>">
+	<label for="cb_con_auth_<?=$_ep?>">#{Controller using for authorize:}</label>
+	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads[$_ep],
+						'name'=>"con_auth[".$_ep."]",											
+						'htmlattrs'=>array('id'=>'cb_con_auth_'.$_ep))
+						); ?>
+	</div>
+	
 	<label for="cb_menu_<?=$_ep?>">#{Generate main menu}</label>
-	<input id="cb_menu_<?=$_ep?>" type="checkbox" onchange="$('#connect_from_<?=$_ep?>').toggle();" name="mainmenu[<?=$_ep?>]" />
+	<input id="cb_menu_<?=$_ep?>" type="checkbox" name="mainmenu[<?=$_ep?>]" onchange="$('#connect_from_<?=$_ep?>').toggle();" />
+	
+	
+	
 		<div id="connect_from_<?=$_ep?>">
 		<label for="menu_connect_from_<?=$_ep?>">#{Connect menu from :}</label>
 		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads[$_ep],
