@@ -1,0 +1,3 @@
+
+				
+	07-02-2017 23:19:51.000000: INSERT INTO `@+users`(`login`,`password`,`hash`,`phone`,`address`,`web`,`skype`) VALUES('adm','32ddd9055fd7f497d2a9c386e4775032','','','','','')

@@ -29,7 +29,9 @@ class scaff_conf
 		x_mkdir(url_seg_add($this->_PATH,'backend','views'));
 		x_mkdir(url_seg_add($this->_PATH,'backend','hmvc'));
 		file_put_contents_ifne(url_seg_add($this->_PATH,'backend','config.php'), '<?php
-		
+$conf = array(
+	"sess_user_descriptor"=>"admin",
+);
 ?>');
 		x_mkdir(url_seg_add($this->_PATH,'install','views'));
 		x_mkdir(url_seg_add($this->_PATH,'install','hmvc'));

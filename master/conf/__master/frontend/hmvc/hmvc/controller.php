@@ -363,10 +363,24 @@ class HmvcController extends BaseController
 		
 		//print_r($_params);
 		if(!empty($_params['ep']['frontend']))
-		{					
-			GLOBAL $_BASEDIR;
-			
+		{			
 			$ep='frontend';
+			
+			if(isset($_params['authcon'][$ep]['enable']))
+			{
+				$_SESSION['authhost'][$ep]=$_params['table'];
+			}
+			else
+				$_SESSION['authhost'][$ep]=$_params['con_auth'][$ep];
+				
+			// connect the menu from som controller
+			if(isset($_params['mainmenu'][$ep]))
+			{
+				$_SESSION['connect_from'][$ep]=$_params['table'];
+			}
+			else
+				$_SESSION['connect_from'][$ep]=$_params['connect_from'][$ep];
+			
 			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 			
 			$the_triada->frontend_from_table($_params,$this,$opts);
@@ -374,9 +388,24 @@ class HmvcController extends BaseController
 		
 		if(!empty($_params['ep']['backend']))
 		{
-			GLOBAL $_BASEDIR;
 				
 			$ep='backend';
+			
+			if(isset($_params['authcon'][$ep]['enable']))
+			{
+				$_SESSION['authhost'][$ep]=$_params['table'];
+			}
+			else
+				$_SESSION['authhost'][$ep]=$_params['con_auth'][$ep];
+			
+			// connect the menu from som controller 
+			if(isset($_params['mainmenu'][$ep]))
+			{
+				$_SESSION['connect_from'][$ep]=$_params['table'];
+			}
+			else
+				$_SESSION['connect_from'][$ep]=$_params['connect_from'][$ep];
+			
 			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 				
 			$the_triada->backend_from_table($_params,$this,$opts);

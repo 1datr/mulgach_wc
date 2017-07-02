@@ -23,8 +23,15 @@ else
 
 	<tr>
 	<th><label>#{kursy.id_prep}</label></th><td>
-				<input type="text" name="kursy[id_prep]" value="<?=((!empty($kursy)) ? $kursy->getField('id_prep',true) : '')?>" />
-			<div class="error" id='err_id_prep' role="alert"></div>
+			<?php 
+					$params = array('ds'=> $this->get_controller('preps')->_MODEL->find() ,'required'=>true, 'name'=>'kursy[id_prep]');
+					if(!empty($kursy))
+		{
+			$params['value']=$kursy->getField('id_prep',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+		<div class="error" id='err_id_prep' role="alert"></div>
 			</td>
 	</tr>
 		<tr>

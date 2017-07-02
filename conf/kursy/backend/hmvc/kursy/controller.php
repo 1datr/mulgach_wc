@@ -10,7 +10,9 @@ class KursyController extends BaseController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=users/login')
+				),	
 		);
 	}
 		
@@ -20,7 +22,7 @@ class KursyController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "kursy", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,7 +45,7 @@ class KursyController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "kursy", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE KURSY";
 		$this->out_view('itemform',array());
 	}
@@ -51,7 +53,7 @@ class KursyController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT KURSY";
-		$this->add_block("BASE_MENU", "kursy", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('kursy'=>$kursy));
 	}
@@ -74,11 +76,6 @@ class KursyController extends BaseController
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
-	public function ActionMenu()
-	{
-		$menu = $this->getinfo('basemenu');
-		//print_r($menu);
-		$this->out_view('menu',array('menu'=>$menu));
-	}
+	
 }
 ?>

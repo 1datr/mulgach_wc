@@ -95,21 +95,26 @@ $eps=array('frontend','backend');
 	<div id="con_for_auth_div_<?=$_ep?>">
 	<label for="cb_con_auth_<?=$_ep?>">#{Controller using for authorize:}</label>
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads[$_ep],
-						'name'=>"con_auth[".$_ep."]",											
-						'htmlattrs'=>array('id'=>'cb_con_auth_'.$_ep))
+							'name'=>"con_auth[".$_ep."]",											
+							'htmlattrs'=>array('id'=>'cb_con_auth_'.$_ep),
+							'value'=>(isset($_SESSION['authhost'][$_ep]) ? $_SESSION['authhost'][$_ep] : ''),
+							)							
 						); ?>
 	</div>
 	
 	<label for="cb_menu_<?=$_ep?>">#{Generate main menu}</label>
 	<input id="cb_menu_<?=$_ep?>" type="checkbox" name="mainmenu[<?=$_ep?>]" onchange="$('#connect_from_<?=$_ep?>').toggle();" />
 	
-	
+	<?php 
+	//print_r($_SESSION);
+	?>
 	
 		<div id="connect_from_<?=$_ep?>">
 		<label for="menu_connect_from_<?=$_ep?>">#{Connect menu from :}</label>
 		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads[$_ep],
 						'name'=>"connect_from[".$_ep."]",					
 						//'value'=>$con['model'],
+						'value'=>(isset($_SESSION['connect_from'][$_ep]) ? $_SESSION['connect_from'][$_ep] : ''),
 						'htmlattrs'=>array())
 						); ?>
 		</div>

@@ -20,7 +20,7 @@ class KursyController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,7 +43,7 @@ class KursyController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE KURSY";
 		$this->out_view('itemform',array());
 	}
@@ -51,7 +51,7 @@ class KursyController extends BaseController
 	public function ActionEdit($id)
 	{
 		$this->_TITLE="EDIT KURSY";
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->out_view('itemform',array('kursy'=>$kursy));
 	}

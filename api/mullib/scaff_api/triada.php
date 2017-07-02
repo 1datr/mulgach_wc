@@ -231,13 +231,18 @@ class scaff_triada
 	
 			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
 	
-			$this->add_view('menu', 'backend/menu', array());
+			if(isset($_params['authcon'][$this->_EP]['enable']))
+			{
+				$_params['con_auth'][$this->_EP]=$_params['table'];
+			}
+			
+			$this->add_view('menu', 'backend/menu', array('auth_con'=>$_params['con_auth'][$this->_EP]));
 				
 		//	mul_dbg($this->menu_site_codes);
 			/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 				x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);*/
 				
-			$this->add_view('views/menu','backend/menu',array('auth_con'=>$_params['con_auth'][$this->_EP]));
+		//	$this->add_view('views/menu','backend/menu',array('auth_con'=>$_params['con_auth'][$this->_EP]));
 	
 			$menu_info_file = url_seg_add($this->_PATH,'../../info/basemenu.php');
 			x_file_put_contents($menu_info_file,
@@ -296,14 +301,17 @@ class scaff_triada
 	
 			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
 				
-				
+			if(isset($_params['authcon'][$this->_EP]['enable']))
+			{
+				$_params['con_auth'][$this->_EP]=$_params['table'];
+			}
 			//	mul_dbg($this->menu_site_codes);
-			$this->add_view('menu', 'backend/menu', array());
+			$this->add_view('menu', 'backend/menu', array('auth_con'=>$_params['con_auth'][$this->_EP]));
 	
 				/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 					x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);*/
 	
-			$this->add_view('views/menu','backend/menu',array());
+			//$this->add_view('views/menu','backend/menu',array());
 	
 			$menu_info_file = url_seg_add($this->_PATH,'../../info/basemenu.php');
 			x_file_put_contents($menu_info_file,
@@ -379,7 +387,7 @@ class scaff_triada
 				
 				if($this->_EP=='backend')
 				{
-					$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/login/backend_rules_auth.phpt' ), array(		
+					$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules_auth.phpt' ), array(		
 						'auth_con' => $_params['table'],
 					));
 				}
@@ -391,7 +399,7 @@ class scaff_triada
 		{
 			if($this->_EP=='backend')
 			{
-				$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/login/backend_rules.phpt' ), array(
+				$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules.phpt' ), array(
 						'auth_con' => $_params['con_auth'][$this->_EP],
 				));
 			}
