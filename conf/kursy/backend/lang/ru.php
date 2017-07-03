@@ -86,4 +86,10 @@ $_LANG['slog.slog']='slog';
 $_LANG['slog.transcription']='transcription';
 $_LANG['slog.sound']='sound';
 $_LANG['slog.type']='type';
+$_LANG['users.first_name']='users.first_name';
+$_LANG['users.last_name']='users.last_name';
+$_LANG['users.sostoyanie_dopuska']='users.sostoyanie_dopuska';
+$_LANG['users.status']='users.status';
+$_LANG['PREDLOGENIE LIST']='PREDLOGENIE LIST';
+$_LANG['ZNAK LIST']='ZNAK LIST';
 ?>

@@ -103,16 +103,18 @@ $_db_charset = "utf8_bin";//
 		try
 		{
 			$conffile=url_seg_add($this->_PATH,"config.php");
-		//	mul_dbg($conffile);
+			//mul_dbg($conffile);
 		
 			include $conffile;				
-		//	mul_dbg($_MODULES);
+		//	
 			
 			if(!empty($_MODULES['db']))	// конфа подключена к базе
 			{
-		
-				$controller->connect_db($_MODULES['db']);
-		
+				$result = $controller->connect_db($_MODULES['db']);
+				
+				//GLOBAL $_MUL_DBG_WORK;
+				//print_r($_MODULES['db']);
+				
 				return $_MODULES['db'];
 			}
 			
@@ -130,7 +132,7 @@ $_db_charset = "utf8_bin";//
 	function get_triada($ep,$hmvc)
 	{
 		if(scaff_triada::exists($this, $ep, $hmvc))
-		{
+		{		
 			$triada = new scaff_triada($this,$ep,$hmvc);
 			return $triada;
 		}

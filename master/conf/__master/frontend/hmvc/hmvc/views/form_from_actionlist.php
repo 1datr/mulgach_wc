@@ -10,7 +10,7 @@ $sbplugin->template_table_start('actions_item');
 $sbplugin->template_table_end();
 ?>
 <?php 
-$form=new mulForm("?r=hmvc/makepure/");
+$form=new mulForm(as_url("hmvc/makepure/"));
 ?>
 <h3>#{CREATE FROM ACTIONLIST}</h3>
 <input type="hidden" name="conf" value="<?=$config?>" />

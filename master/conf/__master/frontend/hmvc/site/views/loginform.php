@@ -1,5 +1,5 @@
 <?php
-$frm=new mulForm('?r=site/auth');
+$frm=new mulForm(as_url('site/auth'));
 ?>
 <table>
 <tr><th>#{Login}</th><td><input type="text" name="login" /></td></tr>

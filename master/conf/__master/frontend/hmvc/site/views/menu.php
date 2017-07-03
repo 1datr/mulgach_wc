@@ -22,7 +22,7 @@
 </ul>
 <ul class="navbar-nav">
 			<li class="nav-item">
-			<a class="nav-link" href="<?=as_url('site/logout')?>">#{Logout}(<?=$_SESSION['user']['login']?>)</a>
+			<a class="nav-link" href="<?=as_url('site/logout')?>">#{Logout}&nbsp;(<?=$this->get_user_info('login')?>)</a>
 			</li>
 </ul>
 </nav>

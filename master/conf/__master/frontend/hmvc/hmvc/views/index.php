@@ -2,7 +2,7 @@
 <?php 
 
 ?>
-<form method="post" action="?r=configs/new">
+<form method="post" action="<?=as_url("configs/new")?>" >
 <table>
 <tr>
 <th><label>#{Table}</label></th>

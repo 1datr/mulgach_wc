@@ -5,6 +5,7 @@ class scaff_triada
 	VAR $_VIEWPATH;
 	VAR $_PARENT_CONF;
 	VAR $_EP;
+	VAR $NAME;
 	VAR $_CONTROLLER_PATH;
 	VAR $_MODEL_PATH;
 	VAR $_BASEFILE_PATH;
@@ -14,6 +15,7 @@ class scaff_triada
 	{
 		$this->_PARENT_CONF = $conf_obj;
 		$this->_EP = $ep;
+		$this->NAME = $triada;
 		$this->_PATH = url_seg_add( $conf_obj->_PATH, $ep, 'hmvc', $triada);
 	//	echo $this->_PATH;
 		if(!file_exists($this->_PATH) || $create)
@@ -28,7 +30,28 @@ class scaff_triada
 		}
 
 	}
-	
+	// 'actions' => action list
+	function make_pure($params,$rewrite_all=true)
+	{
+
+		$this->x_make_controller(array(
+						'triada'=>$this->NAME,
+						'actions'=>$params['actions'],
+				), $rewrite_all, 'customcontroller');
+		
+		foreach ($params['actions'] as $act)
+		{
+			if(!empty($act['automakeview']))
+			{
+				$the_view = url_seg_add($hmvc_dir,'views',$act['name'].".php");
+				if($rewrite_all || !file_exists($the_view) )
+				{
+					echo "<p>$the_view rewrited</p>";
+					x_file_put_contents($the_view, '');
+				}
+			}
+		}
+	}
 	
 	function from_template()
 	{
@@ -357,6 +380,7 @@ class scaff_triada
 		$vars['table'] = $_params['table'];
 		$vars['OTHER_METHODS']='';
 		$vars['ADV_RULES']='';
+		$vars = array_merge($vars,$_params);
 		
 	//	mul_dbg('menu site codes');
 	//	mul_dbg($this->menu_site_codes);

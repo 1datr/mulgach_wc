@@ -214,6 +214,7 @@ class mul_page extends mul_Module
 				'_APPLE_TOUCH_ICONS'=>array(),
 				'sess_user_descriptor'=>'user',
 				'_URL_FORMAT'=>'folder_like',
+				'print_template_path'=>false,
 		), $this->CONF_EP);
 		
 		// фавико привязать к директории
@@ -263,6 +264,12 @@ class mul_page extends mul_Module
 		{
 			$this->draw_js($_REQUEST['jsblock']);
 			die();	
+		}
+		
+		if(!empty($_GET['post_ser']))
+		{
+			$_POST = get_ser($_GET['post_ser']);
+			unset($_GET['post_ser']);
 		}
 		
 		if(!empty($_REQUEST['cssblock']))	// блок css-файлов

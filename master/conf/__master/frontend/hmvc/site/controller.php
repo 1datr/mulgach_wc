@@ -5,7 +5,7 @@ class SiteController extends BaseController
 	{
 		return array(
 			'action_access'=>array(
-				new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','?r=site/login')	
+				new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','site/login')	
 			),
 		);
 	}
@@ -37,25 +37,26 @@ class SiteController extends BaseController
 	public function ActionAuth()
 	{
 	//	print_r($_POST);
-		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['passw']);
+		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['passw']);//		
 		if($auth_res)
 		{
-			$_SESSION['user']=array('login'=>$_POST['login']);
-			//echo "xxx";
-			$this->redirect('?r=site');
+			$_SESSION[$this->get_user_descriptor()]=array('login'=>$_POST['login']);
+//			echo as_url('site');
+			$this->redirect(as_url('site'));
 		}
 		else 
+		{
 			$this->redirect_back();
-		//echo $res;
-		//$this->out_view('loginform',array());
+		}
+		
 	}
 	
 	
 	
 	public function ActionLogout()
 	{
-		unset($_SESSION['user']);
-		$this->redirect('?r=site/login');
+		$this->logout();
+		$this->redirect(as_url('site/login'));
 	}
 }
 ?>

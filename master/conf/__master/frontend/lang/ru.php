@@ -60,4 +60,5 @@ $_LANG['Controller using for authorize:']='Контроллер, использ�
 $_LANG['}" />
 	<p><label>#{Fields:']='}" />
 	<p><label>#{Fields:';
+$_LANG['Bindings and settings']='Bindings and settings';
 ?>

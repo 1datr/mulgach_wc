@@ -50,6 +50,7 @@ class BaseController
 	
 	function connect_db($dbparams)
 	{
+		
 		$res = connect_db($dbparams);
 		if(!empty($res))
 		{
@@ -78,9 +79,14 @@ class BaseController
 		return $this->_ENV['page_module']->get_ep_conf_param($key);
 	}
 	
+	function get_user_descriptor()
+	{
+		return $this->get_ep_param('sess_user_descriptor');
+	}
+	
 	function get_user_info($param=NULL)
 	{
-		$descr = $this->get_ep_param('sess_user_descriptor');
+		$descr = $this->get_user_descriptor();
 		if(isset($_SESSION[$descr]))
 		{
 			if($param==NULL)
@@ -94,6 +100,24 @@ class BaseController
 			}
 		}
 		return NULL;
+	}
+	
+	function logout()
+	{
+		$userinfo = $_SESSION[$this->get_user_descriptor()];
+		$this->BeforeLogout($userinfo);
+		unset($_SESSION[$this->get_user_descriptor()]);
+		$this->AfterLogout($userinfo);
+	}
+	
+	function BeforeLogout($userinfo)
+	{
+	
+	}
+	
+	function AfterLogout($userinfo)
+	{
+		
 	}
 	
 	function add_block($area,$controller,$action=NULL,$args=array())
@@ -163,6 +187,14 @@ class BaseController
 			include $path;
 		}
 		return $_DATA;
+	}
+	
+	function _POST($key)
+	{
+		if($_POST[$key])
+			return $_POST[$key];
+		else 
+			return NULL;
 	}
 	
 	function ActionValidate()
@@ -248,6 +280,8 @@ class BaseController
 		}
 		
 		$_view_path = $this->get_view_path($view);
+		if($this->get_ep_param('print_template_path'))
+		echo "<!-- {$_view_path} -->";
 		include $_view_path;
 		//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
 				

@@ -15,6 +15,23 @@ function merge_arrays($array1,$array2)
 	return $res;
 }
 
+function ser_post($ser_name)
+{
+	GLOBAL $_BASEDIR;
+	$ser_dir = url_seg_add($_BASEDIR,'/test/post_ser');
+	$path=url_seg_add($ser_dir,"{$ser_name}.ser");
+	file_put_contents($path, serialize($_POST));
+}
+
+function get_ser($ser_name)
+{
+	GLOBAL $_BASEDIR;
+	$ser_dir = url_seg_add($_BASEDIR,'/test/post_ser');
+	$path=url_seg_add($ser_dir,"{$ser_name}.ser");
+	$ser_code = file_get_contents($path);
+	return unserialize($ser_code);
+}
+
 function array_order_num($arr)
 {
 	$pos=0;

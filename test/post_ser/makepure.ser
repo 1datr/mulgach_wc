@@ -1,0 +1,1 @@
+a:5:{s:4:"conf";s:5:"kursy";s:6:"triada";s:4:"site";s:7:"actions";a:1:{i:0;a:2:{s:4:"name";s:5:"index";s:12:"automakeview";s:2:"on";}}s:11:"rewrite_all";s:2:"on";s:2:"ep";a:4:{s:8:"frontend";s:2:"on";s:7:"backend";s:2:"on";s:7:"install";s:2:"on";s:4:"rest";s:2:"on";}}

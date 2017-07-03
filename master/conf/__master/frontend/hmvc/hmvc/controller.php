@@ -9,6 +9,7 @@ class HmvcController extends BaseController
 				),
 		);
 	}
+	/*
 	private function ConnectDBIfExists($cfg)
 	{
 		GLOBAL $_BASEDIR;
@@ -32,10 +33,10 @@ class HmvcController extends BaseController
 			//die();
 		}
 	}
-		
+	*/
 	public function ActionIndex($cfg='main',$ep='frontend')
 	{
-		$this->_TITLE="HMVC";
+		$this->_TITLE="HMVC {$cfg}";
 		$this->add_css($this->get_current_dir()."/css/style.css");
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
@@ -43,13 +44,18 @@ class HmvcController extends BaseController
 		
 		$sbplugin = use_jq_plugin('structblock',$this);
 		
-		$dbparams = $this->ConnectDBIfExists($cfg);
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new scaff_conf($cfg);		
+		
+		$dbparams = $_cfg->connect_db_if_exists($this);
+	
 		if($dbparams!=NULL)	// конфа подключена к базе
 		{
 
 			$tables = $this->_ENV['_CONNECTION']->get_tables();
 			
-			
+			//$hmvc_list = get_files_in_folder('');
 			
 			$this->out_view('tables',array('tables'=>$tables,'config'=>$cfg,'sbplugin'=>$sbplugin));
 		}	
@@ -63,7 +69,13 @@ class HmvcController extends BaseController
 	
 	public function ActionFields($cfg='main',$table)
 	{
-		$dbparams = $this->ConnectDBIfExists($cfg);
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new scaff_conf($cfg);
+		
+		$dbparams = $_cfg->connect_db_if_exists($this);
+		
+		//$dbparams = $this->ConnectDBIfExists($cfg);
 		if($dbparams!=NULL)	// конфа подключена к базе
 		{		
 			$fields = $this->_ENV['_CONNECTION']->get_table_fields($table);
@@ -75,53 +87,21 @@ class HmvcController extends BaseController
 	{
 		if(!empty($_POST['triada']))
 		{
+			ser_post('makepure');
 			GLOBAL $_BASEDIR;
-			$cur_conf_dir=$opts['cur_conf_dir'];
-			$conf_dir= url_seg_add($_BASEDIR,"conf");
-			
+			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			$conf = new scaff_conf($_POST['conf']);
+								
 			foreach ($_POST['ep'] as $ep => $val)
 			{			
 				
-				$hmvc_dir=url_seg_add($conf_dir,$_POST['conf'],$ep,'hmvc',$_POST['triada']);
-				//echo $hmvc_dir;
-				//создаем папку триады
-				if(!file_exists($hmvc_dir))
-				{
-					x_mkdir($hmvc_dir);
-					echo "<p>".$hmvc_dir." created</p>";
-				}
+				$triada = $conf->get_triada($ep, $_POST['triada']);
+				if($triada==NULL)
+					$triada = $conf->create_triada($ep, $_POST['triada']);
+				//mul_dbg($triada);
+				$rewrite_all = (isset($_POST['rewrite_all']) ? true : false);
+				$triada->make_pure(array('actions'=>$_POST['actions']),$rewrite_all);
 				
-				$code = parse_code_template(
-							url_seg_add(__DIR__,'../../phpt/customcontroller.phpt'), 
-							array(
-								'triada'=>$_POST['triada'],
-								'actions'=>$_POST['actions'],
-								));
-				$the_file = url_seg_add($hmvc_dir,'controller.php');
-				
-				foreach ($_POST['actions'] as $act)
-				{
-					if(!empty($act['automakeview']))
-					{
-						$the_view = url_seg_add($hmvc_dir,'views',$act['name'].".php");
-						if(!empty($_POST['rewrite_all']) || !file_exists($the_view) )
-						{
-							echo "<p>$the_view rewrited</p>";
-							x_file_put_contents($the_view, '');
-						}
-					}	
-				}
-				
-				if(!empty($_POST['rewrite_all']) || !file_exists($the_file) )
-				{
-					echo "<p>$the_file rewrited</p>"; 
-					x_file_put_contents($the_file, $code);
-				}
-				
-				if(!empty($_POST['actions']))
-				{
-					
-				}
 			}
 		}
 		//$this->add_block('BASE_MENU', 'site', 'menu');
@@ -176,7 +156,7 @@ class HmvcController extends BaseController
 							$settings = array();
 						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 						$sbplugin = use_jq_plugin('structblock',$this);
-						$this->_TITLE="Bindings and settings";
+						$this->_TITLE=$_SESSION['makeinfo']['table']." ". Lang::__t("Bindings and settings");
 						
 						$eps=array('frontend','backend');
 						$triads=array();

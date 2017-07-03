@@ -7,6 +7,7 @@ class ActionAccessRule {
 	VAR $_objects;
 	VAR $_roles;
 	VAR $_redirect=NULL;
+	VAR $_controller;
 	function __construct($rule_type,$rule_objects,$roles,$redirect_url=NULL)
 	{
 		$this->_type=$rule_type;
@@ -17,7 +18,8 @@ class ActionAccessRule {
 	
 	function is_anonym()
 	{
-		return empty($_SESSION['user']);
+		$descr = $this->_controller->get_ep_param('sess_user_descriptor');
+		return empty($_SESSION[$descr]);
 	}
 
 	function calc_for($controller,$action)
@@ -29,13 +31,18 @@ class ActionAccessRule {
 		if($res==false)
 		{
 			if(is_string($this->_redirect) && (!empty($this->_redirect)))
-				$controller->redirect($this->_redirect);
+				$controller->redirect(as_url($this->_redirect));
+			elseif(is_callable($this->redirect))
+			{
+				$this->redirect();
+			}
 		}
 		return $res;
 	}
 	
 	function calc_availability($controller,$action)
 	{
+		$this->_controller = $controller;
 		if($this->_roles=='anonym')
 		{
 			if(! $this->is_anonym() )
@@ -109,6 +116,8 @@ class AuthModel extends BaseModel
 			
 			foreach ($the_data['data'] as $idx => $userobj)
 			{
+				//mul_dbg($user." : ".$passw);
+				//mul_dbg($userobj);
 				if(($userobj['login']==$user) && ($userobj['password']==$passw))
 				{
 					return true;

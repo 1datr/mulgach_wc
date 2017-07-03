@@ -5,6 +5,7 @@ $conf = array(
 		'_FAVICO_FORMAT'=>"image/gif",
 		'_THEME'=>"master_base",
 		
+		'sess_user_descriptor'=>'master',
 );
 
 
