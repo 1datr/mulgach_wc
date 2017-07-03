@@ -4,7 +4,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <?php
 $form = new mulForm(as_url("znak/save"));
 ?>
-<input type="hidden" name="znak[id_znak]" value="<?=((!empty($znak)) ? $znak->getField('id_znak') : '')?>" />
+<input type="hidden" name="znak[]" value="<?=((!empty($znak)) ? $znak->getField('') : '')?>" />
 <h3><?php 
 if(!empty($znak))   
 {
@@ -22,6 +22,12 @@ else
 <table>
 
 	<tr>
+	<th><label>#{znak.id_znak}</label></th><td>
+				<input type="text" name="znak[id_znak]" value="<?=((!empty($znak)) ? $znak->getField('id_znak',true) : '')?>" />
+			<div class="error" id='err_id_znak' role="alert"></div>
+			</td>
+	</tr>
+		<tr>
 	<th><label>#{znak.znak}</label></th><td>
 				<input type="text" name="znak[znak]" value="<?=((!empty($znak)) ? $znak->getField('znak',true) : '')?>" />
 			<div class="error" id='err_znak' role="alert"></div>

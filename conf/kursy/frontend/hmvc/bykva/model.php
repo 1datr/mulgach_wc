@@ -1,5 +1,5 @@
 <?php
-class ModelBykva extends AuthModel
+class ModelBykva extends BaseModel
 {
 	
 }

@@ -74,6 +74,62 @@ $_db_prefix = "crm_";
 $_db_charset = "utf8_bin";//
 ?>');
 		$this->add_basic_layouts();
+		
+		$this->make_def_controller();
+	}
+	
+	public function get_config_code()
+	{
+		$conf_file = url_seg_add($this->_PATH,'config.php');
+		if(file_exists($conf_file))
+			return file_get_contents($conf_file);
+		return "";
+	}
+	
+	public function get_db_conf_code()
+	{
+		$conf_file = url_seg_add($this->_PATH,'dbconf.php');
+		if(file_exists($conf_file))
+			return file_get_contents($conf_file);
+			return "";
+	}
+	
+	public function set_db_conf_code($code)
+	{
+		$conf_file = url_seg_add($this->_PATH,'dbconf.php');
+		file_put_contents($conf_file,$code);
+		
+	}
+	
+	function make_def_controller()
+	{
+		$tr = $this->get_triada('frontend', 'site');
+		if($tr==NULL)
+		{
+			$site_controller = $this->create_triada('frontend', 'site');
+			$site_controller->make_base();
+		}
+		
+		$tr = $this->get_triada('backend', 'site');
+		if($tr==NULL)
+		{
+			$site_controller = $this->create_triada('backend', 'site');
+			$site_controller->make_base();
+		}
+		
+		$tr = $this->get_triada('install', 'site');
+		if($tr==NULL)
+		{
+			$site_controller = $this->create_triada('install', 'site');
+			$site_controller->make_base();
+		}
+		
+		$tr = $this->get_triada('rest', 'site');
+		if($tr==NULL)
+		{
+			$site_controller = $this->create_triada('rest', 'site');
+			$site_controller->make_base();
+		}
 	}
 	
 	function add_basic_layouts()

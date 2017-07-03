@@ -10,10 +10,12 @@ foreach ($files as $the_file)
 	?>
 	<li>
 	<a href="<?=as_url('hmvc/'.basename($the_file))?>"><?=basename($the_file)?></a>
+	<a href="<?=as_url('configs/editconf/'.basename($the_file))?>" title="#{Change config}">#{Edit config}</a>
 	<?php
 	if(basename($the_file)!='main')
 	{
 		?>
+		
 		<a href="<?=as_url('configs/drop/'.basename($the_file))?>" title="Drop it">x</a>
 		<?php 
 	}

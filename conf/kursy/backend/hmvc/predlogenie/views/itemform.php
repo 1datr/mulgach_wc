@@ -4,7 +4,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <?php
 $form = new mulForm(as_url("predlogenie/save"));
 ?>
-<input type="hidden" name="predlogenie[id_predlogenie]" value="<?=((!empty($predlogenie)) ? $predlogenie->getField('id_predlogenie') : '')?>" />
+<input type="hidden" name="predlogenie[]" value="<?=((!empty($predlogenie)) ? $predlogenie->getField('') : '')?>" />
 <h3><?php 
 if(!empty($predlogenie))   
 {
@@ -22,6 +22,12 @@ else
 <table>
 
 	<tr>
+	<th><label>#{predlogenie.id_predlogenie}</label></th><td>
+				<input type="text" name="predlogenie[id_predlogenie]" value="<?=((!empty($predlogenie)) ? $predlogenie->getField('id_predlogenie',true) : '')?>" />
+			<div class="error" id='err_id_predlogenie' role="alert"></div>
+			</td>
+	</tr>
+		<tr>
 	<th><label>#{predlogenie.ru}</label></th><td>
 				<input type="text" name="predlogenie[ru]" value="<?=((!empty($predlogenie)) ? $predlogenie->getField('ru',true) : '')?>" />
 			<div class="error" id='err_ru' role="alert"></div>

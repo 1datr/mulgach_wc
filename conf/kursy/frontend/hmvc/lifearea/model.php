@@ -1,5 +1,5 @@
 <?php
-class ModelLifearea extends AuthModel
+class ModelLifearea extends BaseModel
 {
 	
 }

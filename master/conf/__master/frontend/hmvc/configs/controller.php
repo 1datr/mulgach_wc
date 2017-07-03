@@ -23,24 +23,36 @@ class ConfigsController extends BaseController
 		$this->out_view('index',array('files'=>$files_in_conf_dir));
 	}
 	
+	public function ActionChangecfgfile()
+	{
+		
+	}
+	
+	public function ActionSetdbcfg()
+	{
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$cnf = new scaff_conf($_POST['cfg']);
+		$cnf->set_db_conf_code($_POST['code']);
+		$this->redirect(as_url('configs'));
+	}
+	
+	public function ActionEditconf($cfg='main')
+	{
+		$this->add_block('BASE_MENU', 'site', 'menu');
+		GLOBAL $_BASEDIR;		
+		$this->_TITLE=$cfg.' #{Edit database connection config}';
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$cnf = new scaff_conf($cfg); 
+		
+		$this->out_view('configform',array('cfg'=>$cfg,'conf_code'=>$cnf->get_db_conf_code()));
+	}
+	
 	public function ActionNew()
 	{
 		if(!empty($_POST['newcfg']))
 		{
-			GLOBAL $_BASEDIR;
-			/*
-			
-			$cfgdir = url_seg_add($_BASEDIR,"/conf");
-			$newcfg = url_seg_add($cfgdir,$_POST['newcfg']);					
-			mkdir($newcfg);
-			
-			$base_eps=array('frontend','backend','install','rest');
-			foreach ($base_eps as $ep)
-			{
-				$ep_dir = url_seg_add($newcfg,$ep);
-				mkdir($ep_dir);
-			}
-			*/
+			GLOBAL $_BASEDIR;		
 			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 			$cnf = new scaff_conf($_POST['newcfg'],array('rewrite'=>true));
 		}

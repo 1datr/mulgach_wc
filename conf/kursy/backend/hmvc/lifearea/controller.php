@@ -11,7 +11,7 @@ class LifeareaController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=users/login')
+						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}

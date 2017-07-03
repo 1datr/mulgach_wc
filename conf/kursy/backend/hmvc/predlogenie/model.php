@@ -1,5 +1,5 @@
 <?php
-class ModelPredlogenie extends AuthModel
+class ModelPredlogenie extends BaseModel
 {
 	
 }

@@ -1,5 +1,5 @@
 <?php
-class ModelZnak extends AuthModel
+class ModelZnak extends BaseModel
 {
 	
 }

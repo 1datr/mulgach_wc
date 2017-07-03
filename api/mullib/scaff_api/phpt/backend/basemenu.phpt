@@ -4,7 +4,7 @@ $_DATA=array(
 foreach($tables as $tblidx => $tblinfo)
 {
 	?>
-	array('url'=>'?r=<?=$tblinfo?>','capt'=>'#{<?=$tblinfo?>}'),
+	array('url'=>'<?=$tblinfo?>','capt'=>'#{<?=$tblinfo?>}'),
 	<?php
 }
 ?>

@@ -10,7 +10,9 @@ class UsersController extends AuthController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','users/login')
+				),	
 		);
 	}
 		
@@ -105,7 +107,7 @@ class UsersController extends AuthController
 	
 	public function ActionLogout()
 	{
-		unset($_SESSION[$this->get_ep_param('sess_user_descriptor')]);
+		$this->logout();
 		$this->redirect(as_url('users/login'));
 	}
 }

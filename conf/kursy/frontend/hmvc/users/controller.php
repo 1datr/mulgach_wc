@@ -105,7 +105,7 @@ class UsersController extends AuthController
 	
 	public function ActionLogout()
 	{
-		unset($_SESSION[$this->get_ep_param('sess_user_descriptor')]);
+		$this->logout();
 		$this->redirect(as_url('users/login'));
 	}
 }

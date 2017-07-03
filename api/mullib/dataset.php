@@ -135,7 +135,7 @@ class DataRecord	// запись из БД
 			unset($fld_values[$this->_MODEL->getPrimaryName()]);
 			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
-		mul_dbg($sql);
+	//	mul_dbg($sql);
 		//echo $sql;
 		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
 	}

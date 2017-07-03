@@ -61,4 +61,10 @@ $_LANG['}" />
 	<p><label>#{Fields:']='}" />
 	<p><label>#{Fields:';
 $_LANG['Bindings and settings']='Bindings and settings';
+$_LANG['Change config']='Change config';
+$_LANG['Edit config']='Edit config';
+$_LANG['Config file code']='Config file code';
+$_LANG['Set configuration code']='Set configuration code';
+$_LANG['Edit database connection config']='Edit database connection config';
+$_LANG['id']='id';
 ?>

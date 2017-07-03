@@ -58,6 +58,13 @@ class scaff_triada
 		
 	}
 	
+	function make_base($rewrite=true)
+	{
+		$this->make_pure(array('actions'=>array(array('name'=>'index','automakeview'=>'on')),),$rewrite);
+		file_put_contents(url_seg_add($this->_VIEWPATH,'error404.php'), file_get_contents( url_seg_add(__DIR__,'/phpt/error404.phpt')) );
+		file_put_contents(url_seg_add($this->_VIEWPATH,'error403.php'), file_get_contents( url_seg_add(__DIR__,'/phpt/error403.phpt')) );
+	}	
+		
 	static function exists(&$obj,$ep,$hmvc)
 	{
 		$triada_path = url_seg_add($obj->_PATH, $ep, 'hmvc', $hmvc);
@@ -81,7 +88,7 @@ class scaff_triada
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			$vars['table'] = $_params['table'];
 			$vars['BaseModelClass'] = 'BaseModel';
-			if(isset($_params['authcon'][$this->_EP]))				
+			if(isset($_params['authcon'][$this->_EP]['enable']))				
 				$vars['BaseModelClass'] = 'AuthModel';
 			x_file_put_contents($this->_MODEL_PATH, parse_code_template(url_seg_add(__DIR__,'/phpt/model.phpt'),$vars));
 		}
