@@ -58,6 +58,13 @@ class DataRecord	// запись из БД
 				}
 			}
 		}
+		else 
+		{
+			foreach($this->_MODEL->_SETTINGS['fields'] as $fldname => $fldinfo)
+			{
+				$this->set_field($fldname, '');
+			}
+		}
 	}
 	
 	function set_field($fld,$val)
@@ -77,6 +84,7 @@ class DataRecord	// запись из БД
 		$val = $this->_FIELDS[$fld];
 		if($format_val==true)
 		{
+			if(is_array($val) || is_object($val)) return $val;
 			$val = $this->format_html($val,$format);
 		}
 		return $val;

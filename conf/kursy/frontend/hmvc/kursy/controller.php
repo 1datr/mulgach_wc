@@ -45,14 +45,14 @@ class KursyController extends BaseController
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE KURSY";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('kursy'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT KURSY";
+	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$kursy->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('kursy'=>$kursy));
 	}
 	
@@ -64,14 +64,22 @@ class KursyController extends BaseController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=kursy');
+			$this->redirect(as_url('kursy'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "users", "menu");
+		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$kursy->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('kursy'=>$kursy));
 	}
 	
 	

@@ -78,15 +78,27 @@ class BaseModel
 		
 	}
 	
+	function isFieldRequired($_fld)
+	{
+		return isset($this->_SETTINGS['required'][$_fld]);
+	}
+	
 	function GetRow($row)
 	{
 		$dr = new DataRecord($this,$row,$this->_ENV);
 		return $dr;
 	}
 	
-	function CreateNew($row)
+	function CreateNew($row=NULL)
 	{
-		$dr = new DataRecord($this,$row,$this->_ENV);
+		if($row!=NULL)
+		{
+			$dr = new DataRecord($this,$row,$this->_ENV);			
+		}
+		else 
+		{
+			$dr = $this->GetRow($row);			
+		}
 		return $dr;
 	}
 	// find as default dataset
@@ -197,7 +209,7 @@ class BaseModel
 				$model = $this->get_model($constraint['model']);
 				foreach($model->_SETTINGS['fields'] as $_fld => $_fldinfo)
 				{
-					$selects[]="`$cfld`.`$_fld` as `$cfld.$_fld`";
+					$selects[]="`$cfld`.`$_fld` as `$cfld->$_fld`";
 				}
 				$joins = "{$joins} LEFT OUTER JOIN @+".$constraint['model']." as `$cfld` ON {$this->_TABLE}.`{$cfld}`=`$cfld`.`".$constraint['fld']."`";
 				//$selects[]="`$cfld`.*";

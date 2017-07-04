@@ -174,6 +174,7 @@ class BaseController
 	public function ActionError($ErrorNo)
 	{
 		$this->use_layout('error_layout');
+		$this->_TITLE = "#{ERROR} ".$ErrorNo;
 		$this->out_view('error'.$ErrorNo,array());
 		//echo "<h3>".Lang::__t('Error').' '.$ErrorNo."</h3>";
 	}
@@ -378,6 +379,14 @@ class BaseController
 	{
 		return $this->_ENV['page_module']->get_controller($controller);
 	}
+	
+	// для блоб-полей
+	public function ActionGetblob($primary_id,$blobfld)
+	{
+		
+	}
+	
+	
 }
 
 class AuthController extends BaseController 

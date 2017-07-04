@@ -61,35 +61,23 @@ foreach($fields as $fld => $fldinfo)
 		}
 		elseif($fldinfo['Type']=='enum')
 		{
-		?>
-		<#php 
-			$params = array('data'=> $this->_MODEL->get_field_value_list('<?=$fld ?>'),'name'=>'{table}[<?=$fld?>]');
-			if(!empty(${table}))
-			{
-				$params['value']=${table}->getField('<?=$fld?>',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		#>
-		<div class="error" id='err_<?=$fld?>' role="alert"></div>
-		<?php
+			?><#php $form->field(${table},'<?=$fld?>')->ComboBox();	 #><?php		
 		}
 		elseif($fldinfo['Type']=='set')
 		{
-		
+			?><#php $form->field(${table},'<?=$fld?>')->set();	 #><?php	
+		}
+		elseif($fld==$fld_passw)
+		{
+			?><#php $form->field(${table},'<?=$fld?>')->password();	 #><?php	
 		}
 		elseif(($fldinfo['Type']=='longtext') || (stristr($fldinfo['Type'],"varchar")))
 		{
-		?>
-			<textarea name="{table}[<?=$fld?>]" ><#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#></textarea>
-			<div class="error" id='err_<?=$fld?>' role="alert"></div>
-		<?	
+			?><#php $form->field(${table},'<?=$fld?>')->textarea();	 #><?php	
 		}
 		else
 		{
-		?>
-			<input type="text" name="{table}[<?=$fld?>]" value="<#=((!empty(${table})) ? ${table}->getField('<?=$fld?>',true) : '')#>" />
-			<div class="error" id='err_<?=$fld?>' role="alert"></div>
-		<?	
+			?><#php $form->field(${table},'<?=$fld?>')->text();	 #><?php	
 		}
 	?>
 	</td>

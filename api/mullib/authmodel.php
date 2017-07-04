@@ -163,10 +163,11 @@ class AuthModel extends BaseModel
 		$object->set_field($the_data['settings']['passw_field'], md5(md5($passw)) );
 	}
 	
-	function CreateNew($row)
+	function CreateNew($row=NULL)
 	{
 		$real_row = $row;
-		$real_row['password']=md5(md5(trim($real_row['password'])));
+		if(isset($real_row['password']))
+			$real_row['password']=md5(md5(trim($real_row['password'])));
 		$dr = parent::CreateNew($real_row);		
 		return $dr;
 	}

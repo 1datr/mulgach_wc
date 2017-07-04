@@ -109,7 +109,7 @@ function ximplode($delimeter,$array,$prefix,$suffix,$options=NULL)
  *    $arr - массив, возможно ассоциативный, возможно структур
  * 	  $delimeter - разделитель
  *    $template - шаблон. ключи - индексы из струтуры, специальные ключи - {%val} - значение (если не структурами) {idx} - индекс
- *    $onelement - событие с параметрами &$theval,&$idx,&$thetemplate,&$ctr 
+ *    $onelement - событие с параметрами &$theval,&$idx,&$thetemplate,&$ctr,$thedelimeter
  * */
 function xx_implode($arr,$delimeter,$template,$onelement=NULL)
 {

@@ -67,4 +67,5 @@ $_LANG['Config file code']='Config file code';
 $_LANG['Set configuration code']='Set configuration code';
 $_LANG['Edit database connection config']='Edit database connection config';
 $_LANG['id']='id';
+$_LANG['ERROR']='ERROR';
 ?>

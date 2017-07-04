@@ -1,6 +1,7 @@
 <?php
 define(_CSR_FCODE_EXPIRE_,1000);
 
+
 class mulForm
 {
 	static function check_form($_POST_ARRAY)
@@ -22,6 +23,12 @@ class mulForm
 			}
 		}
 		return false;
+	}
+	
+	function field($model,$fld_name,$opts=array())
+	{
+		$newfld = new ActiveField($model, $fld_name, $opts);
+		return $newfld;
 	}
 	
 	function __construct($action="",$params=array())

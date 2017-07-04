@@ -23,15 +23,11 @@ else
 
 	<tr>
 	<th><label>#{preps.first_name}</label></th><td>
-				<input type="text" name="preps[first_name]" value="<?=((!empty($preps)) ? $preps->getField('first_name',true) : '')?>" />
-			<div class="error" id='err_first_name' role="alert"></div>
-			</td>
+	<?php $form->field($preps,'first_name')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{preps.last_name}</label></th><td>
-				<input type="text" name="preps[last_name]" value="<?=((!empty($preps)) ? $preps->getField('last_name',true) : '')?>" />
-			<div class="error" id='err_last_name' role="alert"></div>
-			</td>
+	<?php $form->field($preps,'last_name')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{preps.user_id}</label></th><td>
@@ -48,16 +44,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{preps.sostoyanie_dopuska}</label></th><td>
-			<?php 
-			$params = array('data'=> $this->_MODEL->get_field_value_list('sostoyanie_dopuska'),'name'=>'preps[sostoyanie_dopuska]');
-			if(!empty($preps))
-			{
-				$params['value']=$preps->getField('sostoyanie_dopuska',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_sostoyanie_dopuska' role="alert"></div>
-			</td>
+	<?php $form->field($preps,'sostoyanie_dopuska')->ComboBox();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

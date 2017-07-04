@@ -6,6 +6,6 @@ $settings = array(
 	'constraints'=>array('user_id'=>array('model'=>'users','fld'=>'id','required'=>true),),	
 	'required'=>array('id_prep','first_name','last_name','user_id','sostoyanie_dopuska'),
 	'rules'=>array(),	
-	'view'=>'{first_name}',
+	'view'=>'{first_name} {last_name} ',
 	
 );

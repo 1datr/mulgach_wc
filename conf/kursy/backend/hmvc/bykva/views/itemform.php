@@ -23,27 +23,19 @@ else
 
 	<tr>
 	<th><label>#{bykva.bukva}</label></th><td>
-				<input type="text" name="bykva[bukva]" value="<?=((!empty($bykva)) ? $bykva->getField('bukva',true) : '')?>" />
-			<div class="error" id='err_bukva' role="alert"></div>
-			</td>
+	<?php $form->field($bykva,'bukva')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{bykva.transcription}</label></th><td>
-				<input type="text" name="bykva[transcription]" value="<?=((!empty($bykva)) ? $bykva->getField('transcription',true) : '')?>" />
-			<div class="error" id='err_transcription' role="alert"></div>
-			</td>
+	<?php $form->field($bykva,'transcription')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{bykva.sound}</label></th><td>
-				<input type="text" name="bykva[sound]" value="<?=((!empty($bykva)) ? $bykva->getField('sound',true) : '')?>" />
-			<div class="error" id='err_sound' role="alert"></div>
-			</td>
+	<?php $form->field($bykva,'sound')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{bykva.type}</label></th><td>
-				<input type="text" name="bykva[type]" value="<?=((!empty($bykva)) ? $bykva->getField('type',true) : '')?>" />
-			<div class="error" id='err_type' role="alert"></div>
-			</td>
+	<?php $form->field($bykva,'type')->text();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

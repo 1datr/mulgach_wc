@@ -45,14 +45,14 @@ class BykvaController extends BaseController
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE BYKVA";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('bykva'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT BYKVA";
+	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$bykva = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$bykva = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$bykva->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('bykva'=>$bykva));
 	}
 	
@@ -64,14 +64,22 @@ class BykvaController extends BaseController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=bykva');
+			$this->redirect(as_url('bykva'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "users", "menu");
+		$bykva = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$bykva->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('bykva'=>$bykva));
 	}
 	
 	

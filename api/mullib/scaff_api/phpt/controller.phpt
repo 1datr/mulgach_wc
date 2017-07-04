@@ -45,14 +45,14 @@ class {table_uc_first}Controller extends {ParentControllerClass}
 	{
 		{menu_block_use}
 		$this->_TITLE="CREATE {TABLE_UC}";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('{table}'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT {TABLE_UC}";
+	{		
 		{menu_block_use}
-		${table} = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		${table} = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=${table}->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('{table}'=>${table}));
 	}
 	
@@ -64,14 +64,22 @@ class {table_uc_first}Controller extends {ParentControllerClass}
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r={table}');
+			$this->redirect(as_url('{table}'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		{menu_block_use}
+		${table} = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=${table}->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('{table}'=>${table}));
 	}
 	
 	{OTHER_METHODS}

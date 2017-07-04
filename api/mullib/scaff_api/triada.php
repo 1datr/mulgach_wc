@@ -137,7 +137,30 @@ class scaff_triada
 			$vars['fields']=$tbl_fields;
 			$vars['settings']=$settings;
 			$vars['constraints']=$_params['constraints'];
+			$vars['fld_passw']='';
+			if(isset($_params['authcon'][$this->_EP]['enable']))
+			{
+				$vars['fld_passw'] = $_params['authcon'][$this->_EP]['passw'];
+			}
 			$this->add_view('itemform','view_itemform',$vars,$_params['rewrite_all']);
+		}
+		
+		if( !($this->has_view('itemview'))|| $_params['rewrite_all'])
+		{
+		
+			$vars=array();
+			$vars['table'] = $_params['table'];
+			$vars['TABLE_UC']=strtoupper($_params['table']);
+			$vars['fld_primary']=$_primary;
+			$vars['fields']=$tbl_fields;
+			$vars['settings']=$settings;
+			$vars['constraints']=$_params['constraints'];
+			$vars['fld_passw']='';
+			if(isset($_params['authcon'][$this->_EP]['enable']))
+			{
+				$vars['fld_passw'] = $_params['authcon'][$this->_EP]['passw'];
+			}
+			$this->add_view('itemview','itemview',$vars,$_params['rewrite_all']);
 		}
 		
 	//	$itemform_view = url_seg_add($dir_views,'itemform.php');
@@ -416,7 +439,7 @@ class scaff_triada
 						'this_controller' => $_params['table'],
 				));
 				
-				if($this->_EP=='backend')
+				if( in_array($this->_EP,array('backend','frontend')))
 				{
 					$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules_auth.phpt' ), array(		
 						'auth_con' => $_params['table'],
@@ -428,7 +451,7 @@ class scaff_triada
 		}
 		else 
 		{
-			if($this->_EP=='backend')
+			if( in_array($this->_EP,array('backend','frontend')))
 			{
 				$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules.phpt' ), array(
 						'auth_con' => $_params['con_auth'][$this->_EP],

@@ -36,40 +36,23 @@ else
 	</tr>
 		<tr>
 	<th><label>#{kursy.name}</label></th><td>
-				<input type="text" name="kursy[name]" value="<?=((!empty($kursy)) ? $kursy->getField('name',true) : '')?>" />
-			<div class="error" id='err_name' role="alert"></div>
-			</td>
+	<?php $form->field($kursy,'name')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{kursy.full_text}</label></th><td>
-				<textarea name="kursy[full_text]" ><?=((!empty($kursy)) ? $kursy->getField('full_text',true) : '')?></textarea>
-			<div class="error" id='err_full_text' role="alert"></div>
-			</td>
+	<?php $form->field($kursy,'full_text')->textarea();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{kursy.small_text}</label></th><td>
-				<input type="text" name="kursy[small_text]" value="<?=((!empty($kursy)) ? $kursy->getField('small_text',true) : '')?>" />
-			<div class="error" id='err_small_text' role="alert"></div>
-			</td>
+	<?php $form->field($kursy,'small_text')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{kursy.web}</label></th><td>
-				<input type="text" name="kursy[web]" value="<?=((!empty($kursy)) ? $kursy->getField('web',true) : '')?>" />
-			<div class="error" id='err_web' role="alert"></div>
-			</td>
+	<?php $form->field($kursy,'web')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{kursy.sostoyanie_dopuska}</label></th><td>
-			<?php 
-			$params = array('data'=> $this->_MODEL->get_field_value_list('sostoyanie_dopuska'),'name'=>'kursy[sostoyanie_dopuska]');
-			if(!empty($kursy))
-			{
-				$params['value']=$kursy->getField('sostoyanie_dopuska',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_sostoyanie_dopuska' role="alert"></div>
-			</td>
+	<?php $form->field($kursy,'sostoyanie_dopuska')->ComboBox();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
