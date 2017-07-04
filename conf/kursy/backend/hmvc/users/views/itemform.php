@@ -51,8 +51,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{users.sostoyanie_dopuska}</label></th><td>
-			<?php $form->field($users,'sostoyanie_dopuska')->ComboBox(null,array('enum_mode'=>'lang'));	 ?>
-			</td>
+	<?php $form->field($users,'sostoyanie_dopuska')->ComboBox();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.skype}</label></th><td>
@@ -60,8 +59,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{users.status}</label></th><td>
-			<?php $form->field($users,'status')->ComboBox();	 ?>
-			</td>
+	<?php $form->field($users,'status')->ComboBox();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.hash}</label></th><td>

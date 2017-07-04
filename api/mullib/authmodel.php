@@ -154,6 +154,24 @@ class AuthModel extends BaseModel
 		return NULL;
 	}
 	
+	function validate($data)
+	{
+		$the_action = $this->_ENV['page_module']->_REQUEST->_args[0];
+		if($the_action=='auth')
+		{
+			$res = array();
+			$res_auth = $this->auth($data['login'], $data['password']);
+			if($res_auth==false)
+			{
+				add_keypair($res,'auth',Lang::__t('Wrong login or password'));
+			}
+			$this->OnValidate($_POST, $res);
+			return $res;
+		}
+		else 
+			return parent::validate($data);
+	}
+	
 	function OnSave(&$object)
 	{		
 		$the_data = $this->load_auth_data();

@@ -51,16 +51,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{users.sostoyanie_dopuska}</label></th><td>
-			<?php 
-			$params = array('data'=> $this->_MODEL->get_field_value_list('sostoyanie_dopuska'),'name'=>'users[sostoyanie_dopuska]');
-			if(!empty($users))
-			{
-				$params['value']=$users->getField('sostoyanie_dopuska',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_sostoyanie_dopuska' role="alert"></div>
-			</td>
+	<?php $form->field($users,'sostoyanie_dopuska')->ComboBox();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.skype}</label></th><td>
@@ -68,16 +59,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{users.status}</label></th><td>
-			<?php 
-			$params = array('data'=> $this->_MODEL->get_field_value_list('status'),'name'=>'users[status]');
-			if(!empty($users))
-			{
-				$params['value']=$users->getField('status',true);
-			}
-			$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_status' role="alert"></div>
-			</td>
+	<?php $form->field($users,'status')->ComboBox();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.hash}</label></th><td>

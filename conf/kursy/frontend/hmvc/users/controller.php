@@ -10,7 +10,9 @@ class UsersController extends AuthController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','users/login')
+				),	
 		);
 	}
 		
@@ -45,14 +47,14 @@ class UsersController extends AuthController
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE USERS";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('users'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT USERS";
+	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$users->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('users'=>$users));
 	}
 	
@@ -64,14 +66,22 @@ class UsersController extends AuthController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=users');
+			$this->redirect(as_url('users'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "users", "menu");
+		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$users->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('users'=>$users));
 	}
 	
 	public function ActionMenu()

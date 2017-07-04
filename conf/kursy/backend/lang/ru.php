@@ -117,4 +117,5 @@ $_LANG['VIEW']='VIEW';
 $_LANG['View PREPS']='View PREPS';
 $_LANG['Edit KURSY']='Edit KURSY';
 $_LANG['View KURSY']='View KURSY';
+$_LANG['Wrong login or password']='Wrong login or password';
 ?>
