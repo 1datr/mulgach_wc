@@ -15,6 +15,11 @@ function merge_arrays($array1,$array2)
 	return $res;
 }
 
+function rel_dir($dir_path)
+{
+	return url_seg_add('/', $dir_path);
+}
+
 function ser_post($ser_name)
 {
 	GLOBAL $_BASEDIR;

@@ -4,7 +4,7 @@ session_start();
 $inc_files = get_files_in_folder( url_seg_add(__DIR__,'/inc/'));
 foreach ($inc_files as $inc_module)
 {
-	require_once $inc_module;
+	require_once rel_dir($inc_module);
 }
 
 $_EP_PATH = NULL;

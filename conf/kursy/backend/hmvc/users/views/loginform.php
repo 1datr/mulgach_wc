@@ -1,5 +1,5 @@
 <?php
-$frm=new mulForm(as_url('users/auth',$this));
+$frm=new mulForm(as_url('users/auth'),$this);
 ?>
 <div class="error" id="err_auth" role="alert"></div>
 <table>

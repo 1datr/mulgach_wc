@@ -1,5 +1,5 @@
 <?php
-use \Widget;
+//use \Widget;
 
 	class InputTextWidget extends \Widget 
 	{
