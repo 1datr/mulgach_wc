@@ -68,4 +68,9 @@ $_LANG['Set configuration code']='Set configuration code';
 $_LANG['Edit database connection config']='Edit database connection config';
 $_LANG['id']='id';
 $_LANG['ERROR']='ERROR';
+$_LANG['Wrong login or password']='Wrong login or password';
+$_LANG['database scaffolding']='database scaffolding';
+$_LANG['table scaffolding']='table scaffolding';
+$_LANG['Primary key of this table is empty']='Primary key of this table is empty';
+$_LANG['Primary key field is not autoincrement']='Primary key field is not autoincrement';
 ?>

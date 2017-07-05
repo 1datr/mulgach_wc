@@ -40,6 +40,18 @@ $sbplugin->template_table_end();
 $form = new mulForm("?r=hmvc/make/makefiles");
 ?>
 
+<h2>HMVC <?=$_SESSION['makeinfo']['table']?> #{table scaffolding}</h2>
+<div style="color:red;">
+<?php 
+foreach ($warnings as $idx => $wrnng)
+{
+	?>
+	<div><?=$wrnng?></div>
+	<?php 
+}
+?>
+</div>
+
 <ul class="nav nav-tabs">
   <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link  active" href="#main">#{tabMain}</a></li>
   <li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link" href="#capts">#{tabCaptsMenues}</a></li>  

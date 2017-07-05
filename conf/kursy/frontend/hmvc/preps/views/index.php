@@ -8,8 +8,8 @@ use BootstrapListView\LVW_Column as LVW_Column;
 $this->usewidget(new ListViewWidget($this),array('ds'=>$ds,
 		'columns'=>array(
 			'__default__',
-			'edit'=>LVW_Column::ref_column('<a href="?r=preps/edit/{id_prep}" role="button" class="btn btn-secondary btn-sm">#{EDIT}</a>'),
-			'delete'=>LVW_Column::ref_column('<a href="?r=preps/delete/{id_prep}" role="button" class="ref_delete btn btn-secondary btn-sm">#{DELETE}</a>'),
+			'edit'=>LVW_Column::ref_column('<a href="<?=as_url("preps/edit/{id_prep}") ?>" role="button" class="btn btn-secondary btn-sm">#{EDIT}</a>'),
+			'delete'=>LVW_Column::ref_column('<a href="<?=as_url("preps/delete/{id_prep}") ?>" role="button" class="ref_delete btn btn-secondary btn-sm">#{DELETE}</a>'),
 		)
 ));
 

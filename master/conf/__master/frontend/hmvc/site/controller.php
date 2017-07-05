@@ -29,6 +29,8 @@ class SiteController extends BaseController
 	
 	public function ActionLogin()
 	{
+	//	print_r($_SESSION);
+		
 		$this->_TITLE=Lang::__t('Master. Authorization');
 		$this->use_layout('layout_login');
 		$this->out_view('loginform',array());
@@ -37,7 +39,7 @@ class SiteController extends BaseController
 	public function ActionAuth()
 	{
 	//	print_r($_POST);
-		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['passw']);//		
+		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);//		
 		if($auth_res)
 		{
 			$_SESSION[$this->get_user_descriptor()]=array('login'=>$_POST['login']);

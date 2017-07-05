@@ -10,7 +10,9 @@ class ZnakController extends BaseController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+				),	
 		);
 	}
 		
@@ -45,14 +47,14 @@ class ZnakController extends BaseController
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE ZNAK";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('znak'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT ZNAK";
+	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$znak = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$znak = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$znak->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('znak'=>$znak));
 	}
 	
@@ -64,14 +66,22 @@ class ZnakController extends BaseController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=znak');
+			$this->redirect(as_url('znak'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "users", "menu");
+		$znak = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$znak->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('znak'=>$znak));
 	}
 	
 	

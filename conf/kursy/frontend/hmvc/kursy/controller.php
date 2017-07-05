@@ -10,7 +10,9 @@ class KursyController extends BaseController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+				),	
 		);
 	}
 		

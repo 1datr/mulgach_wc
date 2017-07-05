@@ -47,14 +47,14 @@ class PredlogenieController extends BaseController
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE PREDLOGENIE";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('predlogenie'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT PREDLOGENIE";
+	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$predlogenie = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$predlogenie = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$predlogenie->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('predlogenie'=>$predlogenie));
 	}
 	
@@ -66,14 +66,22 @@ class PredlogenieController extends BaseController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=predlogenie');
+			$this->redirect(as_url('predlogenie'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "users", "menu");
+		$predlogenie = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$predlogenie->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('predlogenie'=>$predlogenie));
 	}
 	
 	

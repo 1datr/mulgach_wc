@@ -9,31 +9,7 @@ class HmvcController extends BaseController
 				),
 		);
 	}
-	/*
-	private function ConnectDBIfExists($cfg)
-	{
-		GLOBAL $_BASEDIR;
-		try
-		{
-			$conffile=url_seg_add($_BASEDIR,"conf",$cfg,"config.php");
-			include $conffile;
-			
-			if(!empty($_MODULES['db']))	// конфа подключена к базе
-			{
-				
-				$this->connect_db($_MODULES['db']);
-				
-				return $_MODULES['db'];
-			}
-			return NULL;
-		}
-		catch (Exception $exc)
-		{
-			echo "<h4>This configuration does not exists</h4>";
-			//die();
-		}
-	}
-	*/
+	
 	public function ActionIndex($cfg='main',$ep='frontend')
 	{
 		$this->_TITLE="HMVC {$cfg}";
@@ -132,7 +108,7 @@ class HmvcController extends BaseController
 							$_SESSION['makeinfo']=array();				
 							$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
 							
-							$this->redirect('?r=hmvc/make/binds');
+							$this->redirect(as_url('hmvc/make/binds'));
 						};break;
 			case 'binds': {
 						GLOBAL $_BASEDIR;
@@ -206,6 +182,26 @@ class HmvcController extends BaseController
 							}
 						}
 					
+						$table_warnings=array();
+						$primary = $this->_ENV['_CONNECTION']->get_primary($fields);
+						if($primary!=null)
+						{
+							//mul_dbg
+							if($fields[$primary]['Extra'] != 'auto_increment')
+							{
+								$table_warnings[]=Lang::__t('Primary key field is not autoincrement');
+							}
+							/*
+							foreach ($fields as $fld => $finfo)
+							{
+								mul_dbg($fld);
+								mul_dbg($finfo);
+							}*/
+						}
+						else 
+						{
+							$table_warnings[]=Lang::__t('Primary key of this table is empty');
+						}
 											
 						$this->out_view('constraints',array(
 								'fields'=>$fields,
@@ -214,7 +210,8 @@ class HmvcController extends BaseController
 								'settings'=>$settings,
 								'sbplugin'=>$sbplugin,
 								'triads'=>$triads,
-								
+								'table'=>$_SESSION['makeinfo']['table'],
+								'warnings'=>$table_warnings,
 								'fld_login_'=>$fld_login_,
 								'fld_passw_'=>$fld_passw_,
 								'fld_hash_'=>$fld_hash_,
@@ -228,7 +225,7 @@ class HmvcController extends BaseController
 						$this->make_hmvc($_SESSION['makeinfo']);
 						unset($_SESSION['makeinfo']);
 						
-						$this->redirect('?r=hmvc/make/success');
+						$this->redirect(as_url('hmvc/make/success'));
 					};break;
 			case 'success': {
 						$this->_TITLE=Lang::__t('HMVC made successed');

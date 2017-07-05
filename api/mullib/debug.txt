@@ -1,3 +1,30 @@
 
 				
-	
+	07-05-2017 11:40:08.000000: Array
+(
+    [Field] => id_slog
+    [Type] => bigint
+    [Collation] => 
+    [Null] => NO
+    [Key] => PRI
+    [Default] => 
+    [Extra] => 
+    [Privileges] => select,insert,update,references
+    [Comment] => 
+    [TypeInfo] => 20
+)
+
+				
+	07-05-2017 11:40:38.000000: Array
+(
+    [Field] => id_kurs
+    [Type] => bigint
+    [Collation] => 
+    [Null] => NO
+    [Key] => PRI
+    [Default] => 
+    [Extra] => auto_increment
+    [Privileges] => select,insert,update,references
+    [Comment] => 
+    [TypeInfo] => 20
+)

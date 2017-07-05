@@ -10,7 +10,9 @@ class UrokController extends BaseController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+				),	
 		);
 	}
 		
@@ -49,10 +51,10 @@ class UrokController extends BaseController
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT UROK";
+	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$urok = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$urok = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$urok->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('urok'=>$urok));
 	}
 	
@@ -64,14 +66,22 @@ class UrokController extends BaseController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=urok');
+			$this->redirect(as_url('urok'));
 		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
+	}
+	
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "users", "menu");
+		$urok = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$urok->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('urok'=>$urok));
 	}
 	
 	

@@ -166,7 +166,20 @@ function x_make_str($str,$ptrn)
 			$ptrn2["{".$key."}"]=$val;
 		}
 	}
-	return strtr($str,$ptrn2);
+	$str_res = strtr($str,$ptrn2);
+	
+	$str_res = exe_php_str($str_res);
+	//mul_dbg($res);
+	return $str_res;
+}
+
+function exe_php_str($code_str)
+{
+	ob_start();
+	$code_str = "echo ''; ?>{$code_str}<? echo '';";
+	eval($code_str);
+	$res = ob_get_clean();
+	return $res;
 }
 
 function url_seg_add()

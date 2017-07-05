@@ -4,7 +4,7 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <?php
 $form = new mulForm(as_url("urok/save"));
 ?>
-<input type="hidden" name="urok[]" value="<?=((!empty($urok)) ? $urok->getField('') : '')?>" />
+<input type="hidden" name="urok[id_urok]" value="<?=((!empty($urok)) ? $urok->getField('id_urok') : '')?>" />
 <h3><?php 
 if(!empty($urok))   
 {
@@ -22,10 +22,6 @@ else
 <table>
 
 	<tr>
-	<th><label>#{urok.id_urok}</label></th><td>
-	<?php $form->field($urok,'id_urok')->text();	 ?>	</td>
-	</tr>
-		<tr>
 	<th><label>#{urok.id_razdel}</label></th><td>
 			<?php 
 					$params = array('ds'=> $this->get_controller('razdel')->_MODEL->find() ,'required'=>true, 'name'=>'urok[id_razdel]');
