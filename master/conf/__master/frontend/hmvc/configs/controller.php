@@ -66,7 +66,7 @@ class ConfigsController extends BaseController
 		
 		unlink_folder($cfgdir);
 		
-	//	$this->redirect_back();
+		$this->redirect_back();
 	}
 	
 }

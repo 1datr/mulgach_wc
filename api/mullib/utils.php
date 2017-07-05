@@ -390,14 +390,24 @@ function unlink_folder($fldr)
 	foreach ($nested_files as $nested)
 	{
 		if(is_dir($nested))
+		{
 			unlink_folder(dir_dotted($nested));
+		}
 		else 
-			chown($nested, 666);
-			unlink(dir_dotted($nested));
+		{
+			//chown($nested, 666);
+			if(is_dir($nested))
+				rmdir($nested);
+			else
+				unlink(dir_dotted($nested));
+		}
 	}
 	chown($fldr, 666);
 	//if(file_exists($fldr)) echo ";;;";
-	unlink($fldr);
+	if(is_dir($fldr))
+		rmdir($fldr);
+	else
+		unlink($fldr);
 }
 
 function add_keypair(&$arr,$key,$val)
