@@ -198,6 +198,8 @@ class scaff_triada
 			if(isset($fld['file_fields']))
 			{
 				$files_params=$files_params."'".$_params['model_fields'][$idx]['name']."'=>array(),";
+				// make folder to save files
+				x_mkdir( url_seg_add($this->_PATH,'../../../files/',$this->NAME,$_params['model_fields'][$idx]['name'] ) );
 			}
 		}
 		$vars['filesparams']="'file_fields'=>array({$files_params}),";
@@ -416,6 +418,9 @@ class scaff_triada
 	
 	}
 	
+	public function install_from_table($_params,$controller,$opts){
+		
+	}
 	
 	function x_make_controller($_params,$rewrite_all,$template='controller')
 	{
