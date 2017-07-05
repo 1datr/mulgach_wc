@@ -34,11 +34,15 @@ class mulForm
 	function __construct($action="",$params=array())
 	{
 	//	print_r($_SESSION);
-		def_options(array('method'=>'post'), $params);
+		def_options(array('html_attrs'=>array()), $params);
+		def_options(array('method'=>'post','class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['html_attrs']);
+		$params['html_attrs']['action']=$action;
 		?>
-		<form action="<?=$action?>" class="mul_form" method="<?=$params['method']?>" <?php if(!empty($params['target'])) echo 'target="'.$params['target'].'"'; ?>>		
+		<form <?=xx_implode($params['html_attrs'], ' ', '{idx}="{%val}"') ?> >		
 		<?php 
 		/*
+		 <form action="<?=$action?>" class="mul_form" method="<?=$params['method']?>"  enctype="multipart/form-data" <?php if(!empty($params['target'])) echo 'target="'.$params['target'].'"'; ?>> 
+		 
 		list($csrf_key,$csrf_val) = $this->make_csrf($action);
 		echo "<input type=\"hidden\" name=\"".$csrf_key."\" value=\"".$csrf_val."\" />";
 		*/

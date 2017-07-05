@@ -170,6 +170,11 @@ class ActiveField
 		$this->error_div();
 	}
 	
+	function file($opts=array())
+	{
+		
+	}
+	
 	function set($opts=array())
 	{
 		

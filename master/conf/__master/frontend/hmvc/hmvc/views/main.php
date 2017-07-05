@@ -76,11 +76,12 @@ $sbplugin->block_end(function(){
 // Блок с полями
 	$sbplugin->table_block_start('field_item',array('id'=>'fields_block'),array(),'
 		<thead>
-		<tr><th>#{Field}</th><th>#{Required}</th></tr>
+		<tr><th>#{Field}</th><th>#{Required}</th><th>#{File field}</th></tr>
 		</thead>
 		');
 
 	$idx=0;
+	
 	foreach($fields as $fld => $finfo)
 	{
 		//print_r($finfo);
@@ -97,9 +98,20 @@ $sbplugin->block_end(function(){
 				}
 		?>
 		</td>
+		<?php 
+		//mul_dbg($finfo);
+		if( in_array($finfo['Type'],array('text','blob') ))
+		{
+			?>
+			<td><input type="checkbox" name="model_fields[<?=$idx?>][file_fields]" value="on" /></td>
+			<?php 
+		}
+		?>
+		
 		</tr>
 		<?php 
 		$idx++;
+		
 	}
 	$sbplugin->table_block_end(function(){
 		?>

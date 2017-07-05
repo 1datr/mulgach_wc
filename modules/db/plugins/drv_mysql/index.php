@@ -53,7 +53,7 @@ class plg_drv_mysql extends mod_plugin
 			$keys = array_keys($row);
 			$tablename = $row[$keys[0]];
 			
-			//$tablename = substr($tablename,strlen($this->_DB_PARAMS['prefix']));
+			$tablename = substr($tablename,strlen($this->_DB_PARAMS['prefix']));
 			
 			
 			$arr[]= $tablename;

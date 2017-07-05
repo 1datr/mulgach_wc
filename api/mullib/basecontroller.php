@@ -179,6 +179,11 @@ class BaseController
 		//echo "<h3>".Lang::__t('Error').' '.$ErrorNo."</h3>";
 	}
 	
+	public function ActionUploadfile($filefield)
+	{
+		
+	}
+	
 	function getinfo($infodescr)
 	{
 		$_DATA=NULL;

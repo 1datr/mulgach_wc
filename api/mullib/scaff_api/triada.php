@@ -188,7 +188,19 @@ class scaff_triada
 		
 		$vars=array();
 		$vars['table']=$_params['table'];
+		$vars['filesparams']='';
+		
 		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
+		
+		$files_params='';
+		foreach ($_params['model_fields'] as $idx => $fld)
+		{
+			if(isset($fld['file_fields']))
+			{
+				$files_params=$files_params."'".$_params['model_fields'][$idx]['name']."'=>array(),";
+			}
+		}
+		$vars['filesparams']="'file_fields'=>array({$files_params})";
 			
 	//	$this->gather_fields_captions($tbl_fields);
 		
@@ -198,6 +210,8 @@ class scaff_triada
 				});
 			
 		$vars['array_fields']="array({$fields_code})";
+		
+		
 		$con_str="";
 		if(!empty($_params['constraints']))
 		{
@@ -214,6 +228,7 @@ class scaff_triada
 		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
 		$vars['primary']=$_primary;
 		$vars['view']=$_params['view'];
+		
 		$vars['authparams']='';
 	//	mul_dbg($_params['authcon']);
 	//	mul_dbg($_params['authcon'][$this->_EP]['enable']);
@@ -409,7 +424,7 @@ class scaff_triada
 		$vars['TABLE_UC']=strtoupper($_params['table']);
 		$vars['table'] = $_params['table'];
 		$vars['OTHER_METHODS']='';
-		$vars['ADV_RULES']='';
+		$vars['ADV_RULES']='';		
 		$vars = array_merge($vars,$_params);
 		
 	//	mul_dbg('menu site codes');
