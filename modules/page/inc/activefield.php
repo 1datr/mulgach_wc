@@ -4,6 +4,7 @@ class ActiveField
 	VAR $_ROW;
 	VAR $_FLDNAME;
 	VAR $_OPTIONS;
+	VAR $_ENV;
 	function __construct($row,$name,$opts=array())
 	{
 		$this->_ROW=$row;

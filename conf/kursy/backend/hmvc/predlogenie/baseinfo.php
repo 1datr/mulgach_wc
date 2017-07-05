@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_predlogenie','ru','zvuk_ru','en','zvuk_en','transcription','sound','type'),
 	'rules'=>array(),	
 	'view'=>'{ru}',
+	'file_fields'=>array(),
 	
 );

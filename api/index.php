@@ -3,6 +3,7 @@ define('__module_class_prefix__','mul_');
 define('__module_class_suffix__','');
 
 $_MUL_DBG_WORK=true;
+$_CURRENT_CONTROLLER=NULL;
 
 require_once __DIR__."/mullib/utils.php";
 

@@ -26,7 +26,7 @@ foreach ($files as $the_file)
 ?>
 </ul>
 <?php 
-$frm=new mulForm(as_url("configs/new"));
+$frm=new mulForm(as_url("configs/new"),$this);
 ?>
 <label for="newcfg">#{New config name}</label>
 <input type="text" id="newcfg" name="newcfg">

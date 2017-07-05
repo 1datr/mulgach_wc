@@ -2,7 +2,7 @@
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 <?php 
-$frm = new mulForm(as_url('modules/makeplg'));
+$frm = new mulForm(as_url('modules/makeplg'),$this);
 ?>
 <h4><?=Lang::__t('Create plugin') ?></h4>
 <table>

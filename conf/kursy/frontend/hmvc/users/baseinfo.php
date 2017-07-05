@@ -7,6 +7,7 @@ $settings = array(
 	'required'=>array('id','login','password','first_name','last_name','phone','web','address','sostoyanie_dopuska','skype','status','hash'),
 	'rules'=>array(),	
 	'view'=>'{login}',
+	'file_fields'=>array(),
 	'authdata'=>array(
 		'type'=>'db',
 		'src'=>'users',

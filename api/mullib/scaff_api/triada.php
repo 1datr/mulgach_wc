@@ -200,7 +200,7 @@ class scaff_triada
 				$files_params=$files_params."'".$_params['model_fields'][$idx]['name']."'=>array(),";
 			}
 		}
-		$vars['filesparams']="'file_fields'=>array({$files_params})";
+		$vars['filesparams']="'file_fields'=>array({$files_params}),";
 			
 	//	$this->gather_fields_captions($tbl_fields);
 		

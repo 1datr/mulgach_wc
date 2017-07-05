@@ -7,6 +7,6 @@ $settings = array(
 	'required'=>array('id_kurs','id_prep','name','full_text','small_text','web','sostoyanie_dopuska'),
 	'rules'=>array(),	
 	'view'=>'{name}',
-	'file_fields'=>array()
+	'file_fields'=>array(),
 	
 );

@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_urok','id_razdel','number','name','video1','video2','video3','document1','document2','hometask','presentation','text_block','theme'),
 	'rules'=>array(),	
 	'view'=>'{name}',
+	'file_fields'=>array(),
 	
 );

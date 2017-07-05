@@ -37,7 +37,7 @@ $sbplugin->template_table_end();
 ?>
 
 <?php 
-$form = new mulForm("?r=hmvc/make/makefiles");
+$form = new mulForm("?r=hmvc/make/makefiles",$this);
 ?>
 
 <h2>HMVC <?=$_SESSION['makeinfo']['table']?> #{table scaffolding}</h2>

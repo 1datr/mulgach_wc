@@ -7,6 +7,6 @@ $settings = array(
 	'required'=>array('id_slog','slog','transcription','sound','type'),
 	'rules'=>array(),	
 	'view'=>'{slog}',
-	'file_fields'=>array('sound'=>array(),)
+	'file_fields'=>array('sound'=>array(),),
 	
 );

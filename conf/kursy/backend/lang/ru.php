@@ -160,4 +160,13 @@ $_LANG['SLOVO LIST']='SLOVO LIST';
 $_LANG['Edit SLOVO']='Edit SLOVO';
 $_LANG['STUDENT LIST']='STUDENT LIST';
 $_LANG['Edit STUDENT']='Edit STUDENT';
+$_LANG['ucheba.id']='id';
+$_LANG['ucheba.id_uchenik']='id_uchenik';
+$_LANG['ucheba.id_kurs']='id_kurs';
+$_LANG['ucheba.dostup']='dostup';
+$_LANG['ucheba.date_start']='date_start';
+$_LANG['ucheba.date_finish']='date_finish';
+$_LANG['UCHEBA LIST']='UCHEBA LIST';
+$_LANG['Edit PRIMENENIYE']='Edit PRIMENENIYE';
+$_LANG['Edit UCHEBA']='Edit UCHEBA';
 ?>

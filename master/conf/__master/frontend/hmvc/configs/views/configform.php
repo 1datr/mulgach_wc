@@ -1,5 +1,5 @@
 <?php 
-$frm = new mulForm(as_url('configs/setdbcfg'));
+$frm = new mulForm(as_url('configs/setdbcfg'),$this);
 ?>
 <input type="hidden" name="cfg" value="<?=$cfg?>" />
 <table>

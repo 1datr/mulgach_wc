@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_prep','first_name','last_name','user_id','sostoyanie_dopuska'),
 	'rules'=>array(),	
 	'view'=>'{first_name} {last_name} ',
+	'file_fields'=>array(),
 	
 );

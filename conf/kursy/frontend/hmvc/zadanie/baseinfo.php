@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_zadaniya','id_urok','proverka','tematika','title','zadanie_text'),
 	'rules'=>array(),	
 	'view'=>'{tematika}',
+	'file_fields'=>array(),
 	
 );

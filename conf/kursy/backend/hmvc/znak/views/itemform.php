@@ -2,7 +2,7 @@
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 <?php
-$form = new mulForm(as_url("znak/save"));
+$form = new mulForm(as_url("znak/save"),$this);
 ?>
 <input type="hidden" name="znak[id_znak]" value="<?=((!empty($znak)) ? $znak->getField('id_znak') : '')?>" />
 <h3><?php 

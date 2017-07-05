@@ -2,7 +2,7 @@
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 <?php
-$form = new mulForm(as_url("lifearea/save"));
+$form = new mulForm(as_url("lifearea/save"),$this);
 ?>
 <input type="hidden" name="lifearea[id]" value="<?=((!empty($lifearea)) ? $lifearea->getField('id') : '')?>" />
 <h3><?php 

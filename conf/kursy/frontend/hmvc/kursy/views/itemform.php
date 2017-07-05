@@ -2,7 +2,7 @@
 use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 ?>
 <?php
-$form = new mulForm(as_url("kursy/save"));
+$form = new mulForm(as_url("kursy/save"),$this);
 ?>
 <input type="hidden" name="kursy[id_kurs]" value="<?=((!empty($kursy)) ? $kursy->getField('id_kurs') : '')?>" />
 <h3><?php 

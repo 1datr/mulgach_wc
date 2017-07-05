@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_razdel','id_kurs','number','name'),
 	'rules'=>array(),	
 	'view'=>'{name}',
+	'file_fields'=>array(),
 	
 );

@@ -1,7 +1,7 @@
 <div class="row">
 <div class="col-sm-4">
 <?php
-$form=new mulForm(as_url("hmvc/make/"));
+$form=new mulForm(as_url("hmvc/make/"),$this);
 ?>
 <h3>#{CREATE FROM TABLE}</h3>
 <label for="thetable">#{Table}</label>

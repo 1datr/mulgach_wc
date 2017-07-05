@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id','title_ru','title_eng'),
 	'rules'=>array(),	
 	'view'=>'{title_ru}',
+	'file_fields'=>array(),
 	
 );

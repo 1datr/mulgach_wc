@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_bukva','bukva','transcription','sound','type'),
 	'rules'=>array(),	
 	'view'=>'{bukva}',
+	'file_fields'=>array('sound'=>array(),),
 	
 );

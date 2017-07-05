@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_slovo','ru','zvuk_ru','en','risunok','zvuk_en','transcription','type'),
 	'rules'=>array(),	
 	'view'=>'{ru}',
+	'file_fields'=>array(),
 	
 );

@@ -4,6 +4,7 @@ define(_CSR_FCODE_EXPIRE_,1000);
 
 class mulForm
 {
+	VAR $_CONTROLLER;
 	static function check_form($_POST_ARRAY)
 	{
 		if(!empty($_SESSION['csrf_codes']))
@@ -31,9 +32,10 @@ class mulForm
 		return $newfld;
 	}
 	
-	function __construct($action="",$params=array())
+	function __construct($action="",&$controller,$params=array())
 	{
 	//	print_r($_SESSION);
+		$this->_CONTROLLER = $controller;
 		def_options(array('html_attrs'=>array()), $params);
 		def_options(array('method'=>'post','class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['html_attrs']);
 		$params['html_attrs']['action']=$action;

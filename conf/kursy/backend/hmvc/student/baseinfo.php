@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id_uchenik','summ','login','passw','user_id'),
 	'rules'=>array(),	
 	'view'=>'{login}',
+	'file_fields'=>array(),
 	
 );

@@ -104,4 +104,10 @@ $_LANG['zadanie.proverka']='proverka';
 $_LANG['zadanie.tematika']='tematika';
 $_LANG['zadanie.title']='title';
 $_LANG['zadanie.zadanie_text']='zadanie_text';
+$_LANG['ucheba.id']='id';
+$_LANG['ucheba.id_uchenik']='id_uchenik';
+$_LANG['ucheba.id_kurs']='id_kurs';
+$_LANG['ucheba.dostup']='dostup';
+$_LANG['ucheba.date_start']='date_start';
+$_LANG['ucheba.date_finish']='date_finish';
 ?>

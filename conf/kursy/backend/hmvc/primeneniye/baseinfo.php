@@ -7,5 +7,6 @@ $settings = array(
 	'required'=>array('id','id_predlogenie','id_lifearea'),
 	'rules'=>array(),	
 	'view'=>'id',
+	'file_fields'=>array(),
 	
 );
