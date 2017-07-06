@@ -76,6 +76,10 @@ class plg_drv_mysql extends mod_plugin
 		return mysql_fetch_assoc($res);		
 	}
 	
+	public function last_insert_id(){
+		return mysql_insert_id($this->connection);
+	}
+	
 	public function list_rows($res,$function_on_row)
 	{
 		$rownumber = 0;

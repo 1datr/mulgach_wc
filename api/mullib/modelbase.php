@@ -204,6 +204,31 @@ class BaseModel
 		return array('page_query'=>$query, 'query_count'=>$query_count);
 	}
 	
+	public function files_after_insert(&$datarow)
+	{
+		foreach ($this->_SETTINGS['file_fields'] as $fld => $fldsettings)
+		{
+			$curr_file =  $datarow->getField($fld);
+			if($this->_SETTINGS['fileds'][$fld]['Type']=='blob')
+			{
+				
+			}
+			else 
+			{
+				$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld);
+				$curr_file_info = pathinfo($curr_file);
+				$newname = url_seg_add($temp_save_dir,$datarow->getPrimary().".".$curr_file_info['extension']);
+				
+				if (copy($curr_file,$newname)) {
+					unlink($curr_file);
+				}
+				
+				$datarow->setField($fld,$newname);
+			}
+		}
+		$datarow->save();
+	}
+	
 	public function UploadfilesTemp()
 	{
 		$res=array();
@@ -229,7 +254,7 @@ class BaseModel
 			
 			$temppath = url_seg_add($temp_save_dir,$basename.".{$ext}");
 			copy($tmpfile,$temppath);
-			$res[$fld] = $temppath;
+			$res[$this->_SETTINGS['table']."[{$fld}]"] = $temppath;
 		}
 		return $res;
 	}

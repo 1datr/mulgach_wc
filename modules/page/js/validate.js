@@ -28,10 +28,17 @@ $( document ).ready(function()
 						    success: function(data, textStatus, jqXHR)
 						    {
 						    	that_form.attr("files_loaded",'true');
+						    	// заменяем на полученные значения
+						    	for (var key in data) {
+						    		file_field = that_form.find('input[name="'+key+'"][type=file]').first();
+						    		file_field.attr('type','hidden');
+						    		file_field.val(data[key]);
+						    	}
+						    	that_form.submit();
 						    },
 						    error: function(jqXHR, textStatus, errorThrown) 
 						    {
-						    	 
+						    	 console.log(textStatus);
 						    }
 						    
 						    });

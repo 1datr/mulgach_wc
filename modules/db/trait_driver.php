@@ -9,4 +9,5 @@ trait dbDriver {
 	public function get_constraints($table){}
 	public function escape_val($value,$type='text'){}
 	public function create_table($table,$params){}
+	public function last_insert_id(){}
 }
