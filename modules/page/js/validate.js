@@ -4,19 +4,61 @@ $( document ).ready(function()
 			//		$('#fields_block').jqStructBlock();
 	$(document).on("submit",".mul_form", function(e, submit)
 		{
+		
 				that_form = $(this);
-				if(that_form.attr('validated')=="true")
+				if(that_form.attr('validated')=="true") // форма отвалидована
 				{
+					// отправляем файлы если есть и не отправлены
+					if( ( that_form.attr("files_loaded") !== typeof undefined) && (that_form.find('input[type=file]').length > 0) )
+					{
+						// отправляем файлы
+						form_action_upload = that_form.attr('action');
+						form_action_upload = form_action_upload+"/action:uploadfile";
+						e.preventDefault();
+						var the_data = new FormData(that_form[0]);
+						$.ajax({
+						        url: form_action_upload,
+						        type: 'POST',
+						        data: the_data,
+						        mimeType:"multipart/form-data",
+						        contentType: false,
+						        cache: false,
+						        processData:false,
+						        dataType: 'json',
+						    success: function(data, textStatus, jqXHR)
+						    {
+						    	that_form.attr("files_loaded",'true');
+						    },
+						    error: function(jqXHR, textStatus, errorThrown) 
+						    {
+						    	 
+						    }
+						    
+						    });
+								
+					}
+					
 					return true;
 				}
 				
 				e.preventDefault();
 				form_action_base = e.target.action;
 				form_action = form_action_base + "/action:validate";
-							 
-				 m_data=$(this).serialize();
-				 res_check=true;
-				 $.ajax({
+		
+				// перед отправкой на валидацию чтобы сериализовать создаем клон где вместо файла текст с путем к файлу
+				cloned_form=$(this).clone();
+				cloned_form_files = $(cloned_form).find('input[type=file]');
+				$(this).find('input[type=file]').each(function( i, el ) 
+					{
+						original_src = $(el).val();
+						file_in_copy = cloned_form_files.get(i);
+						$(file_in_copy).attr('type','text');
+						$(file_in_copy).val(original_src);
+					}
+				);
+				m_data=$(cloned_form).serialize();
+				res_check=true;
+				$.ajax({
 					url: form_action, // 
 					type: $(this).attr('method'), // 
 					data: m_data,

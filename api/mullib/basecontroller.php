@@ -179,8 +179,12 @@ class BaseController
 		//echo "<h3>".Lang::__t('Error').' '.$ErrorNo."</h3>";
 	}
 	
-	public function ActionUploadfile($filefield)
+	public function ActionUploadfile()
 	{
+		$filemap = $this->_MODEL->UploadfilesTemp();
+		$this->out_json($filemap);
+		//mul_dbg($_FILES);
+		//mul_dbg($_POST);
 		
 	}
 	

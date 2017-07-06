@@ -43,13 +43,25 @@ class BaseModel
 			{
 				if($this->getPrimaryName()==$fld)
 					continue;
-				if(!isset($data[$this->_TABLE][$fld]))
+				if(isset($this->_SETTINGS['file_fields'][$fld]))
 				{
-					add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+					if(empty($data[$this->_TABLE][$fld]))
+					{
+						add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+					}
+					
+					
+				}
+				else 
+				{
+					if(empty($data[$this->_TABLE][$fld]))
+					{
+						add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+					}
 				}
 			}
 			$this->OnValidate($data[$this->_TABLE], $res);
-		}
+		}				
 		return $res;
 	}
 	
@@ -190,6 +202,36 @@ class BaseModel
 		$query="SELECT `{$this->_TABLE}`.*{$sql_selects} FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where $_ORDER LIMIT $base,$pagesize";
 		$query_count="SELECT COUNT(*) as `COUNT` FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where";
 		return array('page_query'=>$query, 'query_count'=>$query_count);
+	}
+	
+	public function UploadfilesTemp()
+	{
+		$res=array();
+		foreach ($this->_SETTINGS['file_fields'] as $fld => $fld_info )
+		{
+			$filename = $_FILES[$this->_SETTINGS['table']]['name'][$fld];
+			$tmpfile = $_FILES[$this->_SETTINGS['table']]['tmp_name'][$fld];
+			
+			$path_parts = pathinfo($tmpfile);
+			$path_name = pathinfo($filename);
+			$ext = $path_name['extension'];
+								
+			$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld, 'temp');
+			x_mkdir($temp_save_dir);
+			
+			$basename = $path_parts['filename'];
+			$ctr=1;
+			while(file_exists( url_seg_add($temp_save_dir,$basename.".{$ext}") ))
+			{
+				$basename=$basename."_{$ctr}";
+				$ctr++;
+			}
+			
+			$temppath = url_seg_add($temp_save_dir,$basename.".{$ext}");
+			copy($tmpfile,$temppath);
+			$res[$fld] = $temppath;
+		}
+		return $res;
 	}
 	
 	function OnSave(&$object)

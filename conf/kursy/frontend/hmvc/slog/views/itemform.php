@@ -6,7 +6,7 @@ $form = new mulForm(as_url("slog/save"),$this);
 ?>
 <input type="hidden" name="slog[id_slog]" value="<?=((!empty($slog)) ? $slog->getField('id_slog') : '')?>" />
 <h3><?php 
-if(!empty($slog))   
+if($slog->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit SLOG} <?=$slog->getView()?>
@@ -31,11 +31,15 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slog.sound}</label></th><td>
-	<?php $form->field($slog,'sound')->text();	 ?>	</td>
+	<?php $form->field($slog,'sound')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slog.type}</label></th><td>
 	<?php $form->field($slog,'type')->text();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{slog.picture}</label></th><td>
+	<?php $form->field($slog,'picture')->file();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

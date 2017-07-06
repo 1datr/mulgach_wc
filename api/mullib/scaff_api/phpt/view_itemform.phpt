@@ -6,7 +6,7 @@ $form = new mulForm(as_url("{table}/save"),$this);
 #>
 <input type="hidden" name="{table}[{fld_primary}]" value="<#=((!empty(${table})) ? ${table}->getField('{fld_primary}') : '')#>" />
 <h3><#php 
-if(!empty(${table}))   
+if(${table}->_EXISTS_IN_DB)   
 {
 	#>
 	#{Edit {TABLE_UC}} <#=${table}->getView()#>
@@ -70,6 +70,10 @@ foreach($fields as $fld => $fldinfo)
 		elseif($fld==$fld_passw)
 		{
 			?><#php $form->field(${table},'<?=$fld?>')->password();	 #><?php	
+		}
+		elseif(isset($settings['file_fields'][$fld]))
+		{
+			?><#php $form->field(${table},'<?=$fld?>')->file();	 #><?php
 		}
 		elseif(($fldinfo['Type']=='longtext') || (stristr($fldinfo['Type'],"varchar")))
 		{

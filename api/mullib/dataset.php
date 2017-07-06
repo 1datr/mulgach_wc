@@ -6,6 +6,7 @@ class DataRecord	// запись из БД
 	VAR $_MODEL;
 	VAR $_FIELDS=array();
 	VAR $_MODIFIED=false;
+	VAR $_EXISTS_IN_DB=false;
 	
 	function __construct($model,$row_from_db=NULL,$env=array())
 	{
@@ -56,6 +57,7 @@ class DataRecord	// запись из БД
 				{
 					$this->set_field($key,$val);
 				}
+				$this->_EXISTS_IN_DB=true;
 			}
 		}
 		else 

@@ -6,7 +6,7 @@ $form = new mulForm(as_url("lifearea/save"),$this);
 ?>
 <input type="hidden" name="lifearea[id]" value="<?=((!empty($lifearea)) ? $lifearea->getField('id') : '')?>" />
 <h3><?php 
-if(!empty($lifearea))   
+if($lifearea->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit LIFEAREA} <?=$lifearea->getView()?>

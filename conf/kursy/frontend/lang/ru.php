@@ -110,4 +110,5 @@ $_LANG['ucheba.id_kurs']='id_kurs';
 $_LANG['ucheba.dostup']='dostup';
 $_LANG['ucheba.date_start']='date_start';
 $_LANG['ucheba.date_finish']='date_finish';
+$_LANG['slog.picture']='picture';
 ?>

@@ -169,4 +169,6 @@ $_LANG['ucheba.date_finish']='date_finish';
 $_LANG['UCHEBA LIST']='UCHEBA LIST';
 $_LANG['Edit PRIMENENIYE']='Edit PRIMENENIYE';
 $_LANG['Edit UCHEBA']='Edit UCHEBA';
+$_LANG['Create SLOG']='Create SLOG';
+$_LANG['slog.picture']='picture';
 ?>
