@@ -173,7 +173,16 @@ class ActiveField
 	
 	function file($opts=array())
 	{
-		
+		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
+		$opts['htmlattrs']['type']='file';
+		if(!isset($opts['name']))
+			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+			else
+				$opts['htmlattrs']['name']= $opts['name'];
+		?>
+		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
+		<?php 
+		$this->error_div();
 	}
 	
 	function set($opts=array())

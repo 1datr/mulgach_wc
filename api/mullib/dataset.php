@@ -6,6 +6,7 @@ class DataRecord	// запись из БД
 	VAR $_MODEL;
 	VAR $_FIELDS=array();
 	VAR $_MODIFIED=false;
+	VAR $_EXISTS_IN_DB=false;
 	
 	function __construct($model,$row_from_db=NULL,$env=array())
 	{
@@ -56,6 +57,7 @@ class DataRecord	// запись из БД
 				{
 					$this->set_field($key,$val);
 				}
+				$this->_EXISTS_IN_DB=true;
 			}
 		}
 		else 
@@ -68,6 +70,11 @@ class DataRecord	// запись из БД
 	}
 	
 	function set_field($fld,$val)
+	{
+		$this->_FIELDS[$fld]=$val;
+	}
+	
+	function setField($fld,$val)
 	{
 		$this->_FIELDS[$fld]=$val;
 	}
@@ -129,7 +136,7 @@ class DataRecord	// запись из БД
 		$fld_values = $this->getFields();
 		$fld_map = $this->_MODEL->_SETTINGS['fields'];
 		$this->escape_array($fld_values,$fld_map);
-		
+		$inserting=false;
 		if($this->getField($this->_MODEL->_SETTINGS['primary'])!=NULL)
 		{			
 			$primary = $this->_MODEL->getPrimaryName();
@@ -141,11 +148,19 @@ class DataRecord	// запись из БД
 		else 
 		{
 			unset($fld_values[$this->_MODEL->getPrimaryName()]);
+			$inserting=true;
 			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
 	//	mul_dbg($sql);
 		//echo $sql;
+		$this->_EXISTS_IN_DB=true;
 		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
+		if($inserting)
+		{
+			$newid = $this->_MODEL->_ENV['_CONNECTION']->last_insert_id();
+			$this->setField($this->_MODEL->_SETTINGS['primary'],$newid);
+			$this->_MODEL->files_after_insert($this);
+		}
 	}
 	
 	function getFieldNames()

@@ -216,9 +216,15 @@ function url_seg_add()
 	
 	$resstr = strtr($resstr,array('//'=>'/'));
 
+	if(substr($arg_list[0],0,1)=='/')
+	{
+		if(substr($resstr[0],0,1)!='/')
+		$resstr="/{$resstr}";
+	}
 	return $resstr;
 	
 }
+
 // создать файл рекурсивно полностью
 function x_file_put_contents($filename,$data,$flags=0,$context=null)
 {

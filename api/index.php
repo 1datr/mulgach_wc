@@ -7,6 +7,7 @@ $_CURRENT_CONTROLLER=NULL;
 
 require_once __DIR__."/mullib/utils.php";
 
+
 if(empty($_EP))
 	$_EP=NULL;
 if(empty($_CONTROLLER))
@@ -18,7 +19,11 @@ if(empty($_CONFIGS_AREA))
 	
 
 if(empty($_NO_READ_CONFIG))
-	require_once url_seg_add(__DIR__,"/../config.php");
+{
+	//require_once url_seg_add(__DIR__,"/../config.php");
+	//echo __DIR__;
+	require_once url_seg_add(__DIR__,"../config.php");
+}
 if(!empty($_CONFIG))
 {
 	require_once url_seg_add($_CONFIGS_AREA,$_CONFIG,"/config.php");
