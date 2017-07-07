@@ -10,4 +10,6 @@ trait dbDriver {
 	public function escape_val($value,$type='text'){}
 	public function create_table($table,$params){}
 	public function last_insert_id(){}
+	public function Typelist(){}
+	public function GetTypeClass($type){}
 }

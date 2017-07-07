@@ -70,6 +70,12 @@ class BaseModel
 		
 	}
 	
+	function get_field_type($field)
+	{
+		$type = $this->_SETTINGS['fields'][$field]['Type'];
+		return $this->_ENV['_CONNECTION']->GetTypeClass($type);
+	}
+	
 	protected function db_query($query)
 	{
 		$res = $this->_ENV['_CONNECTION']->query($query);

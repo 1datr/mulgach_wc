@@ -6,7 +6,7 @@ $form = new mulForm(as_url("kursy/save"),$this);
 ?>
 <input type="hidden" name="kursy[id_kurs]" value="<?=((!empty($kursy)) ? $kursy->getField('id_kurs') : '')?>" />
 <h3><?php 
-if(!empty($kursy))   
+if($kursy->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit KURSY} <?=$kursy->getView()?>

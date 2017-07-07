@@ -6,7 +6,7 @@ $form = new mulForm(as_url("preps/save"),$this);
 ?>
 <input type="hidden" name="preps[id_prep]" value="<?=((!empty($preps)) ? $preps->getField('id_prep') : '')?>" />
 <h3><?php 
-if(!empty($preps))   
+if($preps->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit PREPS} <?=$preps->getView()?>

@@ -63,6 +63,16 @@ $( document ).ready(function()
 						$(file_in_copy).val(original_src);
 					}
 				);
+				
+				cloned_form_selects = $(cloned_form).find('select');
+				$(that_form).find('select').each(function( i, el ) 
+					{
+						original_src = $(el).val();
+						file_in_copy = cloned_form_selects.get(i);						
+						$(file_in_copy).val(original_src);
+					}
+				);
+				
 				m_data=$(cloned_form).serialize();
 				res_check=true;
 				$.ajax({
