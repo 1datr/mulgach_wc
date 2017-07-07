@@ -60,14 +60,23 @@ class ZadanieController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['zadanie']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['zadanie']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['zadanie']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['zadanie']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('zadanie'));
-		
+			$this->redirect(as_url('zadanie'));		
 	}
 			
 	public function ActionDelete($id)

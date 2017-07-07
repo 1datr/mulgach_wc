@@ -1,7 +1,7 @@
 <?php
 //use \Widget;
 
-	class InputTextWidget extends \Widget 
+	class InputTextWidget extends Widget 
 	{
 		function out($params=array())
 		{

@@ -4,8 +4,8 @@ class SiteController extends BaseController
 
 		public function ActionIndex()
 		{
-			$this->redirect('users');
-		}
+							$this->redirect('users');
+						}
 		
 	
 }

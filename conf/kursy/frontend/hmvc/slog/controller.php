@@ -60,14 +60,23 @@ class SlogController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['slog']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['slog']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['slog']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['slog']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('slog'));
-		
+			$this->redirect(as_url('slog'));		
 	}
 			
 	public function ActionDelete($id)

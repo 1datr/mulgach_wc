@@ -36,6 +36,8 @@ class BaseModel
 	
 	function validate($data)
 	{
+		//mul_dbg($data);
+		
 		$res = array();
 		if(isset($data[$this->_TABLE]))
 		{
@@ -68,6 +70,16 @@ class BaseModel
 	function OnValidate($row,&$res)
 	{
 		
+	}
+	
+	function get_field_type($field)
+	{
+		$type = $this->_SETTINGS['fields'][$field]['Type'];
+		$res=array(
+				'type'=>$type,
+				'typeclass'=>$this->_ENV['_CONNECTION']->GetTypeClass($type),
+		);
+		return $res;
 	}
 	
 	protected function db_query($query)
@@ -128,10 +140,39 @@ class BaseModel
 	}
 	
 	function Delete($where) {
+		
+		if(isset($this->_SETTINGS['file_fields']))
+		{
+			$ds = $this->find($where);
+			$ds->walk(function($rec,$rowctr)
+			{
+				foreach ($this->_SETTINGS['file_fields'] as $fld => $finfo)
+				{				
+					$thefile = $rec->getField($fld);
+					if(file_exists($thefile))
+						unlink($thefile);					
+				}
+			});
+		}
+		
 		//$where = $this->_ENV['_CONNECTION']->escape_sql_string($where);
 		$sql=QueryMaker::query_delete($this->_TABLE,$where);
 		$res = $this->_ENV['_CONNECTION']->query($sql);
 		return $res;
+	}
+	
+	function findByPrimary($id)
+	{
+		if(is_array($id))
+		{
+			if(!empty($id[$this->getPrimaryName()]))
+				$id = $id[$this->getPrimaryName()];
+			else 
+				return null;
+		}
+		
+		$row = $this->findOne("*.".$this->getPrimaryName()."={$id}");
+		return $row;
 	}
 	
 	function findOne($where=1,$orderby=NULL)
@@ -204,6 +245,30 @@ class BaseModel
 		return array('page_query'=>$query, 'query_count'=>$query_count);
 	}
 	
+	public function files_before_update(&$datarow)
+	{
+		foreach ($this->_SETTINGS['file_fields'] as $fld => $fldsettings)
+		{
+			$curr_file =  $datarow->getField($fld);
+			if($this->_SETTINGS['fileds'][$fld]['Type']=='blob')
+			{
+			
+			}
+			else
+			{
+				$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld);
+				$curr_file_info = pathinfo($curr_file);
+				$newname = url_seg_add($temp_save_dir,$datarow->getPrimary().".".$curr_file_info['extension']);
+			
+				if (copy($curr_file,$newname)) {
+					unlink($curr_file);
+				}
+			
+				$datarow->setField($fld,$newname);
+			}
+		}
+	}
+	
 	public function files_after_insert(&$datarow)
 	{
 		foreach ($this->_SETTINGS['file_fields'] as $fld => $fldsettings)
@@ -232,10 +297,14 @@ class BaseModel
 	public function UploadfilesTemp()
 	{
 		$res=array();
+		
 		foreach ($this->_SETTINGS['file_fields'] as $fld => $fld_info )
 		{
 			$filename = $_FILES[$this->_SETTINGS['table']]['name'][$fld];
 			$tmpfile = $_FILES[$this->_SETTINGS['table']]['tmp_name'][$fld];
+			
+			if(empty($filename) && empty($tmpfile)) 
+				continue;
 			
 			$path_parts = pathinfo($tmpfile);
 			$path_name = pathinfo($filename);

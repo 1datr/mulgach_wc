@@ -6,7 +6,7 @@ $form = new mulForm(as_url("razdel/save"),$this);
 ?>
 <input type="hidden" name="razdel[id_razdel]" value="<?=((!empty($razdel)) ? $razdel->getField('id_razdel') : '')?>" />
 <h3><?php 
-if(!empty($razdel))   
+if($razdel->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit RAZDEL} <?=$razdel->getView()?>

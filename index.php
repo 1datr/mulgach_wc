@@ -1,5 +1,5 @@
 <?php
-$_BASEDIR="./";
+$_BASEDIR="";
 
 require_once "$_BASEDIR/api/index.php";
 

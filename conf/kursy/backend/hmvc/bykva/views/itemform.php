@@ -6,7 +6,7 @@ $form = new mulForm(as_url("bykva/save"),$this);
 ?>
 <input type="hidden" name="bykva[id_bukva]" value="<?=((!empty($bykva)) ? $bykva->getField('id_bukva') : '')?>" />
 <h3><?php 
-if(!empty($bykva))   
+if($bykva->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit BYKVA} <?=$bykva->getView()?>
@@ -31,7 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{bykva.sound}</label></th><td>
-	<?php $form->field($bykva,'sound')->text();	 ?>	</td>
+	<?php $form->field($bykva,'sound')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{bykva.type}</label></th><td>

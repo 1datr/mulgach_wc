@@ -58,14 +58,23 @@ class {table_uc_first}Controller extends {ParentControllerClass}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['{table}']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['{table}']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['{table}']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['{table}']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('{table}'));
-		
+			$this->redirect(as_url('{table}'));		
 	}
 			
 	public function ActionDelete($id)

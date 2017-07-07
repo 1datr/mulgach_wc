@@ -37,4 +37,24 @@
 	<td valign="top">
 	<?=$users->getField('skype',true) ?>	</td>
 	</tr>
+		<tr>
+	<th valign="top"><label>#{users.first_name}</label></th>
+	<td valign="top">
+	<?=$users->getField('first_name',true) ?>	</td>
+	</tr>
+		<tr>
+	<th valign="top"><label>#{users.last_name}</label></th>
+	<td valign="top">
+	<?=$users->getField('last_name',true) ?>	</td>
+	</tr>
+		<tr>
+	<th valign="top"><label>#{users.status}</label></th>
+	<td valign="top">
+	<?=$users->getField('status',true)?>	</td>
+	</tr>
+		<tr>
+	<th valign="top"><label>#{users.sostoyanie_dopuska}</label></th>
+	<td valign="top">
+	<?=$users->getField('sostoyanie_dopuska',true)?>	</td>
+	</tr>
 	</table>

@@ -5,6 +5,7 @@ class ActiveField
 	VAR $_FLDNAME;
 	VAR $_OPTIONS;
 	VAR $_ENV;
+	VAR $_CONTROLLER;
 	function __construct($row,$name,$opts=array())
 	{
 		$this->_ROW=$row;
@@ -182,6 +183,33 @@ class ActiveField
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php 
+		$file_fld = $this->_ROW->getField($this->_FLDNAME);
+		if(!empty($file_fld))
+		{
+			?>
+			<input type="hidden" name="<?=$opts['htmlattrs']['name']?>" value="#exists" />
+			<?php 
+			$_fld_info = $this->_CONTROLLER->_MODEL->get_field_type($this->_FLDNAME);
+		//	mul_dbg($_fld_info);
+			switch( $_fld_info['typeclass'])
+			{				
+				case 'text':
+				{
+				?>
+					<!-- <?=$file_fld ?> -->
+					<a href="<?=as_url($file_fld) ?>" target="new_file"><?=basename($file_fld)?></a>
+				<?php
+				};break;
+				
+				case 'binary':
+				{
+				?>
+					<!-- <?=$file_fld ?> -->
+					<a href="<?=as_url($file_fld) ?>" target="new_file"><?=basename($file_fld)?></a>
+				<?php
+				};break;
+			}
+		}
 		$this->error_div();
 	}
 	

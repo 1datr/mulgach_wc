@@ -4,9 +4,9 @@ use BootstrapCombobox\ComboboxWidget as ComboboxWidget;
 <?php
 $form = new mulForm(as_url("zadanie/save"),$this);
 ?>
-<input type="hidden" name="zadanie[id_zadaniya]" value="<?=((!empty($zadanie)) ? $zadanie->getField('id_zadaniya') : '')?>" />
+<input type="hidden" name="zadanie[id_zadacha]" value="<?=((!empty($zadanie)) ? $zadanie->getField('id_zadacha') : '')?>" />
 <h3><?php 
-if(!empty($zadanie))   
+if($zadanie->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit ZADANIE} <?=$zadanie->getView()?>
@@ -35,20 +35,24 @@ else
 			</td>
 	</tr>
 		<tr>
-	<th><label>#{zadanie.proverka}</label></th><td>
-	<?php $form->field($zadanie,'proverka')->text();	 ?>	</td>
+	<th><label>#{zadanie.s_proverkoy}</label></th><td>
+	<?php $form->field($zadanie,'s_proverkoy')->text();	 ?>	</td>
 	</tr>
 		<tr>
-	<th><label>#{zadanie.tematika}</label></th><td>
-	<?php $form->field($zadanie,'tematika')->text();	 ?>	</td>
+	<th><label>#{zadanie.tematika_zadaniya}</label></th><td>
+	<?php $form->field($zadanie,'tematika_zadaniya')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{zadanie.title}</label></th><td>
 	<?php $form->field($zadanie,'title')->text();	 ?>	</td>
 	</tr>
 		<tr>
-	<th><label>#{zadanie.zadanie_text}</label></th><td>
-	<?php $form->field($zadanie,'zadanie_text')->textarea();	 ?>	</td>
+	<th><label>#{zadanie.task_text}</label></th><td>
+	<?php $form->field($zadanie,'task_text')->textarea();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{zadanie.type}</label></th><td>
+	<?php $form->field($zadanie,'type')->ComboBox();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

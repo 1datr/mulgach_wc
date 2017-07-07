@@ -60,14 +60,23 @@ class RazdelController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['razdel']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['razdel']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['razdel']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['razdel']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('razdel'));
-		
+			$this->redirect(as_url('razdel'));		
 	}
 			
 	public function ActionDelete($id)

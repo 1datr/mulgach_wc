@@ -61,6 +61,48 @@ class plg_drv_mysql extends mod_plugin
 		return $arr;
 	}
 	
+	public function Typelist()
+	{
+		return array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT','FLOAT','DOUBLE','DECIMAL', // integer types
+				'DATE','DATETIME','TIMESTAMP','TIME','YEAR', // date types
+						'CHAR','VARCHAR','TEXT','TINYTEXT','MEDIUMTEXT','LONGTEXT',// text types
+				'BLOB','TINYBLOB','MEDIUMBLOB','LONGBLOB',// blob types
+				'ENUM','SET' // set types
+				
+		);
+	}
+	
+	public function class_map()
+	{
+		return array(
+				'int'=>array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT'),
+				'float'=>array('FLOAT','DOUBLE','DECIMAL','REAL'),
+				'datetime'=>array('DATE','DATETIME','TIMESTAMP','TIME','YEAR'),
+				'text'=>array('CHAR','VARCHAR','TEXT','TINYTEXT','MEDIUMTEXT','LONGTEXT'),
+				'binary'=>array('BLOB','TINYBLOB','MEDIUMBLOB','LONGBLOB'),
+				'enums'=>array('ENUM','SET'),
+		);
+	}
+	
+	public function GetTypeClass($type)
+	{
+		$map = $this->class_map();
+		$matches=array();
+		foreach ($map as $class => $typelist)
+		{
+			if(in_array(strtoupper($type),$typelist))
+			{
+				return $class;
+			}
+		}
+		return null;
+		//preg_match_all('/(.+)\((.*)\)/Uis', $type,$matches);
+		
+		//mul_dbg($matches);
+		
+		//ucwords($type);
+	}
+	
 	public function query($sql)
 	{
 		$sql = QueryMaker::prepare_query($sql, $this->_DB_PARAMS['prefix']);

@@ -60,14 +60,23 @@ class PrepsController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['preps']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['preps']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['preps']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['preps']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('preps'));
-		
+			$this->redirect(as_url('preps'));		
 	}
 			
 	public function ActionDelete($id)

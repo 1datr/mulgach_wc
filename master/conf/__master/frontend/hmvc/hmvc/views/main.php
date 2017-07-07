@@ -73,10 +73,19 @@ $sbplugin->block_end(function(){
 ?>
 	<h4>#{FIELDS SETTINGS FOR MODEL}</h4>
 <?php 
+	function fld_in_settings($fld,$settings_str)
+	{
+		$str_to_find='{'.$fld.'}';
+		if(stristr($settings_str, $str_to_find)!= FALSE)
+		{
+			return true;
+		}
+		return false;
+	}
 // Блок с полями
 	$sbplugin->table_block_start('field_item',array('id'=>'fields_block'),array(),'
 		<thead>
-		<tr><th>#{Field}</th><th>#{Required}</th><th>#{File field}</th></tr>
+		<tr><th>#{Field}</th><th>#{Type}</th><th>#{Required}</th><th>#{File field}</th></tr>
 		</thead>
 		');
 
@@ -87,17 +96,35 @@ $sbplugin->block_end(function(){
 		//print_r($finfo);
 		?>
 		<tr class="multiform_block" role="item">
-		<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>			
+		<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>
+		<td><?=$finfo['Type']?></td>			
 		<td>
-		<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=(($finfo['Null']=='NO') ? "checked disabled" : "")?> />
-		<?php if($finfo['Null']=='NO') 
-				{
-					?>
-					<input type="hidden" name="model_fields[<?=$idx?>][required]" value="on" />
-					<?php 
-				}
+		<?php
+		$checked_selected = "";
+		//mul_dbg($this);
+		//$typeinfo = $this->_ENV['_MODEL']->get_field_type($fld);
+		//mul_dbg($typeinfo);
+		
+		
+		if( ($finfo['Null']=='NO') && (!in_array($finfo['Type'],array('text','mediumtext','longtext'))) )  
+		{
+			$checked_selected = "checked disabled";
+		}
+		elseif (fld_in_settings($fld,$settings['view']))
+		{
+			$checked_selected = "checked";
+		}
 		?>
-		</td>
+		<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=$checked_selected?> />
+		<?php 
+		if($checked_selected=='checked disabled') 
+		{
+			?>
+			<input type="hidden" name="model_fields[<?=$idx?>][required]" value="on" />
+			<?php 
+		}
+		?>
+		</td>		
 		<?php 
 		//mul_dbg($finfo);
 		if( in_array($finfo['Type'],array('text','blob') ))

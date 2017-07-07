@@ -1,1 +1,0 @@
-$_capts['{table}']['__ITEM__']." #".${table}['{fld_primary}'].". Редактирование "

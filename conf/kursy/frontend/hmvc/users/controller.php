@@ -60,14 +60,23 @@ class UsersController extends AuthController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['users']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['users']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['users']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['users']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('users'));
-		
+			$this->redirect(as_url('users'));		
 	}
 			
 	public function ActionDelete($id)

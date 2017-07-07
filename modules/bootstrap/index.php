@@ -10,16 +10,14 @@ class mul_bootstrap extends mul_Module
 	
 	function use_my_widgtes()
 	{
-		$files = get_files_in_folder( url_seg_add("/",__DIR__,'widgets'));
-		//print_r($files);
+		$files = get_files_in_folder( url_seg_add(__DIR__,'widgets'));
 		foreach ($files as $thefile)
 		{
-			if(is_dir("/".$thefile))
+			if(is_dir($thefile))
 			{
-				$wid_file=url_seg_add("/",$thefile,'index.php');
+				$wid_file=url_seg_add($thefile,'index.php');
 				if(file_exists($wid_file))				
 				{
-					//echo "use widget";
 					require_once $wid_file;
 				}
 			}

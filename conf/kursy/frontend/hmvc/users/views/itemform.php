@@ -6,7 +6,7 @@ $form = new mulForm(as_url("users/save"),$this);
 ?>
 <input type="hidden" name="users[id]" value="<?=((!empty($users)) ? $users->getField('id') : '')?>" />
 <h3><?php 
-if(!empty($users))   
+if($users->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit USERS} <?=$users->getView()?>
@@ -48,6 +48,22 @@ else
 		<tr>
 	<th><label>#{users.skype}</label></th><td>
 	<?php $form->field($users,'skype')->text();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{users.first_name}</label></th><td>
+	<?php $form->field($users,'first_name')->text();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{users.last_name}</label></th><td>
+	<?php $form->field($users,'last_name')->text();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{users.status}</label></th><td>
+	<?php $form->field($users,'status')->ComboBox();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{users.sostoyanie_dopuska}</label></th><td>
+	<?php $form->field($users,'sostoyanie_dopuska')->ComboBox();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

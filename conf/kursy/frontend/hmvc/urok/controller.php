@@ -60,14 +60,23 @@ class UrokController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['urok']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['urok']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['urok']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['urok']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('urok'));
-		
+			$this->redirect(as_url('urok'));		
 	}
 			
 	public function ActionDelete($id)

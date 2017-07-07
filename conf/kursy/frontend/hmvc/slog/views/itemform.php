@@ -37,10 +37,6 @@ else
 	<th><label>#{slog.type}</label></th><td>
 	<?php $form->field($slog,'type')->text();	 ?>	</td>
 	</tr>
-		<tr>
-	<th><label>#{slog.picture}</label></th><td>
-	<?php $form->field($slog,'picture')->file();	 ?>	</td>
-	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
 <?php $form->submit('#{SAVE}'); ?>

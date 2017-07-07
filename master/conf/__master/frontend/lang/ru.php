@@ -74,5 +74,5 @@ $_LANG['database scaffolding']='database scaffolding';
 $_LANG['table scaffolding']='table scaffolding';
 $_LANG['Primary key of this table is empty']='Primary key of this table is empty';
 $_LANG['Primary key field is not autoincrement']='Primary key field is not autoincrement';
-
+$_LANG['Type']='Type';
 ?>

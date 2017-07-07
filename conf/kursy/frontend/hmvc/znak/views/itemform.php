@@ -6,7 +6,7 @@ $form = new mulForm(as_url("znak/save"),$this);
 ?>
 <input type="hidden" name="znak[id_znak]" value="<?=((!empty($znak)) ? $znak->getField('id_znak') : '')?>" />
 <h3><?php 
-if(!empty($znak))   
+if($znak->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit ZNAK} <?=$znak->getView()?>
@@ -31,7 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{znak.sound}</label></th><td>
-	<?php $form->field($znak,'sound')->text();	 ?>	</td>
+	<?php $form->field($znak,'sound')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{znak.type}</label></th><td>

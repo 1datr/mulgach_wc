@@ -60,14 +60,23 @@ class SlovoController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['slovo']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['slovo']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['slovo']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['slovo']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('slovo'));
-		
+			$this->redirect(as_url('slovo'));		
 	}
 			
 	public function ActionDelete($id)

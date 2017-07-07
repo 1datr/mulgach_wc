@@ -6,7 +6,7 @@ $form = new mulForm(as_url("ucheba/save"),$this);
 ?>
 <input type="hidden" name="ucheba[id]" value="<?=((!empty($ucheba)) ? $ucheba->getField('id') : '')?>" />
 <h3><?php 
-if(!empty($ucheba))   
+if($ucheba->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit UCHEBA} <?=$ucheba->getView()?>

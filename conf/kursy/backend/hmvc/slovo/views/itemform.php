@@ -6,7 +6,7 @@ $form = new mulForm(as_url("slovo/save"),$this);
 ?>
 <input type="hidden" name="slovo[id_slovo]" value="<?=((!empty($slovo)) ? $slovo->getField('id_slovo') : '')?>" />
 <h3><?php 
-if(!empty($slovo))   
+if($slovo->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit SLOVO} <?=$slovo->getView()?>

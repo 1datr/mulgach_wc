@@ -6,7 +6,7 @@ $form = new mulForm(as_url("primeneniye/save"),$this);
 ?>
 <input type="hidden" name="primeneniye[id]" value="<?=((!empty($primeneniye)) ? $primeneniye->getField('id') : '')?>" />
 <h3><?php 
-if(!empty($primeneniye))   
+if($primeneniye->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit PRIMENENIYE} <?=$primeneniye->getView()?>
