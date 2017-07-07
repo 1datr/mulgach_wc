@@ -60,14 +60,23 @@ class KursyController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['kursy']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['kursy']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['kursy']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['kursy']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('kursy'));
-		
+			$this->redirect(as_url('kursy'));		
 	}
 			
 	public function ActionDelete($id)

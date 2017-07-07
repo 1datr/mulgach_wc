@@ -60,14 +60,23 @@ class StudentController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['student']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['student']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['student']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['student']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('student'));
-		
+			$this->redirect(as_url('student'));		
 	}
 			
 	public function ActionDelete($id)

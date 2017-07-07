@@ -60,14 +60,23 @@ class UchebaController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['ucheba']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['ucheba']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['ucheba']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['ucheba']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('ucheba'));
-		
+			$this->redirect(as_url('ucheba'));		
 	}
 			
 	public function ActionDelete($id)

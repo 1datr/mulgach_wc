@@ -60,14 +60,23 @@ class PrimeneniyeController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['primeneniye']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['primeneniye']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['primeneniye']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['primeneniye']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('primeneniye'));
-		
+			$this->redirect(as_url('primeneniye'));		
 	}
 			
 	public function ActionDelete($id)

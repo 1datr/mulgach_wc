@@ -60,14 +60,23 @@ class BykvaController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['bykva']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['bykva']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['bykva']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['bykva']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('bykva'));
-		
+			$this->redirect(as_url('bykva'));		
 	}
 			
 	public function ActionDelete($id)

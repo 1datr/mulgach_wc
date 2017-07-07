@@ -60,14 +60,23 @@ class LifeareaController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['lifearea']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['lifearea']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['lifearea']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['lifearea']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('lifearea'));
-		
+			$this->redirect(as_url('lifearea'));		
 	}
 			
 	public function ActionDelete($id)

@@ -6,7 +6,7 @@ $form = new mulForm(as_url("predlogenie/save"),$this);
 ?>
 <input type="hidden" name="predlogenie[id_predlogenie]" value="<?=((!empty($predlogenie)) ? $predlogenie->getField('id_predlogenie') : '')?>" />
 <h3><?php 
-if(!empty($predlogenie))   
+if($predlogenie->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit PREDLOGENIE} <?=$predlogenie->getView()?>
@@ -43,7 +43,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{predlogenie.sound}</label></th><td>
-	<?php $form->field($predlogenie,'sound')->text();	 ?>	</td>
+	<?php $form->field($predlogenie,'sound')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{predlogenie.type}</label></th><td>

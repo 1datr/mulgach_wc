@@ -6,7 +6,7 @@ $form = new mulForm(as_url("zadanie/save"),$this);
 ?>
 <input type="hidden" name="zadanie[id_zadaniya]" value="<?=((!empty($zadanie)) ? $zadanie->getField('id_zadaniya') : '')?>" />
 <h3><?php 
-if(!empty($zadanie))   
+if($zadanie->_EXISTS_IN_DB)   
 {
 	?>
 	#{Edit ZADANIE} <?=$zadanie->getView()?>

@@ -60,14 +60,23 @@ class PredlogenieController extends BaseController
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['predlogenie']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['predlogenie']);
+		
+		if($newitem!=null)
+		{
+			$newitem->FillFromArray($_POST['predlogenie']);
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->GetRow($_POST['predlogenie']);
+		}		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('predlogenie'));
-		
+			$this->redirect(as_url('predlogenie'));		
 	}
 			
 	public function ActionDelete($id)

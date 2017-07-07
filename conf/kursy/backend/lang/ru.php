@@ -171,4 +171,6 @@ $_LANG['Edit PRIMENENIYE']='Edit PRIMENENIYE';
 $_LANG['Edit UCHEBA']='Edit UCHEBA';
 $_LANG['Create SLOG']='Create SLOG';
 $_LANG['slog.picture']='picture';
+$_LANG['Create BYKVA']='Create BYKVA';
+$_LANG['Create ZNAK']='Create ZNAK';
 ?>
