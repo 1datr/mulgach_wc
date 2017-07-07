@@ -9,7 +9,9 @@ trait dbDriver {
 	public function get_constraints($table){}
 	public function escape_val($value,$type='text'){}
 	public function create_table($table,$params){}
-	public function last_insert_id(){}
+	public function last_insert_id(){}	
+	// Функции работы с типами
 	public function Typelist(){}
 	public function GetTypeClass($type){}
+	public function class_map(){}
 }

@@ -9,7 +9,7 @@ $( document ).ready(function()
 				if(that_form.attr('validated')=="true") // форма отвалидована
 				{
 					// отправляем файлы если есть и не отправлены
-					if( ( that_form.attr("files_loaded") !== typeof undefined) && (that_form.find('input[type=file]').length > 0) )
+					if( ( that_form.attr("files_loaded") == undefined) && (that_form.find('input[type=file]').length > 0) )
 					{
 						// отправляем файлы
 						form_action_upload = that_form.attr('action');
@@ -30,9 +30,19 @@ $( document ).ready(function()
 						    	that_form.attr("files_loaded",'true');
 						    	// заменяем на полученные значения
 						    	for (var key in data) {
-						    		file_field = that_form.find('input[name="'+key+'"][type=file]').first();
-						    		file_field.attr('type','hidden');
-						    		file_field.val(data[key]);
+						    		file_field = that_form.find('input[name="'+key+'"][type=hidden]').first();
+						    		if(file_field.length==0)
+						    			{
+						    			file_field=$('<input name="'+key+'" type="hidden" />');
+						    			file_field.val(data[key]);
+						    			that_form.append(file_field);
+						    			}
+						    		else
+						    			{
+						    			file_field.attr('type','hidden');
+						    			file_field.val(data[key]);
+						    			}
+						    		$(that_form).find('input[type=file][name="'+key+'"]').remove();
 						    	}
 						    	that_form.submit();
 						    },
@@ -58,9 +68,20 @@ $( document ).ready(function()
 				$(this).find('input[type=file]').each(function( i, el ) 
 					{
 						original_src = $(el).val();
+						if(original_src=='')
+						{
+						// взять из хиддена	
+							allready_uploaded = $(that_form).find('input[type=hidden][name="'+$(el).attr('name')+'"]').first();
+							if(allready_uploaded!== typeof undefined)
+							{
+								original_src = $(allready_uploaded).val();
+							}
+						}
 						file_in_copy = cloned_form_files.get(i);
 						$(file_in_copy).attr('type','text');
 						$(file_in_copy).val(original_src);
+						// удалить хидден из клона если он есть
+						$(cloned_form).find('input[type=hidden][name="'+$(el).attr('name')+'"]').remove();
 					}
 				);
 				

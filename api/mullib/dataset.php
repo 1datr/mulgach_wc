@@ -14,9 +14,12 @@ class DataRecord	// запись из БД
 		$this->_MODEL=$model;
 		$this->_ENV = $env;
 		if($row_from_db!=NULL)
-		{			
+		{	
+			//$selected_row = $this->_MODEL->findOne("");
+			
 			foreach ($row_from_db as $key => $val)
-			{
+			{				
+				
 				$fld_base = $this->contains_fld($key);
 				if($fld_base!=NULL)	// составное поле через ->
 				{
@@ -69,14 +72,27 @@ class DataRecord	// запись из БД
 		}
 	}
 	
+	function FillFromArray($val_array)
+	{
+		foreach ($val_array as $key => $val)
+		{
+			$this->set_field($key, $val);
+		}
+	}
+	
 	function set_field($fld,$val)
 	{
+		if(isset($this->_MODEL->_SETTINGS['file_fields'][$fld]))
+		{
+			if($val=='#exists')
+				return ;
+		}
 		$this->_FIELDS[$fld]=$val;
 	}
 	
 	function setField($fld,$val)
 	{
-		$this->_FIELDS[$fld]=$val;
+		$this->set_field($fld,$val);		
 	}
 	
 	function format_html($fldval,$flags=NULL)
@@ -133,7 +149,7 @@ class DataRecord	// запись из БД
 	function save()
 	{
 		$this->_MODEL->OnSave($this);
-		$fld_values = $this->getFields();
+		//$fld_values = $this->getFields();
 		$fld_map = $this->_MODEL->_SETTINGS['fields'];
 		$this->escape_array($fld_values,$fld_map);
 		$inserting=false;
@@ -142,6 +158,8 @@ class DataRecord	// запись из БД
 			$primary = $this->_MODEL->getPrimaryName();
 			$WHERE="`{$primary}`='".$this->getPrimary()."'";
 			unset($fld_values[$primary]);			
+			$this->_MODEL->files_before_update($this);	
+			$fld_values = $this->getFields();
 			$sql = QueryMaker::query_update($this->_MODEL->_TABLE,$fld_values,$WHERE);
 			
 		}
@@ -149,6 +167,7 @@ class DataRecord	// запись из БД
 		{
 			unset($fld_values[$this->_MODEL->getPrimaryName()]);
 			$inserting=true;
+			$fld_values = $this->getFields();
 			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
 	//	mul_dbg($sql);
@@ -160,6 +179,10 @@ class DataRecord	// запись из БД
 			$newid = $this->_MODEL->_ENV['_CONNECTION']->last_insert_id();
 			$this->setField($this->_MODEL->_SETTINGS['primary'],$newid);
 			$this->_MODEL->files_after_insert($this);
+		}
+		else 
+		{
+			
 		}
 	}
 	

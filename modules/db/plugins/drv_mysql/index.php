@@ -72,9 +72,9 @@ class plg_drv_mysql extends mod_plugin
 		);
 	}
 	
-	public function GetTypeClass($type)
+	public function class_map()
 	{
-		$types=array(
+		return array(
 				'int'=>array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT'),
 				'float'=>array('FLOAT','DOUBLE','DECIMAL','REAL'),
 				'datetime'=>array('DATE','DATETIME','TIMESTAMP','TIME','YEAR'),
@@ -82,12 +82,25 @@ class plg_drv_mysql extends mod_plugin
 				'binary'=>array('BLOB','TINYBLOB','MEDIUMBLOB','LONGBLOB'),
 				'enums'=>array('ENUM','SET'),
 		);
+	}
+	
+	public function GetTypeClass($type)
+	{
+		$map = $this->class_map();
 		$matches=array();
-		preg_match_all('/(.+)\((.*)\)/Uis', $type,$matches);
+		foreach ($map as $class => $typelist)
+		{
+			if(in_array(strtoupper($type),$typelist))
+			{
+				return $class;
+			}
+		}
+		return null;
+		//preg_match_all('/(.+)\((.*)\)/Uis', $type,$matches);
 		
-		mul_dbg($matches);
+		//mul_dbg($matches);
 		
-		ucwords($type);
+		//ucwords($type);
 	}
 	
 	public function query($sql)

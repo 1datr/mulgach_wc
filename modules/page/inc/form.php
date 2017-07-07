@@ -29,6 +29,7 @@ class mulForm
 	function field($model,$fld_name,$opts=array())
 	{
 		$newfld = new ActiveField($model, $fld_name, $opts);
+		$newfld->_CONTROLLER = $this->_CONTROLLER;
 		return $newfld;
 	}
 	
