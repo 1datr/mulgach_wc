@@ -116,7 +116,8 @@ class HmvcController extends BaseController
 						$cfg = new scaff_conf($_SESSION['makeinfo']['conf']);
 						$cfg->connect_db_if_exists($this);
 						$_hmvc = $cfg->get_triada('frontend', $_SESSION['makeinfo']['table']);
-					//	mul_dbg($_hmvc);
+					
+						//mul_dbg($_hmvc);
 						//$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);											
 						
 						$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
@@ -215,6 +216,7 @@ class HmvcController extends BaseController
 								'fld_login_'=>$fld_login_,
 								'fld_passw_'=>$fld_passw_,
 								'fld_hash_'=>$fld_hash_,
+								'_hmvc'=>$_hmvc,
 						));
 					};break;
 			case 'makefiles': {

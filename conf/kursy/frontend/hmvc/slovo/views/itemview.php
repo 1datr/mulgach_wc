@@ -35,6 +35,6 @@
 		<tr>
 	<th valign="top"><label>#{slovo.type}</label></th>
 	<td valign="top">
-	<?=$slovo->getField('type',true) ?>	</td>
+	<?=$slovo->getField('type',true)?>	</td>
 	</tr>
 	</table>

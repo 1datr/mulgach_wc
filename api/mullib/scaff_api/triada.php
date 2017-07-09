@@ -10,6 +10,7 @@ class scaff_triada
 	VAR $_MODEL_PATH;
 	VAR $_BASEFILE_PATH;
 	VAR $menu_site_codes;
+	VAR $_SETTINGS=array();
 
 	function __construct(&$conf_obj,$ep,$triada,$create=true)
 	{
@@ -27,6 +28,13 @@ class scaff_triada
 		if(!file_exists($this->_VIEWPATH) || $create)
 		{
 			x_mkdir($this->_VIEWPATH);
+		}
+		
+		$baseinfo = url_seg_add($this->_PATH,'baseinfo.php');
+		if(file_exists($baseinfo))
+		{
+			include $baseinfo;
+			$this->_SETTINGS=$settings;
 		}
 
 	}
@@ -197,7 +205,7 @@ class scaff_triada
 		{
 			if(isset($fld['file_fields']))
 			{
-				$files_params=$files_params."'".$_params['model_fields'][$idx]['name']."'=>array(),";
+				$files_params=$files_params."'".$_params['model_fields'][$idx]['name']."'=>array('type'=>'".$_params['model_fields'][$idx]['filter']."'),";
 				// make folder to save files
 				x_mkdir( url_seg_add($this->_PATH,'../../../files/',$this->NAME,$_params['model_fields'][$idx]['name'] ) );
 			}

@@ -176,8 +176,13 @@ class ActiveField
 	{
 		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
 		$opts['htmlattrs']['type']='file';
+		if(!empty($this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type']))
+		{
+			$opts['htmlattrs']['accept']= $this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type'];
+		}
+		
 		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+				$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
 			else
 				$opts['htmlattrs']['name']= $opts['name'];
 		?>
