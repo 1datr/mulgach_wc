@@ -111,4 +111,9 @@ $_LANG['ucheba.dostup']='dostup';
 $_LANG['ucheba.date_start']='date_start';
 $_LANG['ucheba.date_finish']='date_finish';
 $_LANG['slog.picture']='picture';
+$_LANG['zadanie.id_zadacha']='id_zadacha';
+$_LANG['zadanie.s_proverkoy']='s_proverkoy';
+$_LANG['zadanie.tematika_zadaniya']='tematika_zadaniya';
+$_LANG['zadanie.task_text']='task_text';
+$_LANG['zadanie.type']='type';
 ?>

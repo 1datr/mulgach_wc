@@ -22,9 +22,4 @@
 	<td valign="top">
 	<?=$slog->getField('type',true) ?>	</td>
 	</tr>
-		<tr>
-	<th valign="top"><label>#{slog.picture}</label></th>
-	<td valign="top">
-	<?=$slog->getField('picture',true) ?>	</td>
-	</tr>
 	</table>

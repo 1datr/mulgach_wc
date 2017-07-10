@@ -77,7 +77,8 @@ $this->inline_css('
 							'tables'=>$tables,							
 							'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
-							'sbplugin'=>$sbplugin,));
+  							'sbplugin'=>$sbplugin,
+  							'_hmvc'=>$_hmvc,));
   	?>
  	</div>
   	<div id="capts" class="tab-pane tab-page" role="tabpanel">
@@ -93,6 +94,7 @@ $this->inline_css('
 				  			'fld_login_'=>$fld_login_,
 				  			'fld_passw_'=>$fld_passw_,
 				  			'fld_hash_'=>$fld_hash_,
+  							'_hmvc'=>$_hmvc,
   							
   	));
   	?>

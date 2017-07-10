@@ -75,4 +75,7 @@ $_LANG['table scaffolding']='table scaffolding';
 $_LANG['Primary key of this table is empty']='Primary key of this table is empty';
 $_LANG['Primary key field is not autoincrement']='Primary key field is not autoincrement';
 $_LANG['Type']='Type';
+$_LANG['FileType: ']='FileType: ';
+$_LANG['FileType:']='FileType:';
+$_LANG['File type:']='File type:';
 ?>

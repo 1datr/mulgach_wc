@@ -27,7 +27,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slovo.zvuk_ru}</label></th><td>
-	<?php $form->field($slovo,'zvuk_ru')->text();	 ?>	</td>
+	<?php $form->field($slovo,'zvuk_ru')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.en}</label></th><td>
@@ -35,11 +35,11 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slovo.risunok}</label></th><td>
-	<?php $form->field($slovo,'risunok')->text();	 ?>	</td>
+	<?php $form->field($slovo,'risunok')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.zvuk_en}</label></th><td>
-	<?php $form->field($slovo,'zvuk_en')->text();	 ?>	</td>
+	<?php $form->field($slovo,'zvuk_en')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.transcription}</label></th><td>
@@ -47,7 +47,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slovo.type}</label></th><td>
-	<?php $form->field($slovo,'type')->text();	 ?>	</td>
+	<?php $form->field($slovo,'type')->ComboBox();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

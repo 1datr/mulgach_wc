@@ -10,11 +10,49 @@ namespace BootstrapListView
 		VAR $owner_widget;
 		VAR $settings=array();
 		VAR $caption_template="";
+		VAR $fldinfo;
 		function __construct($fld,$owner,$settings=array())
 		{
 			$this->datafld = $fld;
 			$this->owner_widget = $owner;
+						
+			def_options(array('html_template'=>'{value}'), $settings);
+			
+			$this->fldinfo = $this->owner_widget->_CONTROLLER->_MODEL->getFldInfo($fld);
+			if(isset($this->fldinfo['file']))
+			{
+				$the_type = $this->fldinfo['file']['type'];
+				$arr = explode('/',$the_type);
+				$class=$arr[0];
+				
+				$settings['html_template'] = '<?php
+if(!empty($value))
+								{
+								?>
+								<a href="{value}" target="newwin"><?=basename($value)?></a>
+								<?php
+								}
+								?>';
+				
+				switch($class)
+				{
+					case 'audio': {
+						use_jq_plugin('jqplayer',$this->owner_widget->_CONTROLLER);
+						$settings['html_template'] = '<?php 
+if(!empty($value))
+								{
+								?>
+								<audio src="{value}" preload="auto" controls></audio>
+								<?php
+								}
+								?>';
+					};break;
+
+				}
+			}			
+			
 			$this->settings = $settings;
+			
 			if(!empty($settings['caption_template']))
 				$this->caption_template = $settings['caption_template'];
 			else 
@@ -27,7 +65,22 @@ namespace BootstrapListView
 			
 			if(!empty($this->settings['html_template']))
 			{
-				echo x_make_str($this->settings['html_template'], $dr->getFields());
+				$vars = $dr->getFields();
+				
+				$thevalue='';
+				if(is_object($thefield))
+				{
+					$thevalue = $thefield->getView(true);
+				}
+				else
+					$thevalue = $dr->getField($this->datafld,true);
+				
+				$vars['value']=$thevalue;
+				if(isset($this->fldinfo['file']))
+				{
+					$a=1;
+				}
+				echo x_make_str($this->settings['html_template'], $vars);
 			}
 			else 
 			{
@@ -69,6 +122,7 @@ namespace BootstrapListView
 	class ListViewWidget extends \Widget 
 	{
 		VAR $_table;
+		VAR $_CONTROLLER;
 		
 		static function init_column($key,$widg,$val)
 		{
@@ -98,6 +152,8 @@ namespace BootstrapListView
 		function out($params=array())
 		{
 			def_options(array('tableclass'=>'table'),$params);
+			
+			$this->_CONTROLLER = $params['ds']->_ENV['_CONTROLLER'];
 			
 			$this->_table = $params['ds']->_ENV['_CONTROLLER']->_MODEL->_TABLE;
 				

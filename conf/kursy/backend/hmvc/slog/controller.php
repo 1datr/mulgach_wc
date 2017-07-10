@@ -76,8 +76,7 @@ class SlogController extends BaseController
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('slog'));
-		
+			$this->redirect(as_url('slog'));		
 	}
 			
 	public function ActionDelete($id)

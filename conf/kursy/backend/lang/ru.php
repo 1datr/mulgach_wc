@@ -172,5 +172,10 @@ $_LANG['Edit UCHEBA']='Edit UCHEBA';
 $_LANG['Create SLOG']='Create SLOG';
 $_LANG['slog.picture']='picture';
 $_LANG['Create BYKVA']='Create BYKVA';
-$_LANG['Create ZNAK']='Create ZNAK';
+$_LANG['zadanie.id_zadacha']='id_zadacha';
+$_LANG['zadanie.s_proverkoy']='s_proverkoy';
+$_LANG['zadanie.tematika_zadaniya']='tematika_zadaniya';
+$_LANG['zadanie.task_text']='task_text';
+$_LANG['zadanie.type']='type';
+$_LANG['Create SLOVO']='Create SLOVO';
 ?>

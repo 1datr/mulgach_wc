@@ -7,6 +7,6 @@ $settings = array(
 	'required'=>array('id_predlogenie','ru','type'),
 	'rules'=>array(),	
 	'view'=>'{ru}',
-	'file_fields'=>array('sound'=>array(),),
+	'file_fields'=>array('zvuk_ru'=>array('type'=>'audio/*'),'zvuk_en'=>array('type'=>'audio/*'),'sound'=>array('type'=>'audio/*'),),
 	
 );

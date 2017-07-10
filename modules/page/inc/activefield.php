@@ -174,10 +174,37 @@ class ActiveField
 	
 	function file($opts=array())
 	{
-		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
+		
+		$view_src_def_template = '<a href="{file_url}" target="new_file">{file_name}</a>';
+		if(!empty($this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type']))
+		{
+			$the_type = $this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type'];
+			$arr = explode('/',$the_type);
+			$class=$arr[0];
+			switch($class)
+			{
+				case 'audio': {
+					use_jq_plugin('jqplayer',$this->_CONTROLLER);
+					$view_src_def_template = '<audio src="{file_url}" preload="auto" controls></audio><a href="{file_url}" target="new_file">{file_name}</a>';
+				};break;
+			}
+			//mul_dbg($arr);
+		}
+			
+		def_options(array('htmlattrs'=>array(),
+				'enum_mode'=>'raw',
+				'required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),
+				'source_code'=>$view_src_def_template,
+		), 
+				$opts);
 		$opts['htmlattrs']['type']='file';
+		if(!empty($this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type']))
+		{
+			$opts['htmlattrs']['accept']= $this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type'];
+		}
+		
 		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+				$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
 			else
 				$opts['htmlattrs']['name']= $opts['name'];
 		?>
@@ -195,20 +222,22 @@ class ActiveField
 			{				
 				case 'text':
 				{
-				?>
-					<!-- <?=$file_fld ?> -->
-					<a href="<?=as_url($file_fld) ?>" target="new_file"><?=basename($file_fld)?></a>
-				<?php
+					$file_url = as_url($file_fld);
 				};break;
 				
 				case 'binary':
 				{
-				?>
-					<!-- <?=$file_fld ?> -->
-					<a href="<?=as_url($file_fld) ?>" target="new_file"><?=basename($file_fld)?></a>
-				<?php
+					$file_url = as_url($file_fld);
+				
 				};break;
 			}
+			
+			$source_html = x_make_str($opts['source_code'],array(
+				'file_url'=>$file_url,
+				'file_name'=>basename($file_fld),
+			));
+			
+			echo $source_html;			
 		}
 		$this->error_div();
 	}

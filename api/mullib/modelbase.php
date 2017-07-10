@@ -34,6 +34,24 @@ class BaseModel
 		}
 	}
 	
+	function getFldInfo($fld)
+	{
+		$res = $this->_SETTINGS['fields'][$fld];
+		$res['required'] = isset($this->_SETTINGS['required'][$fld]);
+		$res['bindings'] = array();
+		
+		if(isset($this->_SETTINGS['constraints'][$fld]))
+		{
+			$res['bindings'] = $this->_SETTINGS['constraints'][$fld];
+		}
+			
+		if(isset($this->_SETTINGS['file_fields'][$fld]))
+		{
+			$res['file'] = $this->_SETTINGS['file_fields'][$fld];
+		}
+		return $res;
+	}
+	
 	function validate($data)
 	{
 		//mul_dbg($data);
@@ -256,15 +274,20 @@ class BaseModel
 			}
 			else
 			{
-				$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld);
-				$curr_file_info = pathinfo($curr_file);
-				$newname = url_seg_add($temp_save_dir,$datarow->getPrimary().".".$curr_file_info['extension']);
-			
-				if (copy($curr_file,$newname)) {
-					unlink($curr_file);
+				if($datarow->getField($fld)!='')
+				{
+					$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld);
+					$curr_file_info = pathinfo($curr_file);
+					$newname = url_seg_add($temp_save_dir,$datarow->getPrimary().".".$curr_file_info['extension']);
+				
+					if (copy($curr_file,$newname)) {
+						unlink($curr_file);
+					}
+				
+					$datarow->setField($fld,$newname);
 				}
-			
-				$datarow->setField($fld,$newname);
+				else 
+					$datarow->setField($fld,'');
 			}
 		}
 	}
@@ -280,18 +303,23 @@ class BaseModel
 			}
 			else 
 			{
-				$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld);
-				$curr_file_info = pathinfo($curr_file);
-				$newname = url_seg_add($temp_save_dir,$datarow->getPrimary().".".$curr_file_info['extension']);
-				
-				if (copy($curr_file,$newname)) {
-					unlink($curr_file);
+				if($datarow->getField($fld)!='')
+				{
+					$temp_save_dir = url_seg_add($this->_ENV['_CONTROLLER']->get_current_dir(), '../../../files',$this->_SETTINGS['table'],$fld);
+					$curr_file_info = pathinfo($curr_file);
+					$newname = url_seg_add($temp_save_dir,$datarow->getPrimary().".".$curr_file_info['extension']);
+					
+					if (copy($curr_file,$newname)) {
+						unlink($curr_file);
+					}
+					
+					$datarow->setField($fld,$newname);
 				}
-				
-				$datarow->setField($fld,$newname);
+				else 
+					$datarow->setField($fld,'');
 			}
 		}
-		$datarow->save();
+		$datarow->save(false);
 	}
 	
 	public function UploadfilesTemp()

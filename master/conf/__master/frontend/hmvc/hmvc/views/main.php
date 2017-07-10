@@ -130,7 +130,28 @@ $sbplugin->block_end(function(){
 		if( in_array($finfo['Type'],array('text','blob') ))
 		{
 			?>
-			<td><input type="checkbox" name="model_fields[<?=$idx?>][file_fields]" value="on" /></td>
+			<td>
+			<?php 
+			$_CHECKED='';
+			$_FILTER='';			
+			$_DISPLAY='display:none';
+			
+		//	mul_dbg($_hmvc->_SETTINGS['file_fields']);
+		//	mul_dbg($_hmvc->_SETTINGS['file_fields'][$fld]);
+			
+			if(isset($_hmvc->_SETTINGS['file_fields'][$fld]))
+			{
+				$_CHECKED='checked';
+				$_DISPLAY='';
+				if(isset($_hmvc->_SETTINGS['file_fields'][$fld]['type']))
+					$_FILTER='value="'.$_hmvc->_SETTINGS['file_fields'][$fld]['type'].'"';
+			}
+			?>
+			<input type="checkbox" name="model_fields[<?=$idx?>][file_fields]" value="on" onclick='$(fileinfo_<?=$idx?>).toggle()' <?=$_CHECKED?> />
+			<span id="fileinfo_<?=$idx?>" style="<?=$_DISPLAY?>">
+			<label>#{File type:}&nbsp;</lable></label><input type="text" name="model_fields[<?=$idx?>][filter]" <?=$_FILTER?> />
+			</span>
+			</td>
 			<?php 
 		}
 		?>

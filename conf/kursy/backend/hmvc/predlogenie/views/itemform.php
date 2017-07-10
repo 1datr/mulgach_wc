@@ -27,7 +27,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{predlogenie.zvuk_ru}</label></th><td>
-	<?php $form->field($predlogenie,'zvuk_ru')->text();	 ?>	</td>
+	<?php $form->field($predlogenie,'zvuk_ru')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{predlogenie.en}</label></th><td>
@@ -35,7 +35,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{predlogenie.zvuk_en}</label></th><td>
-	<?php $form->field($predlogenie,'zvuk_en')->text();	 ?>	</td>
+	<?php $form->field($predlogenie,'zvuk_en')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{predlogenie.transcription}</label></th><td>
