@@ -146,7 +146,7 @@ class DataRecord	// запись из БД
 		}
 	}
 	
-	function save()
+	function save($files_fields_controll=true)
 	{
 		$this->_MODEL->OnSave($this);
 		//$fld_values = $this->getFields();
@@ -157,8 +157,9 @@ class DataRecord	// запись из БД
 		{			
 			$primary = $this->_MODEL->getPrimaryName();
 			$WHERE="`{$primary}`='".$this->getPrimary()."'";
-			unset($fld_values[$primary]);			
-			$this->_MODEL->files_before_update($this);	
+			unset($fld_values[$primary]);
+			if($files_fields_controll)
+				$this->_MODEL->files_before_update($this);	
 			$fld_values = $this->getFields();
 			$sql = QueryMaker::query_update($this->_MODEL->_TABLE,$fld_values,$WHERE);
 			
@@ -174,11 +175,14 @@ class DataRecord	// запись из БД
 		//echo $sql;
 		$this->_EXISTS_IN_DB=true;
 		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
+		
+		$newid = $this->_MODEL->_ENV['_CONNECTION']->last_insert_id();
+		$this->setField($this->_MODEL->_SETTINGS['primary'],$newid);
+		
 		if($inserting)
-		{
-			$newid = $this->_MODEL->_ENV['_CONNECTION']->last_insert_id();
-			$this->setField($this->_MODEL->_SETTINGS['primary'],$newid);
-			$this->_MODEL->files_after_insert($this);
+		{			
+			if($files_fields_controll)
+				$this->_MODEL->files_after_insert($this);
 		}
 		else 
 		{

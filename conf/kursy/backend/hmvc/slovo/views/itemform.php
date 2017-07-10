@@ -35,7 +35,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slovo.risunok}</label></th><td>
-	<?php $form->field($slovo,'risunok')->text();	 ?>	</td>
+	<?php $form->field($slovo,'risunok')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.zvuk_en}</label></th><td>

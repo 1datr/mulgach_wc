@@ -5,6 +5,7 @@ define(_CSR_FCODE_EXPIRE_,1000);
 class mulForm
 {
 	VAR $_CONTROLLER;
+	VAR $_UPLOAD_MODE;
 	static function check_form($_POST_ARRAY)
 	{
 		if(!empty($_SESSION['csrf_codes']))
@@ -33,6 +34,24 @@ class mulForm
 		return $newfld;
 	}
 	
+	function get_upload_mode()
+	{
+		$res = 'simple';
+		$session__upload_progress__enabled = ini_get('session.upload_progress.enabled');
+		//mul_dbg($session__upload_progress__enabled);
+		$session__upload_progress__cleanup = ini_get('session.upload_progress.cleanup');
+		//mul_dbg($session__upload_progress__cleanup);
+		$session__upload_progress__prefix = ini_get('session.upload_progress.prefix');
+		//mul_dbg($session__upload_progress__prefix);
+		$session__upload_progress__name = ini_get('session.upload_progress.name');
+		//mul_dbg($session__upload_progress__name);
+		$session__upload_progress__freq = ini_get('session.upload_progress.freq');
+		//mul_dbg($session__upload_progress__freq);
+		$session__upload_progress__min_freq = ini_get('session.upload_progress.min_freq');
+		//mul_dbg($session__upload_progress__min_freq);
+		return $res;
+	}
+	
 	function __construct($action="",&$controller,$params=array())
 	{
 	//	print_r($_SESSION);
@@ -49,6 +68,24 @@ class mulForm
 		list($csrf_key,$csrf_val) = $this->make_csrf($action);
 		echo "<input type=\"hidden\" name=\"".$csrf_key."\" value=\"".$csrf_val."\" />";
 		*/
+		$this->_UPLOAD_MODE=$this->get_upload_mode();
+		if($this->_UPLOAD_MODE=='progress')
+		{
+		
+		?>
+			<div class="progress" id="mul_form_progress" style="display:none">
+			<div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+			</div>
+		<?php
+		}
+		else 
+		{
+			?>
+			<div class="progress" id="mul_form_progress" style="display:none">
+			<image src="<?=filepath2url(url_seg_add(__DIR__,'../img/ajax_loader.gif')) ?>" />
+			</div>
+			<?php 
+		}
 		?>
 		
 		<?php 

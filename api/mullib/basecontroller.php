@@ -188,6 +188,16 @@ class BaseController
 		
 	}
 	
+	public function ActionGetprogress()
+	{
+		
+	}
+	
+	public function ActionStopupload()
+	{
+	
+	}
+	
 	function getinfo($infodescr)
 	{
 		$_DATA=NULL;

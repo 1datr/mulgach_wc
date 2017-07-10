@@ -168,13 +168,18 @@ function x_make_str($str,$ptrn)
 	}
 	$str_res = strtr($str,$ptrn2);
 	
-	$str_res = exe_php_str($str_res);
+	$str_res = exe_php_str($str_res,$ptrn);
 	//mul_dbg($res);
 	return $str_res;
 }
 
-function exe_php_str($code_str)
+function exe_php_str($code_str,$addition_vars=array())
 {
+	foreach ($addition_vars as $var => $val)
+	{
+		$$var=$val;
+	}
+	
 	ob_start();
 	$code_str = "echo ''; ?>{$code_str}<? echo '';";
 	eval($code_str);
@@ -299,10 +304,15 @@ function dir_dotted($dir)
 	return url_seg_add('./', $dir);
 }
 
+function convert_slash($url)
+{
+	return strtr($url,array('\\'=>'/'));
+}
+
 function get_files_in_folder($dir_path,$opts=array())
 {
 	def_options(array('dirs'=>false,'basename'=>false), $opts);
-	$d = dir($dir_path);
+	$d = dir(convert_slash($dir_path));
 	$result=array();
 	//	echo "Дескриптор: " . $d->handle . "\n";
 	//	echo "Путь: " . $d->path . "\n";

@@ -16,6 +16,17 @@ $( document ).ready(function()
 						form_action_upload = form_action_upload+"/action:uploadfile";
 						e.preventDefault();
 						var the_data = new FormData(that_form[0]);
+						progressbar = $(that_form).find('#mul_form_progress');
+						
+						$(that_form).find('#mul_form_progress').show();
+						if( (that_form).find('#mul_form_progress .progress-bar').length>0 )
+						{
+							show_procent_timer = setInterval(function()
+					            	{
+					            		$(that_form).find('#mul_form_progress .progress-bar').text($(that_form).find('#mul_form_progress').text()+"+");
+					            	}, 10);
+						}					
+			            					
 						$.ajax({
 						        url: form_action_upload,
 						        type: 'POST',
@@ -27,6 +38,7 @@ $( document ).ready(function()
 						        dataType: 'json',
 						    success: function(data, textStatus, jqXHR)
 						    {
+						    	progressbar.hide();
 						    	that_form.attr("files_loaded",'true');
 						    	// заменяем на полученные значения
 						    	for (var key in data) {
@@ -44,12 +56,18 @@ $( document ).ready(function()
 						    			}
 						    		$(that_form).find('input[type=file][name="'+key+'"]').remove();
 						    	}
+						    	if(typeof show_procent_timer !='undefined')
+						    		clearTimeout(show_procent_timer);
 						    	that_form.submit();
 						    },
 						    error: function(jqXHR, textStatus, errorThrown) 
 						    {
-						    	 console.log(textStatus);
-						    }
+						    	progressbar.hide();
+						    	console.log(textStatus);
+						    	if(typeof show_procent_timer !='undefined')
+						    		clearTimeout(show_procent_timer);
+						    },
+						  
 						    
 						    });
 								
@@ -141,4 +159,13 @@ $( document ).ready(function()
 				});
 				
 			});
-});								
+});	
+
+function clear_file(table,fld)
+{
+	$('#file_source_'+fld).css('text-decoration','line-through');
+	$('input[type=hidden][name="'+table+'['+fld+']"]').val('');
+	$('input[type=file][name="'+table+'['+fld+']"]').val('');
+	return false; 
+}
+
