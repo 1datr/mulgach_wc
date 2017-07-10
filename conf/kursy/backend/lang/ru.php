@@ -178,4 +178,5 @@ $_LANG['zadanie.tematika_zadaniya']='tematika_zadaniya';
 $_LANG['zadanie.task_text']='task_text';
 $_LANG['zadanie.type']='type';
 $_LANG['Create SLOVO']='Create SLOVO';
+$_LANG['Clear the file']='Clear the file';
 ?>

@@ -172,23 +172,46 @@ class ActiveField
 		$this->error_div();
 	}
 	
+	function get_upload_mode()
+	{
+		$res = 'simple';
+		$session__upload_progress__enabled = ini_get('session.upload_progress.enabled');
+		//mul_dbg($session__upload_progress__enabled);
+		$session__upload_progress__cleanup = ini_get('session.upload_progress.cleanup');
+		//mul_dbg($session__upload_progress__cleanup);
+		$session__upload_progress__prefix = ini_get('session.upload_progress.prefix');
+		//mul_dbg($session__upload_progress__prefix);
+		$session__upload_progress__name = ini_get('session.upload_progress.name');
+		//mul_dbg($session__upload_progress__name);
+		$session__upload_progress__freq = ini_get('session.upload_progress.freq');
+		//mul_dbg($session__upload_progress__freq);
+		$session__upload_progress__min_freq = ini_get('session.upload_progress.min_freq');
+		//mul_dbg($session__upload_progress__min_freq);
+		return $res;
+	}
+	
 	function file($opts=array())
 	{
-		
+		$_UPLOAD_MODE=$this->get_upload_mode();
 		$view_src_def_template = '<a href="{file_url}" target="new_file">{file_name}</a>';
-		if(!empty($this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type']))
+		
+		$fldinfo = $this->_CONTROLLER->_MODEL->getFldInfo($this->_FLDNAME);
+		
+		//mul_dbg($fldinfo);
+		
+		if(!empty($fldinfo['file']['type']))
 		{
-			$the_type = $this->_CONTROLLER->_MODEL->_SETTINGS['file_fields'][$this->_FLDNAME]['type'];
+			$the_type = $fldinfo['file']['type'];
 			$arr = explode('/',$the_type);
 			$class=$arr[0];
 			switch($class)
 			{
 				case 'audio': {
 					use_jq_plugin('jqplayer',$this->_CONTROLLER);
-					$view_src_def_template = '<audio src="{file_url}" preload="auto" controls></audio><a href="{file_url}" target="new_file">{file_name}</a>';
+					$view_src_def_template = '<audio src="{file_url}" preload="auto" controls></audio>&nbsp;<a href="{file_url}" target="new_file">{file_name}</a>';
 				};break;
 			}
-			//mul_dbg($arr);
+			
 		}
 			
 		def_options(array('htmlattrs'=>array(),
@@ -209,6 +232,14 @@ class ActiveField
 				$opts['htmlattrs']['name']= $opts['name'];
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
+		<?php
+		if($fldinfo['required']==false)
+		{
+			?>
+		<input type="button" onclick="clear_file('<?=$this->_CONTROLLER->_MODEL->_TABLE?>','<?=$this->_FLDNAME?>')" class="btn btn-small clearfile" title="#{Clear the file}" value="x" />
+		<?php 
+		}
+		?>
 		<?php 
 		$file_fld = $this->_ROW->getField($this->_FLDNAME);
 		if(!empty($file_fld))
@@ -237,8 +268,10 @@ class ActiveField
 				'file_name'=>basename($file_fld),
 			));
 			
-			echo $source_html;			
+			echo "<div id=\"file_source_{$this->_FLDNAME}\" style=\"display:inline;\">$source_html</div>";			
 		}
+		
+		
 		$this->error_div();
 	}
 	
