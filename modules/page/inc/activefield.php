@@ -75,11 +75,12 @@ class ActiveField
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 		
-		$curr_value = $this->_ROW->getField($this->_FLDNAME);			
+		$curr_value = $this->_ROW->getField($this->_FLDNAME);	
+		$fldparams = $this->_ROW->_MODEL->getFldInfo($this->_FLDNAME);
 		?>			
 		<select <?=$this->get_attr_str($opts['htmlattrs'])?> >
 		<?php
-		if(!$opts['required'])
+		if(!$fldparams['required'])
 		{
 			if(empty($curr_value))
 			{
