@@ -10,7 +10,8 @@ class plg_drv_mysql extends mod_plugin
 	{
 		$this->_DB_PARAMS = $_PARAMS;
 	//print_r($_PARAMS);
-		$this->connection = mysql_pconnect($_PARAMS['host'], $_PARAMS['user'], $_PARAMS['passw']);
+	//	mysql_ping();
+		$this->connection = @mysql_pconnect($_PARAMS['host'], $_PARAMS['user'], $_PARAMS['passw'],MYSQL_CLIENT_INTERACTIVE);
 		if (!($this->connection === false))
 		{
 			// select database
@@ -27,7 +28,6 @@ class plg_drv_mysql extends mod_plugin
 		}  
 		//print_r($_PARAMS);
 		
-		mysql_query("SET SESSION character_set_results = '".$_PARAMS['charset']."'");
 		mysql_set_charset($_PARAMS['charset']);
 		
 	}
