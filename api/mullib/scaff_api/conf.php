@@ -94,6 +94,25 @@ $_db_charset = "utf8_bin";//
 			return "";
 	}
 	
+	function get_triads()
+	{
+		$eps=array('frontend','backend','install','rest');
+		$res=array();
+		foreach ($eps as $_ep)
+		{
+			$ep_dir=url_seg_add($this->_PATH,$_ep,'hmvc');					
+			
+			if(file_exists($ep_dir))
+			{
+				
+				$hmvcs = get_files_in_folder($ep_dir,array('dirs'=>true,'basename'=>true));
+				
+				$res[$_ep]=$hmvcs;
+			}
+		}
+		return $res;
+	}
+	
 	public function set_db_conf_code($code)
 	{
 		$conf_file = url_seg_add($this->_PATH,'dbconf.php');

@@ -99,8 +99,8 @@ $this->inline_css('
   	));
   	?>
   	</div>
-
 </div>
+
 <br/>
 <?php $form->submit('#{MAKE HMVC}'); ?>
 

@@ -11,14 +11,29 @@ namespace BootstrapListView
 		VAR $settings=array();
 		VAR $caption_template="";
 		VAR $fldinfo;
+
 		function __construct($fld,$owner,$settings=array())
 		{
 			$this->datafld = $fld;
 			$this->owner_widget = $owner;
 						
-			def_options(array('html_template'=>'{value}'), $settings);
+			$def_template = '{value}';
+			$def_capt_template = '{value}';
+			$is_visible=true;
 			
 			$this->fldinfo = $this->owner_widget->_CONTROLLER->_MODEL->getFldInfo($fld);
+			
+			if($this->fldinfo['password'])
+			{
+				$def_template = "";
+				$def_capt_template="";
+				$is_visible=false;
+			}
+			
+			def_options(array('html_template'=>$def_template,'caption_template'=>$def_capt_template,'visible'=>$is_visible), $settings);		
+			
+		//	mul_dbg($settings,false);
+			
 			if(isset($this->fldinfo['file']))
 			{
 				$the_type = $this->fldinfo['file']['type'];
@@ -49,7 +64,9 @@ if(!empty($value))
 					};break;
 
 				}
-			}			
+			}	
+			
+			
 			
 			$this->settings = $settings;
 			
@@ -61,6 +78,8 @@ if(!empty($value))
 		
 		function draw(&$dr,&$numrow)
 		{
+			if(!$this->settings['visible']) return NULL;
+			
 			$thefield = $dr->getField($this->datafld);
 			
 			if(!empty($this->settings['html_template']))
@@ -80,37 +99,32 @@ if(!empty($value))
 				{
 					$a=1;
 				}
-				echo x_make_str($this->settings['html_template'], $vars);
+				
+			//	mul_dbg($this->settings);
+				
+				return x_make_str($this->settings['html_template'], $vars);
 			}
 			else 
 			{
-				if(is_object($thefield))
-				{
-					echo $thefield->getView(true);
-				}
-				else
-					echo $dr->getField($this->datafld,true);
+			//	mul_dbg('emptty ');
 			}
+				
+			return " ";
+			
 		}
 		
 		function draw_col_head()
 		{
-	//		echo isset($this->settings['caption']);
-			if(isset($this->settings['caption']))
-			{
-				echo $this->settings['caption'];
-				
-			}
-			else
-			{
+			if(!$this->settings['visible']) return NULL;
 			
-				if($this->caption_template=='')
-				{
-					
-				}
-				else 
-					echo \Lang::__t( $this->owner_widget->_table.'.'.$this->datafld);
-			}
+			$vars=array();
+			if(isset($this->settings['caption']))
+				$vars['value']=$this->settings['caption'];
+			else
+				$vars['value']=\Lang::__t( $this->owner_widget->_table.'.'.$this->datafld);
+			
+			return x_make_str($this->settings['caption_template'], $vars);
+			
 		}
 		
 		static function ref_column($template,$caption_template='')
@@ -165,7 +179,13 @@ if(!empty($value))
 				echo "<tr>";
 				foreach ($params['columns'] as $idx => $column)
 				{
-					echo "<td>"; $column->draw($rec,$number); echo "</td>";
+					$td_content = $column->draw($rec,$number);
+				//	mul_dbg($td_content,false);
+
+					if( is_string($td_content) )
+					{
+						echo "<td>{$td_content}</td>";
+					}
 				}
 				echo "</tr>";
 				
@@ -210,9 +230,11 @@ if(!empty($value))
 				<?php 
 				foreach ($params['columns'] as $idx => $col)
 				{
-					echo "<th>";
-					echo $col->draw_col_head();
-					echo "</th>";
+					$th_content = $col->draw_col_head();
+					if(is_string($th_content) )
+					{
+						echo "<th>{$th_content}</th>";
+					}
 				}
 				?>
 				

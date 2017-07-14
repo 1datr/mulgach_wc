@@ -58,9 +58,6 @@ $_LANG['MAKE SUCCESSED']='MAKE SUCCESSED';
 $_LANG['HMVC made successed']='HMVC made successed';
 $_LANG['made successed']='made successed';
 $_LANG['Controller using for authorize:']='Контроллер, используемый для авторизации:';
-$_LANG['}" />
-	<p><label>#{Fields:']='}" />
-	<p><label>#{Fields:';
 $_LANG['Bindings and settings']='Bindings and settings';
 $_LANG['Change config']='Change config';
 $_LANG['Edit config']='Edit config';
@@ -78,4 +75,7 @@ $_LANG['Type']='Type';
 $_LANG['FileType: ']='FileType: ';
 $_LANG['FileType:']='FileType:';
 $_LANG['File type:']='File type:';
+$_LANG['Translations']='Переводы';
+$_LANG['Log in']='Войти';
+$_LANG['TRIADS LIST']='TRIADS LIST';
 ?>

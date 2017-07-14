@@ -67,6 +67,7 @@ namespace BootstrapCombobox
 					if($val==$params['value'])
 						$selected="selected";
 				}
+
 				?>
 				<option value="<?=$val?>" <?=$selected?>><?=x_make_str($params['caption_template'],$row)?></option>
 				<?php 

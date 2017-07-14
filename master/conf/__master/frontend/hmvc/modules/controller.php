@@ -5,7 +5,7 @@ class ModulesController extends BaseController
 	{
 		return array(
 				'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=site/login')
+						new ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
 				),
 		);
 	}

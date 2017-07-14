@@ -31,9 +31,9 @@ class HmvcController extends BaseController
 
 			$tables = $this->_ENV['_CONNECTION']->get_tables();
 			
-			//$hmvc_list = get_files_in_folder('');
+			$triads = $_cfg->get_triads();
 			
-			$this->out_view('tables',array('tables'=>$tables,'config'=>$cfg,'sbplugin'=>$sbplugin));
+			$this->out_view('hmvcs',array('tables'=>$tables,'config'=>$cfg,'triads'=>$triads,'sbplugin'=>$sbplugin));
 		}	
 		else 
 		{

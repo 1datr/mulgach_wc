@@ -1,5 +1,3 @@
-<div class="row">
-<div class="col-sm-4">
 <?php
 $form=new mulForm(as_url("hmvc/make/"),$this);
 ?>
@@ -23,13 +21,4 @@ foreach ($tables as $table)
 <label>REST&nbsp;</label><input type="checkbox" name="ep[rest]" checked >
 <br />
 <?php $form->submit('#{NEXT >}'); ?>
-</form>
-</div>
-
-<div class="col-sm-4">
-<?php 
-$this->out_view('form_from_actionlist',array('tables'=>$tables,'config'=>$config,'sbplugin'=>$sbplugin));
-?>
-
-</div>
-</div>
+<?php $form->close(); ?>

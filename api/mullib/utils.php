@@ -166,6 +166,10 @@ function x_make_str($str,$ptrn)
 			$ptrn2["{".$key."}"]=$val;
 		}
 	}
+	else 
+	{
+		$ptrn=array('%val'=>$ptrn);
+	}
 	$str_res = strtr($str,$ptrn2);
 	
 	$str_res = exe_php_str($str_res,$ptrn);
@@ -175,6 +179,8 @@ function x_make_str($str,$ptrn)
 
 function exe_php_str($code_str,$addition_vars=array())
 {
+	//mul_dbg(debug_backtrace(),false);
+	
 	foreach ($addition_vars as $var => $val)
 	{
 		$$var=$val;
@@ -384,6 +390,13 @@ function filepath2url($path)
 	global $_BASEDIR;
 	$str = url_seg_add($_BASEDIR,string_diff( strtr($path,array('\\'=>'/')), strtr($_SERVER['DOCUMENT_ROOT'],array('\\'=>'/')) ));	
 	return as_url($str);
+}
+
+function array_to_pages($the_array,$pagesize=7)
+{
+	$res=array();
+	
+	return $res;
 }
 
 function as_uri($str)

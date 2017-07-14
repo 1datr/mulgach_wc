@@ -172,6 +172,15 @@ class AuthModel extends BaseModel
 			return parent::validate($data);
 	}
 	
+	function getFldInfo($fld)
+	{
+		$res = parent::getFldInfo($fld);
+		$auth_data = $this->load_auth_data();
+		$res['password'] = ($auth_data['settings']['passw_field']==$fld);
+		$res['login'] = ($auth_data['settings']['login_field']==$fld);
+		return $res;		
+	}
+	
 	function OnSave(&$object)
 	{		
 		$the_data = $this->load_auth_data();

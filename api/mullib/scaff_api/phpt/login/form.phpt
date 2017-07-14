@@ -7,4 +7,4 @@ $frm=new mulForm(as_url('{this_controller}/auth'),$this);
 <tr><th>#{Password}</th><td><input type="password" name="{passw_fld}" /></td></tr>
 <tr></tr>
 </table>
-<#php $frm->submit('#{Log_in}'); #>
+<#php $frm->submit('#{Log in}'); #>
