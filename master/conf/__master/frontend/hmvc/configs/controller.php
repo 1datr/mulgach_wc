@@ -17,6 +17,8 @@ class ConfigsController extends BaseController
 		$this->add_block('BASE_MENU', 'site', 'menu');
 		$this->add_keyword('xxx');
 		
+		use_jq_plugin('confirmdelete',$this);
+		
 		global $_BASEDIR;
 		$files_in_conf_dir = get_files_in_folder( url_seg_add($_BASEDIR,"/conf"));
 		

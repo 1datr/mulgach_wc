@@ -26,6 +26,8 @@ class HmvcController extends BaseController
 		
 		$dbparams = $_cfg->connect_db_if_exists($this);
 	
+		use_jq_plugin('confirmdelete',$this);
+		
 		if($dbparams!=NULL)	// конфа подключена к базе
 		{
 
@@ -33,13 +35,18 @@ class HmvcController extends BaseController
 			
 			$triads = $_cfg->get_triads();
 			
-			$this->out_view('hmvcs',array('tables'=>$tables,'config'=>$cfg,'triads'=>$triads,'sbplugin'=>$sbplugin));
+			$this->out_view('hmvcs',array('tables'=>$tables,'config'=>$cfg,'triads'=>$triads,'_config'=>$_cfg,'sbplugin'=>$sbplugin));
 		}	
 		else 
 		{
 			$this->out_view('index',array());
 		}		
 		
+		
+	}
+	
+	public function ActionDelete()
+	{
 		
 	}
 	

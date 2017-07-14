@@ -16,7 +16,7 @@ foreach ($files as $the_file)
 	{
 		?>
 		
-		<a href="<?=as_url('configs/drop/'.basename($the_file))?>" title="Drop it">x</a>
+		<a href="<?=as_url('configs/drop/'.basename($the_file))?>" class="ref_delete" conf_message="#{Delete this configuration?}" title="Drop it">x</a>
 		<?php 
 	}
 	?>

@@ -21,12 +21,12 @@ $this->inline_css('
 	border-right: 1px solid #ddd;
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
-	height: 200px;
+	height: 100px;
 }	
 
 .columns-page{
 	column-break-before:always;
-
+	
 /* -webkit-column-count:2;
   -moz-column-count:2;*/
 
@@ -37,7 +37,16 @@ $this->inline_css('
 .pseudo_td1 {
 	width:80px;
 	display:inline-block;
-	margin-right:10px;
+	margin-right:20px;
+}
+
+.pseudo_td2 {
+	width:50px;
+	display:inline-block;
+	margin-right:20px;
+}
+.pseudotable{
+	list-style-type: none;
 }
 ');
 ?>
@@ -48,18 +57,21 @@ foreach ($triads as $ep => $triadlist)
 {
 	?>
 	<div id="hmvcs_<?=$ep?>" class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" role="tabpanel">
-	<div class="columns-page">
-	<ul>
-	<?php 
- 	foreach($triadlist as $idx => $triada){
- 		?>
- 		<li><span class="pseudo_td1"><?=$triada?></span><span>x</span></li>
- 		<?php 
- 	}
- 	?>
- 	</ul>
-	</div>
- 	
+	
+			<div class="columns-page">
+			<ul class="pseudotable">
+			<?php 
+			//mul_dbg($_config);
+		 	foreach($triadlist as $idx => $triada){
+		 		?>
+		 		<li><span class="pseudo_td1"><?=$triada?></span>
+		 		<span class="pseudo_td2"><a class="ref_delete" conf_message="#{Delete this triada?}" href="<?=as_url('hmvc/delete/'.$_config->_NAME.'/'.$ep.'/'.$triada)?>">x</a></span></li>
+		 		<?php 
+		 	}
+		 	?>
+		 	</ul>
+			</div>
+	 	
  	</div>
 	<?php 
 	$idx++;

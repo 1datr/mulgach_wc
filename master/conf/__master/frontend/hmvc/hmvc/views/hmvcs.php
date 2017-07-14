@@ -8,6 +8,7 @@
 							'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
   							'sbplugin'=>$sbplugin,
+  							'_config'=>$_config,
   							'_hmvc'=>$_hmvc,));
   	?>
 </div> 
