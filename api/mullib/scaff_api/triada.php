@@ -118,6 +118,11 @@ class scaff_triada
 		return file_exists($path);
 	}
 	
+	function delete()
+	{
+		unlink_folder($this->_PATH); 
+	}
+	
 	function add_std_data_views($_params,$controller)
 	{
 		include $this->_BASEFILE_PATH;

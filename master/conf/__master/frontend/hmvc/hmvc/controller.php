@@ -45,9 +45,14 @@ class HmvcController extends BaseController
 		
 	}
 	
-	public function ActionDelete()
+	public function ActionDelete($cfg,$ep,$triada)
 	{
-		
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new scaff_conf($cfg);
+		$tr = $_cfg->get_triada($ep, $triada);
+		$tr->delete();
+		$this->redirect_back();
 	}
 	
 	public function ActionFields($cfg='main',$table)

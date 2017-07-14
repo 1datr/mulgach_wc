@@ -250,14 +250,14 @@ function file_put_contents_ifne($filename,$data,$flags=0,$context=null)
 // создать папку рекурсивно полностью
 function x_mkdir($path)
 {
-		
+//	mul_dbg("creating dir ".$path);
 	$parent_path = dirname($path);
 	if(file_exists($parent_path))
 	{		
 		if(!file_exists($path))
 		{
 			mkdir($path);
-		//	mul_dbg("creating dir ".$path);
+			
 		}
 	}
 	else 

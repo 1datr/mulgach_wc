@@ -7,6 +7,6 @@ $settings = array(
 	'required'=>array('id_znak','znak','type'),
 	'rules'=>array(),	
 	'view'=>'{znak}',
-	'file_fields'=>array('sound'=>array(),),
+	'file_fields'=>array('sound'=>array('type'=>''),),
 	
 );

@@ -36,12 +36,13 @@ class ModulesController extends BaseController
 	{
 		if(!empty($_POST['plgname']))
 		{
-			global $_BASEDIR;
-			$module_file = url_seg_add($_BASEDIR,'modules',$_POST['module'],'plugins',$_POST['plgname'],'index.php');
-			x_file_put_contents($module_file, 
-					parse_code_template(url_seg_add(__DIR__,'../../phpt/module/plugin.phpt'), array('plgname'=>$_POST['plgname'])) );
-			echo "<h3>".Lang::__t('Plugin succesfully created')."</h3>";
-			$this->redirect('\?r=modules');
+			GLOBAL $_BASEDIR;
+			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			
+			$module = new scaff_module($_POST['module']);
+			$module->create_plugin($_POST['plgname'],array('rewrite'=>true));
+		
+			$this->redirect(as_url('modules'));
 		}
 	}
 	
