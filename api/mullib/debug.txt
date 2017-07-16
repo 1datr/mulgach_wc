@@ -1,6 +1,1 @@
  
- 
-				
-	07-15-2017 00:35:15.000000: creating dir /modules/bootstrap/plugins/xxx/js
-				
-	07-15-2017 00:35:15.000000: creating dir /modules/bootstrap/plugins/xxx/css

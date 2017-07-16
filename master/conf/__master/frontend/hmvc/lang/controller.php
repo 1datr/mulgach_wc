@@ -12,11 +12,19 @@ class LangController extends BaseController
 		
 	public function ActionIndex()
 	{
-		$this->_TITLE="Master";
-		$this->add_css($this->get_current_dir()."/css/style.css");
+		$this->_TITLE= Lang::__t("Search");
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
-		$this->add_keyword('xxx');
+	//	$this->add_keyword('xxx');
+		$this->out_view('index',array());
+	}
+	
+	public function ActionSearch($lng,$srch_key,$srch_val)
+	{
+		$this->_TITLE= Lang::__t("Search result by ").$srch_key;
+		
+		$this->add_block('BASE_MENU', 'site', 'menu');
+	//	$this->add_keyword('xxx');
 		$this->out_view('index',array());
 	}
 	

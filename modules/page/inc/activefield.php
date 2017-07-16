@@ -1,4 +1,5 @@
 <?php
+
 class ActiveField
 {
 	VAR $_ROW;
@@ -41,6 +42,7 @@ class ActiveField
 			$opts['htmlattrs']['name']= $opts['name'];
 		
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
+		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
@@ -279,6 +281,24 @@ class ActiveField
 	function set($opts=array())
 	{
 		
+	}
+	
+	function hidden($opts=array())
+	{
+		def_options(array('htmlattrs'=>array()), $opts);
+		$opts['htmlattrs']['type']='hidden';
+		if(!isset($opts['name']))
+			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+			else
+				$opts['htmlattrs']['name']= $opts['name'];
+				
+		$fldval = $this->_ROW->getField($this->_FLDNAME);
+		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
+		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
+		?>
+		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
+		<?php
+		$this->error_div();
 	}
 	
 	function checkbox($opts=array())

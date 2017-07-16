@@ -80,4 +80,7 @@ $_LANG['Log in']='Войти';
 $_LANG['TRIADS LIST']='TRIADS LIST';
 $_LANG['Delete this triada?']='Delete this triada?';
 $_LANG['Delete this configuration?']='Delete this configuration?';
+$_LANG['language']='language';
+$_LANG['translation']='translation';
+$_LANG['Search']='Search';
 ?>

@@ -15,12 +15,30 @@ class BaseModel
 		$this->_LOCATION=$_LOCATION;
 		$this->_ENV = $the_ENV;
 		$this->_ENV['model']=$this;
-		$this->read_base_info();
+		$rules = $this->rules();
+		if(count($rules)==0)
+			$this->read_base_info();
+		else 
+			$this->_SETTINGS=$rules;
+		
+		//mul_dbg($this->)
 	}
 	
 	function rules()
 	{
 		return array();
+	}
+	
+	function scenario($value=null)
+	{
+		if($value==null)
+		{
+			return $this->_SCENARIO;
+		}
+		else 
+			$this->_SCENARIO=$value;
+		
+		return NULL;
 	}
 	
 	function read_base_info()
@@ -141,6 +159,17 @@ class BaseModel
 		{
 			$dr = $this->GetRow($row);			
 		}
+		return $dr;
+	}
+	
+	function empty_row_form_model()
+	{
+		$therow=array();
+		foreach($this->_SETTINGS['fields'] as $fld => $fldinfo)
+		{
+			$therow[$fld]='';
+		}
+		$dr = new DataRecord($this,$therow);
 		return $dr;
 	}
 	// find as default dataset

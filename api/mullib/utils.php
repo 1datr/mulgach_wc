@@ -317,7 +317,7 @@ function convert_slash($url)
 
 function get_files_in_folder($dir_path,$opts=array())
 {
-	def_options(array('dirs'=>false,'basename'=>false), $opts);
+	def_options(array('dirs'=>false,'basename'=>false,'without_ext'=>false), $opts);
 	$d = dir(convert_slash($dir_path));
 	$result=array();
 	//	echo "Дескриптор: " . $d->handle . "\n";
@@ -341,6 +341,11 @@ function get_files_in_folder($dir_path,$opts=array())
 			}
 			if($opts['basename'])
 				$result[]=basename($filename);
+			elseif($opts['without_ext'])
+			{
+				$info = pathinfo($filename);
+				$result[]=basename($filename,'.'.$info['extension']);
+			}
 			else
 				$result[]=$filename;
 					

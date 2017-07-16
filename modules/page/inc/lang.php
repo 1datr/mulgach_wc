@@ -15,6 +15,14 @@ class Lang {
 		return $langfile->getkey($key);
 	}
 	
+	static function get_langs()
+	{
+		GLOBAL $_EP_PATH;
+		$lang_dir = url_seg_add($_EP_PATH,'lang');
+		$lang_files = get_files_in_folder($lang_dir,['without_ext'=>true]);
+		return $lang_files;
+	}
+	
 	static function translate_str($str,$_lang=NULL)
 	{
 		$langfile=new Lang($_lang);
