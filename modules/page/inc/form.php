@@ -56,8 +56,18 @@ class mulForm
 	{
 	//	print_r($_SESSION);
 		$this->_CONTROLLER = $controller;
-		def_options(array('html_attrs'=>array()), $params);
-		def_options(array('method'=>'post','class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['html_attrs']);
+		def_options(array('html_attrs'=>array(),'mode'=>'post'), $params);
+		if($params['mode']=='post')
+		{
+			$method='post';
+		}
+		else 
+		{
+			$method='get';
+		}
+		
+		def_options(array('method'=>'post','class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['html_attrs']);		
+		
 		$params['html_attrs']['action']=$action;
 		?>
 		<form <?=xx_implode($params['html_attrs'], ' ', '{idx}="{%val}"') ?> >		
