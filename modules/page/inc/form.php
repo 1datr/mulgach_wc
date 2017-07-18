@@ -58,7 +58,7 @@ class mulForm
 	{
 	//	print_r($_SESSION);
 		$this->_CONTROLLER = $controller;
-		def_options(array('html_attrs'=>array(),'mode'=>'post'), $params);
+		def_options(array('htmlattrs'=>array(),'mode'=>'post'), $params);
 		$this->_MODE = $params['mode'];
 		if($params['mode']=='post')
 		{
@@ -73,7 +73,7 @@ class mulForm
 		
 		$params['html_attrs']['action']=$action;
 		?>
-		<form <?=xx_implode($params['html_attrs'], ' ', '{idx}="{%val}"') ?> >		
+		<form <?=xx_implode($params['htmlattrs'], ' ', '{idx}="{%val}"') ?> >		
 		<?php 
 		/*
 		 <form action="<?=$action?>" class="mul_form" method="<?=$params['method']?>"  enctype="multipart/form-data" <?php if(!empty($params['target'])) echo 'target="'.$params['target'].'"'; ?>> 

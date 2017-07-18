@@ -87,4 +87,6 @@ $_LANG['Search result by ']='Search result by ';
 $_LANG['LangKey']='LangKey';
 $_LANG['LangVal']='LangVal';
 $_LANG['Translation']='Translation';
+$_LANG['save translation']='save translation';
+$_LANG['save']='save';
 ?>

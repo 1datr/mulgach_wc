@@ -8,7 +8,7 @@ class BaseModel
 	VAR $_SETTINGS;
 	VAR $_LOCATION;
 	VAR $_ENV;	
-	VAR $_SCENARIO;
+	VAR $_SCENARIO='default';
 	
 	function __construct($_LOCATION="",$the_ENV=array())
 	{

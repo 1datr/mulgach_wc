@@ -37,7 +37,7 @@ $this->inline_css('
 	 	if($ep==$current_ep)
 	 	{
 			if(count($results)>0)
-				$this->out_view('results',array('results'=>$results));
+				$this->out_view('results',array('results'=>$results,'ep'=>$ep,'config'=>$config,));
 	 	}
  	}
 	?>
