@@ -1,34 +1,52 @@
-<h3>#{Translations}</h3>
+<h3>#{Translations} <?=$config?></h3>
+
+<ul class="nav nav-tabs">
 <?php 
-$form = new mulForm(as_url('lang/search'),$this
-		//,array('method'=>'get')
-		);
-$dr = $this->_MODEL->empty_row_form_model();
-?>
-<table>
-<tr>
-<?php 
-$langs = Lang::get_langs();
-if(count($langs)>1)
+$eps=array('frontend','backend','install');
+foreach ($eps as $idx => $ep)
 {
+	$flg = (isset($current_ep)) ? ($current_ep==$ep) : ($idx==0);
 	?>
-	<td><?php $form->field($dr, 'lang')->ComboBox($langs); ?></td>
+	<li class="nav-item"><a data-toggle="tab" role="tab" class="nav-link  <?=(($flg)?'active':'')?>" href="#lang_<?=$ep?>"><?=$ep?></a></li>
 	<?php 
 }
-else 
-	{
-		?>
-		<?php $form->field($dr, 'lang')->hidden(['value'=>$langs[0]]); ?>
-		<?php 
-	}	
 ?>
-<td><?php $form->field($dr, 'langkey')->text(['htmlattrs'=>['placeholder'=>Lang::__t('language')],
-		//'name'=>'lang'		
-]);?></td>
-<td><?php $form->field($dr, 'translation')->text(['htmlattrs'=>['placeholder'=>Lang::__t('translation')]]);?></td>
-<td><?php $form->submit(Lang::__t('Search')) ?></td>
-</tr>
-</table>
+</ul>
 <?php 
-$form->close();
+$this->inline_css('
+.tab-page {
+	padding: 10px;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+}		
+');
+?>
+<div class="tab-content">
+<?php foreach ($eps as $idx => $ep)
+{
+	$flg = (isset($current_ep)) ? ($current_ep==$ep) : ($idx==0);
+	?>
+	<div id="lang_<?=$ep?>" class="tab-pane <?=( ($flg) ?'active':'')?> tab-page" role="tabpanel">
+ 	<?php 
+ 	$this->out_view('searchform',array('request'=>$request,'ep'=>$ep,'config'=>$config,'dr'=>$dr));
+ 	if(isset($current_ep))
+ 	{
+	 	if($ep==$current_ep)
+	 	{
+			if(count($results)>0)
+				$this->out_view('results',array('results'=>$results));
+	 	}
+ 	}
+	?>
+ 	</div>
+	<?php 
+}
+?>
+</div>
+
+<?php 
+
 ?>

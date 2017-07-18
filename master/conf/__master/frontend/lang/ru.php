@@ -83,4 +83,8 @@ $_LANG['Delete this configuration?']='Delete this configuration?';
 $_LANG['language']='language';
 $_LANG['translation']='translation';
 $_LANG['Search']='Search';
+$_LANG['Search result by ']='Search result by ';
+$_LANG['LangKey']='LangKey';
+$_LANG['LangVal']='LangVal';
+$_LANG['Translation']='Translation';
 ?>

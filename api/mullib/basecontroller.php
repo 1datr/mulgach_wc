@@ -67,6 +67,12 @@ class BaseController
 		return $matches[1][0];
 	}
 	
+	function get_image($img)
+	{
+		$controller_dir = $this->get_current_dir();
+		return filepath2url(url_seg_add($controller_dir,$img));
+	}
+	
 	function get_current_dir()
 	{
 		GLOBAL $_EP, $_CONTROLLER, $_ACTION, $_CONFIG, $_BASEDIR;

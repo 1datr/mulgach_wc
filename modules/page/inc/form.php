@@ -6,6 +6,7 @@ class mulForm
 {
 	VAR $_CONTROLLER;
 	VAR $_UPLOAD_MODE;
+	VAR $_MODE;
 	static function check_form($_POST_ARRAY)
 	{
 		if(!empty($_SESSION['csrf_codes']))
@@ -31,6 +32,7 @@ class mulForm
 	{
 		$newfld = new ActiveField($model, $fld_name, $opts);
 		$newfld->_CONTROLLER = $this->_CONTROLLER;
+		$newfld->_FORM = $this;
 		return $newfld;
 	}
 	
@@ -57,6 +59,7 @@ class mulForm
 	//	print_r($_SESSION);
 		$this->_CONTROLLER = $controller;
 		def_options(array('html_attrs'=>array(),'mode'=>'post'), $params);
+		$this->_MODE = $params['mode'];
 		if($params['mode']=='post')
 		{
 			$method='post';
@@ -66,7 +69,7 @@ class mulForm
 			$method='get';
 		}
 		
-		def_options(array('method'=>'post','class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['html_attrs']);		
+		def_options(array('method'=>$method,'class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['html_attrs']);		
 		
 		$params['html_attrs']['action']=$action;
 		?>

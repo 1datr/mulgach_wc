@@ -5,12 +5,15 @@ class ModelLang extends BaseModel
 	{
 		return array(
 			'table'=>'langform',
-			'fields'=>array('lang'=>array('Type'=>'enum','Typeinfo'=>array(
+			'fields'=>array(
+					'config'=>array('Type'=>'text'),
+					'ep'=>array('Type'=>'text'),
+					'lang'=>array('Type'=>'enum','Typeinfo'=>array(
 						'values'=>function(){
 							return Lang::get_langs();						
 						},
 					)),'langkey'=>array('Type'=>'text'),'translation'=>array('Type'=>'text')),	
-				
+			'required'=>array('config','ep','lang'),
 		);
 	}
 	//$this->getinfo('basemenu');

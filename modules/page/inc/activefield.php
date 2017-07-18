@@ -7,11 +7,24 @@ class ActiveField
 	VAR $_OPTIONS;
 	VAR $_ENV;
 	VAR $_CONTROLLER;
+	VAR $_FORM;
 	function __construct($row,$name,$opts=array())
 	{
 		$this->_ROW=$row;
 		$this->_FLDNAME=$name;
 		$this->_OPTIONS=$opts;
+	}
+	
+	private function get_var_name()
+	{
+		if($this->_FORM->_MODE=='post')
+		{
+			return $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+		}
+		elseif($this->_FORM->_MODE=='get')
+		{
+			return 'args['.$this->_FLDNAME.']';
+		}
 	}
 	
 	function get_attr_str($attrlist)
@@ -37,11 +50,12 @@ class ActiveField
 		def_options(array('htmlattrs'=>array()), $opts);
 		$opts['htmlattrs']['type']='text';
 		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 		
-		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
+		if(!isset($opts['value']))
+			$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
@@ -54,7 +68,7 @@ class ActiveField
 		def_options(array('htmlattrs'=>array('rows'=>5,'cols'=>10)), $opts);
 
 		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+				$opts['htmlattrs']['name']= $this->get_var_name();
 			else
 				$opts['htmlattrs']['name']= $opts['name'];
 			
@@ -73,7 +87,7 @@ class ActiveField
 	{
 		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
 		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 		
@@ -230,7 +244,7 @@ class ActiveField
 		}
 		
 		if(!isset($opts['name']))
-				$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+				$opts['htmlattrs']['name']= $this->get_var_name();
 			else
 				$opts['htmlattrs']['name']= $opts['name'];
 		?>
@@ -288,9 +302,9 @@ class ActiveField
 		def_options(array('htmlattrs'=>array()), $opts);
 		$opts['htmlattrs']['type']='hidden';
 		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
-			else
-				$opts['htmlattrs']['name']= $opts['name'];
+			$opts['htmlattrs']['name']= $this->get_var_name();
+		else
+			$opts['htmlattrs']['name']= $opts['name'];
 				
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);

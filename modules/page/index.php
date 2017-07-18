@@ -702,7 +702,7 @@ class mul_page extends mul_Module
 		{
 		//	print_r($arg);
 			$_fun_map[]=$arg->name;
-			if(!empty($request->_args[$arg->name]))
+			if(isset($request->_args[$arg->name]))
 			{
 				$_val = $request->_args[$arg->name];
 				if(!empty($arg_info[$arg->name]))
@@ -716,11 +716,11 @@ class mul_page extends mul_Module
 				}
 				$method_args[] = $_val;
 			}
-			elseif(!empty($request->_args[$idx_in_req_args]))
+			elseif(isset($request->_args[$idx_in_req_args]))
 			{
 			//	echo "+ $idx_in_req_args +";
 				
-				if(!empty($arg_info[$arg->name]))
+				if(isset($arg_info[$arg->name]))
 				{
 				//	echo '$request->_args[$arg->name]=('.$arg_info[$arg->name].')$request->_args[$idx_in_req_args];';
 					eval('$request->_args[$arg->name]=('.$arg_info[$arg->name].')$request->_args[$idx_in_req_args];');

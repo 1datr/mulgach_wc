@@ -109,6 +109,13 @@ class HMVCRequest
 
 
 		$this->_args = array_order_num($_result);
+		//
+		if(isset($_REQUEST['args']))
+		{
+			$this->_args = $_REQUEST['args'];
+			unset($_REQUEST['args']);
+		}
+		//mul_dbg($this->_args);
 	}
 	
 	function setmap($map)
