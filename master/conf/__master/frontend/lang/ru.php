@@ -89,4 +89,5 @@ $_LANG['LangVal']='LangVal';
 $_LANG['Translation']='Translation';
 $_LANG['save translation']='save translation';
 $_LANG['save']='save';
+$_LANG['Configuration ']='Configuration ';
 ?>

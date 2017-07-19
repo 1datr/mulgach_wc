@@ -1,3 +1,4 @@
+<h1 class="h1">#{Configuration }<?=$config?></h1>
 <div class="row">
 <?php 
   	$this->out_view('triads',array(

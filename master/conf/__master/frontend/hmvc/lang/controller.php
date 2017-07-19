@@ -24,7 +24,7 @@ class LangController extends BaseController
 	
 	public function ActionSearch($config='main',$ep='frontend',$lang,$langkey,$translation)
 	{
-		$this->_TITLE= Lang::__t("Search result by ").$srch_key;
+		$this->_TITLE= Lang::__t("Search result by ").$langkey." ".$translation;
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
 	//	$this->add_keyword('xxx');
