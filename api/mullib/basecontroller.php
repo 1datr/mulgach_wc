@@ -15,6 +15,7 @@ class BaseController
 	VAR $_CONTROLLER_DIR=NULL; // директория контроллера (заполняется из модуля page)
 	VAR $_ENV;
 	VAR $_MODEL;
+	VAR $_HEADERS=NULL;
 	VAR $_CONNECTION;
 	
 	function __construct($_env_info=array())

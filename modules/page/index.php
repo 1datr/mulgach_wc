@@ -847,6 +847,7 @@ class mul_page extends mul_Module
 			'_INLINE_SCRIPT'=>$controller_object->_INLINE_SCRIPT,
 			'_INLINE_CSS'=>$controller_object->_INLINE_STYLE,
 			'_RESULT_TYPE'=>$controller_object->_RESULT_TYPE,
+			'_HEADERS'=>$controller_object->_HEADERS,
 			'ok'=>true,
 		);
 	}		
