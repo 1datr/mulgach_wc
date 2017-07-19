@@ -19,7 +19,10 @@ class ActiveField
 	{
 		if($this->_FORM->_MODE=='post')
 		{
-			return $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+			if(isset($this->_CONTROLLER->_MODEL->_SETTINGS['domen']))
+				return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$this->_FLDNAME.']';
+			else
+				return $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
 		}
 		elseif($this->_FORM->_MODE=='get')
 		{

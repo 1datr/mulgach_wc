@@ -22,6 +22,14 @@ class LangController extends BaseController
 		$this->out_view('index',array('results'=>array(),'config'=>$config,'dr'=>$dr,));
 	}
 	
+	public function ActionSet()
+	{
+		//mul_dbg($_POST);
+		$the_lng = new Lang($_POST['lang']['lang'],$_POST['lang']['config'],$_POST['lang']['ep']);
+		$the_lng->add_key($_POST['lang']['langkey'],$_POST['lang']['translation']);
+		$this->redirect_back();
+	}
+	
 	public function ActionSearch($config='main',$ep='frontend',$lang,$langkey,$translation)
 	{
 		$this->_TITLE= Lang::__t("Search result by ").$langkey." ".$translation;

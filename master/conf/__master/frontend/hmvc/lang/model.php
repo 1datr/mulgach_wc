@@ -26,6 +26,7 @@ class ModelLang extends BaseModel
 		*/
 		return array(
 				'table'=>'langform',
+				'domen'=>'lang',
 				'fields'=>array(
 						'config'=>array('Type'=>'text'),
 						'ep'=>array('Type'=>'text'),

@@ -1,1 +1,14 @@
 
+				
+	07-19-2017 10:36:45.000000: Array
+(
+    [lang] => Array
+        (
+            [config] => kursy
+            [ep] => backend
+            [lang] => 
+            [langkey] => users.login
+            [translation] => Login
+        )
+
+)

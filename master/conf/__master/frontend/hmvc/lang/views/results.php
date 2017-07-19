@@ -8,8 +8,8 @@ $row = $this->_MODEL->empty_row_form_model();
 foreach ($results as $key => $val) {
 ?>
   <tr>
-    <td><?=$key?></td>
-    <td style="padding:0px;">
+    <td ><?=$key?></td>
+    <td >
     
     <?php
     $row->setField('config',$config);
@@ -18,7 +18,7 @@ foreach ($results as $key => $val) {
     $row->setField('langkey',$key);
     $row->setField('translation',$val);
     
-    $frm = new mulForm('lang/set',$this,['htmlattrs'=>['style'=>"padding:0px;"]]);
+    $frm = new mulForm(as_url('lang/set'),$this,['htmlattrs'=>['style'=>"margin:0px;"]]);
     ?>
     <table style="padding:0px;" cellspacing="0" cellpadding="0">
     <tr>
@@ -33,7 +33,7 @@ foreach ($results as $key => $val) {
     </td>
     <td>    
     <?php 
-    $frm->submit(Lang::__t('save'),'',['class'=>'btn btn-small']);
+    $frm->submit(Lang::__t('save'),'',['class'=>'btn btn-secondary btn-sm']);
     ?>
     </tr>
     </table>

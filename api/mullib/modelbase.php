@@ -36,7 +36,11 @@ class BaseModel
 			return $this->_SCENARIO;
 		}
 		else 
+		{
 			$this->_SCENARIO=$value;
+			$rules = $this->rules();
+			$this->_SETTINGS=$rules;
+		}
 		
 		return NULL;
 	}
