@@ -107,46 +107,68 @@ class UsersController extends AuthController
 		$this->out_view('loginform',array());
 	}
 	
-	public function ActionCaption()
+	public function ActionCaptcha()
 	{
 		$this->_TITLE=Lang::__t('Authorization');
 		$this->_RESULT_TYPE="image/png";
 		//$this->use_layout('layout_login');
 		//$this->out_view('loginform',array());
 		
-		$img_dir="";
+		$img_dir="../../img/";
 		
-		$im = imagecreatefrompng();
-		
+		$font_dir="../../font/";
 		
 		// Количество линий. Обратите внимание, что они накладываться будут дважды (за текстом и на текст). Поставим рандомное значение, от 3 до 7.
 		$linenum = rand(3, 7);
 		// Задаем фоны для капчи. Можете нарисовать свой и загрузить его в папку /img. Рекомендуемый размер - 150х70. Фонов может быть сколько угодно
 		$img_arr = array(
-				"1.png"
+				"bg1.png"
 		);
 		// Шрифты для капчи. Задавать можно сколько угодно, они будут выбираться случайно
 		$font_arr = array();
-		$font_arr[0]["fname"] = "DroidSans.ttf";	// Имя шрифта. Я выбрал Droid Sans, он тонкий, плохо выделяется среди линий.
+	//	$font_arr[0]["fname"] = "DroidSans.ttf";	// Имя шрифта. Я выбрал Droid Sans, он тонкий, плохо выделяется среди линий.
+		$font_arr[0]["fname"] ="ms_sans_serif.ttf";
+		$fonts = get_files_in_folder( url_seg_add( $this->get_current_dir(), $font_dir),['']);
 		$font_arr[0]["size"] = rand(20, 30);				// Размер в pt
 		// Генерируем "подстилку" для капчи со случайным фоном
 		$n = rand(0,sizeof($font_arr)-1);
 		$img_fn = $img_arr[rand(0, sizeof($img_arr)-1)];
-		$im = imagecreatefrompng ($img_dir . $img_fn);
+		
+		$im = imagecreatefrompng( url_seg_add( $this->get_current_dir(),$img_dir,$img_fn));
+		
 		// Рисуем линии на подстилке
 		for ($i=0; $i<$linenum; $i++)
 		{
 			$color = imagecolorallocate($im, rand(0, 150), rand(0, 100), rand(0, 150)); // Случайный цвет c изображения
 			imageline($im, rand(0, 20), rand(1, 50), rand(150, 180), rand(1, 50), $color);
 		}
-		$color = imagecolorallocate($im, rand(0, 200), 0, rand(0, 200)); // Опять случайный цвет. Уже для текста.
 		
+		$col_r = rand(0, 200);
+		$col_g = 0;
+		$col_b = rand(0, 200); // Опять случайный цвет. Уже для текста.
+		
+		$code = GenRandStr();
 		// Накладываем текст капчи
-		$x = rand(0, 35);
+		$x = rand(0, 15);
 		for($i = 0; $i < strlen($code); $i++) {
-			$x+=15;
+			
+			$delta = rand(-50,50);
+			$curr_r = ( ($col_r+$delta>=0) ? ($col_r+($delta)): $col_r );
+			$delta = rand(-50,50);
+			$curr_g = ( ($col_g+$delta>=0) ? ($col_g+($delta)): $col_g );
+			$delta = rand(-50,50);
+			$curr_b = ( ($col_b+$delta>=0) ? ($col_b+($delta)): $col_b );
+			
+			mul_dbg("$curr_r : $curr_g : $curr_b");
+			
+			$color = imagecolorallocate($im, $curr_r, $curr_g, $curr_b); // случайный цвет
 			$letter=substr($code, $i, 1);
-			imagettftext ($im, $font_arr[$n]["size"], rand(2, 4), $x, rand(50, 55), $color, img_dir.$font_arr[$n]["fname"], $letter);
+		//	$_size = $font_arr[$n]["size"];
+			$_size = rand(35, 40);
+			//$_font = url_seg_add($this->get_current_dir(),$font_dir,$font_arr[$n]["fname"]);
+			$_font = $fonts[ rand(0,sizeof($fonts)-1)];
+			imagettftext($im, $_size, rand(2, 20), $x, rand(50, 55), $color, $_font, $letter);
+			$x+=25;
 		}
 		
 		// Опять линии, уже сверху текста
