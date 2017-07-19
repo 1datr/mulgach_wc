@@ -45,15 +45,21 @@ class BaseModel
 		return NULL;
 	}
 	
-	function read_base_info()
+	function get_base_info()
 	{
 		$_baseinfo_file = url_seg_add($this->_LOCATION,"baseinfo.php");
 		if(file_exists($_baseinfo_file))
 		{
 			include $_baseinfo_file;
-			$this->_SETTINGS = $settings;
-			$this->_TABLE=$this->_SETTINGS['table'];
+			return $settings;
 		}
+		return array();
+	}
+	
+	function read_base_info()
+	{		
+		$this->_SETTINGS = $this->get_base_info();
+		$this->_TABLE=$this->_SETTINGS['table'];
 	}
 	
 	function getFldInfo($fld)
@@ -354,6 +360,11 @@ class BaseModel
 		}
 		$datarow->save(false);
 	}
+	
+	public function ActionRegister()
+	{
+		
+	} 	
 	
 	public function UploadfilesTemp()
 	{

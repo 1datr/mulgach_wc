@@ -80,6 +80,20 @@ class ActionAccessRule {
 
 class AuthModel extends BaseModel
 {
+	function rules()
+	{
+		$this->read_base_info();
+		switch($this->scenario())
+		{
+			case 'default': 
+				return array();
+			case 'register': {
+				
+			};break;
+		}
+		return array();
+	}
+	
 	function load_auth_data()
 	{
 		if(!empty($this->_SETTINGS['authdata']))
