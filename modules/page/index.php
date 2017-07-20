@@ -781,7 +781,7 @@ class mul_page extends mul_Module
 		
 		$bad_result = array('ok'=>false);
 			
-		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
+		require_once url_seg_add($_BASEDIR,"api/mullib/basecontroller.php");
 			
 		if( file_exists($con_info['_CONTROLLER_FILE']))
 		{

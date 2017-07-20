@@ -1,4 +1,5 @@
 <?php
+				// ++++
 $_LANG['users.id']='id';
 $_LANG['users.login']='login';
 $_LANG['users.password']='password';
@@ -115,4 +116,6 @@ $_LANG['zadanie.s_proverkoy']='s_proverkoy';
 $_LANG['zadanie.tematika_zadaniya']='tematika_zadaniya';
 $_LANG['zadanie.task_text']='task_text';
 $_LANG['zadanie.type']='type';
+$_LANG['Update_captcha']='Update_captcha';
+$_LANG['REGISTER']='REGISTER';
 ?>

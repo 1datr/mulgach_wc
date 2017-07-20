@@ -161,7 +161,6 @@ class Lang {
 ".xx_implode($newlang, '
 ', "\$_LANG['{idx}']='{%val}';")."
 ?>";
-		//mul_dbg($new_lang_content);
 		
 		$res = file_put_contents($this->lang_dir, $new_lang_content);
 	}
