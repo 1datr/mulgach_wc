@@ -155,12 +155,14 @@ class Lang {
 			$value=$key;
 		$newlang[$key]=$value;
 		
-		//print_r($newlang);
-		
+			
 		$new_lang_content = "<?php
+				// ++++
 ".xx_implode($newlang, '
 ', "\$_LANG['{idx}']='{%val}';")."
 ?>";
-		file_put_contents($this->lang_dir, $new_lang_content);
+		//mul_dbg($new_lang_content);
+		
+		$res = file_put_contents($this->lang_dir, $new_lang_content);
 	}
 }

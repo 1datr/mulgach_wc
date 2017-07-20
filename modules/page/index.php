@@ -308,6 +308,9 @@ class mul_page extends mul_Module
 
 		$this->inc_ep_config($conf_info);
 		
+		if(isset($_REQUEST['srv'])) 
+			return;
+			
 		if(empty($_REQUEST['r'])) $_REQUEST['r']='';
 		
 		$info = $this->hmvc_request($_REQUEST['r']);

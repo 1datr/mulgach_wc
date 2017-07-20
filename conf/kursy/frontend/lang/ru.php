@@ -1,5 +1,4 @@
 <?php
-$_LANG['']='';
 $_LANG['users.id']='id';
 $_LANG['users.login']='login';
 $_LANG['users.password']='password';

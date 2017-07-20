@@ -20,6 +20,21 @@ class mul_Module
 		return $name;
 	}
 	
+	function get_srv()
+	{
+		return $this->get_request('srv');
+	}
+	
+	function get_request($reqname,$defval=null)
+	{
+		if(isset($_REQUEST[$reqname]))
+		{
+			return $_REQUEST[$reqname];
+		}
+		else
+			return $defval;
+	}
+	
 	function use_plugin($plg,$params=array())
 	{
 		require_once $this->get_module_dir()."/plugins/$plg/index.php";

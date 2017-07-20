@@ -5,5 +5,6 @@ $_MODULES = array(
 	'jquery'=>array(),
 	'bootstrap'=>array(),
 	'route'=>array(),
+	'captcha'=>array(),
 );
 ?>
