@@ -118,4 +118,5 @@ $_LANG['zadanie.task_text']='task_text';
 $_LANG['zadanie.type']='type';
 $_LANG['Update_captcha']='Update_captcha';
 $_LANG['REGISTER']='REGISTER';
+$_LANG['Update captcha']='Update captcha';
 ?>

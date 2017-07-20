@@ -117,6 +117,16 @@ class BaseController
 		$this->AfterLogout($userinfo);
 	}
 	
+	function BeforeAction(&$params)
+	{
+
+	}
+	
+	function AfterAction(&$params)
+	{
+	
+	}
+	
 	function BeforeLogout($userinfo)
 	{
 	

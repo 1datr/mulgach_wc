@@ -2,11 +2,13 @@
 
 class plg_simple extends mod_plugin 
 {
-	
+	VAR $params;
 	// ѕараметры :
 	// controller - контроллер, к которому подключаешь плагин 	
 	function __construct($_PARAMS=array())
 	{
+		def_options(['img_id'=>'img-captcha'], $_PARAMS);
+		$this->params = $_PARAMS;
 		
 		if(is_object($_PARAMS))
 		{
@@ -133,11 +135,11 @@ class plg_simple extends mod_plugin
 			$color = imagecolorallocate($im, $curr_r, $curr_g, $curr_b); // случайный цвет
 			$letter=substr($code, $i, 1);
 			//	$_size = $font_arr[$n]["size"];
-			$_size = rand(35, 40);
+			$_size = rand(25, 35);
 			//$_font = url_seg_add($this->get_current_dir(),$font_dir,$font_arr[$n]["fname"]);
 			$_font = $fonts[ rand(0,sizeof($fonts)-1)];
-			imagettftext($im, $_size, rand(-12, 20), $x, rand(50, 55), $color, $_font, $letter);
-			$x+=30;
+			imagettftext($im, $_size, rand(-20, 20), $x, rand(50, 55), $color, $_font, $letter);
+			$x+=rand(20,30);
 		}
 		
 		// ќп€ть линии, уже сверху текста
@@ -157,13 +159,19 @@ class plg_simple extends mod_plugin
 		return "?srv=captcha_pic";
 	}
 	
+	public function get_onclick_update_js()
+	{
+		return "$('#img-captcha').attr('src',$('#".$this->params['img_id']."').attr('src'));return false;";
+	}
+	
 	public function full_html()
 	{
 		?>
-		<img src="<?=$this->picture_url()?>" id="img-captcha" />
+		<img src="<?=$this->picture_url()?>" id="<?=$this->params['img_id']?>" />
 		<!--Ёлемент, запрашивающий новый код CAPTCHA-->
-		<button role="button" class="glyphicon glyphicon-refresh btn" onclick="$('#img-captcha').attr('src',$('#img-captcha').attr('src'));return false;">#{Update_captcha}</button>
-	  
+		<button type="button" class="btn btn-default" aria-label="Left Align" onclick="<?=$this->get_onclick_update_js()?>">
+  			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>#{Update captcha}
+		</button>			  
 		<?php 
 	}
 }

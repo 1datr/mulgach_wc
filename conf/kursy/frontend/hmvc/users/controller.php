@@ -110,7 +110,8 @@ class UsersController extends AuthController
 	public function ActionRegister()
 	{
 		$captcha = mul_captcha::use_captcha($this);
-		$this->out_view('register',array('captcha'=>$captcha));
+		$reg_form_struct = $this->_MODEL->empty_row_form_model();
+		$this->out_view('register',array('captcha'=>$captcha,'reg_struct'=>$reg_form_struct));
 	}
 	
 	public function ActionAuth()
@@ -128,7 +129,15 @@ class UsersController extends AuthController
 		//$this->out_view('loginform',array());
 	}
 	
-	
+	public function BeforeAction(&$params)
+	{
+		//mul_dbg($params);
+		
+		if($params['action']=='register')
+		{
+			$this->_MODEL->scenario('register');	
+		}
+	}
 	
 	public function ActionLogout()
 	{

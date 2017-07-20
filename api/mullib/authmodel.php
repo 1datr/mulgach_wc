@@ -88,7 +88,14 @@ class AuthModel extends BaseModel
 			case 'default': 
 				return array();
 			case 'register': {
-				
+				//mul_dbg($this->_SETTINGS);
+				$adata = $this->load_auth_data();
+				$passw_fld = $adata['data']['passw_field'];
+				$passw_fld2 = $passw_fld."_re";
+				//mul_dbg($adata);
+				$settings=$this->_SETTINGS;
+				$settings['fields'][$passw_fld2]=$settings['fields'][$passw_fld];
+				return $settings;
 			};break;
 		}
 		return array();

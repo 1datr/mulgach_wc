@@ -827,9 +827,15 @@ class mul_page extends mul_Module
 		}
 		//print_r($method_args);
 		try{
-		call_user_func_array(array($controller_object,$_action_name), $method_args);
-				//$controller_object->$_action_name();
+			$before_args = [
+					'action'=>$con_info['_ACTION_NAME'],
+					'args'=>$method_args,
+			];
+			$controller_object->BeforeAction($before_args);			
 			
+			call_user_func_array(array($controller_object,$_action_name), $method_args);
+				//$controller_object->$_action_name();
+			$controller_object->AfterAction($before_args);
 		}
 		catch (Exception $exc)
 		{
