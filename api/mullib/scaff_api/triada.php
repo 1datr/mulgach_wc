@@ -194,7 +194,16 @@ class scaff_triada
 				if($this->_EP=='frontend')
 				{
 					$vars['makeuser_action']='makeuser';
-					$vars['fields_ordered']=$this->_SETTINGS['fields'];
+					$fields = $this->_SETTINGS['fields'];
+					$ordered_fields=array();
+					
+					$vars['fields_ordered']=$fields;
+					$vars['fld_primary']=$_primary;
+					$vars['table'] = $_params['table'];
+					$vars['TABLE_UC']=strtoupper($_params['table']);
+					$vars['fields']=$tbl_fields;
+					$vars['settings']=$settings;
+					$vars['constraints']=$_params['constraints'];
 					
 					$this->add_view('register','reg/regtemplate',$vars,$_params['rewrite_all']);
 				}
@@ -482,7 +491,7 @@ class scaff_triada
 				
 				if($this->_EP=='frontend')	// рега для фронтенда
 				{
-					$reg_functions = parse_code_template( url_seg_add(__DIR__,'phpt/reg/reg_methods.phpt' ), array(
+					$vars['OTHER_METHODS']= $vars['OTHER_METHODS'] .parse_code_template( url_seg_add(__DIR__,'phpt/reg/reg_methods.phpt' ), array(
 							//'auth_con' => $_params['table'],
 					));
 				}

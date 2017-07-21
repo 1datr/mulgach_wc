@@ -119,4 +119,6 @@ $_LANG['zadanie.type']='type';
 $_LANG['Update_captcha']='Update_captcha';
 $_LANG['REGISTER']='REGISTER';
 $_LANG['Update captcha']='Update captcha';
+$_LANG['Log in']='Log in';
+$_LANG['{table']='{table';
 ?>

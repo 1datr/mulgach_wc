@@ -1,5 +1,5 @@
 <#php
-$frm = new mulForm(as_url('{makeuser_action}'),$this);
+$form = new mulForm(as_url('{makeuser_action}'),$this);
 //var_dump($reg_struct);
 #>
 <table>
@@ -43,27 +43,27 @@ foreach($fields_ordered as $fld => $fldinfo)
 		}
 		elseif($fldinfo['Type']=='enum')
 		{
-			?><#php $form->field(${table},'<?=$fld?>')->ComboBox();	 #><?php		
+			?><#php $form->field($reg_struct,'<?=$fld?>')->ComboBox();	 #><?php		
 		}
 		elseif($fldinfo['Type']=='set')
 		{
-			?><#php $form->field(${table},'<?=$fld?>')->set();	 #><?php	
+			?><#php $form->field($reg_struct,'<?=$fld?>')->set();	 #><?php	
 		}
 		elseif($fld==$fld_passw)
 		{
-			?><#php $form->field(${table},'<?=$fld?>')->password();	 #><?php	
+			?><#php $form->field($reg_struct,'<?=$fld?>')->password();	 #><?php	
 		}
 		elseif(isset($settings['file_fields'][$fld]))
 		{
-			?><#php $form->field(${table},'<?=$fld?>')->file();	 #><?php
+			?><#php $form->field($reg_struct,'<?=$fld?>')->file();	 #><?php
 		}
 		elseif(($fldinfo['Type']=='longtext') || (stristr($fldinfo['Type'],"varchar")))
 		{
-			?><#php $form->field(${table},'<?=$fld?>')->textarea();	 #><?php	
+			?><#php $form->field($reg_struct,'<?=$fld?>')->textarea();	 #><?php	
 		}
 		else
 		{
-			?><#php $form->field(${table},'<?=$fld?>')->text();	 #><?php	
+			?><#php $form->field($reg_struct,'<?=$fld?>')->text();	 #><?php	
 		}
 	?>
 	</td>
@@ -81,6 +81,6 @@ foreach($fields_ordered as $fld => $fldinfo)
 </table>
 
 <#php
-$frm->submit('#{REGISTER}');
-$frm->close();
+$form->submit('#{REGISTER}');
+$form->close();
 #>
