@@ -1,4 +1,5 @@
 <?php
+				// ++++
 $_LANG['']='';
 $_LANG['users.id']='id';
 $_LANG['users.login']='Log in';

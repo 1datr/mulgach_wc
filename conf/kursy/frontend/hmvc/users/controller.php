@@ -98,20 +98,11 @@ class UsersController extends AuthController
 		$menu = $this->getinfo('basemenu');
 		//print_r($menu);
 		$this->out_view('menu',array('menu'=>$menu));
-	}	
-	
-	public function ActionLogin()
+	}	public function ActionLogin()
 	{
 		$this->_TITLE=Lang::__t('Authorization');
 		$this->use_layout('layout_login');
 		$this->out_view('loginform',array());
-	}
-	
-	public function ActionRegister()
-	{
-		$captcha = mul_captcha::use_captcha($this);
-		$reg_form_struct = $this->_MODEL->empty_row_form_model();
-		$this->out_view('register',array('captcha'=>$captcha,'reg_struct'=>$reg_form_struct));
 	}
 	
 	public function ActionAuth()
@@ -129,15 +120,7 @@ class UsersController extends AuthController
 		//$this->out_view('loginform',array());
 	}
 	
-	public function BeforeAction(&$params)
-	{
-		//mul_dbg($params);
-		
-		if($params['action']=='register')
-		{
-			$this->_MODEL->scenario('register');	
-		}
-	}
+	
 	
 	public function ActionLogout()
 	{

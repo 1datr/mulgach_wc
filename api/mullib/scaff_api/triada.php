@@ -176,7 +176,7 @@ class scaff_triada
 			$this->add_view('itemview','itemview',$vars,$_params['rewrite_all']);
 		}
 		
-	//	$itemform_view = url_seg_add($dir_views,'itemform.php');
+	//	контроллер авторизации
 		if($_params['authcon'][$this->_EP]['enable'])
 		{
 			if( !($this->has_view('loginform'))|| $_params['rewrite_all'])
@@ -190,6 +190,14 @@ class scaff_triada
 			//	$vars['settings']=$settings;
 			//	$vars['constraints']=$_params['constraints'];
 				$this->add_view('loginform','login/form',$vars,$_params['rewrite_all']);
+				
+				if($this->_EP=='frontend')
+				{
+					$vars['makeuser_action']='makeuser';
+					$vars['fields_ordered']=$this->_SETTINGS['fields'];
+					
+					$this->add_view('register','reg/regtemplate',$vars,$_params['rewrite_all']);
+				}
 			}
 		}
 	}
@@ -454,7 +462,7 @@ class scaff_triada
 		$vars['ParentControllerClass']='BaseController';
 
 		// add controller file
-		if(isset($_params['authcon'][$this->_EP]['enable']))
+		if(isset($_params['authcon'][$this->_EP]['enable']))	//  онтроллер авторизации
 		{
 			$vars['ParentControllerClass']='AuthController';
 			
@@ -472,6 +480,13 @@ class scaff_triada
 						'this_controller' => $_params['table'],
 				));
 				
+				if($this->_EP=='frontend')	// рега дл€ фронтенда
+				{
+					$reg_functions = parse_code_template( url_seg_add(__DIR__,'phpt/reg/reg_methods.phpt' ), array(
+							//'auth_con' => $_params['table'],
+					));
+				}
+				
 				if( in_array($this->_EP,array('backend','frontend')))
 				{
 					$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules_auth.phpt' ), array(		
@@ -482,7 +497,7 @@ class scaff_triada
 			//	$this->add_view('loginform','login/action',$vars,$_params['rewrite_all']);
 			}
 		}
-		else 
+		else // простой контроллер
 		{
 			if( in_array($this->_EP,array('backend','frontend')))
 			{
