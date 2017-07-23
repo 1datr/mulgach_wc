@@ -94,6 +94,7 @@ $this->inline_css('
 				  			'fld_login_'=>$fld_login_,
 				  			'fld_passw_'=>$fld_passw_,
 				  			'fld_hash_'=>$fld_hash_,
+  							'fld_email_'=>$fld_email_,
   							'_hmvc'=>$_hmvc,
   							
   	));

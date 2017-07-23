@@ -49,7 +49,7 @@ foreach($fields_ordered as $fld => $fldinfo)
 		{
 			?><#php $form->field($reg_struct,'<?=$fld?>')->set();	 #><?php	
 		}
-		elseif($fld==$fld_passw)
+		elseif(($fld==$fld_passw) || ($fld==$fld_passw_re))
 		{
 			?><#php $form->field($reg_struct,'<?=$fld?>')->password();	 #><?php	
 		}

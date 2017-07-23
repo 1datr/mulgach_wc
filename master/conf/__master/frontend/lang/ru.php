@@ -1,4 +1,5 @@
 <?php
+				// ++++
 $_LANG['Select module:']='Модуль плагина:';
 $_LANG['New plugin name:']='Имя нового плагина:';
 $_LANG['Create plugin']='Сгенерировать плагин';
@@ -90,4 +91,5 @@ $_LANG['Translation']='Translation';
 $_LANG['save translation']='save translation';
 $_LANG['save']='save';
 $_LANG['Configuration ']='Configuration ';
+$_LANG['e-mail']='e-mail';
 ?>

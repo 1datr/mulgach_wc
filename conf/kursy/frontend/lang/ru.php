@@ -121,4 +121,11 @@ $_LANG['REGISTER']='REGISTER';
 $_LANG['Update captcha']='Update captcha';
 $_LANG['Log in']='Log in';
 $_LANG['{table']='{table';
+$_LANG['User registration']='User registration';
+$_LANG['users.1']='users.1';
+$_LANG['users.2']='users.2';
+$_LANG['users.3']='users.3';
+$_LANG['users.password_re']='users.password_re';
+$_LANG['users.email']='email';
+$_LANG['users.']='users.';
 ?>

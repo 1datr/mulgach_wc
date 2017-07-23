@@ -15,6 +15,37 @@ function merge_arrays($array1,$array2)
 	return $res;
 }
 
+function merge_arrays_assoc()
+{
+	$numargs = func_num_args();
+	$arg_list = func_get_args();
+	$_merge_if_not_exists=true;
+	if(is_bool($args_list[$numargs-1]))
+	{
+		$_merge_if_not_exists = $args_list[$numargs-1];
+	}
+	$res=array();
+	foreach ($arg_list as $idx => $arg_array)
+	{
+		
+		foreach ($arg_array as $key => $val)
+		{
+			if($_merge_if_not_exists)
+			{
+				if(!isset($res[$val]))
+				{
+					$res[$key]=$val;
+				}
+			}
+			else 
+			{
+				$res[$key]=$val;
+			}
+		}
+	}
+	return $res;
+}
+
 function ser_post($ser_name)
 {
 	GLOBAL $_BASEDIR;

@@ -176,6 +176,7 @@ class HmvcController extends BaseController
 						$fld_login_='';
 						$fld_passw_="";
 						$fld_hash_="";
+						$fld_email_="";
 					//	mul_dbg($fields);
 						foreach ($fields as $fld => $val)
 						{
@@ -192,6 +193,11 @@ class HmvcController extends BaseController
 							if( (strstr($fld,'hash')!=false) || (strstr($fld,'token')!=false) )  
 							{
 								$fld_hash_=$fld;
+							}
+							
+							if( (strstr($fld,'e-mail')!=false) || (strstr($fld,'email')!=false) )
+							{
+								$fld_email_=$fld;
 							}
 						}
 					
@@ -228,6 +234,7 @@ class HmvcController extends BaseController
 								'fld_login_'=>$fld_login_,
 								'fld_passw_'=>$fld_passw_,
 								'fld_hash_'=>$fld_hash_,
+								'fld_email_'=>$fld_email_,
 								'_hmvc'=>$_hmvc,
 						));
 					};break;

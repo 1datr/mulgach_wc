@@ -195,10 +195,39 @@ class scaff_triada
 				{
 					$vars['makeuser_action']='makeuser';
 					$fields = $this->_SETTINGS['fields'];
+					
 					$ordered_fields=array();
 					
-					$vars['fields_ordered']=$fields;
+					$login_field = $this->_SETTINGS['authdata']['login_field'];
+					//mul_dbg($login_field);
+					$ordered_fields[$login_field]=$fields[$login_field];
+					unset($fields[$login_field]);
+							
+					$passw_field= $this->_SETTINGS['authdata']['passw_field'];
+					$ordered_fields[$passw_field]=$fields[$passw_field];
+					$passw_field_re = $passw_field."_re";
+					$ordered_fields[$passw_field_re]=$fields[$passw_field];
+					unset($fields[$passw_field]);
+					
+					$email_field = $this->_SETTINGS['authdata']['email_field'];
+					//mul_dbg($login_field);
+					$ordered_fields[$email_field]=$fields[$email_field];
+					unset($fields[$email_field]);
+					
+				//	$hash_tag = $this->_SETTINGS['authdata']['hash_tag'];
+				//	$ordered_fields[$hash_tag]=$fields[$hash_tag];
+					unset($fields[$hash_tag]);
+					
+				//	mul_dbg($ordered_fields);
+					
+					$ordered_fields=merge_arrays_assoc($ordered_fields, $fields);
+					
+				//	mul_dbg($ordered_fields);
+					
+					$vars['fields_ordered']=$ordered_fields;
 					$vars['fld_primary']=$_primary;
+					$vars['fld_passw']=$passw_field;
+					$vars['fld_passw_re']=$passw_field_re;
 					$vars['table'] = $_params['table'];
 					$vars['TABLE_UC']=strtoupper($_params['table']);
 					$vars['fields']=$tbl_fields;
@@ -274,6 +303,7 @@ class scaff_triada
 						'login_field'=>$_params['authcon'][$this->_EP]['login'],
 						'passw_field'=>$_params['authcon'][$this->_EP]['passw'],
 						'hash_field'=>$_params['authcon'][$this->_EP]['hash'],
+						'email_field'=>$_params['authcon'][$this->_EP]['email'],
 					));
 		}
 		

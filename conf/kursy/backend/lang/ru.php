@@ -182,4 +182,5 @@ $_LANG['Create SLOVO']='Create SLOVO';
 $_LANG['Clear the file']='Очистить файл';
 $_LANG['Create USERS']='Create USERS';
 $_LANG['Log in']='Log in';
+$_LANG['users.email']='email';
 ?>

@@ -89,6 +89,9 @@ $eps=array('frontend','backend');
 			<label for="authcon_hash_<?=$_ep?>">#{Hash field}</label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][hash]','value'=>$fld_hash_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_'.$_ep,))); ?><br />
 			
+			<label for="authcon_email_<?=$_ep?>">#{e-mail}</label>
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon['.$_ep.'][email]','value'=>$fld_email_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_email_'.$_ep,))); ?><br />
+			
 		
 		</div>
 	

@@ -156,12 +156,12 @@ class plg_simple extends mod_plugin
 	
 	public function picture_url()
 	{
-		return "?srv=captcha_pic";
+		return "/?srv=captcha_pic";
 	}
 	
 	public function get_onclick_update_js()
 	{
-		return "$('#img-captcha').attr('src',$('#".$this->params['img_id']."').attr('src'));return false;";
+		return "var img = $('#".$this->params['img_id']."'); img.attr('src', img.attr('src').split('&')[0] + '&' + Math.random()); return false;";
 	}
 	
 	public function full_html()
