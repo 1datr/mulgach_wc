@@ -10,3 +10,15 @@ public function ActionMakeuser()
 {
 
 }
+
+public function BeforeAction(&$params)
+{
+	if(in_array($params['action'],array('makeuser')))
+	{
+		$this->_MODEL->scenario("register");
+	}	
+	elseif($params['action']=='validate')
+	{
+		$this->_MODEL->scenario("register");
+	}
+}

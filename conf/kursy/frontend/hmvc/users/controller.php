@@ -11,7 +11,7 @@ class UsersController extends AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','users/login')
+						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register')),'anonym','users/login')
 				),	
 		);
 	}
@@ -137,6 +137,18 @@ class UsersController extends AuthController
 public function ActionMakeuser()
 {
 
+}
+
+public function BeforeAction(&$params)
+{
+	if(in_array($params['action'],array('makeuser')))
+	{
+		$this->_MODEL->scenario("register");
+	}	
+	elseif($params['action']=='validate')
+	{
+		$this->_MODEL->scenario("register");
+	}
 }
 }
 ?>

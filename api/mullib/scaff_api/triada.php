@@ -214,7 +214,7 @@ class scaff_triada
 					$ordered_fields[$email_field]=$fields[$email_field];
 					unset($fields[$email_field]);
 					
-				//	$hash_tag = $this->_SETTINGS['authdata']['hash_tag'];
+					$hash_tag = $this->_SETTINGS['authdata']['hash_tag'];
 				//	$ordered_fields[$hash_tag]=$fields[$hash_tag];
 					unset($fields[$hash_tag]);
 					
@@ -510,6 +510,7 @@ class scaff_triada
 				$vars['this_controller'] = $_params['table'];
 				$vars['login_fld']=$_params['authcon']['backend']['login'];
 				$vars['passw_fld']=$_params['authcon']['backend']['passw'];
+				$allowed_methods="'login','auth'";
 					
 				//	$vars['settings']=$settings;
 				//	$vars['constraints']=$_params['constraints'];
@@ -524,12 +525,14 @@ class scaff_triada
 					$vars['OTHER_METHODS']= $vars['OTHER_METHODS'] .parse_code_template( url_seg_add(__DIR__,'phpt/reg/reg_methods.phpt' ), array(
 							//'auth_con' => $_params['table'],
 					));
+					$allowed_methods="'login','auth','register'";
 				}
 				
 				if( in_array($this->_EP,array('backend','frontend')))
 				{
 					$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules_auth.phpt' ), array(		
 						'auth_con' => $_params['table'],
+						'allowed_methods' => $allowed_methods,
 					));
 				}
 				
