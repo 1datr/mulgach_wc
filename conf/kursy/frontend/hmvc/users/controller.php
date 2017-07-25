@@ -147,6 +147,7 @@ public function BeforeAction(&$params)
 	}	
 	elseif($params['action']=='validate')
 	{
+		mul_dbg($params);
 		$this->_MODEL->scenario("register");
 	}
 }

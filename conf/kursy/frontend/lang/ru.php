@@ -128,4 +128,5 @@ $_LANG['users.3']='users.3';
 $_LANG['users.password_re']='users.password_re';
 $_LANG['users.email']='email';
 $_LANG['users.']='users.';
+$_LANG['CAPTCHA_CAPTION']='CAPTCHA_CAPTION';
 ?>

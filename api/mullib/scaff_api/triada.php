@@ -193,7 +193,7 @@ class scaff_triada
 				
 				if($this->_EP=='frontend')
 				{
-					$vars['makeuser_action']='makeuser';
+					$vars['makeuser_action']=$this->NAME.'/makeuser';
 					$fields = $this->_SETTINGS['fields'];
 					
 					$ordered_fields=array();

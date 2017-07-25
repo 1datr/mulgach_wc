@@ -183,4 +183,8 @@ $_LANG['Clear the file']='Очистить файл';
 $_LANG['Create USERS']='Create USERS';
 $_LANG['Log in']='Log in';
 $_LANG['users.email']='email';
+$_LANG['Create UCHEBA']='Create UCHEBA';
+$_LANG['Create UROK']='Create UROK';
+$_LANG['Create ZADANIE']='Create ZADANIE';
+$_LANG['Create RAZDEL']='Create RAZDEL';
 ?>

@@ -95,6 +95,7 @@ class AuthModel extends BaseModel
 				//mul_dbg($adata);
 				$settings=$this->_SETTINGS;
 				$settings['fields'][$passw_fld2]=$settings['fields'][$passw_fld];
+				$settings['capcha_code']=array('Type'=>'text');
 				return $settings;
 			};break;
 		}
