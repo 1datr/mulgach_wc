@@ -190,8 +190,22 @@ class AuthModel extends BaseModel
 			$this->OnValidate($_POST, $res);
 			return $res;
 		}
-		else 
+		elseif($this->scenario()=='default')
+		{
 			return parent::validate($data);
+		}
+		elseif($this->scenario()=='register')
+		{
+			$res = parent::validate($data);
+			$authdata = $this->load_auth_data();
+			$passw_field = $authdata['settings']['passw_field'];
+			$passw_field_re = $passw_field."_re";
+			if($data[$this->_TABLE][$passw_field]!=$data[$this->_TABLE][$passw_field_re])
+			{
+				$res[$passw_field_re]=Lang::__t('Passwords are not equal');
+			}
+			return $res;
+		}
 	}
 	
 	function getFldInfo($fld)

@@ -78,12 +78,7 @@ foreach($fields_ordered as $fld => $fldinfo)
     <# $captcha->full_html();  #>
     </td>
   </tr>
-  <tr> 	  
-    
-    <td>
-    <#php $form->field($reg_struct,'capcha_code')->text();	 #>
-    </td>
-  </tr>
+
 </table>
 
 <#php

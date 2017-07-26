@@ -1,5 +1,6 @@
 <?php
 $form = new mulForm(as_url('users/makeuser'),$this);
+$captcha = mul_captcha::use_captcha($this,['model'=>&$reg_form_struct,'form'=>&$form]);
 //var_dump($reg_struct);
 ?>
 <table>
@@ -54,15 +55,10 @@ $form = new mulForm(as_url('users/makeuser'),$this);
 	  <tr> 	  
     <td rowspan="2">#{CAPTCHA_CAPTION}</td>
     <td>
-    <? $captcha->full_html();  ?>
+    <? $captcha->full_html($form,$reg_struct);  ?>
     </td>
   </tr>
-  <tr> 	  
-    
-    <td>
-    <?php $form->field($reg_struct,'capcha_code')->text();	 ?>
-    </td>
-  </tr>
+
 </table>
 
 <?php

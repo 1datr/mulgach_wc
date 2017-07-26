@@ -3,6 +3,8 @@
 class plg_simple extends mod_plugin 
 {
 	VAR $params;
+	VAR $_MODEL=NULL;
+	VAR $_FORM=NULL;
 	// ѕараметры :
 	// controller - контроллер, к которому подключаешь плагин 	
 	function __construct($_PARAMS=array())
@@ -22,7 +24,10 @@ class plg_simple extends mod_plugin
 
 			$this->add_js_css($this->_controller);
 			
-		}		
+		}	
+		
+		if(isset($_PARAMS['form'])) $this->_FORM = $_PARAMS['form'];
+		if(isset($_PARAMS['model'])) $this->_MODEL = $_PARAMS['model'];
 	}
 	
 	function add_js_css($controller_obj)
@@ -164,14 +169,19 @@ class plg_simple extends mod_plugin
 		return "var img = $('#".$this->params['img_id']."'); img.attr('src', img.attr('src').split('&')[0] + '&' + Math.random()); return false;";
 	}
 	
-	public function full_html()
+	public function full_html(&$form,&$model_row)
 	{
 		?>
 		<img src="<?=$this->picture_url()?>" id="<?=$this->params['img_id']?>" />
 		<!--Ёлемент, запрашивающий новый код CAPTCHA-->
 		<button type="button" class="btn btn-default" aria-label="Left Align" onclick="<?=$this->get_onclick_update_js()?>">
   			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>#{Update captcha}
-		</button>			  
+		</button>	
+		<br />		  
 		<?php 
+		$_cap_field='captcha_value';
+		$model_row->setField($_cap_field,"");
+		
+		$form->field($model_row,$_cap_field)->text();
 	}
 }

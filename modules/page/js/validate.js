@@ -126,14 +126,19 @@ $( document ).ready(function()
 							// ...
 							var full_str='';
 							var ctr=0; 
-							for(var idx in json[key])
-							{
-								if(ctr)
-									full_str = full_str+'<br />'+json[key][idx];
-								else
-									full_str = full_str+json[key][idx];
-								ctr++;
+							if(Array.isArray(json[key]))
+							{							
+								for(var idx in json[key])
+								{
+									if(ctr)
+										full_str = full_str+'<br />'+json[key][idx];
+									else
+										full_str = full_str+json[key][idx];
+									ctr++;
+								}
 							}
+							else
+								full_str = full_str+json[key];
 							$("#err_"+key).html(full_str);
 							counter++;
 						}

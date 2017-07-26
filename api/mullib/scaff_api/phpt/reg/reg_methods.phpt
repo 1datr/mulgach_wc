@@ -19,7 +19,10 @@ public function BeforeAction(&$params)
 	}	
 	elseif($params['action']=='validate')
 	{
-		mul_dbg($params);
-		$this->_MODEL->scenario("register");
+		$req = $this->getRequest();
+		if($req->_args[0]=='register')
+		{
+			$this->_MODEL->scenario("register");			
+		}
 	}
 }

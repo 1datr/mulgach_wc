@@ -126,11 +126,12 @@ class UsersController extends AuthController
 	{
 		$this->logout();
 		$this->redirect(as_url('users/login'));
-	}public function ActionRegister()
+	}
+	
+	public function ActionRegister()
 {
-	$this->_TITLE=Lang::__t('User registration');
-	$captcha = mul_captcha::use_captcha($this);
-	$reg_form_struct = $this->_MODEL->empty_row_form_model();
+	$this->_TITLE=Lang::__t('User registration');	
+	$reg_form_struct = $this->_MODEL->empty_row_form_model();	
 	$this->out_view('register',array('captcha'=>$captcha,'reg_struct'=>$reg_form_struct));
 }
 	
@@ -147,8 +148,11 @@ public function BeforeAction(&$params)
 	}	
 	elseif($params['action']=='validate')
 	{
-		mul_dbg($params);
-		$this->_MODEL->scenario("register");
+		$req = $this->getRequest();
+		if($req->_args[0]=='makeuser')
+		{
+			$this->_MODEL->scenario("register");			
+		}
 	}
 }
 }

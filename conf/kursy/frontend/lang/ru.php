@@ -129,4 +129,6 @@ $_LANG['users.password_re']='users.password_re';
 $_LANG['users.email']='email';
 $_LANG['users.']='users.';
 $_LANG['CAPTCHA_CAPTION']='CAPTCHA_CAPTION';
+$_LANG['Passwords not equal']='Passwords not equal';
+$_LANG['Passwords are not equal']='Passwords are not equal';
 ?>
