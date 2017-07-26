@@ -375,6 +375,13 @@ class mul_page extends mul_Module
 		return $info;
 	}
 	
+	function call_event($eventname, $eparams=[])
+	{
+		$event_res = array('eparams'=>$eparams);
+		$res = call_modules($this->get_mod_name(),$eventname,$event_res);
+		return $event_res;
+	}
+	
 	function draw_html($info)
 	{
 		$_CSS=array();

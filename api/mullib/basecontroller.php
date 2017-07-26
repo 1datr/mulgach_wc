@@ -49,6 +49,12 @@ class BaseController
 		);
 	}
 	
+	function CallEvent($eventname, $eparams=[])
+	{
+		$res = $this->_ENV['page_module']->call_event($eventname, $eparams);
+		return $res;
+	}
+	
 	function connect_db($dbparams)
 	{
 		
@@ -236,6 +242,8 @@ class BaseController
 	
 	function ActionValidate()
 	{
+		$this->CallEvent('BeforeValidate', []);
+		
 		$res = array();
 		if(!empty($this->_MODEL))
 		{	
@@ -243,6 +251,8 @@ class BaseController
 			$res = $this->_MODEL->validate($_POST);
 		}
 		$this->out_json($res);
+		
+		$this->CallEvent('AfterValidate', []);
 	}
 	
 	function inline_script($script)

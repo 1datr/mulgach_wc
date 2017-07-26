@@ -41,6 +41,11 @@ class mul_captcha extends mul_Module
 		return array('usecaptcha');
 	}
 	
+	function AfterValidate($params=[])
+	{
+		mul_dbg('After validate');
+	}
+	
 	function usecaptcha()
 	{
 		if($this->get_srv()==='captcha_pic')
