@@ -149,6 +149,12 @@ class DataRecord	// запись из БД
 	
 	function save($files_fields_controll=true)
 	{
+		$validres = $this->_MODEL->validate($this->getFields());
+		if(count($validres))
+		{
+			return;
+		}
+		
 		$this->_MODEL->OnSave($this);
 		//$fld_values = $this->getFields();
 		$fld_map = $this->_MODEL->_SETTINGS['fields'];

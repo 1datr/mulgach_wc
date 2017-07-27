@@ -81,7 +81,7 @@ $( document ).ready(function()
 				form_action = form_action_base + "/action:validate";
 		
 				// перед отправкой на валидацию чтобы сериализовать создаем клон где вместо файла текст с путем к файлу
-				cloned_form=$(this).clone();
+				cloned_form=$(this).clone(false);
 				cloned_form_files = $(cloned_form).find('input[type=file]');
 				$(this).find('input[type=file]').each(function( i, el ) 
 					{
