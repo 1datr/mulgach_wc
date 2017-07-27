@@ -149,7 +149,8 @@ class DataRecord	// запись из БД
 	
 	function save($files_fields_controll=true)
 	{
-		$validres = $this->_MODEL->validate($this->getFields());
+		$validres = $this->_MODEL->validate([$this->_MODEL->_TABLE => $this->getFields()]);
+		//mul_dbg($validres);
 		if(count($validres))
 		{
 			return;

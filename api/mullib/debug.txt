@@ -1,4 +1,23 @@
-					
-	07-27-2017 17:08:28.000000: -->>7flCGM
+
+
 				
-	07-27-2017 17:08:40.000000: -->>zuxwG0
+	07-27-2017 23:14:00.000000: Array
+(
+    [users] => Array
+        (
+            [login] => 
+            [password] => 
+            [password_re] => 
+            [email] => 
+            [first_name] => 
+            [last_name] => 
+            [phone] => 
+            [web] => 
+            [address] => 
+            [sostoyanie_dopuska] => new
+            [skype] => 
+            [status] => student
+            [captcha_value] => 
+        )
+
+)
