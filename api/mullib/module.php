@@ -10,23 +10,27 @@ function module_exists($modname)
 	return false;
 }
 
-function call_modules($module,$eventname)
+function call_modules($module,$eventname,$args=[],$eopts=[])
 {
-	$args=array();
+	def_options(array('src'=>'module'), $eopts);
+	
+	
 	global $_MOD_CLASSES;
 	$called_list=array();
 	foreach ($_MOD_CLASSES as $idx => $mod)
 	{
 		if(($mod->get_mod_name()!=$module)&&(!in_array($mod,$called_list)))
 		{
-			call_event($mod,$eventname,$module,$called_list,$args);
+			call_event($mod,$eventname,$module,$called_list,$args, $eopts);
 		}
 	}
 	return $args;
 }
 
-function call_event($mod,$eventname,$event_src,&$called_list,&$res_of_module)
+function call_event($mod,$eventname,$event_src,&$called_list,&$res_of_module, $eopts=[])
 {
+	def_options(array('src'=>'module'), $eopts);
+	
 	$waits = $mod->wait_events();
 	if(count($waits))
 	{
@@ -53,13 +57,23 @@ function call_event($mod,$eventname,$event_src,&$called_list,&$res_of_module)
 		}
 	}
 	
-	$metodname = "{$event_src}_{$eventname}";
+	switch($eopts['src'])
+	{
+		case 'module':
+			$metodname = "{$event_src}_{$eventname}";
+			break;
+		case 'controller':
+			$metodname = "{$eventname}";
+			break;
+	}
+	
 	
 	if(method_exists($mod, $metodname))
 	{		
 		$mod_res=array();
-		$mod->$metodname($mod_res);
-		$res_of_module[$mod->get_mod_name()]=$mod_res; // записали полученный от модуля результат
+		//$mod->$metodname($mod_res);
+		$mod->$metodname($res_of_module);
+		$res_of_module[$mod->get_mod_name()]=$res_of_module;//$mod_res; // записали полученный от модуля результат
 		
 		$args[$mod->get_mod_name()]=$res_of_module;
 		$called_list[]=$mod;

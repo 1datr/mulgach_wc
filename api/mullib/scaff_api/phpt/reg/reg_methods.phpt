@@ -19,9 +19,9 @@ public function BeforeAction(&$params)
 	elseif($params['action']=='validate')
 	{
 		$req = $this->getRequest();
-		if($req->_args[0]=='register')
+		if($req->_args[0]=="makeuser")
 		{
-			$this->_MODEL->scenario("register");			
+			$this->_MODEL->scenario('register');			
 		}
 	}
 }

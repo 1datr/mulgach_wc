@@ -1,5 +1,7 @@
 <?php
 
+define('CAPTCHA_VAR','captcha_value');
+
 class plg_simple extends mod_plugin 
 {
 	VAR $params;
@@ -9,7 +11,7 @@ class plg_simple extends mod_plugin
 	// controller - контроллер, к которому подключаешь плагин 	
 	function __construct($_PARAMS=array())
 	{
-		def_options(['img_id'=>'img-captcha'], $_PARAMS);
+		def_options(['img_id'=>'img-captcha','code_var'=>'capcha_code'], $_PARAMS);
 		$this->params = $_PARAMS;
 		
 		if(is_object($_PARAMS))
@@ -83,6 +85,14 @@ class plg_simple extends mod_plugin
 		return $css_array;
 	}
 	
+	function GenCode()
+	{
+		$code = GenRandStr();
+		mul_dbg("-->>".$code);
+		$_SESSION[$this->params['code_var']]=$code;
+		return $code;
+	}
+	
 	function picture($opts=[])
 	{
 		header('Content-type: image/png');
@@ -124,8 +134,7 @@ class plg_simple extends mod_plugin
 		$col_g = 0;
 		$col_b = rand(0, 200); // Опять случайный цвет. Уже для текста.
 		
-		$code = GenRandStr();
-		$_SESSION[$opts['code_var']]=$code;
+		$code = $this->GenCode();
 		// Накладываем текст капчи
 		$x = rand(0, 10);
 		for($i = 0; $i < strlen($code); $i++) {
@@ -169,6 +178,22 @@ class plg_simple extends mod_plugin
 		return "var img = $('#".$this->params['img_id']."'); img.attr('src', img.attr('src').split('&')[0] + '&' + Math.random()); return false;";
 	}
 	
+	public static function recognize($data)
+	{
+		if(isset($data['row'][CAPTCHA_VAR]))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public function check_captcha(&$data)
+	{
+	//	mul_dbg($_SESSION);
+		if($data['row'][CAPTCHA_VAR]!=$_SESSION[$this->params['code_var']])
+			$data['res']['captcha_value']=Lang::__t('Captcha error');
+	}
+	
 	public function full_html(&$form,&$model_row)
 	{
 		?>
@@ -180,7 +205,7 @@ class plg_simple extends mod_plugin
 		<br />		  
 		<?php 
 		$_cap_field='captcha_value';
-		$model_row->setField($_cap_field,"");
+		$model_row->setField(CAPTCHA_VAR,"");
 		
 		$form->field($model_row,$_cap_field)->text();
 	}

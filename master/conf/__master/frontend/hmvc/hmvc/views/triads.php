@@ -26,12 +26,10 @@ $this->inline_css('
 
 .columns-page{
 	column-break-before:always;
-	
-/* -webkit-column-count:2;
-  -moz-column-count:2;*/
 
-  -webkit-column-width:15em;
-  -moz-column-width:15em;
+  	-webkit-column-width:15em;
+  	-moz-column-width:15em;
+	height: 95px;		
 }	
 
 .pseudo_td1 {
@@ -57,21 +55,21 @@ foreach ($triads as $ep => $triadlist)
 {
 	?>
 	<div id="hmvcs_<?=$ep?>" class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" role="tabpanel">
-	
+		<div style="owerflow: auto;height:100px;">
 			<div class="columns-page">
-			<ul class="pseudotable">
-			<?php 
-			//mul_dbg($_config);
-		 	foreach($triadlist as $idx => $triada){
-		 		?>
-		 		<li><span class="pseudo_td1"><?=$triada?></span>
-		 		<span class="pseudo_td2"><a class="ref_delete" conf_message="#{Delete this triada?}" href="<?=as_url('hmvc/delete/'.$_config->_NAME.'/'.$ep.'/'.$triada)?>">x</a></span></li>
-		 		<?php 
-		 	}
-		 	?>
-		 	</ul>
+				<ul class="pseudotable">
+				<?php 
+				//mul_dbg($_config);
+			 	foreach($triadlist as $idx => $triada){
+			 		?>
+			 		<li><span class="pseudo_td1"><?=$triada?></span>
+			 		<span class="pseudo_td2"><a class="ref_delete" conf_message="#{Delete this triada?}" href="<?=as_url('hmvc/delete/'.$_config->_NAME.'/'.$ep.'/'.$triada)?>">x</a></span></li>
+			 		<?php 
+			 	}
+			 	?>
+			 	</ul>
 			</div>
-	 	
+	 	</div>
  	</div>
 	<?php 
 	$idx++;

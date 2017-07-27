@@ -126,9 +126,7 @@ class UsersController extends AuthController
 	{
 		$this->logout();
 		$this->redirect(as_url('users/login'));
-	}
-	
-	public function ActionRegister()
+	}public function ActionRegister()
 {
 	$this->_TITLE=Lang::__t('User registration');
 	$reg_form_struct = $this->_MODEL->empty_row_form_model();
@@ -149,9 +147,9 @@ public function BeforeAction(&$params)
 	elseif($params['action']=='validate')
 	{
 		$req = $this->getRequest();
-		if($req->_args[0]=='register')
+		if($req->_args[0]=="makeuser")
 		{
-			$this->_MODEL->scenario("register");			
+			$this->_MODEL->scenario('register');			
 		}
 	}
 }
