@@ -200,7 +200,7 @@ class AuthModel extends BaseModel
 			$authdata = $this->load_auth_data();
 			$passw_field = $authdata['settings']['passw_field'];
 			$passw_field_re = $passw_field."_re";
-			mul_dbg($data);
+			//mul_dbg($data);
 			if($data[$this->_TABLE][$passw_field]!=$data[$this->_TABLE][$passw_field_re])
 			{
 				$res[$passw_field_re]=Lang::__t('Passwords are not equal');
@@ -216,6 +216,24 @@ class AuthModel extends BaseModel
 		$res['password'] = ($auth_data['settings']['passw_field']==$fld);
 		$res['login'] = ($auth_data['settings']['login_field']==$fld);
 		return $res;		
+	}
+	
+	function reguser($userdata)
+	{
+		$this->scenario('register');
+		$valres = $this->validate($userdata);
+		
+		$this->scenario('default');
+		$newuser = $this->empty_row_form_model();
+		$_fields = $newuser->getFields();
+		foreach ($_fields as $fld => $val)
+		{
+			if(isset($userdata[$fld]))
+			{
+				$newuser->setField($fld, $userdata[$fld]);
+			}
+		}
+		$newuser->save();
 	}
 	
 	function OnSave(&$object)

@@ -32,10 +32,14 @@ function merge_arrays_assoc()
 		{
 			if($_merge_if_not_exists)
 			{
-				if(!isset($res[$val]))
-				{
-					$res[$key]=$val;
-				}
+			/*	if( (!is_object($val)) && (!is_array($val)) )
+				{*/
+					//if(!isset($res[$val]))  
+					if(!key_exists($key, $res))
+					{
+						$res[$key]=$val;
+					}
+			//	}
 			}
 			else 
 			{
@@ -400,9 +404,10 @@ function get_nested_dirs($the_dir)
 	return $the_dirs;
 }
 
-function GenRandStr($length=6) {
+function GenRandStr($length=6,$space=false) {
 
-	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
+	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZ0123456789";
+	if($space) $chars=$chars." ";
 
 	$code = "";
 

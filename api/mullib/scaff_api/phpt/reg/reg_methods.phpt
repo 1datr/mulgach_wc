@@ -7,7 +7,7 @@ public function ActionRegister()
 	
 public function ActionMakeuser()
 {
-
+	$this->_MODEL->reguser($_POST['{table}']);
 }
 
 public function BeforeAction(&$params)

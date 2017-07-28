@@ -2,7 +2,7 @@
 				// ++++
 $_LANG['']='';
 $_LANG['users.id']='id';
-$_LANG['users.login']='Log in';
+$_LANG['users.login']='Login';
 $_LANG['users.password']='Пароль';
 $_LANG['users.first_name']='Имя';
 $_LANG['users.last_name']='Фамилия';

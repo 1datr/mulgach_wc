@@ -137,6 +137,9 @@ class plg_simple extends mod_plugin
 		$code = $this->GenCode();
 		// Накладываем текст капчи
 		$x = rand(0, 10);
+		
+		$_size = rand(25, 35);
+		
 		for($i = 0; $i < strlen($code); $i++) {
 				
 			$delta = rand(-50,50);
@@ -149,7 +152,7 @@ class plg_simple extends mod_plugin
 			$color = imagecolorallocate($im, $curr_r, $curr_g, $curr_b); // случайный цвет
 			$letter=substr($code, $i, 1);
 			//	$_size = $font_arr[$n]["size"];
-			$_size = rand(25, 35);
+			
 			//$_font = url_seg_add($this->get_current_dir(),$font_dir,$font_arr[$n]["fname"]);
 			$_font = $fonts[ rand(0,sizeof($fonts)-1)];
 			imagettftext($im, $_size, rand(-20, 20), $x, rand(50, 55), $color, $_font, $letter);

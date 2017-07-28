@@ -39,7 +39,10 @@ class BaseModel
 		{
 			$this->_SCENARIO=$value;
 			$rules = $this->rules();
-			$this->_SETTINGS=$rules;
+			if(count($rules))
+				$this->_SETTINGS=$rules;
+			else 
+				$this->_SETTINGS=$this->read_base_info();
 		}
 		
 		return NULL;
@@ -60,6 +63,7 @@ class BaseModel
 	{		
 		$this->_SETTINGS = $this->get_base_info();
 		$this->_TABLE=$this->_SETTINGS['table'];
+		return $this->_SETTINGS;
 	}
 	
 	function getFldInfo($fld)
@@ -172,7 +176,7 @@ class BaseModel
 		return $dr;
 	}
 	
-	function empty_row_form_model()
+	function empty_row_form_model($fill_fields=true)
 	{
 		$therow=array();
 		foreach($this->_SETTINGS['fields'] as $fld => $fldinfo)
@@ -180,6 +184,13 @@ class BaseModel
 			$therow[$fld]='';
 		}
 		$dr = new DataRecord($this,$therow);
+		if($fill_fields)
+		{
+			foreach ($this->_SETTINGS['fields'] as $fld => $fldinfo)
+			{
+				$dr->setField($fld, null);
+			}
+		}
 		return $dr;
 	}
 	// find as default dataset
