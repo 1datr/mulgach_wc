@@ -71,6 +71,7 @@ class DataRecord	// запись из БД
 				$this->set_field($fldname, '');
 			}
 		}
+		$this->_MODIFIED=false;
 	}
 	
 	function FillFromArray($val_array)
@@ -78,6 +79,7 @@ class DataRecord	// запись из БД
 		foreach ($val_array as $key => $val)
 		{
 			$this->set_field($key, $val);
+			$this->_MODIFIED=true;
 		}
 	}
 	
@@ -89,6 +91,7 @@ class DataRecord	// запись из БД
 				return ;
 		}
 		$this->_FIELDS[$fld]=$val;
+		$this->_MODIFIED=true;
 	}
 	
 	function setField($fld,$val)
@@ -100,6 +103,11 @@ class DataRecord	// запись из БД
 	{
 		if($flags==NULL) $flags=(ENT_COMPAT | ENT_HTML401);
 		return htmlentities($fldval,$flags);
+	}
+	
+	function Modified()
+	{
+		return $this->_MODIFIED;
 	}
 	
 	function getField($fld,$format_val=true,$format=NULL)
@@ -149,6 +157,9 @@ class DataRecord	// запись из БД
 	
 	function save($files_fields_controll=true)
 	{
+		if(! $this->_MODIFIED)
+			return ;
+		
 		$validres = $this->_MODEL->validate([$this->_MODEL->_TABLE => $this->getFields()]);
 		//mul_dbg($validres);
 		if(count($validres))
@@ -159,7 +170,7 @@ class DataRecord	// запись из БД
 		$this->_MODEL->OnSave($this);
 		//$fld_values = $this->getFields();
 		$fld_map = $this->_MODEL->_SETTINGS['fields'];
-		$this->escape_array($fld_values,$fld_map);
+		
 		$inserting=false;
 		if($this->getField($this->_MODEL->_SETTINGS['primary'])!=NULL)
 		{			
@@ -169,6 +180,7 @@ class DataRecord	// запись из БД
 			if($files_fields_controll)
 				$this->_MODEL->files_before_update($this);	
 			$fld_values = $this->getFields();
+			$this->escape_array($fld_values,$fld_map);
 			$sql = QueryMaker::query_update($this->_MODEL->_TABLE,$fld_values,$WHERE);
 			
 		}
@@ -177,6 +189,7 @@ class DataRecord	// запись из БД
 			unset($fld_values[$this->_MODEL->getPrimaryName()]);
 			$inserting=true;
 			$fld_values = $this->getFields();
+			$this->escape_array($fld_values,$fld_map);
 			$sql = QueryMaker::query_insert($this->_MODEL->_TABLE, $fld_values);
 		}
 	//	mul_dbg($sql);
@@ -187,6 +200,8 @@ class DataRecord	// запись из БД
 		$newid = $this->_MODEL->_ENV['_CONNECTION']->last_insert_id();
 		$this->setField($this->_MODEL->_SETTINGS['primary'],$newid);
 		
+		$this->_MODIFIED=false;
+		
 		if($inserting)
 		{			
 			if($files_fields_controll)
@@ -196,6 +211,8 @@ class DataRecord	// запись из БД
 		{
 			
 		}
+		
+		
 	}
 	
 	function getFieldNames()

@@ -7,6 +7,6 @@ $settings = array(
 	'required'=>array('id_bukva','bukva','type'),
 	'rules'=>array(),	
 	'view'=>'{bukva}',
-	'file_fields'=>array('sound'=>array(),),
+	'file_fields'=>array('sound'=>array('type'=>''),),
 	
 );

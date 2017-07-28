@@ -63,7 +63,7 @@ class BaseModel
 	{		
 		$this->_SETTINGS = $this->get_base_info();
 		$this->_TABLE=$this->_SETTINGS['table'];
-		return $this->_SETTINGS;
+		return $this->_SETTINGS; 
 	}
 	
 	function getFldInfo($fld)

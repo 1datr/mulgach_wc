@@ -222,6 +222,8 @@ class AuthModel extends BaseModel
 	{
 		$this->scenario('register');
 		$valres = $this->validate($userdata);
+		if(count($valres))
+			return ;
 		
 		$this->scenario('default');
 		$newuser = $this->empty_row_form_model();
@@ -238,11 +240,14 @@ class AuthModel extends BaseModel
 	
 	function OnSave(&$object)
 	{		
-		$the_data = $this->load_auth_data();
-		//print_r($object);
-		$passw = $object->getField($the_data['settings']['passw_field']);
-		echo $passw;
-		$object->set_field($the_data['settings']['passw_field'], md5(md5($passw)) );
+		if($object->Modified())
+		{
+			$the_data = $this->load_auth_data();
+			//print_r($object);
+			$passw = $object->getField($the_data['settings']['passw_field']);
+			//echo $passw;
+			$object->set_field($the_data['settings']['passw_field'], md5(md5($passw)) );
+		}
 	}
 	
 	function CreateNew($row=NULL)

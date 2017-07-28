@@ -11,11 +11,17 @@ class plg_drv_mysql extends mod_plugin
 		$this->_DB_PARAMS = $_PARAMS;
 	//print_r($_PARAMS);
 	//	mysql_ping();
-		$this->connection = @mysql_pconnect($_PARAMS['host'], $_PARAMS['user'], $_PARAMS['passw'],MYSQL_CLIENT_INTERACTIVE);
+		$this->connect();
+		
+	}
+	
+	function connect()
+	{
+		$this->connection = @mysql_pconnect($this->_DB_PARAMS['host'], $this->_DB_PARAMS['user'], $this->_DB_PARAMS['passw'],MYSQL_CLIENT_INTERACTIVE);
 		if (!($this->connection === false))
 		{
 			// select database
-			if (mysql_select_db($_PARAMS['dbname'], $this->connection) === false)
+			if (mysql_select_db($this->_DB_PARAMS['dbname'], $this->connection) === false)
 			{
 				echo('Could not select database: ' . mysql_error());
 				die();
@@ -25,11 +31,9 @@ class plg_drv_mysql extends mod_plugin
 		{
 			echo('Could not connect mysql host: ' . mysql_error());
 			die();
-		}  
-		//print_r($_PARAMS);
+		}
 		
-		mysql_set_charset($_PARAMS['charset']);
-		
+		mysql_set_charset($this->_DB_PARAMS['charset']);
 	}
 	
 	public function escape_val($value,$type='text')
@@ -110,7 +114,20 @@ class plg_drv_mysql extends mod_plugin
 //		echo ">> $sql >>";
 	
 		$res = mysql_query($sql);
+		if($res===false)
+		{
+			if($this->error_number()==2006)
+			{
+				$this->connect();
+				$res = mysql_query($sql);
+			}
+		}
 		return $res;
+	}
+	
+	public function error_number()
+	{
+		return mysql_errno();
 	}
 	// get new row
 	public function get_row($res,$idx=NULL)

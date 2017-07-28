@@ -64,12 +64,14 @@ class UrokController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['urok']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['urok']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['urok']);		
 		
 		$newitem->save();
 		

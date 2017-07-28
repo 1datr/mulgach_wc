@@ -64,12 +64,14 @@ class PrepsController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['preps']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['preps']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['preps']);		
 		
 		$newitem->save();
 		

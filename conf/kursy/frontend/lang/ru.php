@@ -133,4 +133,5 @@ $_LANG['Passwords not equal']='Passwords not equal';
 $_LANG['Passwords are not equal']='Passwords are not equal';
 $_LANG['Captcha error']='Captcha error';
 $_LANG['users._re']='users._re';
+$_LANG['Wrong login or password']='Wrong login or password';
 ?>

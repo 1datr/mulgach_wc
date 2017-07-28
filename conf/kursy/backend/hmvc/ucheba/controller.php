@@ -64,12 +64,14 @@ class UchebaController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['ucheba']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['ucheba']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['ucheba']);		
 		
 		$newitem->save();
 		

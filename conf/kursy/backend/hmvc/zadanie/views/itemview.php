@@ -9,14 +9,14 @@
 			</td>
 	</tr>
 		<tr>
-	<th valign="top"><label>#{zadanie.s_proverkoy}</label></th>
+	<th valign="top"><label>#{zadanie.proverka}</label></th>
 	<td valign="top">
-	<?=$zadanie->getField('s_proverkoy',true) ?>	</td>
+	<?=$zadanie->getField('proverka',true) ?>	</td>
 	</tr>
 		<tr>
-	<th valign="top"><label>#{zadanie.tematika_zadaniya}</label></th>
+	<th valign="top"><label>#{zadanie.tematika}</label></th>
 	<td valign="top">
-	<?=$zadanie->getField('tematika_zadaniya',true) ?>	</td>
+	<?=$zadanie->getField('tematika',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{zadanie.title}</label></th>
@@ -24,13 +24,8 @@
 	<?=$zadanie->getField('title',true) ?>	</td>
 	</tr>
 		<tr>
-	<th valign="top"><label>#{zadanie.task_text}</label></th>
+	<th valign="top"><label>#{zadanie.zadanie_text}</label></th>
 	<td valign="top">
-				<p><?=nl2br($zadanie->getField('task_text',true)) ?></p>	</td>
-	</tr>
-		<tr>
-	<th valign="top"><label>#{zadanie.type}</label></th>
-	<td valign="top">
-	<?=$zadanie->getField('type',true)?>	</td>
+				<p><?=nl2br($zadanie->getField('zadanie_text',true)) ?></p>	</td>
 	</tr>
 	</table>

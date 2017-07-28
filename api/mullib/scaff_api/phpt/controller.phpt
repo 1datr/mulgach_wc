@@ -62,12 +62,14 @@ class {table_uc_first}Controller extends {ParentControllerClass}
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['{table}']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['{table}']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['{table}']);		
 		
 		$newitem->save();
 		

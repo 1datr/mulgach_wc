@@ -64,12 +64,14 @@ class RazdelController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['razdel']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['razdel']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['razdel']);		
 		
 		$newitem->save();
 		

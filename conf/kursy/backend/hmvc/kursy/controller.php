@@ -64,12 +64,14 @@ class KursyController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['kursy']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['kursy']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['kursy']);		
 		
 		$newitem->save();
 		

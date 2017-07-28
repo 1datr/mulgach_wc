@@ -56,11 +56,11 @@ else
 	</tr>
 		<tr>
 	<th><label>#{urok.document1}</label></th><td>
-	<?php $form->field($urok,'document1')->text();	 ?>	</td>
+	<?php $form->field($urok,'document1')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{urok.document2}</label></th><td>
-	<?php $form->field($urok,'document2')->text();	 ?>	</td>
+	<?php $form->field($urok,'document2')->file();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{urok.hometask}</label></th><td>

@@ -64,12 +64,14 @@ class ZnakController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['znak']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['znak']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['znak']);		
 		
 		$newitem->save();
 		

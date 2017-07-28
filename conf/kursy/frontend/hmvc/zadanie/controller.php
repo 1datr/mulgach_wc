@@ -64,12 +64,14 @@ class ZadanieController extends BaseController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['zadanie']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['zadanie']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['zadanie']);		
 		
 		$newitem->save();
 		
