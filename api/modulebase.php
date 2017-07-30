@@ -25,6 +25,38 @@ class mul_Module
 		return $this->get_request('srv');
 	}
 	
+	function srv_exists($srv_name)
+	{
+		$method_name="Srv".UcaseFirst($srv_name);
+		return method_exists($this, $method_name);
+	}
+	
+	function call_srv($srv_name)
+	{
+		$method_name="Srv".UcaseFirst($srv_name);
+		mul_dbg($method_name);
+		$this->$method_name();
+	}
+	
+	function ExeRequest($req)
+	{
+		if($req->plugin!=null)
+		{
+			$plg = $this->use_plugin($req->plugin);
+
+			if($plg->srv_exists($req->method))
+			{
+
+				$plg->call_srv($req->method);
+			}
+		}
+		else 
+		{
+			if($this->srv_exists($req->method))
+				$this->call_srv($req->method);
+		}
+	}
+	
 	function get_request($reqname,$defval=null)
 	{
 		if(isset($_REQUEST[$reqname]))
@@ -101,5 +133,18 @@ class mod_plugin {
 			$css_array[] = $str_css;
 		}
 		return $css_array;
+	}
+	
+	function srv_exists($srv_name)
+	{
+		$method_name="Srv".UcaseFirst($srv_name);
+	
+		return method_exists($this, $method_name);
+	}
+	
+	function call_srv($srv_name)
+	{
+		$method_name="Srv".UcaseFirst($srv_name);
+		$this->$method_name();
 	}
 }

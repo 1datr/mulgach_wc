@@ -309,7 +309,17 @@ class mul_page extends mul_Module
 		$this->inc_ep_config($conf_info);
 		
 		if(isset($_REQUEST['srv'])) 
+		{
+			$srv_req = new SrvRequest($_REQUEST['srv']);	
+						
+			GLOBAL $_MOD_CLASSES;
+			$the_module = find_module($srv_req->module);
+			
+			//mul_dbg($the_module);
+			
+			$the_module->ExeRequest($srv_req);
 			return;
+		}		
 			
 		if(empty($_REQUEST['r'])) $_REQUEST['r']='';
 		

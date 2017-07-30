@@ -1,4 +1,27 @@
 <?php 
+
+class SrvRequest
+{
+	VAR $module;
+	VAR $plugin=null;
+	VAR $method;
+	function  __construct($srv_str)
+	{
+		$srv_pieces = explode('.', $srv_str);
+		if(count($srv_pieces)>2)
+		{
+			$this->module = $srv_pieces[0];
+			$this->plugin = $srv_pieces[1];
+			$this->method = $srv_pieces[2];
+		}
+		else 
+		{
+			$this->module = $srv_pieces[0];
+			$this->method = $srv_pieces[1];
+		}
+	}
+}
+
 function module_exists($modname)
 {
 	global $_MOD_CLASSES;
@@ -9,6 +32,7 @@ function module_exists($modname)
 	}			
 	return false;
 }
+
 
 function call_modules($module,$eventname,$args=[],$eopts=[])
 {

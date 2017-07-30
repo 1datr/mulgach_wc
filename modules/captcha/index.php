@@ -76,6 +76,11 @@ class mul_captcha extends mul_Module
 	
 	function usecaptcha()
 	{
+		$plugs = $this->get_plug_list();
+		foreach($plugs as $idx => $plg)
+		{
+			
+		}
 		if($this->get_srv()==='captcha_pic')
 		{
 			$plg = $this->get_request('mode','simple');

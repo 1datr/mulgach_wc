@@ -93,7 +93,7 @@ class plg_simple extends mod_plugin
 		return $code;
 	}
 	
-	function picture($opts=[])
+	function SrvPicture($opts=[])
 	{
 		header('Content-type: image/png');
 		//$this->use_layout('layout_login');
@@ -173,7 +173,7 @@ class plg_simple extends mod_plugin
 	
 	public function picture_url()
 	{
-		return "/?srv=captcha_pic";
+		return "/?srv=captcha.simple.picture";
 	}
 	
 	public function get_onclick_update_js()
