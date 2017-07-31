@@ -88,7 +88,7 @@ class plg_simple extends mod_plugin
 	function GenCode()
 	{
 		$code = GenRandStr();
-		mul_dbg("-->>".$code);
+	//	mul_dbg("-->>".$code);
 		$_SESSION[$this->params['code_var']]=$code;
 		return $code;
 	}

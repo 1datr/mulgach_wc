@@ -1,3 +1,21 @@
+function clone_form(form_selector)
+{
+	form_obj = $(form_selector)[0];
+	newfrm = $('<form></form>');
+	/* Копируем все свойства формы */	
+	for (var key in form_obj.attributes) {
+		$(newfrm).attr(form_obj.attributes[key].name,form_obj.attributes[key].value);
+	}
+	
+	$(form_obj).find('input, select, submit').each(function(i,el)
+		{
+			el_cloned = $(el).clone();
+			$(newfrm).append(el_cloned);
+		});
+		
+	return newfrm;
+}
+
 $( document ).ready(function() 
 {
 			//		$('#items_block').jqStructBlock();
@@ -81,7 +99,10 @@ $( document ).ready(function()
 				form_action = form_action_base + "/action:validate";
 		
 				// перед отправкой на валидацию чтобы сериализовать создаем клон где вместо файла текст с путем к файлу
-				cloned_form=$(this).clone(false);
+				//cloned_form=$(this).clone(false);
+				
+				cloned_form = clone_form(this);
+				
 				cloned_form_files = $(cloned_form).find('input[type=file]');
 				$(this).find('input[type=file]').each(function( i, el ) 
 					{

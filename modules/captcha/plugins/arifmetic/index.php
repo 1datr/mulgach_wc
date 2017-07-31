@@ -93,7 +93,7 @@
 			$code = $ch1+$ch2;
 			
 			$str = $ch1."+".$ch2;
-			mul_dbg("-->>".$code);
+		//	mul_dbg("-->>".$code);
 			$_SESSION[$this->params['code_var']]=$code;
 			return $str;
 		}
