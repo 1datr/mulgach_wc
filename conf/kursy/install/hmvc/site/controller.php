@@ -1,5 +1,5 @@
 <?php 
-class SiteController extends BaseController
+class SiteController extends InstallController
 {
 
 		public function ActionIndex()
