@@ -8,6 +8,12 @@ public function ActionRegister()
 public function ActionMakeuser()
 {
 	$this->_MODEL->reguser($_POST['{table}']);
+	$this->redirect(as_url('{table}/regsuccess'));
+}
+
+public function ActionRegsuccess()
+{
+	$this->out_view('regsuccess',[]);
 }
 
 public function BeforeAction(&$params)

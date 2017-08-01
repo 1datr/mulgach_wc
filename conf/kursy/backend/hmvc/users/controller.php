@@ -64,12 +64,14 @@ class UsersController extends AuthController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['users']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['users']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['users']);		
 		
 		$newitem->save();
 		

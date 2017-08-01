@@ -235,6 +235,8 @@ class scaff_triada
 					$vars['constraints']=$_params['constraints'];
 					
 					$this->add_view('register','reg/regtemplate',$vars,$_params['rewrite_all']);
+					
+					$this->add_view('regsuccess','reg/regsuccess',$vars,$_params['rewrite_all']);
 				}
 			}
 		}
@@ -408,6 +410,38 @@ class scaff_triada
 	
 	}
 	
+	public function install_from_table($_params,$controller,$opts)
+	{
+		GLOBAL $_BASEDIR;
+		
+		$conf_obj=$opts['conf_obj'];
+		
+		//	mul_dbg(__LINE__." went");
+		//	$dbparams = $this->_PARENT_CONF->connect_db_if_exists($controller);
+		
+		
+		$rewrite_all=false;
+		if(isset($_params['rewrite_all']))
+			$rewrite_all=true;
+		
+		// add controller file
+		$this->x_make_controller($_params,$rewrite_all);
+			
+		$vars_menu=array('triada'=>$this->NAME);
+		
+		
+		$template_file_name="installcontroller";
+		if(isset($_params['mainmenu'][$this->_EP]))
+		{
+			$template_file_name="installauthcontroller";
+		}
+		
+		
+		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
+				parse_code_template(url_seg_add(__DIR__,'/phpt/install',$template_file_name.'.phpt'),$vars_menu));
+		
+	}
+	
 	public function backend_from_table($_params,$controller,$opts)
 	{
 		GLOBAL $_BASEDIR;
@@ -478,9 +512,7 @@ class scaff_triada
 	
 	}
 	
-	public function install_from_table($_params,$controller,$opts){
-		
-	}
+	
 	
 	function x_make_controller($_params,$rewrite_all,$template='controller')
 	{
@@ -526,7 +558,7 @@ class scaff_triada
 							//'auth_con' => $_params['table'],
 							'table' => $_params['table'],
 					));
-					$allowed_methods="'login','auth','register','makeuser'";
+					$allowed_methods="'login','auth','register','makeuser','regsuccess'";
 				}
 				
 				if( in_array($this->_EP,array('backend','frontend')))

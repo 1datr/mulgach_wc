@@ -241,6 +241,10 @@ class HmvcController extends BaseController
 			case 'makefiles': {
 					
 						$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+						
+						if(isset($_SESSION['makeinfo']['ep']['install']))
+							$_SESSION['makeinfo']['authcon']['install']=$_SESSION['makeinfo']['authcon']['backend'];
+						
 						$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
 						
 						$this->make_hmvc($_SESSION['makeinfo']);
@@ -407,6 +411,13 @@ class HmvcController extends BaseController
 			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 				
 			$the_triada->backend_from_table($_params,$this,$opts);
+		}
+		
+		if(!empty($_params['ep']['install']))
+		{
+			$ep='install';
+			$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+			$the_triada->install_from_table($_params,$this,$opts);
 		}
 	}
 	

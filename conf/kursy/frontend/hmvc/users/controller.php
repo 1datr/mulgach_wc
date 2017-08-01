@@ -11,7 +11,7 @@ class UsersController extends AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser')),'anonym','users/login')
+						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser','regsuccess')),'anonym','users/login')
 				),	
 		);
 	}
@@ -64,12 +64,14 @@ class UsersController extends AuthController
 		
 		if($newitem!=null)
 		{
-			$newitem->FillFromArray($_POST['users']);
+			
 		}
 		else 
 		{
-			$newitem = $this->_MODEL->GetRow($_POST['users']);
-		}		
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['users']);		
 		
 		$newitem->save();
 		
@@ -136,6 +138,12 @@ class UsersController extends AuthController
 public function ActionMakeuser()
 {
 	$this->_MODEL->reguser($_POST['users']);
+	$this->redirect(as_url('users/regsuccess'));
+}
+
+public function ActionRegsuccess()
+{
+	$this->out_view('regsuccess',[]);
 }
 
 public function BeforeAction(&$params)

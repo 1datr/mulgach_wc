@@ -1,6 +1,6 @@
 <?php
 $form = new mulForm(as_url('users/makeuser'),$this);
-$captcha = mul_captcha::use_captcha($this,['model'=>&$reg_form_struct,'form'=>&$form],'arifmetic');
+$captcha = mul_captcha::use_captcha($this,['model'=>&$reg_form_struct,'form'=>&$form]);
 //var_dump($reg_struct);
 ?>
 <table>
