@@ -33,6 +33,8 @@ require_once __DIR__."/modulebase.php";
 require_once __DIR__."/mullib/basecontroller.php";
 require_once __DIR__."/mullib/modelbase.php";
 require_once __DIR__."/mullib/authmodel.php";
+require_once __DIR__."/mullib/install/installcontroller.php";
+require_once __DIR__."/mullib/install/installauthcontroller.php";
 
 require_once __DIR__."/mullib/module.php";
 

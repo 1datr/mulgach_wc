@@ -138,6 +138,8 @@ class BaseModel
 		return $res;
 	}
 	
+	
+	
 	// Список возможных значений поля если ENUM или SET
 	function get_field_value_list($field)
 	{

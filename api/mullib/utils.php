@@ -344,6 +344,24 @@ function dir_dotted($dir)
 	}
 	return url_seg_add('./', $dir);
 }
+/*
+ * 	$array1 - массив	
+ *  $ev_onelement - функция function(&$element) return true or false $element - массив с ключами index и value
+ * */
+function filter_array($array1,$ev_onelement)
+{
+	$res = array();
+	foreach ($array1 as $idx => $val)
+	{
+		$element_res=array('index'=>$idx,'value'=>$val);
+		$e_res = $ev_onelement($element_res);
+		if($e_res)
+		{
+			$res[$element_res['index']]=$element_res['value'];	
+		}
+	}
+	return $res;
+}
 
 function convert_slash($url)
 {

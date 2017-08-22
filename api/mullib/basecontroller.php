@@ -43,6 +43,16 @@ class BaseController
 		}
 	}
 	
+	public function UseModel($model_settings=array())
+	{
+		$model_env = $this->_ENV;
+		$model_env['_CONTROLLER']=$this;		
+		$_model = new BaseModel($this->_CONTROLLER_DIR,$model_env);
+		$_model->_SETTINGS=$model_settings;
+		$this->_MODEL = $_model;
+		return $this->_MODEL;
+	}
+	
 	public function Rules()
 	{
 		return array(	
@@ -353,6 +363,27 @@ class BaseController
 	{
 		$this->_RESULT_TYPE="application/json";
 		echo json_encode($object);
+	}
+		
+	function out_ajax_block($view,$vars=array())
+	{
+		foreach ($vars as $var => $val)
+		{
+			$$var = $val;
+		}
+	
+		$_view_path = $this->get_view_path($view);
+		if($this->get_ep_param('print_template_path'))
+			echo "<!-- {$_view_path} -->";
+		
+		ob_start();
+		include $_view_path;
+		$str = ob_get_clean();
+		
+		$obj_json = array('html'=>$str,'js'=>$this->_JS,'css'=>$this->_CSS);
+			//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
+		$this->_RESULT_TYPE="application/json";
+		echo json_encode($obj_json);
 	}
 	
 	function draw_controller_request($req)

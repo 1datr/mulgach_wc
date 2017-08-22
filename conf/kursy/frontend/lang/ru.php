@@ -135,4 +135,5 @@ $_LANG['Captcha error']='Captcha error';
 $_LANG['users._re']='users._re';
 $_LANG['Wrong login or password']='Wrong login or password';
 $_LANG['User successfully registered']='User successfully registered';
+$_LANG['slovo.zzz']='zzz';
 ?>

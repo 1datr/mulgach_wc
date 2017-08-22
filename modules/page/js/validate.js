@@ -16,6 +16,29 @@ function clone_form(form_selector)
 	return newfrm;
 }
 
+function load_ajax_block(sel,url)
+{
+	$.getJSON(url,function(data)
+	{
+		$(sel).html(data.html);
+		// javascripts
+		for (var key in data.js) 
+		{
+			$('head').append($("<script src=\""+data.js[key]+"\"><\/script>")[0]);
+		}
+		// css
+		for (var key in data.css) 
+		{
+			$('head').append($("<link rel=\"stylesheet\" type=\"text/css\" href=\""+data.css[key]+"\">"));
+
+		}
+		
+	}).fail(function( jqxhr, textStatus, error ) {
+	    var err = textStatus + ", " + error;
+	    console.log( "Request Failed: " + err );
+	});
+}
+
 $( document ).ready(function() 
 {
 			//		$('#items_block').jqStructBlock();

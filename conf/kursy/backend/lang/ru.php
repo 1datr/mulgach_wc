@@ -188,4 +188,5 @@ $_LANG['Create UROK']='Create UROK';
 $_LANG['Create ZADANIE']='Create ZADANIE';
 $_LANG['Create RAZDEL']='Create RAZDEL';
 $_LANG['Create ZNAK']='Create ZNAK';
+$_LANG['slovo.zzz']='zzz';
 ?>

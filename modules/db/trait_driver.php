@@ -10,8 +10,30 @@ trait dbDriver {
 	public function escape_val($value,$type='text'){}
 	public function create_table($table,$params){}
 	public function last_insert_id(){}	
-	// Функции работы с типами
+	// Методы работы с типами
 	public function Typelist(){}
 	public function GetTypeClass($type){}
 	public function class_map(){}
+	// Методы для работы с параметрами драйверов
+	public static function getModel(){
+		return base_driver_model();
+	}
+	
+}
+
+function base_driver_model_settings()
+{
+	$settings = array(
+			'domen'=>'dbinfo',
+			'fields'=>array(
+					'driver'=>array('Type'=>'text','TypeInfo'=>"20"),
+			),
+			'required'=>array('driver'),
+			'rules'=>array(),
+			//	'view'=>'{name}',
+			'file_fields'=>array(),
+	
+	);
+	
+	return $settings;
 }

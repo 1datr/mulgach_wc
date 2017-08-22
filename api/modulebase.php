@@ -67,6 +67,24 @@ class mul_Module
 			return $defval;
 	}
 	
+	static function getModulePlugins($modname)
+	{
+		$mod = find_module($modname);
+		if($mod==NULL)
+		{
+			$mod = new mul_Module([]);
+			return $mod->getplugins();
+		}
+		return $mod->getplugins();
+	}	
+	
+	public function getplugins()
+	{
+		$plg_dir = url_seg_add($this->get_module_dir(),"/plugins/");
+		$plglist = get_files_in_folder($plg_dir,['dirs'=>true,'basename'=>true]);	
+		return $plglist;
+	}
+	
 	function use_plugin($plg,$params=array())
 	{
 		require_once $this->get_module_dir()."/plugins/$plg/index.php";

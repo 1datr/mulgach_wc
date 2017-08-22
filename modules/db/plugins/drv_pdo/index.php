@@ -1,6 +1,6 @@
 <?php
 
-class plg_drv_mysql extends mod_plugin 
+class plg_drv_pdo extends mod_plugin
 {
 	use dbDriver;
 	VAR $connection;
@@ -9,12 +9,12 @@ class plg_drv_mysql extends mod_plugin
 	function __construct($_PARAMS)
 	{
 		$this->_DB_PARAMS = $_PARAMS;
-	//print_r($_PARAMS);
-	//	mysql_ping();
+		//print_r($_PARAMS);
+		//	mysql_ping();
 		$this->connect();
-		
+
 	}
-	
+
 	function connect()
 	{
 		$this->connection = @mysql_pconnect($this->_DB_PARAMS['host'], $this->_DB_PARAMS['user'], $this->_DB_PARAMS['passw'],MYSQL_CLIENT_INTERACTIVE);
@@ -32,20 +32,20 @@ class plg_drv_mysql extends mod_plugin
 			echo('Could not connect mysql host: ' . mysql_error());
 			die();
 		}
-		
+
 		mysql_set_charset($this->_DB_PARAMS['charset']);
 	}
-	
+
 	public function escape_val($value,$type='text')
 	{
 		return mysql_real_escape_string($value);
 	}
-	
+
 	public function escape_sql_string($sql_text)
 	{
 		return mysql_real_escape_string($sql_text);
 	}
-	
+
 	public function get_tables()
 	{
 		$sql="SHOW FULL TABLES LIKE '".$this->_DB_PARAMS['prefix']."%'";
@@ -56,26 +56,26 @@ class plg_drv_mysql extends mod_plugin
 		{
 			$keys = array_keys($row);
 			$tablename = $row[$keys[0]];
-			
+				
 			$tablename = substr($tablename,strlen($this->_DB_PARAMS['prefix']));
-			
-			
+				
+				
 			$arr[]= $tablename;
 		}
 		return $arr;
 	}
-	
+
 	public function Typelist()
 	{
 		return array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT','FLOAT','DOUBLE','DECIMAL', // integer types
 				'DATE','DATETIME','TIMESTAMP','TIME','YEAR', // date types
-						'CHAR','VARCHAR','TEXT','TINYTEXT','MEDIUMTEXT','LONGTEXT',// text types
+				'CHAR','VARCHAR','TEXT','TINYTEXT','MEDIUMTEXT','LONGTEXT',// text types
 				'BLOB','TINYBLOB','MEDIUMBLOB','LONGBLOB',// blob types
 				'ENUM','SET' // set types
-				
+
 		);
 	}
-	
+
 	public function class_map()
 	{
 		return array(
@@ -87,7 +87,7 @@ class plg_drv_mysql extends mod_plugin
 				'enums'=>array('ENUM','SET'),
 		);
 	}
-	
+
 	public function GetTypeClass($type)
 	{
 		$map = $this->class_map();
@@ -101,18 +101,18 @@ class plg_drv_mysql extends mod_plugin
 		}
 		return null;
 		//preg_match_all('/(.+)\((.*)\)/Uis', $type,$matches);
-		
+
 		//mul_dbg($matches);
-		
+
 		//ucwords($type);
 	}
-	
+
 	public function query($sql)
 	{
 		$sql = QueryMaker::prepare_query($sql, $this->_DB_PARAMS['prefix']);
-		
-//		echo ">> $sql >>";
-	
+
+		//		echo ">> $sql >>";
+
 		$res = mysql_query($sql);
 		if($res===false)
 		{
@@ -124,7 +124,7 @@ class plg_drv_mysql extends mod_plugin
 		}
 		return $res;
 	}
-	
+
 	public function error_number()
 	{
 		return mysql_errno();
@@ -132,13 +132,13 @@ class plg_drv_mysql extends mod_plugin
 	// get new row
 	public function get_row($res,$idx=NULL)
 	{
-		return mysql_fetch_assoc($res);		
+		return mysql_fetch_assoc($res);
 	}
-	
+
 	public function last_insert_id(){
 		return mysql_insert_id($this->connection);
 	}
-	
+
 	public function list_rows($res,$function_on_row)
 	{
 		$rownumber = 0;
@@ -148,7 +148,7 @@ class plg_drv_mysql extends mod_plugin
 			$rownumber++;
 		}
 	}
-	
+
 	public function get_table_fields($tbl)
 	{
 		$res = $this->query("SHOW FULL COLUMNS FROM `@+{$tbl}`");
@@ -156,8 +156,8 @@ class plg_drv_mysql extends mod_plugin
 		while($col = $this->get_row($res)){
 			//	print_r($col);
 			$Field = $col['Field'];
-		//	unset($col['Field']);
-			
+			//	unset($col['Field']);
+				
 			$matches = array();
 			$col['TypeInfo']=NULL;
 			if(preg_match_all('/(.+)\((.+)\)/Uis', $col['Type'],$matches))
@@ -166,22 +166,22 @@ class plg_drv_mysql extends mod_plugin
 				$col['Type']=$matches[1][0];
 				$col['TypeInfo']=$matches[2][0];
 				/*
-				try
-				{
+				 try
+				 {
 					$intval = (int)$col['TypeInfo'];
 					$col['TypeInfo']=$intval;
-				}
-				catch (Exception $ex){}
-				*/
-				
+					}
+					catch (Exception $ex){}
+					*/
+
 			}
-			
-			$arr[$Field]=$col;			
+				
+			$arr[$Field]=$col;
 			//print_r($col); print "<br>\n";
 		}
 		return $arr;
 	}
-	
+
 	function get_enum_field_values($table,$column)
 	{
 		$result = $this->query("SHOW COLUMNS FROM `@+$table`  LIKE '$column'");
@@ -193,14 +193,14 @@ class plg_drv_mysql extends mod_plugin
 		}
 		return null;
 	}
-	
+
 	public function get_primary($var)
 	{
 		if(is_string($var))
 		{
 			$var = $this->get_table_fields($var);
 		}
-	
+
 		foreach($var as $fld => $fld_info )
 		{
 			if($fld_info['Key']=="PRI")
@@ -209,18 +209,18 @@ class plg_drv_mysql extends mod_plugin
 			}
 		}
 	}
-	
+
 	public function get_constraints($table)
 	{
-		
+
 	}
-	
+
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
 	public static function getModel(){
 		$drv_base = base_driver_model();
 		return $drv_base;
 	}
-	
+
 	// row count in result
 	public function rowcount($res)
 	{

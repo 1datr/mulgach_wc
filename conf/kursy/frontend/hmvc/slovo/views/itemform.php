@@ -20,7 +20,6 @@ else
 }
 ?></h3>
 <table>
-
 	<tr>
 	<th><label>#{slovo.ru}</label></th><td>
 	<?php $form->field($slovo,'ru')->text();	 ?>	</td>
@@ -49,7 +48,7 @@ else
 	<th><label>#{slovo.type}</label></th><td>
 	<?php $form->field($slovo,'type')->ComboBox();	 ?>	</td>
 	</tr>
-	</table>
+</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
 <?php $form->submit('#{SAVE}'); ?>
 </form>
