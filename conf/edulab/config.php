@@ -1,5 +1,7 @@
 <?php
-require_once __DIR__."/dbconf.php";
+$_NO_READ_CONFIG=true;
+if(file_exists(__DIR__."/dbconf.php"))
+	require_once __DIR__."/dbconf.php";
 //$_CACHE_JS=true;
 //$_CACHE_CSS=true;
 
