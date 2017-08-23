@@ -11,8 +11,8 @@ class plg_drv_pdo extends mod_plugin
 		$this->_DB_PARAMS = $_PARAMS;
 		//print_r($_PARAMS);
 		//	mysql_ping();
-		$this->connect();
-
+		if($this->_DB_PARAMS['connectable']) 
+			$this->connect();	
 	}
 
 	function connect()
@@ -216,10 +216,11 @@ class plg_drv_pdo extends mod_plugin
 	}
 
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
-	public static function getModel(){
-		$drv_base = base_driver_model();
+	/*public function getModel(){
+		$drv_base = $this->base_driver_settings();
+		$drv_base['fields']['host']=array('Type'=>'text','TypeInfo'=>"20");
 		return $drv_base;
-	}
+	}*/
 
 	// row count in result
 	public function rowcount($res)

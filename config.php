@@ -1,3 +1,3 @@
 <?php
-//$_CONFIG='main';
+//$_CONFIG='edulab';
 $_CONFIG='kursy';

@@ -215,6 +215,43 @@ class DataRecord	// запись из БД
 		
 	}
 	
+	public function draw_def_form($form)
+	{
+		?>
+		<table>
+		<?php 
+		foreach($this->_FIELDS as $fld => $value)
+		{
+			?>
+			<tr>
+    			<th><?=Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th>
+    			<td><?php 
+    			$finfo = $this->_MODEL->getFldInfo($fld);
+    			$fparams=[];
+    			if(isset($finfo['fldparams']))
+    				$fparams=$finfo['fldparams'];
+    			if($finfo['Type']=='enum')
+    			{
+    				$form->field($this,$fld)->ComboBox([],$fparams);
+    			}
+    			elseif(eql_ife($finfo,'password',true))
+    			{
+    				$form->field($this,$fld)->password($fparams);
+    			}
+    			else 
+    			{
+    				$form->field($this,$fld)->text($fparams);
+    			}
+    			
+    			?></td>
+  			</tr>
+			<?php 
+		}
+		?>
+		</table>
+		<?php 
+	}
+	
 	function getFieldNames()
 	{
 		return array_keys($this->_FIELDS);

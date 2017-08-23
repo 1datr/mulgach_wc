@@ -8,11 +8,28 @@ class plg_drv_mysql extends mod_plugin
 	VAR $_DB_PARAMS;
 	function __construct($_PARAMS)
 	{
-		$this->_DB_PARAMS = $_PARAMS;
+		def_options(['connectable'=>true], $_PARAMS);
+		$this->_DB_PARAMS = $_PARAMS;		
 	//print_r($_PARAMS);
 	//	mysql_ping();
-		$this->connect();
-		
+		if($this->_DB_PARAMS['connectable']) 
+			$this->connect();		
+	}
+	
+	public function must_connect()
+	{
+		return $this->_DB_PARAMS['connectable'];	
+	}
+	
+	public function get_db_list()
+	{
+		$res = $this->query("show databases");
+		$res_array=array();
+		while($row = $this->get_row($res))
+		{
+			
+		}
+		return $res_array;
 	}
 	
 	function connect()
@@ -21,10 +38,13 @@ class plg_drv_mysql extends mod_plugin
 		if (!($this->connection === false))
 		{
 			// select database
-			if (mysql_select_db($this->_DB_PARAMS['dbname'], $this->connection) === false)
+			if(!empty($this->_DB_PARAMS['dbname']))
 			{
-				echo('Could not select database: ' . mysql_error());
-				die();
+				if (mysql_select_db($this->_DB_PARAMS['dbname'], $this->connection) === false)
+				{
+					echo('Could not select database: ' . mysql_error());
+					die();
+				}
 			}
 		}
 		else
@@ -216,8 +236,16 @@ class plg_drv_mysql extends mod_plugin
 	}
 	
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
-	public static function getModel(){
-		$drv_base = base_driver_model();
+	public function getModel()
+	{
+		$drv_base = $this->base_driver_settings();
+		$drv_base['fields']['host']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'localhost');
+		$drv_base['fields']['user']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'root');
+		$drv_base['fields']['password']=array('Type'=>'text','TypeInfo'=>"20");
+		$drv_base['fields']['dbname']=array('Type'=>'text','TypeInfo'=>"20");
+		$drv_base['fields']['prefix']=array('Type'=>'text','TypeInfo'=>"20");
+		
+		$drv_base['required']= array_merge($drv_base['required'], array('host','user','password','dbname'));
 		return $drv_base;
 	}
 	
@@ -226,4 +254,6 @@ class plg_drv_mysql extends mod_plugin
 	{
 		return mysql_num_rows($res);
 	}
+	
+	
 }

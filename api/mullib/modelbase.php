@@ -190,7 +190,7 @@ class BaseModel
 		{
 			foreach ($this->_SETTINGS['fields'] as $fld => $fldinfo)
 			{
-				$dr->setField($fld, null);
+				$dr->setField($fld, (isset($fldinfo['defval']) ? $fldinfo['defval'] : null ));
 			}
 		}
 		return $dr;
@@ -378,7 +378,7 @@ class BaseModel
 	{
 		
 	} 	
-	
+		
 	public function UploadfilesTemp()
 	{
 		$res=array();

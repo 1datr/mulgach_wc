@@ -124,6 +124,14 @@ class ActiveField
 		}
 		
 		//mul_dbg($data);
+		if(($data==NULL)&&(isset($this->_ROW->_MODEL->_SETTINGS['fields'][$this->_FLDNAME]['fldparams']['valuelist'])))
+		{
+			$valuelist = $this->_ROW->_MODEL->_SETTINGS['fields'][$this->_FLDNAME]['fldparams']['valuelist'];
+			if(is_array($valuelist))
+				$data = $valuelist;
+			else 
+				$data = $valuelist();
+		}
 		
 		if(is_array($data))
 		{			 

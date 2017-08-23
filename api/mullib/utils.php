@@ -115,7 +115,7 @@ function def_options($defs,&$opt_array)
 {
 	foreach ($defs as $defkey => $defval)
 	{
-		if(empty($opt_array[$defkey]))
+		if(!isset($opt_array[$defkey]))
 			$opt_array[$defkey]=$defval;
 	}
 }
@@ -437,6 +437,24 @@ function GenRandStr($length=6,$space=false) {
 
 	return $code;
 
+}
+
+function eql_ife($arr,$key,$val)
+{
+	if(isset($arr[$key]))
+	{
+		return ($arr[$key]==$val);
+	}
+	return false;
+}
+
+function calc_ife($arr,$key,$calc_func)
+{
+	if(isset($arr[$key]))
+	{
+		return $calc_func($arr[$key]);
+	}
+	return false;
 }
 
 function string_diff($str1,$str2)

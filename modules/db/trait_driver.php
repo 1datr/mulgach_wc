@@ -1,6 +1,7 @@
 <?php
 trait dbDriver {
 	public function query($sql){}
+	public function must_connect(){}
 	public function get_row($res,$idx=NULL){}
 	public function rowcount($res){}
 	public function get_tables(){}
@@ -16,24 +17,43 @@ trait dbDriver {
 	public function class_map(){}
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
 	public static function getModel(){
-		return base_driver_model();
+		return dbDriver::base_driver_settings();
 	}
+	public function get_db_list(){}
 	
+	public static function base_driver_settings()
+	{
+		$settings = array(
+				'domen'=>'dbinfo',
+				'fields'=>array(
+						'driver'=>array('Type'=>'enum','TypeInfo'=>"20",'fldparams'=>['htmlattrs'=>[
+											'id'=>'the_driver',
+											'onclick'=>'load_ajax_block(\'#drv_params\',\''.as_url('site/loadform/').'\'+\'/\'+$(\'#the_driver\').val());',
+						],
+								'valuelist'=>function(){
+									$plugs = mul_Module::getModulePlugins('db');
+									$plugs = filter_array($plugs,function(&$el){
+										$matchez=array();
+										if( preg_match_all('/^drv_(.+)$/Uis', $el['value'],$matchez))
+										{
+											$el['value']=$matchez[1][0];
+											return true;
+										}
+										return false;
+									});
+									
+										return $plugs;
+									}
+								]),
+				),
+				'required'=>array('driver'),
+				'rules'=>array(),
+				//	'view'=>'{name}',
+				'file_fields'=>array(),
+	
+		);
+	
+		return $settings;
+	}
 }
 
-function base_driver_model_settings()
-{
-	$settings = array(
-			'domen'=>'dbinfo',
-			'fields'=>array(
-					'driver'=>array('Type'=>'text','TypeInfo'=>"20"),
-			),
-			'required'=>array('driver'),
-			'rules'=>array(),
-			//	'view'=>'{name}',
-			'file_fields'=>array(),
-	
-	);
-	
-	return $settings;
-}
