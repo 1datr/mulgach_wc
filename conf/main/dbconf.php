@@ -1,9 +1,12 @@
 <?php 
-$_db_server = "localhost";
-$_db_user = "root";
-$_db_passw = "123456";
-$_db_name = "tms2";
-$_db_prefix = "crm_";
-//$_db_charset = "cp1251_general_ci";
-$_db_charset = "utf8_bin";//
+$dbparams = array(
+		"family"=>"mysql",
+		"host"=>"localhost",
+		"user"=>"root",
+		"passw"=>"123456",
+		"dbname"=>"tms2",
+		"prefix"=>"crm_",
+		"charset"=>"utf8_bin",
+		"dbkey"=>"main",
+);
 ?>

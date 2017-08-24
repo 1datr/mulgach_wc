@@ -142,9 +142,19 @@ class BaseModel
 	
 	// Список возможных значений поля если ENUM или SET
 	function get_field_value_list($field)
-	{
+	{		
 		if(in_array($this->_SETTINGS['fields'][$field]['Type'],array('enum','set')))
-			return $this->_ENV['_CONNECTION']->get_enum_field_values($this->_SETTINGS['table'],$field);
+		{
+			if(isset($this->_SETTINGS['fields'][$field]['fldparams']['valuelist']))
+			{
+				if(is_callable($this->_SETTINGS['fields'][$field]['fldparams']['valuelist']))
+					return $this->_SETTINGS['fields'][$field]['fldparams']['valuelist']();
+				else 
+					return $this->_SETTINGS['fields'][$field]['fldparams']['valuelist'];
+			}
+			else 
+				return $this->_ENV['_CONNECTION']->get_enum_field_values($this->_SETTINGS['table'],$field);
+		}
 		else 
 			return $this->_SETTINGS['fields'][$field]['Type'];
 	}

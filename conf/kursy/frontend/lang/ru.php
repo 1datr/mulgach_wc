@@ -136,4 +136,7 @@ $_LANG['users._re']='users._re';
 $_LANG['Wrong login or password']='Wrong login or password';
 $_LANG['User successfully registered']='User successfully registered';
 $_LANG['slovo.zzz']='zzz';
+$_LANG['Edit USERS']='Edit USERS';
+$_LANG['Create USERS']='Create USERS';
+$_LANG['BYKVA LIST']='BYKVA LIST';
 ?>

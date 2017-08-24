@@ -30,13 +30,14 @@ class mul_db extends mul_Module
 	}
 
 	function connect($dbparams=NULL)
-	{
-		
+	{		
 		if($dbparams!=NULL)
 		{
 			$this->dbparams = $dbparams;
 		}
-		if($this->dbparams['family'])
+		
+		//if($this->dbparams['family'])
+		if($this->dbparams!='#none')
 		{
 						
 			$drv = $this->use_plugin("drv_mysql",$this->dbparams);

@@ -6,8 +6,14 @@ class plg_drv_mysql extends mod_plugin
 	VAR $connection;
 	VAR $parent_module;
 	VAR $_DB_PARAMS;
+	VAR $_CONNECTION_EMPTY=FALSE;
 	function __construct($_PARAMS)
 	{
+		if($_PARAMS=='#none')
+		{
+			$this->_CONNECTION_EMPTY=true;
+			return ;
+		}
 		def_options(['connectable'=>true], $_PARAMS);
 		$this->_DB_PARAMS = $_PARAMS;		
 	//print_r($_PARAMS);
@@ -34,6 +40,8 @@ class plg_drv_mysql extends mod_plugin
 	
 	function connect()
 	{
+		if($this->_CONNECTION_EMPTY) return ;
+		
 		$this->connection = @mysql_pconnect($this->_DB_PARAMS['host'], $this->_DB_PARAMS['user'], $this->_DB_PARAMS['passw'],MYSQL_CLIENT_INTERACTIVE);
 		if (!($this->connection === false))
 		{
