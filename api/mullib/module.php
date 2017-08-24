@@ -85,6 +85,16 @@ function call_event($mod,$eventname,$event_src,&$called_list,&$res_of_module, $e
 	{
 		case 'module':
 			$metodname = "{$event_src}_{$eventname}";
+			if(method_exists($mod, $metodname))
+			{
+				$mod_res=array();
+				//$mod->$metodname($mod_res);
+				$mod->$metodname($res_of_module);
+				$res_of_module[$mod->get_mod_name()]=$res_of_module;//$mod_res; // записали полученный от модуля результат
+			
+				$args[$mod->get_mod_name()]=$res_of_module;
+				$called_list[]=$mod;
+			}
 			break;
 		case 'controller':
 			$metodname = "{$eventname}";
@@ -92,16 +102,7 @@ function call_event($mod,$eventname,$event_src,&$called_list,&$res_of_module, $e
 	}
 	
 	
-	if(method_exists($mod, $metodname))
-	{		
-		$mod_res=array();
-		//$mod->$metodname($mod_res);
-		$mod->$metodname($res_of_module);
-		$res_of_module[$mod->get_mod_name()]=$res_of_module;//$mod_res; // записали полученный от модуля результат
-		
-		$args[$mod->get_mod_name()]=$res_of_module;
-		$called_list[]=$mod;
-	}
+	
 }
 
 function make_event_queue($event,$module_from)

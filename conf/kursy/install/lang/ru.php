@@ -14,4 +14,5 @@ $_LANG['dbinfo.user']='user';
 $_LANG['dbinfo.password']='password';
 $_LANG['dbinfo.dbname']='database name';
 $_LANG['dbinfo.prefix']='prefix';
+$_LANG['.driver']='.driver';
 ?>

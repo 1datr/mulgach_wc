@@ -38,6 +38,43 @@ class plg_drv_mysql extends mod_plugin
 		return $res_array;
 	}
 	
+	public function dbconfig_code($_params)
+	{
+		$str="<?php 
+		\$dbparams = array(
+			'family'=>'mysql',
+			'host'=>'".$_params['host']."',
+			'user'=>'".$_params['user']."',
+			'passw'=>'".$_params['password']."',
+			'dbname'=>'".$_params['dbname']."',
+			'prefix'=>'".$_params['prefix']."',
+			'charset'=>'cp1251_general_ci',
+			'dbkey'=>'main',
+);
+?>";
+		return $str;
+	}
+	
+	function test_conn($conn_params)
+	{
+		$conn = @mysql_pconnect($conn_params['host'], $conn_params['user'], $conn_params['password'],MYSQL_CLIENT_INTERACTIVE);
+		if(!($conn === false))		
+		{
+			if(!empty($conn_params['dbname']))
+			{
+				if(mysql_select_db($conn_params['dbname'], $conn) === false)
+				{
+					return mysql_error();
+				}
+				return true;
+			}
+		}
+		else 
+			return mysql_error();
+		
+		return true;
+	}
+	
 	function connect()
 	{
 		if($this->_CONNECTION_EMPTY) return ;
@@ -238,6 +275,7 @@ class plg_drv_mysql extends mod_plugin
 		}
 	}
 	
+	
 	public function get_constraints($table)
 	{
 		
@@ -249,11 +287,25 @@ class plg_drv_mysql extends mod_plugin
 		$drv_base = $this->base_driver_settings();
 		$drv_base['fields']['host']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'localhost');
 		$drv_base['fields']['user']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'root');
-		$drv_base['fields']['password']=array('Type'=>'text','TypeInfo'=>"20");
+		$drv_base['fields']['password']=array('Type'=>'text','TypeInfo'=>"20",'password'=>true);
 		$drv_base['fields']['dbname']=array('Type'=>'text','TypeInfo'=>"20");
 		$drv_base['fields']['prefix']=array('Type'=>'text','TypeInfo'=>"20");
 		
 		$drv_base['required']= array_merge($drv_base['required'], array('host','user','password','dbname'));
+		
+		$drv_base['validate_proc']=function($row,&$res)
+		{
+			$module_db = find_module('db');
+			$plg="drv_".$row['driver'];
+			if($module_db!=NULL)
+			{
+				$plg = $module_db->use_plugin($plg,['connectable'=>false]);
+				$test_res = $plg->test_conn($row);
+			}
+
+			if($test_res!==true)
+				$res['connect']=$test_res;
+		};
 		return $drv_base;
 	}
 	

@@ -47,8 +47,8 @@ class BaseController
 	{
 		$model_env = $this->_ENV;
 		$model_env['_CONTROLLER']=$this;		
-		$_model = new BaseModel($this->_CONTROLLER_DIR,$model_env);
-		$_model->_SETTINGS=$model_settings;
+		$_model = new BaseModel($this->_CONTROLLER_DIR,$model_env);		
+		$_model->set_settings($model_settings);
 		$this->_MODEL = $_model;
 		return $this->_MODEL;
 	}
@@ -62,6 +62,12 @@ class BaseController
 	function CallEvent($eventname, $eparams=[])
 	{
 		$res = $this->_ENV['page_module']->call_event($eventname, $eparams,['src'=>'controller']);
+		$method_name=$eventname;
+		$ev_res=array();
+		if(method_exists($this, $method_name))
+		{
+			$this->$method_name($ev_res);
+		}
 		return $res;
 	}
 	
@@ -253,14 +259,16 @@ class BaseController
 	function ActionValidate()
 	{				
 		$res = array();
+		$this->CallEvent('BeforeValidate', ['controller'=>$this,'row'=>$therow,'res'=>&$res]);
+		
 		if(!empty($this->_MODEL))
 		{	
 			// валидуем по модели
-			$therow = $_POST[$this->_MODEL->_TABLE];
-			$this->CallEvent('BeforeValidate', ['controller'=>$this,'row'=>$therow,'res'=>&$res]);
-			$res = $this->_MODEL->validate($_POST);
-			$this->CallEvent('AfterValidate', ['controller'=>$this,'row'=>$therow,'res'=>&$res]);
+			$therow = $_POST[$this->_MODEL->_TABLE];			
+			$res = $this->_MODEL->validate($_POST);			
 		}
+		
+		$this->CallEvent('AfterValidate', ['controller'=>$this,'row'=>$therow,'res'=>&$res]);
 		$this->out_json($res);				
 	}
 	

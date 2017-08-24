@@ -36,6 +36,13 @@ class mulForm
 		return $newfld;
 	}
 	
+	function custom_error_div($err_blockname)
+	{
+		?>
+		<div class="error" id='err_<?=$err_blockname ?>' role="alert"></div>
+		<?php 
+	}
+	
 	function get_upload_mode()
 	{
 		$res = 'simple';

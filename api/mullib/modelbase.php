@@ -84,6 +84,18 @@ class BaseModel
 		return $res;
 	}
 	
+	function set_settings($_settings)
+	{
+		$this->_SETTINGS=$_settings;
+		if(!isset($this->_SETTINGS['table']))
+		{
+			if(isset($this->_SETTINGS['domen']))
+				$this->_TABLE=$this->_SETTINGS['domen'];
+		}
+		else 
+			$this->_TABLE=$this->_SETTINGS['table'];
+	}
+	
 	function validate($data)
 	{
 		//mul_dbg($data);
@@ -119,7 +131,11 @@ class BaseModel
 	
 	function OnValidate($row,&$res)
 	{
-		
+		if(isset($this->_SETTINGS['validate_proc']))
+		{
+			$proc = $this->_SETTINGS['validate_proc'];
+			$proc($row,$res);
+		}
 	}
 	
 	function get_field_type($field)

@@ -11,6 +11,7 @@ trait dbDriver {
 	public function escape_val($value,$type='text'){}
 	public function create_table($table,$params){}
 	public function last_insert_id(){}	
+	public function test_conn($conn_params){}
 	// Методы работы с типами
 	public function Typelist(){}
 	public function GetTypeClass($type){}
@@ -55,5 +56,7 @@ trait dbDriver {
 	
 		return $settings;
 	}
+
+	public function dbconfig_code($_params){}
 }
 

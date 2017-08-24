@@ -1,5 +1,5 @@
 <?php
-$form = new mulForm(as_url("kursy/save"),$this);
+$form = new mulForm(as_url("site/setconfig"),$this);
 // 'driver'
 ?>
 <div id="drv_params">

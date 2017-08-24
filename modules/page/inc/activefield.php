@@ -48,6 +48,7 @@ class ActiveField
 		<?php 
 	}
 	
+	
 	function text($opts=array())
 	{
 		def_options(array('htmlattrs'=>array()), $opts);

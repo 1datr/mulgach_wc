@@ -42,10 +42,27 @@ class InstallController extends BaseController
 		}
 		return NULL;
 	}
-	
-	public function ActionDblist()
-	{
 		
+	public function BeforeValidate()
+	{
+		//mul_dbg($_POST);
+		$driver = $_POST['dbinfo']['driver'];
+		$drv_obj = $this->get_plug_obj("drv_".$driver);
+		$_model = $drv_obj->getModel();
+		$this->UseModel($_model);
+		//mul_dbg($_model);
+	}
+	
+	public function ActionSetconfig()
+	{
+		$conf_dir = url_seg_add($this->get_current_dir(),'../..');
+		$dbconf_file = url_seg_add($conf_dir,'dbconf.php');
+		
+		$driver = $_POST['dbinfo']['driver'];
+		$drv_obj = $this->get_plug_obj("drv_".$driver);
+		
+		$code = $drv_obj->dbconfig_code($_POST['dbinfo']);
+		file_put_contents($dbconf_file, $code);
 	}
 	
 	public function ActionLoadform($drv=NULL)
