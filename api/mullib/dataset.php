@@ -94,9 +94,15 @@ class DataRecord	// запись из БД
 		$this->_MODIFIED=true;
 	}
 	
+	function FieldExists($fld)
+	{
+		return array_key_exists($fld,$this->_FIELDS);
+	}
+	
 	function setField($fld,$val)
 	{
-		$this->set_field($fld,$val);		
+		if($this->FieldExists($fld))
+			$this->set_field($fld,$val);		
 	}
 	
 	function format_html($fldval,$flags=NULL)

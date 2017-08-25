@@ -1,9 +1,9 @@
 <?php 
 $dbparams = array(
-		"family"=>"mysql",
+		"driver"=>"mysql",
 		"host"=>"localhost",
 		"user"=>"root",
-		"passw"=>"123456",
+		"password"=>"123456",
 		"dbname"=>"kursy",
 		"prefix"=>"",
 		"charset"=>"cp1251_general_ci",

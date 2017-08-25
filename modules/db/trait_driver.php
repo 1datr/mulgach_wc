@@ -11,6 +11,10 @@ trait dbDriver {
 	public function escape_val($value,$type='text'){}
 	public function create_table($table,$params){}
 	public function last_insert_id(){}	
+	
+	public function error_number(){}
+	public function error_text(){}
+	
 	public function test_conn($conn_params){}
 	// Методы работы с типами
 	public function Typelist(){}
@@ -21,6 +25,8 @@ trait dbDriver {
 		return dbDriver::base_driver_settings();
 	}
 	public function get_db_list(){}
+	
+	public function create_db($dbname){}
 	
 	public static function base_driver_settings()
 	{

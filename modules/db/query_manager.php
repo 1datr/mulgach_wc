@@ -17,6 +17,11 @@ class QueryMaker {
 		return "DELETE FROM `@+{$tbl}` WHERE $where";
 	}
 	
+	static function query_makedb($db_name)
+	{
+		return "CREATE DATABASE IF NOT EXISTS `@+{$db_name}`";
+	}
+	
 	static function query_update($tbl,$arr,$WHERE=1)
 	{
 		return "UPDATE `@+{$tbl}` SET ".xx_implode($arr, ',', "`{idx}`='{%val}'") ." WHERE {$WHERE}";

@@ -14,4 +14,9 @@ $_LANG['dbinfo.user']='user';
 $_LANG['dbinfo.password']='password';
 $_LANG['dbinfo.dbname']='database name';
 $_LANG['dbinfo.prefix']='prefix';
+$_LANG['dbinfo.passw']='dbinfo.passw';
+$_LANG['dbinfo.charset']='dbinfo.charset';
+$_LANG['dbinfo.dbkey']='dbinfo.dbkey';
+$_LANG['Create this database?']='Create this database?';
+$_LANG['OK']='OK';
 ?>

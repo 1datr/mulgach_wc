@@ -4,12 +4,16 @@ class plg_drv_mysql extends mod_plugin
 {
 	use dbDriver;
 	VAR $connection;
+	VAR $_controller;
 	VAR $parent_module;
 	VAR $_DB_PARAMS;
 	VAR $_CONNECTION_EMPTY=FALSE;
 	function __construct($_PARAMS)
 	{
-		if($_PARAMS=='#none')
+		if($_PARAMS==='#none')
+			$_PARAMS=array();
+		
+		if(count($_PARAMS)==0)
 		{
 			$this->_CONNECTION_EMPTY=true;
 			return ;
@@ -18,6 +22,10 @@ class plg_drv_mysql extends mod_plugin
 		$this->_DB_PARAMS = $_PARAMS;		
 	//print_r($_PARAMS);
 	//	mysql_ping();
+		$con = find_module('page')->getController();
+		if($con!=NULL)
+			$con->add_js( filepath2url(url_seg_add(__DIR__,'js/dbutils.js')) );
+		
 		if($this->_DB_PARAMS['connectable']) 
 			$this->connect();		
 	}
@@ -42,7 +50,7 @@ class plg_drv_mysql extends mod_plugin
 	{
 		$str="<?php 
 		\$dbparams = array(
-			'family'=>'mysql',
+			'driver'=>'mysql',
 			'host'=>'".$_params['host']."',
 			'user'=>'".$_params['user']."',
 			'passw'=>'".$_params['password']."',
@@ -58,28 +66,33 @@ class plg_drv_mysql extends mod_plugin
 	function test_conn($conn_params)
 	{
 		$conn = @mysql_pconnect($conn_params['host'], $conn_params['user'], $conn_params['password'],MYSQL_CLIENT_INTERACTIVE);
+		$res_arr=array();
 		if(!($conn === false))		
 		{
 			if(!empty($conn_params['dbname']))
 			{
 				if(mysql_select_db($conn_params['dbname'], $conn) === false)
 				{
-					return mysql_error();
+					$res_arr['database'] = mysql_error().". ".Lang::__t('Create this database?');
+					return $res_arr;
 				}
 				return true;
 			}
 		}
 		else 
-			return mysql_error();
+			$res_arr['server'] = mysql_error();
 		
+		if(count($res_arr)>0)
+			return $res_arr;
+			
 		return true;
 	}
 	
-	function connect()
+	function connect($die=true)
 	{
 		if($this->_CONNECTION_EMPTY) return ;
 		
-		$this->connection = @mysql_pconnect($this->_DB_PARAMS['host'], $this->_DB_PARAMS['user'], $this->_DB_PARAMS['passw'],MYSQL_CLIENT_INTERACTIVE);
+		$this->connection = @mysql_pconnect($this->_DB_PARAMS['host'], $this->_DB_PARAMS['user'], $this->_DB_PARAMS['password'],MYSQL_CLIENT_INTERACTIVE);
 		if (!($this->connection === false))
 		{
 			// select database
@@ -87,18 +100,51 @@ class plg_drv_mysql extends mod_plugin
 			{
 				if (mysql_select_db($this->_DB_PARAMS['dbname'], $this->connection) === false)
 				{
-					echo('Could not select database: ' . mysql_error());
-					die();
+					if($die)
+					{
+						echo('Could not select database: ' . mysql_error());
+						die();
+					}
 				}
 			}
 		}
 		else
 		{
-			echo('Could not connect mysql host: ' . mysql_error());
-			die();
+			if($die)
+			{
+				echo('Could not connect mysql host: ' . mysql_error());
+				die();
+			}
 		}
 		
-		mysql_set_charset($this->_DB_PARAMS['charset']);
+		@mysql_set_charset($this->_DB_PARAMS['charset']);
+	}
+	
+	public function create_db($db_name)
+	{
+		$sql = QueryMaker::query_makedb($db_name);		
+		return $this->query($sql);
+	}
+	
+	public function SrvMakedb($params=[])
+	{
+		//mul_dbg($_POST);
+		$this->_DB_PARAMS=$_POST['dbinfo'];
+		$dbname = $this->_DB_PARAMS['dbname'];
+		$this->_DB_PARAMS['dbname']=NULL;		
+		$this->_CONNECTION_EMPTY=false;
+		$this->connect(false);
+		$res = $this->create_db($dbname);
+		
+		$arr_result=array('success'=>true);
+		
+		if($res===false)
+		{
+			$arr_result['success']=false;
+			$arr_result['message']="Error #".$this->error_number()." ".$this->error_text();
+		}	
+		
+		echo json_encode($arr_result);
 	}
 	
 	public function escape_val($value,$type='text')
@@ -178,13 +224,15 @@ class plg_drv_mysql extends mod_plugin
 		
 //		echo ">> $sql >>";
 	
-		$res = mysql_query($sql);
+		$res = @mysql_query($sql);
 		if($res===false)
 		{
 			if($this->error_number()==2006)
 			{
 				$this->connect();
-				$res = mysql_query($sql);
+				$res = @mysql_query($sql);
+				if($res===false)
+					return false;
 			}
 		}
 		return $res;
@@ -193,6 +241,11 @@ class plg_drv_mysql extends mod_plugin
 	public function error_number()
 	{
 		return mysql_errno();
+	}
+	
+	public function error_text()
+	{
+		return mysql_error();
 	}
 	// get new row
 	public function get_row($res,$idx=NULL)
@@ -281,6 +334,11 @@ class plg_drv_mysql extends mod_plugin
 		
 	}
 	
+	private function OK_button_code()
+	{
+		$str = '&nbsp;<button class="btn btn-sm btn-xs" onclick="make_db(this);return false;">'.Lang::__t('OK').'</button>';
+		return $str;
+	}
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
 	public function getModel()
 	{
@@ -291,7 +349,7 @@ class plg_drv_mysql extends mod_plugin
 		$drv_base['fields']['dbname']=array('Type'=>'text','TypeInfo'=>"20");
 		$drv_base['fields']['prefix']=array('Type'=>'text','TypeInfo'=>"20");
 		
-		$drv_base['required']= array_merge($drv_base['required'], array('host','user','password','dbname'));
+		$drv_base['required']= array_merge($drv_base['required'], array('host','user','dbname'));
 		
 		$drv_base['validate_proc']=function($row,&$res)
 		{
@@ -304,9 +362,67 @@ class plg_drv_mysql extends mod_plugin
 			}
 
 			if($test_res!==true)
-				$res['connect']=$test_res;
+			{	
+				if(isset($test_res['server']))	
+				{
+					$test_res_str = $test_res['server'];					
+				}
+				if(isset($test_res['database']))
+				{
+					$test_res_str = $test_res['database'];
+					$test_res_str = $test_res_str.$this->OK_button_code();
+				}
+				$res['connect']=$test_res_str;
+			}
 		};
 		return $drv_base;
+	}
+	
+	function add_js_css($controller_obj)
+	{
+		$js_files = $this->js_files();
+		foreach ($js_files as $str_js)
+		{
+			$controller_obj->add_js($str_js);
+		}
+	
+		$css_files = $this->css_files();
+		foreach ($css_files as $str_css)
+		{
+			$controller_obj->add_css($str_css);
+		}
+	}
+	
+	function js_files()
+	{
+		$js_array=array();
+		GLOBAL $_BASEDIR;
+		$js_files = get_files_in_folder( url_seg_add(__DIR__,'js') );
+			
+		//echo $_SERVER['DOCUMENT_ROOT'];
+		foreach ($js_files as $js_script)
+		{
+			//echo $js_script;
+			$str_js = filepath2url($js_script);
+			$js_array[] = $str_js;
+		}
+		return $js_array;
+	}
+	
+	function css_files()
+	{
+		$css_array=array();
+		GLOBAL $_BASEDIR;
+		$css_files = get_files_in_folder( url_seg_add(__DIR__,'css') );
+			
+		//echo $_SERVER['DOCUMENT_ROOT'];
+		foreach ($css_files as $css_file)
+		{
+			//echo $js_script;
+			$str_css = filepath2url($css_file);
+			$css_array[] = $str_css;
+		}
+		return $css_array;
 	}
 	
 	// row count in result

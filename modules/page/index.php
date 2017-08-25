@@ -23,11 +23,17 @@ class mul_page extends mul_Module
 	VAR $CONF_EP=array();
 	VAR $theme_obj;
 	VAR $_REQUEST=NULL;
+	VAR $_CONTROLLER;
 	
 	
 	function __construct($_PARAMS)
 	{
 		
+	}
+	
+	function getController()
+	{
+		return $this->_CONTROLLER;
 	}
 	
 	function get_actions()
@@ -822,7 +828,10 @@ class mul_page extends mul_Module
 		ob_start();
 			
 		$this->_ENV_INFO['page_module']=$this;
-		$controller_object = new $controller_name(
+		
+		$old_controller = $this->_CONTROLLER;
+		//$controller_object
+		$this->_CONTROLLER = new $controller_name(
 						array(
 								'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],
 								'_ENV'=>$this->_ENV_INFO,
@@ -831,19 +840,19 @@ class mul_page extends mul_Module
 						
 		// Такого метода нет в контроллере попытка 1
 			
-		if(!method_exists($controller_object, $_action_name))
+		if(!method_exists($this->_CONTROLLER, $_action_name))
 		{
 			return array_merge($bad_result,array('error'=>'404',));
 		}
 		//print_r($con_info);
-		if(!$controller_object->IsActionEnable($con_info['_ACTION_NAME']))
+		if(!$this->_CONTROLLER->IsActionEnable($con_info['_ACTION_NAME']))
 		{
 			return array_merge($bad_result,array('error'=>'403','notry'=>true));
 		}
 						
 		// Параметры метода
 		
-		$method_args = $this->make_args($controller_name, $controller_object, $_action_name, $request);
+		$method_args = $this->make_args($controller_name, $this->_CONTROLLER, $_action_name, $request);
 		//print_r($method_args);
 		if($method_args==NULL && !is_array($method_args) )
 		{
@@ -855,11 +864,11 @@ class mul_page extends mul_Module
 					'action'=>$con_info['_ACTION_NAME'],
 					'args'=>$method_args,
 			];
-			$controller_object->BeforeAction($before_args);			
+			$this->_CONTROLLER->BeforeAction($before_args);			
 			
-			call_user_func_array(array($controller_object,$_action_name), $method_args);
+			call_user_func_array(array($this->_CONTROLLER,$_action_name), $method_args);
 				//$controller_object->$_action_name();
-			$controller_object->AfterAction($before_args);
+			$this->_CONTROLLER->AfterAction($before_args);
 		}
 		catch (Exception $exc)
 		{
@@ -868,6 +877,9 @@ class mul_page extends mul_Module
 		$content = ob_get_contents();
 		ob_end_clean();
 			
+		$controller_object = $this->_CONTROLLER;
+		
+		$this->_CONTROLLER = $old_controller;
 			
 		return array(
 			'content'=>$content,

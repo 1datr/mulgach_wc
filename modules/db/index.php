@@ -39,8 +39,9 @@ class mul_db extends mul_Module
 		//if($this->dbparams['family'])
 		if($this->dbparams!='#none')
 		{
-						
-			$drv = $this->use_plugin("drv_mysql",$this->dbparams);
+			$drvname = $this->dbparams['driver'];		
+			$drvname = "drv_$drvname";
+			$drv = $this->use_plugin($drvname,$this->dbparams);
 			if(!empty($this->dbparams['dbkey']))
 				$this->connections[$this->dbparams['dbkey']]=$drv;
 			else
