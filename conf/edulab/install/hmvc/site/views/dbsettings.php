@@ -3,8 +3,7 @@ $form = new mulForm(as_url("site/setconfig"),$this);
 // 'driver'
 ?>
 <div id="drv_params">
-<?php
-$form->custom_error_div('connect');
+<?php 
 $model_row->draw_def_form($form);
 ?>
 </div>

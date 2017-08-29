@@ -1,5 +1,5 @@
 <?php 
-class BykvaController extends InstallTableController
+class BykvaController extends InstallTableController 
 {
 
 

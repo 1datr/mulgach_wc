@@ -1,5 +1,5 @@
 <?php 
-class UsersController extends InstallController
+class UsersController extends InstallTableController 
 {
 
 

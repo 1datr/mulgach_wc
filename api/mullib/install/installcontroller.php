@@ -87,7 +87,20 @@ class InstallController extends BaseController
 		$_cfg = new scaff_conf($_CONFIG);
 		
 		$install_triads = $_cfg->get_triads('install');
-		print_r($install_triads);
+		
+		$this->add_js( url_seg_add($this->get_current_dir(), 'js/install.js'));
+		
+		delete_from_array_by_value('site', $install_triads);
+		
+		//print_r($install_triads);
+		$this->inline_script('
+var hmvcs=['.xx_implode($install_triads, ',', '"{%val}"').'];				
+				
+
+				');
+		jq_onready($this, 'call_install_table("/install");');
+		
+		$this->out_view('maketables',['triads'=>$install_triads]);
 	}
 	
 	public function ActionLoadform($drv=NULL)

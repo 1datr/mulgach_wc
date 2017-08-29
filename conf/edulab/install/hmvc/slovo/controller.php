@@ -1,5 +1,5 @@
 <?php 
-class SlovoController extends InstallController
+class SlovoController extends InstallTableController 
 {
 
 

@@ -140,7 +140,7 @@ class plg_drv_mysql extends mod_plugin
 					$thetemplate=$thetemplate." null";
 				
 				// 					
-				if($this->GetTypeClass($theval['Type'])!='text')
+				if( !in_array($this->GetTypeClass($theval['Type']),['text','datetime','binary'] ))
 				{
 					$theval['Type']=$theval['Type']."(".$theval['TypeInfo'].")";
 				}				
@@ -157,7 +157,8 @@ class plg_drv_mysql extends mod_plugin
 			}
 		);
 		$sql = $sql."( $str_fields )";
-		//echo $sql;
+		
+		//mul_dbg($sql);
 		return $this->query($sql);
 	}
 	

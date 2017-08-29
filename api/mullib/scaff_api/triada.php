@@ -426,14 +426,20 @@ class scaff_triada
 		
 		// add controller file
 		$this->x_make_controller($_params,$rewrite_all);
+		
+		// Модель
+		$this->make_model($_params,$rewrite_all);
+		
+		// Файлик
+		$this->make_baseinfo($_params,$controller);
 			
 		$vars_menu=array('triada'=>$this->NAME);
 		
 		
-		$template_file_name="installcontroller";
+		$template_file_name="installtablecontroller";
 		if(isset($_params['mainmenu'][$this->_EP]))
 		{
-			$template_file_name="installauthcontroller";
+			$template_file_name="install/installauthcontroller";
 		}
 		
 		

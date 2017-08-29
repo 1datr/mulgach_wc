@@ -11,7 +11,7 @@ class PrepsController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','bykva/login')
+						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}

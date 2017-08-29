@@ -228,6 +228,11 @@ function exe_php_str($code_str,$addition_vars=array())
 	return $res;
 }
 
+function delete_from_array_by_value($val, &$arr)
+{
+	unset($arr[array_search($val,$arr)]);
+}
+
 function url_seg_add()
 {
 	$numargs = func_num_args();
