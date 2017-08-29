@@ -44,27 +44,29 @@ $conf = array(
 		
 ?>');
 		file_put_contents_ifne(url_seg_add($this->_PATH,'config.php'), '<?php
-require_once __DIR__."/dbconf.php";
+
+if($_EP=="install")
+{
+	$dbparams="#none";
+}
+else 
+{
+	if(file_exists(__DIR__."/dbconf.php"))
+	{
+		require_once __DIR__."/dbconf.php";
+	}
+}
 //$_CACHE_JS=true;
 //$_CACHE_CSS=true;
 
 
 $_MODULES=array(
-		"db"=>array(
-				"family"=>"mysql",
-				"host"=>$_db_server,
-				"user"=>$_db_user,
-				"passw"=>$_db_passw,
-				"dbname"=>$_db_name,
-				"prefix"=>$_db_prefix,
-				"charset"=>$_db_charset,
-				"dbkey"=>"main",
-		),		
+		"db"=>$dbparams,		
 )
 				
 ?>');
 		
-		file_put_contents_ifne(url_seg_add($this->_PATH,'dbconf.php'), '<?php 
+/*		file_put_contents_ifne(url_seg_add($this->_PATH,'dbconf.php'), '<?php 
 $_db_server = "localhost";
 $_db_user = "root";
 $_db_passw = "123456";
@@ -72,7 +74,7 @@ $_db_name = "tms2";
 $_db_prefix = "crm_";
 //$_db_charset = "cp1251_general_ci";
 $_db_charset = "utf8_bin";//
-?>');
+?>');*/
 		$this->add_basic_layouts();
 		
 		$this->make_def_controller();
@@ -94,21 +96,28 @@ $_db_charset = "utf8_bin";//
 			return "";
 	}
 	
-	function get_triads()
-	{
+	function get_triads($_the_ep=NULL)
+	{		
 		$eps=array('frontend','backend','install','rest');
 		$res=array();
 		foreach ($eps as $_ep)
 		{
-			$ep_dir=url_seg_add($this->_PATH,$_ep,'hmvc');					
-			
-			if(file_exists($ep_dir))
+			if( ($_the_ep==NULL) || ($_ep===$_the_ep))
 			{
+				$ep_dir=url_seg_add($this->_PATH,$_ep,'hmvc');					
 				
-				$hmvcs = get_files_in_folder($ep_dir,array('dirs'=>true,'basename'=>true));
-				
-				$res[$_ep]=$hmvcs;
+				if(file_exists($ep_dir))
+				{
+					
+					$hmvcs = get_files_in_folder($ep_dir,array('dirs'=>true,'basename'=>true));
+					
+					$res[$_ep]=$hmvcs;
+				}
 			}
+		}
+		if($_the_ep!=NULL)
+		{
+			return $res[$_the_ep];
 		}
 		return $res;
 	}
@@ -214,6 +223,7 @@ $_db_charset = "utf8_bin";//
 		return null;
 	}
 	
+		
 	function create_triada($ep,$hmvc)
 	{
 		$tr = $this->get_triada($ep, $hmvc);

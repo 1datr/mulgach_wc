@@ -19,4 +19,6 @@ $_LANG['dbinfo.charset']='dbinfo.charset';
 $_LANG['dbinfo.dbkey']='dbinfo.dbkey';
 $_LANG['Create this database?']='Create this database?';
 $_LANG['OK']='OK';
+$_LANG[' was created']=' was created';
+$_LANG['Table ']='Table ';
 ?>

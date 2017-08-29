@@ -14,6 +14,7 @@ $_EP_PATH = NULL;
 class mul_page extends mul_Module 
 {
 	VAR $_DIR_CONFIG;
+	VAR $_CONFIG;
 	VAR $_DIR_EP;
 	VAR $_THEME;
 	VAR $CFG_INFO;
@@ -286,6 +287,8 @@ class mul_page extends mul_Module
 		
 		GLOBAL $_EP, $_CONTROLLER, $_ACTION, $_THEME;
 		GLOBAL $_CONFIGS_AREA, $_CONFIG, $_BASEDIR;
+		
+		$this->_CONFIG = $_CONFIG ;
 		if(empty($_EP))
 			$_EP="frontend";	
 		

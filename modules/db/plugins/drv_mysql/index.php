@@ -53,7 +53,7 @@ class plg_drv_mysql extends mod_plugin
 			'driver'=>'mysql',
 			'host'=>'".$_params['host']."',
 			'user'=>'".$_params['user']."',
-			'passw'=>'".$_params['password']."',
+			'password'=>'".$_params['password']."',
 			'dbname'=>'".$_params['dbname']."',
 			'prefix'=>'".$_params['prefix']."',
 			'charset'=>'cp1251_general_ci',
@@ -123,6 +123,41 @@ class plg_drv_mysql extends mod_plugin
 	public function create_db($db_name)
 	{
 		$sql = QueryMaker::query_makedb($db_name);		
+		return $this->query($sql);
+	}
+	
+	
+	public function create_table($table_info)
+	{
+		// DROP TABLE IF EXISTS `@+{table}`
+		$sql = "CREATE TABLE `@+".$table_info['table']."` ";
+		$table_fields = $table_info['fields'];
+		$str_fields = xx_implode($table_fields, ',', '`{idx}` {Type}',function(&$theval,&$idx,&$thetemplate,&$ctr,$thedelimeter) use($table_info)
+			{
+				if(in_array($idx,$table_info['required']) || ($table_info['primary']==$idx) )				
+					$thetemplate=$thetemplate." not null";
+				else 
+					$thetemplate=$thetemplate." null";
+				
+				// 					
+				if($this->GetTypeClass($theval['Type'])!='text')
+				{
+					$theval['Type']=$theval['Type']."(".$theval['TypeInfo'].")";
+				}				
+					
+				//	
+				if($table_info['primary']==$idx)
+				{
+					$thetemplate=$thetemplate." PRIMARY KEY";
+					if(eql_ife($table_fields, 'not_a_i', true))
+					{
+						$thetemplate=$thetemplate." AUTO_INCREMENT";
+					}
+				}
+			}
+		);
+		$sql = $sql."( $str_fields )";
+		//echo $sql;
 		return $this->query($sql);
 	}
 	

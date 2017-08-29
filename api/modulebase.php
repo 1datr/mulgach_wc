@@ -87,12 +87,16 @@ class mul_Module
 	
 	function use_plugin($plg,$params=array())
 	{
-		require_once $this->get_module_dir()."/plugins/$plg/index.php";
-		$class_name="plg_$plg";
-		if(class_exists($class_name))
+		$_plug_file_path = $this->get_module_dir()."/plugins/$plg/index.php";
+		if(file_exists($_plug_file_path))
 		{
-			$newobj=new $class_name($params);
-			return $newobj;
+			require_once $_plug_file_path;
+			$class_name="plg_$plg";
+			if(class_exists($class_name))
+			{
+				$newobj=new $class_name($params);
+				return $newobj;
+			}
 		}
 		return null;
 	}

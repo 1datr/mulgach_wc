@@ -65,6 +65,7 @@ class InstallController extends BaseController
 		return NULL;
 	}
 	
+	// установить файл конфигурации
 	public function ActionSetconfig()
 	{
 		$conf_dir = url_seg_add($this->get_current_dir(),'../../..');
@@ -75,6 +76,18 @@ class InstallController extends BaseController
 		
 		$code = $drv_obj->dbconfig_code($_POST['dbinfo']);
 		file_put_contents($dbconf_file, $code);
+		
+		$this->redirect(as_url('site/maketables'));
+	}
+	
+	public function ActionMaketables()
+	{
+		GLOBAL $_BASEDIR, $_CONFIG;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');		
+		$_cfg = new scaff_conf($_CONFIG);
+		
+		$install_triads = $_cfg->get_triads('install');
+		print_r($install_triads);
 	}
 	
 	public function ActionLoadform($drv=NULL)
@@ -111,4 +124,12 @@ class InstallController extends BaseController
 		
 		$this->out_ajax_block('dbsettings',array('model_row'=>$model_row,'plugs'=>$plugs,'drv'=>$drv,'drv'=>$drv));
 	}
+	
+	
+	
+	function create_table()
+	{
+			
+	}
+	
 }

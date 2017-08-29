@@ -586,7 +586,10 @@ class scaff_triada
 		$this->make_controller($vars,$rewrite_all,$template);
 	}
 	
+	public static function GetTriads($confs,$ep)
+	{
 	
+	}
 	
 	function getModelInfo()
 	{

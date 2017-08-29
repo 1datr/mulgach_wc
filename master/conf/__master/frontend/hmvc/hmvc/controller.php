@@ -350,6 +350,22 @@ class HmvcController extends BaseController
 		
 	}
 	
+	private function make_hmvc_install($_params,$opts)
+	{
+		GLOBAL $_BASEDIR;
+	
+		$conf_obj=$opts['conf_obj'];
+	
+		$rewrite_all=false;
+		if(isset($_params['rewrite_all']))
+			$rewrite_all=true;
+	
+		$ep='install';
+		$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+	
+		$the_triada->install_from_table($_params,$this,$opts);
+	}
+	
 	private function make_hmvc($_params)
 	{
 		//print_r($_params['constraints']);

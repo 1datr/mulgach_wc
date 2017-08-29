@@ -3,7 +3,7 @@
 			'driver'=>'mysql',
 			'host'=>'localhost',
 			'user'=>'root',
-			'passw'=>'123456',
+			'password'=>'123456',
 			'dbname'=>'dre',
 			'prefix'=>'',
 			'charset'=>'cp1251_general_ci',

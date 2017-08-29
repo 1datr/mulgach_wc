@@ -9,7 +9,7 @@ trait dbDriver {
 	public function get_primary($var){}
 	public function get_constraints($table){}
 	public function escape_val($value,$type='text'){}
-	public function create_table($table,$params){}
+	public function create_table($table_info){}
 	public function last_insert_id(){}	
 	
 	public function error_number(){}

@@ -58,7 +58,7 @@ class BaseController
 		return array(	
 		);
 	}
-	
+		
 	function CallEvent($eventname, $eparams=[])
 	{
 		$res = $this->_ENV['page_module']->call_event($eventname, $eparams,['src'=>'controller']);
@@ -78,7 +78,9 @@ class BaseController
 		if(!empty($res))
 		{
 			$this->_ENV['_CONNECTION']=$res;
+			return $res;
 		}
+		return NULL;
 	}
 	
 	function get_this_name()// имя текущего контроллера

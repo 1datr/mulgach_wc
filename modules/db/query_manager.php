@@ -27,6 +27,11 @@ class QueryMaker {
 		return "UPDATE `@+{$tbl}` SET ".xx_implode($arr, ',', "`{idx}`='{%val}'") ." WHERE {$WHERE}";
 	}
 	
+	static function query_create_db($settings)
+	{
+		
+	}
+	
 	static function query_insert($tbl,$_arr_to_insert)
 	{
 		function one_block_query($arr)
