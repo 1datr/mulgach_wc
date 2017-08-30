@@ -96,7 +96,7 @@ class scaff_triada
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			$vars['table'] = $_params['table'];
 			$vars['BaseModelClass'] = 'BaseModel';
-			if(isset($_params['authcon'][$this->_EP]['enable']))				
+			if(isset($_params['authcon']['enable']))				
 				$vars['BaseModelClass'] = 'AuthModel';
 			x_file_put_contents($this->_MODEL_PATH, parse_code_template(url_seg_add(__DIR__,'/phpt/model.phpt'),$vars));
 		}
@@ -295,17 +295,17 @@ class scaff_triada
 		$vars['authparams']='';
 	//	mul_dbg($_params['authcon']);
 	//	mul_dbg($_params['authcon'][$this->_EP]['enable']);
-		if(isset($_params['authcon'][$this->_EP]['enable']))
+		if(isset($_params['authcon']['enable']))
 		{			
 			
 			$vars['authparams']=parse_code_template(url_seg_add(__DIR__,'phpt/authparams.phpt') , 
 					array(
 						'src_type'=>'db',
 						'src_authdata'=>$_params['table'],
-						'login_field'=>$_params['authcon'][$this->_EP]['login'],
-						'passw_field'=>$_params['authcon'][$this->_EP]['passw'],
-						'hash_field'=>$_params['authcon'][$this->_EP]['hash'],
-						'email_field'=>$_params['authcon'][$this->_EP]['email'],
+						'login_field'=>$_params['authcon']['login'],
+						'passw_field'=>$_params['authcon']['passw'],
+						'hash_field'=>$_params['authcon']['hash'],
+						'email_field'=>$_params['authcon']['email'],
 					));
 		}
 		
@@ -358,17 +358,17 @@ class scaff_triada
 		$this->menu_site_codes=array('menu_method'=>'','menu_block_use'=>'');
 		if(!empty($_params['mainmenu'][$this->_EP]))
 		{
-			$vars_menu=array('auth_con'=>$_params['con_auth'][$this->_EP]);
+			$vars_menu=array('auth_con'=>$_params['con_auth']);
 			$this->menu_site_codes['menu_method']=parse_code_template(url_seg_add(__DIR__,'/phpt/backend/sitemenu.phpt'),$vars_menu);
 	
 			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
 	
-			if(isset($_params['authcon'][$this->_EP]['enable']))
+			if(isset($_params['authcon']['enable']))
 			{
-				$_params['con_auth'][$this->_EP]=$_params['table'];
+				$_params['con_auth']=$_params['table'];
 			}
 			
-			$this->add_view('menu', 'backend/menu', array('auth_con'=>$_params['con_auth'][$this->_EP]));
+			$this->add_view('menu', 'backend/menu', array('auth_con'=>$_params['con_auth']));
 				
 		//	mul_dbg($this->menu_site_codes);
 			/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
@@ -471,12 +471,12 @@ class scaff_triada
 	
 			$this->menu_site_codes['menu_block_use'] = '$this->add_block("BASE_MENU", "'.$_params["table"].'", "menu");';
 				
-			if(isset($_params['authcon'][$this->_EP]['enable']))
+			if(isset($_params['authcon']['enable']))
 			{
-				$_params['con_auth'][$this->_EP]=$_params['table'];
+				$_params['con_auth']=$_params['table'];
 			}
 			//	mul_dbg($this->menu_site_codes);
-			$this->add_view('menu', 'backend/menu', array('auth_con'=>$_params['con_auth'][$this->_EP]));
+			$this->add_view('menu', 'backend/menu', array('auth_con'=>$_params['con_auth']));
 	
 				/*	$menu_info_file = parse_code_template(url_seg_add(__DIR__,'../../phpt/backend/menu.phpt'),array());
 					x_file_put_contents(url_seg_add($hmvc_dir,'views/menu.php'), $menu_info_file);*/
@@ -539,22 +539,22 @@ class scaff_triada
 		$vars['ParentControllerClass']='BaseController';
 
 		// add controller file
-		if(isset($_params['authcon'][$this->_EP]['enable']))	// Контроллер авторизации
+		if(isset($_params['authcon']['enable']))	// Контроллер авторизации
 		{
 			$vars['ParentControllerClass']='AuthController';
 			
 			if( !($this->has_view('loginform'))|| $_params['rewrite_all'])
 			{
 				$vars['this_controller'] = $_params['table'];
-				$vars['login_fld']=$_params['authcon']['backend']['login'];
-				$vars['passw_fld']=$_params['authcon']['backend']['passw'];
+				$vars['login_fld']=$_params['authcon']['login'];
+				$vars['passw_fld']=$_params['authcon']['passw'];
 				$allowed_methods="'login','auth'";
 					
 				//	$vars['settings']=$settings;
 				//	$vars['constraints']=$_params['constraints'];
 				$vars['OTHER_METHODS']= $vars['OTHER_METHODS'] . parse_code_template( url_seg_add(__DIR__,'phpt/login/action.phpt' ), array(
-						'login_fld' => $_params['authcon']['backend']['login'],
-						'passw_fld' => $_params['authcon']['backend']['passw'],
+						'login_fld' => $_params['authcon']['login'],
+						'passw_fld' => $_params['authcon']['passw'],
 						'this_controller' => $_params['table'],
 				));
 				
@@ -583,7 +583,7 @@ class scaff_triada
 			if( in_array($this->_EP,array('backend','frontend')))
 			{
 				$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules.phpt' ), array(
-						'auth_con' => $_params['con_auth'][$this->_EP],
+						'auth_con' => $_params['con_auth'],
 				));
 			}
 		}

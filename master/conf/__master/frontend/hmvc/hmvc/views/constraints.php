@@ -78,6 +78,12 @@ $this->inline_css('
 							'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
   							'sbplugin'=>$sbplugin,
+				  			// def fields
+				  			'fld_login_'=>$fld_login_,
+				  			'fld_passw_'=>$fld_passw_,
+				  			'fld_hash_'=>$fld_hash_,
+				  			'fld_email_'=>$fld_email_,
+  							'triads'=>$triads,
   							'_hmvc'=>$_hmvc,));
   	?>
  	</div>

@@ -187,6 +187,39 @@ $sbplugin->block_end(function(){
 	?>
 	</p>
 	</div>
+	
+	
+<h3>#{AUTHORIZATION}</h3>	
+<div style="border-width: 1px; border-color:#ddd; border-style: solid; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-top-left-radius: 5px; ">
+<label for="cb_usercon_">#{Users and auth controller}</label>
+<input type="checkbox" name="authcon[enable]" onclick="toggle_ep_divs('');" /><br/>
+	<div id="authcon_settings_" style="display: none; padding-left:20px;">
+		<label for="authcon_login_">#{Login field}</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[login]','value'=>$fld_login_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_',))); ?><br />
+			
+		<label for="authcon_passw_">#{Password field}</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[passw]','value'=>$fld_passw_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_passw_',))); ?><br />
+			
+		<label for="authcon_hash_">#{Hash field}</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[hash]','value'=>$fld_hash_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_',))); ?><br />
+			
+		<label for="authcon_email_">#{e-mail}</label>
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[email]','value'=>$fld_email_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_email_',))); ?><br />
+			
+		
+	</div>
+	
+	<div id="con_for_auth_div_">
+	<label for="cb_con_auth_">#{Controller using for authorize:}</label>
+	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads['frontend'],
+							'name'=>"con_auth",											
+							'htmlattrs'=>array('id'=>'cb_con_auth_'.$_ep),
+							'value'=>(isset($_SESSION['authhost']) ? $_SESSION['authhost'] : ''),
+							)							
+						); ?>
+	</div>
+	
+</div>	
 
 
 	

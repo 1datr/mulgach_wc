@@ -1,5 +1,5 @@
 <?php 
-class UsersController extends AuthController
+class UsersController extends BaseController
 {
 
 	public function Rules()
@@ -11,7 +11,7 @@ class UsersController extends AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','users/login')
+						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
@@ -100,34 +100,6 @@ class UsersController extends AuthController
 		$menu = $this->getinfo('basemenu');
 		//print_r($menu);
 		$this->out_view('menu',array('menu'=>$menu));
-	}	public function ActionLogin()
-	{
-		$this->_TITLE=Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('loginform',array());
-	}
-	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
-		if($auth_res)
-		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
-
-			$this->redirect(as_url('users'));
-		}
-		else 
-			$this->redirect_back();
-
-		//$this->out_view('loginform',array());
-	}
-	
-	
-	
-	public function ActionLogout()
-	{
-		$this->logout();
-		$this->redirect(as_url('users/login'));
 	}
 }
 ?>

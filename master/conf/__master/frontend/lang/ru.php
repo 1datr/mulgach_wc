@@ -92,4 +92,6 @@ $_LANG['save translation']='save translation';
 $_LANG['save']='save';
 $_LANG['Configuration ']='Configuration ';
 $_LANG['e-mail']='e-mail';
+$_LANG['MAIN MENU']='MAIN MENU';
+$_LANG['AUTHORIZATION']='AUTHORIZATION';
 ?>

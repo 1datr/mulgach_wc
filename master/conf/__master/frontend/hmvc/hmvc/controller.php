@@ -379,17 +379,18 @@ class HmvcController extends BaseController
 	//	print_r($_params);
 		$dbparams = $conf_obj->connect_db_if_exists($this); 
 		
-		//print_r($_params);
+		// Авторизация
+		if(isset($_params['authcon']['enable']))
+		{
+			$_SESSION['authhost']=$_params['table'];
+		}
+		else
+			$_SESSION['authhost']=$_params['con_auth'];
+		
+			
 		if(!empty($_params['ep']['frontend']))
 		{			
-			$ep='frontend';
-			
-			if(isset($_params['authcon'][$ep]['enable']))
-			{
-				$_SESSION['authhost'][$ep]=$_params['table'];
-			}
-			else
-				$_SESSION['authhost'][$ep]=$_params['con_auth'][$ep];
+			$ep='frontend';						
 				
 			// connect the menu from som controller
 			if(isset($_params['mainmenu'][$ep]))
@@ -407,14 +408,7 @@ class HmvcController extends BaseController
 		if(!empty($_params['ep']['backend']))
 		{
 				
-			$ep='backend';
-			
-			if(isset($_params['authcon'][$ep]['enable']))
-			{
-				$_SESSION['authhost'][$ep]=$_params['table'];
-			}
-			else
-				$_SESSION['authhost'][$ep]=$_params['con_auth'][$ep];
+			$ep='backend';						
 			
 			// connect the menu from som controller 
 			if(isset($_params['mainmenu'][$ep]))

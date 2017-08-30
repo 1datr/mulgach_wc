@@ -1,3 +1,4 @@
+
 	public function ActionLogin()
 	{
 		$this->_TITLE=Lang::__t('Authorization');
