@@ -192,8 +192,19 @@ $sbplugin->block_end(function(){
 <h3>#{AUTHORIZATION}</h3>	
 <div style="border-width: 1px; border-color:#ddd; border-style: solid; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-top-left-radius: 5px; ">
 <label for="cb_usercon_">#{Users and auth controller}</label>
-<input type="checkbox" name="authcon[enable]" onclick="toggle_ep_divs('');" /><br/>
-	<div id="authcon_settings_" style="display: none; padding-left:20px;">
+<?php 
+$checked="";
+$display="display: none;";
+$display_authcon="";
+if($authcon)
+{
+	$checked=" checked ";
+	$display="";
+	$display_authcon="display: none;";
+}
+?>
+<input type="checkbox" name="authcon[enable]" onclick="toggle_ep_divs('');" <?=$checked?> /><br/>
+	<div id="authcon_settings_" style="<?=$display?>padding-left:20px;">
 		<label for="authcon_login_">#{Login field}</label>
 		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[login]','value'=>$fld_login_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_',))); ?><br />
 			
@@ -209,7 +220,7 @@ $sbplugin->block_end(function(){
 		
 	</div>
 	
-	<div id="con_for_auth_div_">
+	<div id="con_for_auth_div_" style="<?=$display_authcon?>">
 	<label for="cb_con_auth_">#{Controller using for authorize:}</label>
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads['frontend'],
 							'name'=>"con_auth",											

@@ -84,7 +84,9 @@ $this->inline_css('
 				  			'fld_hash_'=>$fld_hash_,
 				  			'fld_email_'=>$fld_email_,
   							'triads'=>$triads,
-  							'_hmvc'=>$_hmvc,));
+  							'_hmvc'=>$_hmvc,
+  							'authcon'=>$authcon,
+  	));
   	?>
  	</div>
   	<div id="capts" class="tab-pane tab-page" role="tabpanel">

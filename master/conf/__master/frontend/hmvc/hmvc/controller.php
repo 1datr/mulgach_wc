@@ -10,8 +10,21 @@ class HmvcController extends BaseController
 		);
 	}
 	
-	public function ActionIndex($cfg='main',$ep='frontend')
+	public function getCurrCFG()
 	{
+		$conf_file = "../config.php";
+		require_once $conf_file;
+		return $_CONFIG;
+	}
+	
+	public function ActionIndex($cfg=NULL,$ep='frontend')
+	{
+		if($cfg==NULL)
+		{
+			
+			$cfg= $this->getCurrCFG();
+		}
+		
 		$this->_TITLE="HMVC {$cfg}";
 		$this->add_css($this->get_current_dir()."/css/style.css");
 		
@@ -221,7 +234,9 @@ class HmvcController extends BaseController
 						{
 							$table_warnings[]=Lang::__t('Primary key of this table is empty');
 						}
-											
+							
+						$authcon=$_hmvc->is_auth();
+						
 						$this->out_view('constraints',array(
 								'fields'=>$fields,
 								'tables'=>$tables,							
@@ -236,6 +251,7 @@ class HmvcController extends BaseController
 								'fld_hash_'=>$fld_hash_,
 								'fld_email_'=>$fld_email_,
 								'_hmvc'=>$_hmvc,
+								'authcon'=>$authcon,
 						));
 					};break;
 			case 'makefiles': {
