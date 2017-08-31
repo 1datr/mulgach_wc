@@ -8,5 +8,13 @@ $settings = array(
 	'rules'=>array(),	
 	'view'=>'{bukva}',
 	'file_fields'=>array(),
-	
+	'authdata'=>array(
+		'type'=>'db',
+		'src'=>'users',
+		// fields
+		'login_field'=>'login',
+		'passw_field'=>'password',
+		'hash_tag'=>'hash',
+		'email_field'=>'email',
+	),
 );

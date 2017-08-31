@@ -11,6 +11,7 @@ class scaff_triada
 	VAR $_BASEFILE_PATH;
 	VAR $menu_site_codes;
 	VAR $_SETTINGS=array();
+	VAR $_AUTH=FALSE;
 
 	function __construct(&$conf_obj,$ep,$triada,$create=true)
 	{
@@ -37,6 +38,21 @@ class scaff_triada
 			$this->_SETTINGS=$settings;
 		}
 
+	//	$this->_AUTH = $this->is_auth();
+	}
+	
+	function is_auth()
+	{
+		$_CONTROLLER_FILE = url_seg_add($this->_PATH,'controller.php');
+		if(file_exists( $_CONTROLLER_FILE))
+		{
+			require $_CONTROLLER_FILE;
+			
+			$controller_name = BaseController::ControllerName($this->NAME);
+			$con_obj = new $controller_name('#test');
+			return method_exists($con_obj, "ActionLogin");
+		}
+		return false;
 	}
 	// 'actions' => action list
 	function make_pure($params,$rewrite_all=true)
@@ -434,18 +450,70 @@ class scaff_triada
 		$this->make_baseinfo($_params,$controller);
 			
 		$vars_menu=array('triada'=>$this->NAME);
-		
+				
 		
 		$template_file_name="installtablecontroller";
-		if(isset($_params['mainmenu'][$this->_EP]))
-		{
-			$template_file_name="install/installauthcontroller";
-		}
 		
+		// 
+		if(isset($_params['authcon']['enable']))
+		{
+			$this->make_insatll_user_form();
+		}		
 		
 		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
 				parse_code_template(url_seg_add(__DIR__,'/phpt/install',$template_file_name.'.phpt'),$vars_menu));
 		
+	}
+	
+	public function make_insatll_user_form()
+	{
+		$template_file_name="installauthcontroller";
+			
+		$uvars['makeuser_action']=$this->NAME.'/regadmin';
+		$fields = $this->_SETTINGS['fields'];
+		
+		$ordered_fields=array();
+		
+		$login_field = $this->_SETTINGS['authdata']['login_field'];
+		//mul_dbg($login_field);
+		$ordered_fields[$login_field]=$fields[$login_field];
+		unset($fields[$login_field]);
+		
+		$passw_field= $this->_SETTINGS['authdata']['passw_field'];
+		$ordered_fields[$passw_field]=$fields[$passw_field];
+		$passw_field_re = $passw_field."_re";
+		$ordered_fields[$passw_field_re]=$fields[$passw_field];
+		unset($fields[$passw_field]);
+		
+		$email_field = $this->_SETTINGS['authdata']['email_field'];
+		//mul_dbg($login_field);
+		$ordered_fields[$email_field]=$fields[$email_field];
+		unset($fields[$email_field]);
+		
+		$hash_tag = $this->_SETTINGS['authdata']['hash_tag'];
+		//	$ordered_fields[$hash_tag]=$fields[$hash_tag];
+		unset($fields[$hash_tag]);
+		
+		//	mul_dbg($ordered_fields);
+		
+		$ordered_fields=merge_arrays_assoc($ordered_fields, $fields);
+		
+		//	mul_dbg($ordered_fields);
+		
+		$uvars['fields_ordered']=$ordered_fields;
+		$uvars['fld_primary']=$_primary;
+		$uvars['fld_passw']=$passw_field;
+		$uvars['fld_passw_re']=$passw_field_re;
+		$uvars['table'] = $_params['table'];
+		$uvars['TABLE_UC']=strtoupper($_params['table']);
+		$uvars['fields']=$tbl_fields;
+		$uvars['settings']=$settings;
+		$uvars['constraints']=$_params['constraints'];
+			
+		file_put_contents(url_seg_add($this->_PATH,'views/adduserform.php'),
+				parse_code_template(url_seg_add(__DIR__,'/phpt/install/view/adduserform.phpt'),
+						$uvars
+						));
 	}
 	
 	public function backend_from_table($_params,$controller,$opts)

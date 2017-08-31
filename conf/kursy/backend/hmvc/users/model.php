@@ -1,5 +1,5 @@
 <?php
-class ModelUsers extends BaseModel
+class ModelUsers extends AuthModel
 {
 	
 }

@@ -20,6 +20,9 @@ class BaseController
 	
 	function __construct($_env_info=array())
 	{
+		if($_env_info=='#test')
+			return ;
+		
 		$this->_CONTROLLER_DIR = $_env_info['_CONTROLLER_DIR'];
 		$this->_ENV = $_env_info['_ENV'];
 		
@@ -41,6 +44,11 @@ class BaseController
 			$model_env['_CONTROLLER']=$this;
 			$this->_MODEL = new $model_class_name($this->_CONTROLLER_DIR,$model_env);
 		}
+	}
+	
+	public static function ControllerName($trname)
+	{
+		return ucfirst(strtolower($trname))."Controller";
 	}
 	
 	public function UseModel($model_settings=array())
