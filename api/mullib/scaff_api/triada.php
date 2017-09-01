@@ -457,7 +457,8 @@ class scaff_triada
 		// 
 		if(isset($_params['authcon']['enable']))
 		{
-			$this->make_insatll_user_form();
+			$template_file_name="installauthcontroller";
+			$this->make_install_user_form();
 		}		
 		
 		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
@@ -465,7 +466,7 @@ class scaff_triada
 		
 	}
 	
-	public function make_insatll_user_form()
+	public function make_install_user_form()
 	{
 		$template_file_name="installauthcontroller";
 			

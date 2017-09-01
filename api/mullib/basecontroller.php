@@ -54,9 +54,11 @@ class BaseController
 	public function UseModel($model_settings=array())
 	{
 		$model_env = $this->_ENV;
-		$model_env['_CONTROLLER']=$this;		
+		$model_env['_CONTROLLER']=$this;
+		
 		$_model = new BaseModel($this->_CONTROLLER_DIR,$model_env);		
 		$_model->set_settings($model_settings);
+		
 		$this->_MODEL = $_model;
 		return $this->_MODEL;
 	}
@@ -86,6 +88,7 @@ class BaseController
 		if(!empty($res))
 		{
 			$this->_ENV['_CONNECTION']=$res;
+			$this->_MODEL->_ENV['_CONNECTION']=$this->_ENV['_CONNECTION'];
 			return $res;
 		}
 		return NULL;

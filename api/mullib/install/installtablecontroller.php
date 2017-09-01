@@ -38,7 +38,7 @@ class InstallTableController extends BaseController
 			if(!empty($dbparams))	// конфа подключена к базе
 			{
 				$this->_CONNECTION = $this->connect_db($dbparams);
-	
+				$this->_ENV['_CONNECTION'] = $this->_CONNECTION;
 				//GLOBAL $_MUL_DBG_WORK;
 				//print_r($_MODULES['db']);
 	
