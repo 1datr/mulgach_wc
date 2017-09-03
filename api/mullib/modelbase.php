@@ -161,12 +161,15 @@ class BaseModel
 	{		
 		if(in_array($this->_SETTINGS['fields'][$field]['Type'],array('enum','set')))
 		{
-			if(isset($this->_SETTINGS['fields'][$field]['fldparams']['valuelist']))
+			if( array_key_exists('fldparams',$this->_SETTINGS['fields'][$field]))
 			{
-				if(is_callable($this->_SETTINGS['fields'][$field]['fldparams']['valuelist']))
-					return $this->_SETTINGS['fields'][$field]['fldparams']['valuelist']();
-				else 
-					return $this->_SETTINGS['fields'][$field]['fldparams']['valuelist'];
+				if(isset($this->_SETTINGS['fields'][$field]['fldparams']['valuelist']))
+				{
+					if(is_callable($this->_SETTINGS['fields'][$field]['fldparams']['valuelist']))
+						return $this->_SETTINGS['fields'][$field]['fldparams']['valuelist']();
+					else 
+						return $this->_SETTINGS['fields'][$field]['fldparams']['valuelist'];
+				}
 			}
 			else 
 				return $this->_ENV['_CONNECTION']->get_enum_field_values($this->_SETTINGS['table'],$field);

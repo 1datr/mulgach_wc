@@ -323,12 +323,15 @@ class scaff_triada
 						'hash_field'=>$_params['authcon']['hash'],
 						'email_field'=>$_params['authcon']['email'],
 					));
+			
+			$_basic_req_fields_auth=[$_params['authcon']['login'], $_params['authcon']['passw'], $_params['authcon']['email'] ];
 		}
 		
-		//print_r($_params);
-		$vars['required']='array('.xx_implode($_params['model_fields'], ',', "'{name}'",function($theval,&$idx,&$thetemplate,&$ctr,&$thedelimeter)
+		//print_r($_params['model_fields']);
+		
+		$vars['required']='array('.xx_implode($_params['model_fields'], ',', "'{name}'",function($theval,&$idx,&$thetemplate,&$ctr,&$thedelimeter) use($_basic_req_fields_auth)
 		{
-			if(empty($theval['required']))
+			if(empty($theval['required']) && (!in_array($theval['name'],$_basic_req_fields_auth)))
 			{
 				$thetemplate='';
 				$thedelimeter='';
@@ -457,7 +460,12 @@ class scaff_triada
 		// 
 		if(isset($_params['authcon']['enable']))
 		{
-			$this->make_insatll_user_form();
+
+		
+
+			$template_file_name="installauthcontroller";
+			$this->make_install_user_form();
+
 		}		
 		
 		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
@@ -465,7 +473,8 @@ class scaff_triada
 		
 	}
 	
-	public function make_insatll_user_form()
+
+	public function make_install_user_form()
 	{
 		$template_file_name="installauthcontroller";
 			

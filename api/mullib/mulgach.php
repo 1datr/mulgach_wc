@@ -1,14 +1,19 @@
-<?php 
-class Mulgach 
+<?php
+class Mulgach
 {
 	static function version()
 	{
 		return "1.0.0";
 	}
 	
+	static function sysname()
+	{
+		return "Mulgach";
+	}
+	
 	static function fullname()
 	{
-		return "Mulgach web constructor ".Mulgach::version();
+		return Mulgach::sysname()." ".Mulgach::version();
 	}
 }
-?>
+
