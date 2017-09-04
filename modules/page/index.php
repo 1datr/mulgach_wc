@@ -397,14 +397,16 @@ class mul_page extends mul_Module
 	function call_event($eventname, $eparams=[],$eopts=[])
 	{
 		$event_res = array('eparams'=>$eparams);
+		/*
 		if($eopts['src']=='controller')
 		{
 			
 		}
 		else 
-		{
+		{*/
 			$res = call_modules($this->get_mod_name(),$eventname,$event_res,$eopts);
-		}
+		//}
+		
 		return $event_res;
 	}
 	

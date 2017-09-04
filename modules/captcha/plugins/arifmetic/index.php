@@ -1,12 +1,11 @@
 <?php
-	
-	define('CAPTCHA_VAR','captcha_arif_value');
-	
+		
 	class plg_arifmetic extends mod_plugin
 	{
 		VAR $params;
 		VAR $_MODEL=NULL;
 		VAR $_FORM=NULL;
+		
 		// Параметры :
 		// controller - контроллер, к которому подключаешь плагин
 		function __construct($_PARAMS=array())
@@ -30,6 +29,11 @@
 			
 			if(isset($_PARAMS['form'])) $this->_FORM = $_PARAMS['form'];
 			if(isset($_PARAMS['model'])) $this->_MODEL = $_PARAMS['model'];
+		}
+		
+		static function VarName()
+		{
+			return 'captcha_arif_value';
 		}
 		
 		function add_js_css($controller_obj)
@@ -189,7 +193,7 @@
 		
 		public static function recognize($data)
 		{
-			if(isset($data['row'][CAPTCHA_VAR]))
+			if(isset($data['row'][ self::VarName()]))
 			{
 				return true;
 			}
@@ -198,10 +202,10 @@
 		
 		public function check_captcha(&$data)
 		{
-			
-			if($data['row'][CAPTCHA_VAR]!=$_SESSION[$this->params['code_var']])
+		
+			if($data['row'][self::VarName()]!=$_SESSION[$this->params['code_var']])
 			{
-				$data['res'][CAPTCHA_VAR]=Lang::__t('Captcha error');
+				$data['res'][self::VarName()]=Lang::__t('Captcha error');
 				
 			}
 		}
@@ -216,8 +220,8 @@
 		</button>	
 		<br />		  
 		<?php 
-		$_cap_field=CAPTCHA_VAR;
-		$model_row->setField(CAPTCHA_VAR,"");
+		$_cap_field=self::VarName();
+		$model_row->setField(self::VarName(),"");
 		
 		$form->field($model_row,$_cap_field)->text();
 	}

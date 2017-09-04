@@ -1,12 +1,11 @@
 <?php
 
-define('CAPTCHA_VAR','captcha_value');
-
 class plg_simple extends mod_plugin 
 {
 	VAR $params;
 	VAR $_MODEL=NULL;
 	VAR $_FORM=NULL;
+	VAR $_CAP_VARNAME = 'captcha_value';
 	// Параметры :
 	// controller - контроллер, к которому подключаешь плагин 	
 	function __construct($_PARAMS=array())
@@ -64,6 +63,11 @@ class plg_simple extends mod_plugin
 			$js_array[] = $str_js;
 		}
 		return $js_array;
+	}
+	
+	static function VarName()
+	{
+		return 'captcha_value';
 	}
 	
 	function css_files()
@@ -183,7 +187,7 @@ class plg_simple extends mod_plugin
 	
 	public static function recognize($data)
 	{
-		if(isset($data['row'][CAPTCHA_VAR]))
+		if(isset($data['row'][self::VarName()]))
 		{
 			return true;
 		}
@@ -193,7 +197,7 @@ class plg_simple extends mod_plugin
 	public function check_captcha(&$data)
 	{
 	//	mul_dbg($_SESSION);
-		if($data['row'][CAPTCHA_VAR]!=$_SESSION[$this->params['code_var']])
+		if($data['row'][self::VarName()]!=$_SESSION[$this->params['code_var']])
 			$data['res']['captcha_value']=Lang::__t('Captcha error');
 	}
 	
@@ -207,8 +211,8 @@ class plg_simple extends mod_plugin
 		</button>	
 		<br />		  
 		<?php 
-		$_cap_field='captcha_value';
-		$model_row->setField(CAPTCHA_VAR,"");
+		$_cap_field=self::VarName();
+		$model_row->setField(self::VarName(),"");
 		
 		$form->field($model_row,$_cap_field)->text();
 	}

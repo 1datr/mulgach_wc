@@ -40,4 +40,5 @@ $_LANG['users.password']='users.password';
 $_LANG['users.email']='users.email';
 $_LANG['users.sostoyanie_dopuska']='users.sostoyanie_dopuska';
 $_LANG['users.status']='users.status';
+$_LANG['Captcha error']='Captcha error';
 ?>
