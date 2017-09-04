@@ -160,7 +160,7 @@ class DataRecord	// запись из БД
 			$fields[$key]=$this->_MODEL->_ENV['_CONNECTION']->escape_val($val,$fld_map[$key]);
 		}
 	}
-	
+		
 	function save($files_fields_controll=true)
 	{
 		if(! $this->_MODIFIED)
@@ -201,7 +201,7 @@ class DataRecord	// запись из БД
 	//	mul_dbg($sql);
 		//echo $sql;
 		$this->_EXISTS_IN_DB=true;
-		$this->_MODEL->_ENV['_CONNECTION']->query($sql);
+		$insert_res = $this->_MODEL->_ENV['_CONNECTION']->query($sql);
 		
 		$newid = $this->_MODEL->_ENV['_CONNECTION']->last_insert_id();
 		$this->setField($this->_MODEL->_SETTINGS['primary'],$newid);

@@ -50,7 +50,10 @@ class scaff_triada
 			
 			$controller_name = BaseController::ControllerName($this->NAME);
 			$con_obj = new $controller_name('#test');
-			return method_exists($con_obj, "ActionLogin");
+			if($this->_EP=='install')
+				return method_exists($con_obj, "ActionregAdmin");
+			else
+				return method_exists($con_obj, "ActionLogin");
 		}
 		return false;
 	}
@@ -452,7 +455,7 @@ class scaff_triada
 		// Ôàéëèê
 		$this->make_baseinfo($_params,$controller);
 			
-		$vars_menu=array('triada'=>$this->NAME);
+		$vars_menu=array('triada'=>$this->NAME,'table'=>$_params['table']);
 				
 		
 		$template_file_name="installtablecontroller";

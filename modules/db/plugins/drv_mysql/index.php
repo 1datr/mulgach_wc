@@ -149,7 +149,7 @@ class plg_drv_mysql extends mod_plugin
 				if($table_info['primary']==$idx)
 				{
 					$thetemplate=$thetemplate." PRIMARY KEY";
-					if(eql_ife($table_fields, 'not_a_i', true))
+					if(!eql_ife($table_fields, 'not_a_i', true))
 					{
 						$thetemplate=$thetemplate." AUTO_INCREMENT";
 					}

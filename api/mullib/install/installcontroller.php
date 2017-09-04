@@ -87,16 +87,49 @@ class InstallController extends BaseController
 		$_cfg = new scaff_conf($_CONFIG);
 		
 		$install_triads = $_cfg->get_triads('install');
+		$tr_auth="";
 		
-		$this->add_js( url_seg_add($this->get_current_dir(), 'js/install.js'));
-		
+		//mul_dbg($install_triads);
 		delete_from_array_by_value('site', $install_triads);
+		
+		foreach ($install_triads as $triada)
+		{
+			
+			$tr_object = new scaff_triada($_cfg, 'install', $triada);
+			$is_auth = $tr_object->is_auth();
+			if($is_auth)
+				$tr_auth = $triada;
+		}
+		
+		//$this->add_js( url_seg_add($this->get_current_dir(), 'js/install.js'));
+		
+		
 		
 		//print_r($install_triads);
 		$this->inline_script('
-var hmvcs=['.xx_implode($install_triads, ',', '"{%val}"').'];				
+var hmvcs=['.xx_implode($install_triads, ',', '"{%val}"').'];	
 				
-
+function call_install_table(baseurl,idx=0)
+{
+	$.ajax({
+	   	type: "POST",                 
+	   	url: baseurl+"/"+hmvcs[idx],
+		dataType: "json",
+	   	success: function(res) {   
+										
+			$("#install_console").html($("#install_console").html()+"<div class=\\"message\\">"+res.message+"</div>");	
+			if(idx+1<=hmvcs.length-1)
+			{
+				call_install_table(baseurl,idx+1);
+			}
+	 		else
+			{
+				document.location = "/install/'.$tr_auth.'/makeadmin";
+			}
+	   	}
+	});
+}
+				
 				');
 		jq_onready($this, 'call_install_table("/install");');
 		
