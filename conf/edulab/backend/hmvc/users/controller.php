@@ -100,7 +100,8 @@ class UsersController extends AuthController
 		$menu = $this->getinfo('basemenu');
 		//print_r($menu);
 		$this->out_view('menu',array('menu'=>$menu));
-	}	public function ActionLogin()
+	}
+	public function ActionLogin()
 	{
 		$this->_TITLE=Lang::__t('Authorization');
 		$this->use_layout('layout_login');

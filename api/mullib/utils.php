@@ -368,6 +368,15 @@ function filter_array($array1,$ev_onelement)
 	return $res;
 }
 
+function _redirect($_url)
+{
+	?>
+	<script language="javascript">
+		document.location = "<?=$_url?>";
+	</script>
+	<?php 
+}
+
 function convert_slash($url)
 {
 	return strtr($url,array('\\'=>'/'));

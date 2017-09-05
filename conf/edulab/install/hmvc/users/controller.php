@@ -32,10 +32,5 @@ class UsersController extends InstallAuthController
 			}
 		}
 	}
-	
-	public function ActionRegsuccess()
-	{
-		$this->out_view('regsuccess',[]);
-	}
 }
 ?>

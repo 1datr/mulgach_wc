@@ -9,6 +9,10 @@ else
 	{
 		require_once __DIR__."/dbconf.php";
 	}
+	else 
+	{
+		_redirect("install");
+	}
 }
 //$_CACHE_JS=true;
 //$_CACHE_CSS=true;
