@@ -37,7 +37,7 @@ class scaff_triada
 			include $baseinfo;
 			$this->_SETTINGS=$settings;
 		}
-
+		
 	//	$this->_AUTH = $this->is_auth();
 	}
 	
@@ -80,6 +80,11 @@ class scaff_triada
 		}
 	}
 	
+	function make_install_site()
+	{
+		
+	}
+	
 	function from_template()
 	{
 		
@@ -90,6 +95,16 @@ class scaff_triada
 		$this->make_pure(array('actions'=>array(array('name'=>'index','automakeview'=>'on')),),$rewrite);
 		file_put_contents(url_seg_add($this->_VIEWPATH,'error404.php'), file_get_contents( url_seg_add(__DIR__,'/phpt/error404.phpt')) );
 		file_put_contents(url_seg_add($this->_VIEWPATH,'error403.php'), file_get_contents( url_seg_add(__DIR__,'/phpt/error403.phpt')) );
+		if($this->_EP=='install')
+		{
+			$arr_templates = array('regsuccess','maketables','dbsettings','dbinfocontainer');
+			$_vars=[];
+			foreach ($arr_templates as $_template)
+			{
+				file_put_contents(url_seg_add($this->_VIEWPATH,$_template.'.php'), parse_code_template( url_seg_add(__DIR__,'/phpt/install/view/'.$_template.'.phpt'), $_vars ) );
+			}
+		}
+		
 	}	
 		
 	static function exists(&$obj,$ep,$hmvc)
@@ -461,10 +476,13 @@ class scaff_triada
 		$template_file_name="installtablecontroller";
 		
 		// 
+		if($_params['name'])
+		{
+			$template_file_name="installcontroller";
+		}
+		
 		if(isset($_params['authcon']['enable']))
 		{
-
-		
 
 			$template_file_name="installauthcontroller";
 			$this->make_install_user_form();

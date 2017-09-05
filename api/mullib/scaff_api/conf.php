@@ -43,38 +43,8 @@ $conf = array(
 		file_put_contents_ifne(url_seg_add($this->_PATH,'rest','config.php'), '<?php
 		
 ?>');
-		file_put_contents_ifne(url_seg_add($this->_PATH,'config.php'), '<?php
-
-if($_EP=="install")
-{
-	$dbparams="#none";
-}
-else 
-{
-	if(file_exists(__DIR__."/dbconf.php"))
-	{
-		require_once __DIR__."/dbconf.php";
-	}
-}
-//$_CACHE_JS=true;
-//$_CACHE_CSS=true;
-
-
-$_MODULES=array(
-		"db"=>$dbparams,		
-)
-				
-?>');
-		
-/*		file_put_contents_ifne(url_seg_add($this->_PATH,'dbconf.php'), '<?php 
-$_db_server = "localhost";
-$_db_user = "root";
-$_db_passw = "123456";
-$_db_name = "tms2";
-$_db_prefix = "crm_";
-//$_db_charset = "cp1251_general_ci";
-$_db_charset = "utf8_bin";//
-?>');*/
+		file_put_contents_ifne(url_seg_add($this->_PATH,'config.php'), 
+			parse_code_template( url_seg_add(__DIR__,'phpt/config.phpt'),array() ) );		
 		$this->add_basic_layouts();
 		
 		$this->make_def_controller();
