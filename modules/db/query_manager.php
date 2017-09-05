@@ -19,7 +19,7 @@ class QueryMaker {
 	
 	static function query_makedb($db_name)
 	{
-		return "CREATE DATABASE IF NOT EXISTS `@+{$db_name}`";
+		return "CREATE DATABASE IF NOT EXISTS `{$db_name}`";
 	}
 	
 	static function query_update($tbl,$arr,$WHERE=1)

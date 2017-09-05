@@ -38,4 +38,6 @@ $_LANG['Register admin user']='Register admin user';
 $_LANG['users.login']='users.login';
 $_LANG['users.password']='users.password';
 $_LANG['users.email']='users.email';
+$_LANG['Create this database?']='Create this database?';
+$_LANG['OK']='OK';
 ?>

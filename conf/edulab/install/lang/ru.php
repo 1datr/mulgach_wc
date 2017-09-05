@@ -41,4 +41,6 @@ $_LANG['users.email']='users.email';
 $_LANG['users.sostoyanie_dopuska']='users.sostoyanie_dopuska';
 $_LANG['users.status']='users.status';
 $_LANG['Captcha error']='Captcha error';
+$_LANG['Create this database?']='Create this database?';
+$_LANG['OK']='OK';
 ?>

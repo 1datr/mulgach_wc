@@ -1,6 +1,7 @@
 <?php
 $form = new mulForm(as_url("site/setconfig"),$this);
 // 'driver'
+$form->custom_error_div('connect');
 ?>
 <div id="drv_params">
 <?php 
