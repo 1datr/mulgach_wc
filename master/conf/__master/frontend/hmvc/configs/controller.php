@@ -22,7 +22,9 @@ class ConfigsController extends BaseController
 		global $_BASEDIR;
 		$files_in_conf_dir = get_files_in_folder( url_seg_add($_BASEDIR,"/conf"));
 		
-		$this->out_view('index',array('files'=>$files_in_conf_dir));
+		GLOBAL $_CONFIG;
+		
+		$this->out_view('index',array('files'=>$files_in_conf_dir,'curr_config'=>$this->getCurrCFG() ));
 	}
 	
 	public function ActionChangecfgfile()

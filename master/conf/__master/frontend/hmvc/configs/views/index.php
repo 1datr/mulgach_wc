@@ -20,7 +20,7 @@ foreach ($files as $the_file)
 	</a>
 	</td>
 	<?php
-	if(basename($the_file)!='main')
+	if(basename($the_file)!=$curr_config)
 	{
 		?>
 		<td>

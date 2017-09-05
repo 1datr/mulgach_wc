@@ -68,6 +68,13 @@ class BaseController
 		return array(	
 		);
 	}
+	
+	public function getCurrCFG()
+	{
+		$conf_file = "../config.php";
+		require_once $conf_file;
+		return $_CONFIG;
+	}
 		
 	function CallEvent($eventname, $eparams=[])
 	{

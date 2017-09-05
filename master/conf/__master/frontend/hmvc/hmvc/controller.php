@@ -10,12 +10,7 @@ class HmvcController extends BaseController
 		);
 	}
 	
-	public function getCurrCFG()
-	{
-		$conf_file = "../config.php";
-		require_once $conf_file;
-		return $_CONFIG;
-	}
+	
 	
 	public function ActionIndex($cfg=NULL,$ep='frontend')
 	{
@@ -29,7 +24,7 @@ class HmvcController extends BaseController
 		$this->add_css($this->get_current_dir()."/css/style.css");
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
-		$this->add_keyword('xxx');
+		//$this->add_keyword('xxx');
 		
 		$sbplugin = use_jq_plugin('structblock',$this);
 		
