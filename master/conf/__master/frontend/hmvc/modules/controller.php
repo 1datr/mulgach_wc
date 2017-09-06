@@ -46,6 +46,11 @@ class ModulesController extends BaseController
 		}
 	}
 	
+	public function BeforeAction(&$params)
+	{
+		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+	}
+	
 	
 }
 ?>

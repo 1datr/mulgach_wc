@@ -175,7 +175,7 @@ $conf = array(
 			include $conffile;				
 		//	
 			
-			if(!empty($_MODULES['db']))	// конфа подключена к базе
+			if(isset($_MODULES['db']))	// конфа подключена к базе
 			{
 				$result = $controller->connect_db($_MODULES['db']);
 				
@@ -185,7 +185,7 @@ $conf = array(
 				return $_MODULES['db'];
 			}
 			
-			return TRUE;
+			return null;
 		}
 		catch (Exception $exc)
 		{

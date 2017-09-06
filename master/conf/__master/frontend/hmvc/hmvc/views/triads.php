@@ -1,5 +1,6 @@
+
+<div class="col-sm-12" >
 <h3>#{TRIADS LIST}</h3>
-<div class="container">
 <ul class="nav nav-tabs">
 <?php 
 $tkeys = array_keys($triads);
@@ -85,3 +86,4 @@ foreach ($triads as $ep => $triadlist)
 ?>
 </div>
 </div>
+

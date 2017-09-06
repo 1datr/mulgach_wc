@@ -51,6 +51,11 @@ class HmvcController extends BaseController
 		
 	}
 	
+	public function BeforeAction(&$params)
+	{
+		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+	}
+	
 	public function ActionDelete($cfg,$ep,$triada)
 	{
 		GLOBAL $_BASEDIR;

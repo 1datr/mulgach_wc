@@ -15,6 +15,9 @@ class ConfigsController extends BaseController
 		$this->add_css($this->get_current_dir()."/css/style.css");
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
+		
+		
+		
 		$this->add_keyword('xxx');
 		
 		use_jq_plugin('confirmdelete',$this);
@@ -25,6 +28,21 @@ class ConfigsController extends BaseController
 		GLOBAL $_CONFIG;
 		
 		$this->out_view('index',array('files'=>$files_in_conf_dir,'curr_config'=>$this->getCurrCFG() ));
+	}
+	
+	public function BeforeAction(&$params)
+	{
+		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+	}
+	
+	public function ActionConflist()
+	{
+		global $_BASEDIR;
+		$files_in_conf_dir = get_files_in_folder( url_seg_add($_BASEDIR,"/conf"));
+		
+		GLOBAL $_CONFIG;
+		
+		$this->out_view('conflist',array('files'=>$files_in_conf_dir,'curr_config'=>$this->getCurrCFG() ));
 	}
 	
 	public function ActionChangecfgfile()

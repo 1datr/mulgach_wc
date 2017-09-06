@@ -30,6 +30,11 @@ class LangController extends BaseController
 		$this->redirect_back();
 	}
 	
+	public function BeforeAction(&$params)
+	{
+		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+	}
+	
 	public function ActionSearch($config='main',$ep='frontend',$lang,$langkey,$translation)
 	{
 		$this->_TITLE= Lang::__t("Search result by ").$langkey." ".$translation;
