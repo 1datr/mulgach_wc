@@ -9,9 +9,7 @@ class HmvcController extends BaseController
 				),
 		);
 	}
-	
-	
-	
+		
 	public function ActionIndex($cfg=NULL,$ep='frontend')
 	{
 		if($cfg==NULL)

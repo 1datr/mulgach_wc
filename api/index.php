@@ -27,7 +27,12 @@ if(empty($_NO_READ_CONFIG))
 }
 if(!empty($_CONFIG))
 {
+	$_REDIRECT_INSTALL = false;
 	require_once url_seg_add($_CONFIGS_AREA,$_CONFIG,"/config.php");
+	if($_REDIRECT_INSTALL)
+	{
+		_redirect('/install');
+	}
 }
 
 require_once __DIR__."/modulebase.php";

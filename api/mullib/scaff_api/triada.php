@@ -37,7 +37,7 @@ class scaff_triada
 			include $baseinfo;
 			$this->_SETTINGS=$settings;
 		}
-		
+
 	//	$this->_AUTH = $this->is_auth();
 	}
 	
@@ -61,11 +61,17 @@ class scaff_triada
 	function make_pure($params,$rewrite_all=true)
 	{
 
-		$this->x_make_controller(array(
+		if($this->_EP=='install')
+		{
+			$this->make_install_site();
+		}
+		else 
+		{
+			$this->x_make_controller(array(
 						'triada'=>$this->NAME,
 						'actions'=>$params['actions'],
 				), $rewrite_all, 'customcontroller');
-		
+		}
 		foreach ($params['actions'] as $act)
 		{
 			if(!empty($act['automakeview']))
@@ -82,7 +88,10 @@ class scaff_triada
 	
 	function make_install_site()
 	{
-		
+		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
+				parse_code_template( url_seg_add(__DIR__,'/phpt/install/installcontroller.phpt'),
+						['triada'=>$this->NAME]
+					) );
 	}
 	
 	function from_template()
@@ -97,7 +106,7 @@ class scaff_triada
 		file_put_contents(url_seg_add($this->_VIEWPATH,'error403.php'), file_get_contents( url_seg_add(__DIR__,'/phpt/error403.phpt')) );
 		if($this->_EP=='install')
 		{
-			$arr_templates = array('regsuccess','maketables','dbsettings','dbinfocontainer');
+			$arr_templates = array('regsuccess','maketables','dbsettings','dbinfocontainer','index');
 			$_vars=[];
 			foreach ($arr_templates as $_template)
 			{

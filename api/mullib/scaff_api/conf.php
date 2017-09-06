@@ -21,12 +21,21 @@ class scaff_conf
 		//GLOBAL $_MUL_DBG_WORK;
 		//$_MUL_DBG_WORK=false;
 		
-		x_mkdir(url_seg_add($this->_PATH,'frontend','views'));		
+		x_mkdir(url_seg_add($this->_PATH,'frontend','views'));
+		file_put_contents_ifne(url_seg_add($this->_PATH,'frontend','views/basic_layout.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/basic_layout.phpt') , []) );
+		file_put_contents_ifne(url_seg_add($this->_PATH,'frontend','views/error_layout.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/error_layout.phpt') , []) );
+		file_put_contents_ifne(url_seg_add($this->_PATH,'frontend','views/layout_login.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/layout_login.phpt') , []) );
+		
 		x_mkdir(url_seg_add($this->_PATH,'frontend','hmvc'));
 		file_put_contents_ifne(url_seg_add($this->_PATH,'frontend','config.php'), '<?php
 		
 ?>');
+		
 		x_mkdir(url_seg_add($this->_PATH,'backend','views'));
+		file_put_contents_ifne(url_seg_add($this->_PATH,'backend','views/basic_layout.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/basic_layout.phpt') , []) );
+		file_put_contents_ifne(url_seg_add($this->_PATH,'backend','views/error_layout.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/error_layout.phpt') , []) );
+		file_put_contents_ifne(url_seg_add($this->_PATH,'backend','views/layout_login.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/layout_login.phpt') , []) );
+		
 		x_mkdir(url_seg_add($this->_PATH,'backend','hmvc'));
 		file_put_contents_ifne(url_seg_add($this->_PATH,'backend','config.php'), '<?php
 $conf = array(
@@ -34,11 +43,15 @@ $conf = array(
 );
 ?>');
 		x_mkdir(url_seg_add($this->_PATH,'install','views'));
+		
 		x_mkdir(url_seg_add($this->_PATH,'install','hmvc'));
 		file_put_contents_ifne(url_seg_add($this->_PATH,'install','config.php'), '<?php
 		
 ?>');
 		x_mkdir(url_seg_add($this->_PATH,'rest','views'));
+		file_put_contents_ifne(url_seg_add($this->_PATH,'install','views/basic_layout.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/install/view/basic_layout.phpt') , []) );
+		file_put_contents_ifne(url_seg_add($this->_PATH,'install','views/error_layout.php'), parse_code_template(  url_seg_add(__DIR__,'/phpt/views/error_layout.phpt') , []) );
+		
 		x_mkdir(url_seg_add($this->_PATH,'rest','hmvc'));
 		file_put_contents_ifne(url_seg_add($this->_PATH,'rest','config.php'), '<?php
 		

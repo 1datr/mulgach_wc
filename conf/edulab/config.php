@@ -11,7 +11,7 @@ else
 	}
 	else 
 	{
-		_redirect("install");
+		$_REDIRECT_INSTALL = true;
 	}
 }
 //$_CACHE_JS=true;
