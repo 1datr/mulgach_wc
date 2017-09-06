@@ -94,4 +94,12 @@ $_LANG['Configuration ']='Configuration ';
 $_LANG['e-mail']='e-mail';
 $_LANG['MAIN MENU']='MAIN MENU';
 $_LANG['AUTHORIZATION']='AUTHORIZATION';
+$_LANG['Connect config database']='Connect config database';
+$_LANG['Database configuration connection']='Database configuration connection';
+$_LANG['dbinfo.driver']='dbinfo.driver';
+$_LANG['dbinfo.host']='dbinfo.host';
+$_LANG['dbinfo.user']='dbinfo.user';
+$_LANG['dbinfo.password']='dbinfo.password';
+$_LANG['dbinfo.dbname']='dbinfo.dbname';
+$_LANG['dbinfo.prefix']='dbinfo.prefix';
 ?>

@@ -53,7 +53,10 @@ class SiteController extends BaseController
 		
 	}
 	
-	
+	public function BeforeAction(&$params)
+	{
+		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+	}
 	
 	public function ActionLogout()
 	{

@@ -5,7 +5,7 @@
 			'user'=>'root',
 			'password'=>'123456',
 			'dbname'=>'edulab',
-			'prefix'=>'edu_',
+			'prefix'=>'edu',
 			'charset'=>'cp1251_general_ci',
 			'dbkey'=>'main',
 );

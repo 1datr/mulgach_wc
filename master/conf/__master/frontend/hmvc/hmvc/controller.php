@@ -21,7 +21,7 @@ class HmvcController extends BaseController
 		$this->_TITLE="HMVC {$cfg}";
 		$this->add_css($this->get_current_dir()."/css/style.css");
 		
-		$this->add_block('BASE_MENU', 'site', 'menu');
+	//	$this->add_block('BASE_MENU', 'site', 'menu');
 		//$this->add_keyword('xxx');
 		
 		$sbplugin = use_jq_plugin('structblock',$this);
@@ -45,15 +45,14 @@ class HmvcController extends BaseController
 		}	
 		else 
 		{
-			$this->out_view('index',array());
+			$this->out_view('index',array('config'=>$cfg,));
 		}		
-		
-		
 	}
 	
 	public function BeforeAction(&$params)
 	{
 		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+		$this->add_block('BASE_MENU', 'site', 'menu');
 	}
 	
 	public function ActionDelete($cfg,$ep,$triada)
@@ -105,6 +104,91 @@ class HmvcController extends BaseController
 		}
 		//$this->add_block('BASE_MENU', 'site', 'menu');
 		$this->redirect_back();
+	}
+	
+	public function ActionConnectdb($cfg=NULL)
+	{
+		if($cfg==NULL)
+		{			
+			$cfg= $this->getCurrCFG();
+		}
+		
+		$this->_TITLE = Lang::__t('Database configuration connection');
+		$model=array();
+		
+		//	$model = $this->UseModel(base_driver_model_settings());
+		//	$model_row = $model->empty_row_form_model();
+		$plugs = $this->GetPlugs();
+		//
+		
+		$this->out_view('dbinfocontainer',array(//'model_row'=>$model_row,
+				'plugs'=>$plugs,'drv_first'=>$plugs[0],'config'=>$cfg,));
+	}
+	
+	public function ActionLoadconnform($cfg=NULL,$drv=NULL)
+	{
+		if($cfg==NULL)
+		{
+			$cfg= $this->getCurrCFG();
+		}
+		
+		
+		$plugs = $this->GetPlugs();
+		
+		if($drv==NULL)
+		{
+			$params_in_conf = $this->get_db_conf();
+			if($params_in_conf==NULL)
+				$drv=$plugs[0];
+				else
+					$drv=$params_in_conf['driver'];
+		}
+		
+		//
+		$drv_class = 'drv_'.$drv;
+		$drv_obj = $this->get_plug_obj($drv_class);
+		$the_model = $this->UseModel($drv_obj->getModel());
+		
+		$model_row = $the_model->empty_row_form_model();
+		$model_row->setField('driver', $drv);
+		
+		if($params_in_conf!=NULL)	// есть конфиг бд
+		{
+			foreach($params_in_conf as $pkey => $pval)
+			{
+				
+				$model_row->setField($pkey, $pval);
+			}
+		}
+		
+		$this->out_ajax_block('dbsettings',array('model_row'=>$model_row,'plugs'=>$plugs,'drv'=>$drv,'drv'=>$drv));
+	}
+	
+	public function GetPlugs()
+	{
+		$plugs = mul_Module::getModulePlugins('db');
+		$plugs = filter_array($plugs,function(&$el){
+			$matchez=array();
+			if( preg_match_all('/^drv_(.+)$/Uis', $el['value'],$matchez))
+			{
+				$el['value']=$matchez[1][0];
+				return true;
+			}
+			return false;
+		});
+			
+			return $plugs;
+	}
+	
+	public function get_plug_obj($plg)
+	{
+		$module_db = find_module('db');
+		if($module_db!=NULL)
+		{
+			$plg = $module_db->use_plugin($plg,['connectable'=>false]);
+			return $plg;
+		}
+		return NULL;
 	}
 	
 	private function SearchViewFld($fieldlist)

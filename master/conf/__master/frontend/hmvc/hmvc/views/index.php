@@ -2,13 +2,4 @@
 <?php 
 
 ?>
-<form method="post" action="<?=as_url("configs/new")?>" >
-<table>
-<tr>
-<th><label>#{Table}</label></th>
-<td>
-
-</td>
-</tr>
-</table>
-</form>
+<a href="<?=as_url('hmvc/connectdb/'.$config)?>">#{Connect config database}</a>
