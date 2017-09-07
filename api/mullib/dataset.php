@@ -229,10 +229,20 @@ class DataRecord	// запись из БД
 		foreach($this->_FIELDS as $fld => $value)
 		{
 			?>
-			<tr>
-    			<th><?=Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th>
+			
+			<?php 
+			$finfo = $this->_MODEL->getFldInfo($fld);
+			if(eql_ife($finfo,'hidden',true))
+			{
+				$form->field($this,$fld)->hidden($fparams);
+			}
+			else 
+			{
+				?>
+				<tr>
+				<th><?=Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th>
     			<td><?php 
-    			$finfo = $this->_MODEL->getFldInfo($fld);
+    			
     			$fparams=[];
     			if(isset($finfo['fldparams']))
     				$fparams=$finfo['fldparams'];
@@ -249,8 +259,13 @@ class DataRecord	// запись из БД
     				$form->field($this,$fld)->text($fparams);
     			}
     			
-    			?></td>
-  			</tr>
+    			?>
+    			</td>	
+    			</tr>			
+				<?php 
+			}
+			?>    			
+  			
 			<?php 
 		}
 		?>

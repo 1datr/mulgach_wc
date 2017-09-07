@@ -376,9 +376,9 @@ class plg_drv_mysql extends mod_plugin
 		return $str;
 	}
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
-	public function getModel()
+	public function getModel($params=[])
 	{
-		$drv_base = $this->base_driver_settings();
+		$drv_base = $this->base_driver_settings($params);
 		$drv_base['fields']['host']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'localhost');
 		$drv_base['fields']['user']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'root');
 		$drv_base['fields']['password']=array('Type'=>'text','TypeInfo'=>"20",'password'=>true);

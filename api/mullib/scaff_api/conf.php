@@ -143,6 +143,22 @@ $conf = array(
 		}
 	}
 	
+	static function set_current_cfg($_cfg)
+	{
+		global $_BASEDIR;
+		$conf_file= url_seg_add($_BASEDIR,'config.php');
+		$conf_content = file_get_contents($conf_file);
+		$preg_expr = <<<'EOT'
+#\$_CONFIG\s*=\s*(\'.+\')|(\".+\")#
+EOT;
+		$_matches=[];
+		preg_match_all($preg_expr, $conf_content, $_matches);
+		$cfg_str = "\$_CONFIG ='$_cfg'";		
+EOT;
+		$conf_content = preg_replace($preg_expr, $cfg_str, $conf_content);
+		file_put_contents($conf_file, $conf_content);
+	}
+	
 	function add_basic_layouts()
 	{
 		$_std_files = get_files_in_folder(url_seg_add(__DIR__,'phpt/std_layouts'));

@@ -102,4 +102,10 @@ $_LANG['dbinfo.user']='dbinfo.user';
 $_LANG['dbinfo.password']='dbinfo.password';
 $_LANG['dbinfo.dbname']='dbinfo.dbname';
 $_LANG['dbinfo.prefix']='dbinfo.prefix';
+$_LANG['Create this database?']='Create this database?';
+$_LANG['OK']='OK';
+$_LANG['dbinfo.conf']='dbinfo.conf';
+$_LANG['Change database config']='Change database config';
+$_LANG['Connect config the database']='Connect config the database';
+$_LANG['Make current']='Make current';
 ?>

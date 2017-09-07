@@ -21,21 +21,28 @@ trait dbDriver {
 	public function GetTypeClass($type){}
 	public function class_map(){}
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג
-	public static function getModel(){
-		return dbDriver::base_driver_settings();
+	public static function getModel($params=[]){
+		return dbDriver::base_driver_settings($params);
 	}
 	public function get_db_list(){}
 	
 	public function create_db($dbname){}
 	
-	public static function base_driver_settings()
+	public static function base_driver_settings($params=[])
 	{
+		def_options(['onchange_url'=> "'".as_url('site/loadform/')."'+'/'+$('#the_driver').val()"], $params);
+		
+		if($url_template==NULL)
+			$the_url = $params['onchange_url'];
+		else
+			$the_url = strtr($params['onchange_url'],[]);
+		
 		$settings = array(
 				'domen'=>'dbinfo',
 				'fields'=>array(
 						'driver'=>array('Type'=>'enum','TypeInfo'=>"20",'fldparams'=>['htmlattrs'=>[
 											'id'=>'the_driver',
-											'onclick'=>'load_ajax_block(\'#drv_params\',\''.as_url('site/loadform/').'\'+\'/\'+$(\'#the_driver\').val());',
+											'onclick'=>'load_ajax_block(\'#drv_params\','.$the_url.')',
 						],
 								'valuelist'=>function(){
 									$plugs = mul_Module::getModulePlugins('db');

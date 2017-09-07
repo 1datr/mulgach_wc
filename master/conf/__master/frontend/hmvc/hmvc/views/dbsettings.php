@@ -1,5 +1,6 @@
 <?php
-$form = new mulForm(as_url("hmvc/setconfig"),$this);
+$form = new mulForm(as_url("hmvc/setdbcfg"),$this);
+$form->custom_error_div('connect');
 // 'driver'
 ?>
 <div id="drv_params">

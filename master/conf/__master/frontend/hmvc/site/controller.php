@@ -55,7 +55,11 @@ class SiteController extends BaseController
 	
 	public function BeforeAction(&$params)
 	{
-		$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+		if(!in_array($params['action'],['login','auth']))
+		{
+			//mul_dbg($params);
+			$this->add_block('SIDEBAR_LEFT', 'configs', 'conflist');
+		}
 	}
 	
 	public function ActionLogout()

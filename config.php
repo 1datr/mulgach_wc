@@ -1,3 +1,3 @@
 <?php
-$_CONFIG='edulab';
-//$_CONFIG='newcfg';
+$_CONFIG ='edulab';
+//$_CONFIG ='edulab';

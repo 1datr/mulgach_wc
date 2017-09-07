@@ -130,9 +130,8 @@ class HmvcController extends BaseController
 		if($cfg==NULL)
 		{
 			$cfg= $this->getCurrCFG();
-		}
-		
-		
+		}	
+				
 		$plugs = $this->GetPlugs();
 		
 		if($drv==NULL)
@@ -145,12 +144,20 @@ class HmvcController extends BaseController
 		}
 		
 		//
+		mul_dbg($drv);
 		$drv_class = 'drv_'.$drv;
 		$drv_obj = $this->get_plug_obj($drv_class);
-		$the_model = $this->UseModel($drv_obj->getModel());
+		$the_model = $this->UseModel($drv_obj->getModel(
+				[
+					'onchange_url'=> "'".as_url('hmvc/loadconnform/'.$cfg)."'+'/'+$('#the_driver').val()"						
+				]));
+		
+		$this->_MODEL->_SETTINGS['fields']['conf']=['Type'=>'text','hidden'=>true];
 		
 		$model_row = $the_model->empty_row_form_model();
 		$model_row->setField('driver', $drv);
+		
+		$model_row->setField('conf', $cfg);
 		
 		if($params_in_conf!=NULL)	// есть конфиг бд
 		{
@@ -162,6 +169,38 @@ class HmvcController extends BaseController
 		}
 		
 		$this->out_ajax_block('dbsettings',array('model_row'=>$model_row,'plugs'=>$plugs,'drv'=>$drv,'drv'=>$drv));
+	}
+	
+	public function ActionSetdbcfg()
+	{		
+		$conf_dir = url_seg_add();
+		
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$conf_obj = new scaff_conf($_POST['dbinfo']['conf']);
+		
+		$dbconf_file = url_seg_add($conf_dir,'dbconf.php');
+		
+		$driver = $_POST['dbinfo']['driver'];
+		$drv_obj = $this->get_plug_obj("drv_".$driver);
+		
+		$code = $drv_obj->dbconfig_code($_POST['dbinfo']);
+		$conf_obj->set_db_conf_code($code);
+		
+		$this->redirect(as_url('hmvc/'.$_POST['dbinfo']['conf']));
+	}
+	
+	public function BeforeValidate()
+	{
+		//mul_dbg($_POST);
+		if(isset($_POST['dbinfo']))
+		{
+			$driver = $_POST['dbinfo']['driver'];
+			$drv_obj = $this->get_plug_obj("drv_".$driver);
+			$_model = $drv_obj->getModel();
+			$this->UseModel($_model);
+		}
+		//mul_dbg($_model);
 	}
 	
 	public function GetPlugs()

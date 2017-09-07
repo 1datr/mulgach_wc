@@ -16,10 +16,6 @@ class ConfigsController extends BaseController
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
 		
-		
-		
-		$this->add_keyword('xxx');
-		
 		use_jq_plugin('confirmdelete',$this);
 		
 		global $_BASEDIR;
@@ -87,6 +83,16 @@ class ConfigsController extends BaseController
 		$cfgdir = url_seg_add($_BASEDIR,"/conf",$cfg);
 		
 		unlink_folder($cfgdir);
+		
+		$this->redirect_back();
+	}
+	
+	public function ActionSetcurrent()
+	{
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		
+		scaff_conf::set_current_cfg($_POST['cfg']);
 		
 		$this->redirect_back();
 	}

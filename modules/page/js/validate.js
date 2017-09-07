@@ -33,6 +33,9 @@ function load_ajax_block(sel,url)
 
 		}
 		
+	/*	if(afterload!=null)
+			afterload();*/
+		
 	}).fail(function( jqxhr, textStatus, error ) {
 	    var err = textStatus + ", " + error;
 	    console.log( "Request Failed: " + err );
