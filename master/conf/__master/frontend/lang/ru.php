@@ -108,4 +108,5 @@ $_LANG['dbinfo.conf']='dbinfo.conf';
 $_LANG['Change database config']='Change database config';
 $_LANG['Connect config the database']='Connect config the database';
 $_LANG['Make current']='Make current';
+$_LANG['Entities editor']='Entities editor';
 ?>

@@ -1,5 +1,6 @@
 <h1 class="h1">#{Configuration }<?=$config?></h1>
 
+<a href="<?=as_url('emaker/'.$config)?>"><button class="btn btn-primary">#{Entities editor}</button></a>
 
 <div class="row">
 <?php 
