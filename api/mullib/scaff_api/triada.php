@@ -76,7 +76,7 @@ class scaff_triada
 		{
 			if(!empty($act['automakeview']))
 			{
-				$the_view = url_seg_add($hmvc_dir,'views',$act['name'].".php");
+				$the_view = url_seg_add($this->_PATH,'views',$act['name'].".php");
 				if($rewrite_all || !file_exists($the_view) )
 				{
 					echo "<p>$the_view rewrited</p>";
@@ -173,7 +173,7 @@ class scaff_triada
 		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
 		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
 		
-		if( !($this->has_view('view_index')) || $_params['rewrite_all'])
+		if( !($this->has_view('index')) || $_params['rewrite_all'])
 		{
 			$vars=array();
 			$vars['table'] = $_params['table'];
@@ -183,7 +183,7 @@ class scaff_triada
 		}
 		
 	//	$itemform_view = url_seg_add($dir_views,'itemform.php');
-		if( !($this->has_view('view_itemform'))|| $_params['rewrite_all'])
+		if( !($this->has_view('itemform'))|| $_params['rewrite_all'])
 		{
 						
 			$vars=array();		

@@ -144,7 +144,6 @@ class HmvcController extends BaseController
 		}
 		
 		//
-		mul_dbg($drv);
 		$drv_class = 'drv_'.$drv;
 		$drv_obj = $this->get_plug_obj($drv_class);
 		$the_model = $this->UseModel($drv_obj->getModel(
