@@ -441,6 +441,7 @@ class BaseController
 	
 	function redirect($url)
 	{
+		$_SESSION['back_page']=$_SERVER['HTTP_REFERER'];
 		?>
 		<script type="text/javascript">
 <!--
@@ -452,6 +453,7 @@ class BaseController
 	
 	function redirect_back()
 	{
+		$_SESSION['back_page']=$_SERVER['HTTP_REFERER'];
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	

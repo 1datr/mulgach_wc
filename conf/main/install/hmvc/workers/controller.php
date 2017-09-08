@@ -1,73 +1,36 @@
 <?php 
-class WorkersController extends BaseController
+class WorkersController extends InstallAuthController
 {
 
-	public function Rules()
+	function ActionMakeadmin()
 	{
-		return array(
-			'action_args'=>array(
-				'index'=>['page'=>'integer'],	
-				'edit'=>['id'=>'integer'],	
-				'delete'=>['id'=>'integer'],
-			),			
-				
-		);
-	}
-		
-	public function ActionIndex($page=1)
-	{
-		$this->_TITLE="WORKERS";
-	
-		$conn = get_connection();
-
-		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		echo "<h3>WORKERS LIST</h3>";
-		
-		$this->inline_script("
-		    $( document ).ready(function() {
-        		$('.ref_delete').click(function() 
-        		{
-        			if(confirm('Удалить объект?'))
-        			{
-        				return true;
-        			}
-        			return false;
-        		});
-    		});
-		");
-		
-		$this->out_view('index',array('ds'=>$ds));
+		$this->_TITLE=Lang::__t('User registration');
+		$this->connect_db_if_exists();
+		$reg_form_struct = $this->_MODEL->empty_row_form_model();
+		$this->out_view('adduserform',array('reg_struct'=>$reg_form_struct));
 	}
 	
-	public function ActionCreate()
+	public function ActionRegadmin()
 	{
-		$this->_TITLE="CREATE WORKERS";
-		$this->out_view('itemform',array());
+		$this->connect_db_if_exists();
+		$this->_MODEL->reguser($_POST['workers']);
+		$this->redirect(as_url('workers/regsuccess'));
 	}
 	
-	public function ActionEdit($id)
+	public function BeforeAction(&$params)
 	{
-		$this->_TITLE="EDIT WORKERS";
-		$workers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
-		$this->out_view('itemform',array('workers'=>$workers));
-	}
-	
-	public function ActionSave()
-	{
-		$newitem = $this->_MODEL->CreateNew($_POST['workers']);
-		$newitem->save();
-		
-		if(!empty($_POST['back_url']))
-			$this->redirect($_POST['back_url']);
-		else 
-			$this->redirect('/?r=workers');
-		
-	}
-	
-	public function ActionDelete($id)
-	{
-		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
-		$this->redirect($_SERVER['HTTP_REFERER']);
+		if(in_array($params['action'],array('regadmin')))
+		{
+			$this->_MODEL->scenario("register");
+		}
+		elseif($params['action']=='validate')
+		{
+			$req = $this->getRequest();
+			if($req->_args[0]=="regadmin")
+			{
+				$this->_MODEL->scenario('register');
+			}
+		}
 	}
 }
 ?>

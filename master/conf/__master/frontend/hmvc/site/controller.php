@@ -44,7 +44,11 @@ class SiteController extends BaseController
 		{
 			$_SESSION[$this->get_user_descriptor()]=array('login'=>$_POST['login']);
 //			echo as_url('site');
-			$this->redirect(as_url('site'));
+
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else 
+				$this->redirect(as_url('site'));
 		}
 		else 
 		{

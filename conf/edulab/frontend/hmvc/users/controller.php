@@ -114,8 +114,11 @@ class UsersController extends AuthController
 		if($auth_res)
 		{
 			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
-
-			$this->redirect(as_url('users'));
+			
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else
+				$this->redirect(as_url('users'));
 		}
 		else 
 			$this->redirect_back();

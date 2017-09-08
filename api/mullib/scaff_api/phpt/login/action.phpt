@@ -12,8 +12,11 @@
 		if($auth_res)
 		{
 			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('{login_fld}'=>$_POST['{login_fld}']);
-
-			$this->redirect(as_url('{this_controller}'));
+			
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else
+				$this->redirect(as_url('{this_controller}'));
 		}
 		else 
 			$this->redirect_back();

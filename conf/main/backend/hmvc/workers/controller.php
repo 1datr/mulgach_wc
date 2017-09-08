@@ -10,7 +10,9 @@ class WorkersController extends AuthController
 				'edit'=>['id'=>'integer'],	
 				'delete'=>['id'=>'integer'],
 			),			
-				
+			'action_access'=>array(
+						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','workers/login')
+				),	
 		);
 	}
 		
@@ -20,7 +22,7 @@ class WorkersController extends AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "workers", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -43,38 +45,63 @@ class WorkersController extends AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "otdel", "menu");
+		$this->add_block("BASE_MENU", "workers", "menu");
 		$this->_TITLE="CREATE WORKERS";
-		$this->out_view('itemform',array());
+		$this->out_view('itemform',array('workers'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
-	{
-		$this->_TITLE="EDIT WORKERS";
-		$this->add_block("BASE_MENU", "otdel", "menu");
-		$workers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+	{		
+		$this->add_block("BASE_MENU", "workers", "menu");
+		$workers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$workers->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('workers'=>$workers));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->GetRow($_POST['workers']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['workers']);
+		
+		if($newitem!=null)
+		{
+			
+		}
+		else 
+		{
+			$newitem = $this->_MODEL->empty_row_form_model();
+
+		}	
+		$newitem->FillFromArray($_POST['workers']);		
+		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect('/?r=workers');
-		
+			$this->redirect(as_url('workers'));		
 	}
-	
+			
 	public function ActionDelete($id)
 	{
 		$this->_MODEL->Delete($this->_MODEL->_SETTINGS['primary']."=".$id);
 		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
-		public function ActionLogin()
+	public function ActionView($id)
+	{
+		$this->add_block("BASE_MENU", "workers", "menu");
+		$workers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$workers->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('workers'=>$workers));
+	}
+	
+	public function ActionMenu()
+	{
+		$menu = $this->getinfo('basemenu');
+		//print_r($menu);
+		$this->out_view('menu',array('menu'=>$menu));
+	}
+	public function ActionLogin()
 	{
 		$this->_TITLE=Lang::__t('Authorization');
 		$this->use_layout('layout_login');
@@ -87,8 +114,11 @@ class WorkersController extends AuthController
 		if($auth_res)
 		{
 			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
-
-			$this->redirect(as_url('workers'));
+			
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else
+				$this->redirect(as_url('workers'));
 		}
 		else 
 			$this->redirect_back();
@@ -100,7 +130,7 @@ class WorkersController extends AuthController
 	
 	public function ActionLogout()
 	{
-		unset($_SESSION[$this->get_ep_param('sess_user_descriptor')]);
+		$this->logout();
 		$this->redirect(as_url('workers/login'));
 	}
 }

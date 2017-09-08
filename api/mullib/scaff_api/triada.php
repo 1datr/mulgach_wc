@@ -220,15 +220,15 @@ class scaff_triada
 		}
 		
 	//	контроллер авторизации
-		if($_params['authcon'][$this->_EP]['enable'])
+		if($_params['authcon']['enable'])
 		{
 			if( !($this->has_view('loginform'))|| $_params['rewrite_all'])
 			{
 				
 				$vars=array();
 				$vars['this_controller'] = $_params['table'];
-				$vars['login_fld']=$_params['authcon']['backend']['login'];
-				$vars['passw_fld']=$_params['authcon']['backend']['passw'];
+				$vars['login_fld']=$_params['authcon']['login'];
+				$vars['passw_fld']=$_params['authcon']['passw'];
 			
 			//	$vars['settings']=$settings;
 			//	$vars['constraints']=$_params['constraints'];

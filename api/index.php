@@ -35,6 +35,8 @@ if(!empty($_CONFIG))
 	}
 }
 
+$_CURRENT_SCREEN = "";
+
 require_once __DIR__."/modulebase.php";
 require_once __DIR__."/mullib/basecontroller.php";
 require_once __DIR__."/mullib/modelbase.php";

@@ -5,7 +5,7 @@ class HmvcController extends BaseController
 	{
 		return array(
 				'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=site/login')
+						new ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
 				),
 		);
 	}
@@ -245,8 +245,7 @@ class HmvcController extends BaseController
 		
 	public function ActionMake($step='begin')
 	{
-		$this->add_block('BASE_MENU', 'site', 'menu');
-
+		
 		//print_r($step);
 		
 		switch($step){

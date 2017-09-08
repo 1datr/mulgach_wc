@@ -12,25 +12,25 @@ class UsersController extends InstallAuthController
 	
 	public function ActionRegadmin()
 	{
-		$newitem = $this->_MODEL->findByPrimary($_POST['users']);
+		$this->connect_db_if_exists();
+		$this->_MODEL->reguser($_POST['users']);
+		$this->redirect(as_url('users/regsuccess'));
+	}
 	
-		if($newitem!=null)
+	public function BeforeAction(&$params)
+	{
+		if(in_array($params['action'],array('regadmin')))
 		{
-				
+			$this->_MODEL->scenario("register");
 		}
-		else
+		elseif($params['action']=='validate')
 		{
-			$newitem = $this->_MODEL->empty_row_form_model();
-	
+			$req = $this->getRequest();
+			if($req->_args[0]=="regadmin")
+			{
+				$this->_MODEL->scenario('register');
+			}
 		}
-		$newitem->FillFromArray($_POST['users']);
-	
-		$newitem->save();
-	
-		if(!empty($_POST['back_url']))
-			$this->redirect($_POST['back_url']);
-			else
-				$this->redirect(as_url('users'));
 	}
 }
 ?>

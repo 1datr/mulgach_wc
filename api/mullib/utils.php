@@ -495,6 +495,14 @@ function as_uri($str)
 	return url_seg_add('/', $str);
 }
 
+function get_back_page()
+{
+	if(isset($_SESSION['back_page']))
+		return $_SESSION['back_page'];
+	else 
+		return $_SERVER['HTTP_REFERER'];
+}
+
 function as_url($str)
 {
 			

@@ -1,4 +1,5 @@
 <?php
+				// ++++
 $_LANG['']='';
 $_LANG['projects.id_project']='id';
 $_LANG['projects.name']='name';
