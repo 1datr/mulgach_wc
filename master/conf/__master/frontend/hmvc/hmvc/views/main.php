@@ -34,7 +34,7 @@ if(!empty($settings))
 			}
 			?>			
 			<label><?=Lang::__t('Field:')?></label>
-			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],
 						'name'=>"constraints[".$idx."][field]",						
 						'htmlattrs'=>array(
 								'class'=>'fld_select',
@@ -44,7 +44,7 @@ if(!empty($settings))
 						'value'=>$fld_from,
 					)); ?>
 			<label><?=Lang::__t('Table:')?></label>
-			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['tables'],
 					'name'=>"constraints[".$idx."][table]",					
 					'value'=>$con['model'],
 					'htmlattrs'=>array('class'=>'table_to_select','nametemplate'=>"constraints[#idx#][table]",
@@ -91,7 +91,7 @@ $sbplugin->block_end(function(){
 
 	$idx=0;
 	
-	foreach($fields as $fld => $finfo)
+	foreach($table_info['fields'] as $fld => $finfo)
 	{
 		//print_r($finfo);
 		?>
@@ -178,7 +178,7 @@ $sbplugin->block_end(function(){
 	<label for="_view">#{View:}&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
 	<p><label>#{Fields:}&nbsp;</label>
 	<?php 
-	foreach($fields as $fld => $fldinfo)
+	foreach($table_info['fields'] as $fld => $fldinfo)
 	{
 		?>
 		<div style="display: inline-block" class="drg_view">{<?=$fld?>}</div>
@@ -190,7 +190,7 @@ $sbplugin->block_end(function(){
 	
 	
 <h3>#{AUTHORIZATION}</h3>	
-<div style="border-width: 1px; border-color:#ddd; border-style: solid; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-top-left-radius: 5px; ">
+<div style="border-width: 1px; border-color:#ddd; border-style: solid; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-top-left-radius:5px; padding:5px;">
 <label for="cb_usercon_">#{Users and auth controller}</label>
 <?php 
 $checked="";
@@ -206,16 +206,16 @@ if($authcon)
 <input type="checkbox" name="authcon[enable]" onclick="toggle_ep_divs('');" <?=$checked?> /><br/>
 	<div id="authcon_settings_" style="<?=$display?>padding-left:20px;">
 		<label for="authcon_login_">#{Login field}</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[login]','value'=>$fld_login_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_',))); ?><br />
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],'name'=>'authcon[login]','value'=>$table_info['auth_fields']['login'],'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_login_',))); ?><br />
 			
 		<label for="authcon_passw_">#{Password field}</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[passw]','value'=>$fld_passw_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_passw_',))); ?><br />
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],'name'=>'authcon[passw]','value'=>$table_info['auth_fields']['passw'],'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_passw_',))); ?><br />
 			
 		<label for="authcon_hash_">#{Hash field}</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[hash]','value'=>$fld_hash_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_',))); ?><br />
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],'name'=>'authcon[hash]','value'=>$table_info['auth_fields']['hash'],'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_hash_',))); ?><br />
 			
 		<label for="authcon_email_">#{e-mail}</label>
-		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'authcon[email]','value'=>$fld_email_,'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_email_',))); ?><br />
+		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],'name'=>'authcon[email]','value'=>$table_info['auth_fields']['email'],'htmlattrs'=>array('class'=>'fld_select','id'=>'authcon_email_',))); ?><br />
 			
 		
 	</div>

@@ -39,7 +39,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slog.picture}</label></th><td>
-	<?php $form->field($slog,'picture')->text();	 ?>	</td>
+	<?php $form->field($slog,'picture')->file();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

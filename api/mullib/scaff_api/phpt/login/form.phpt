@@ -7,5 +7,6 @@ $frm=new mulForm(as_url('{this_controller}/auth'),$this);
 <tr><th>#{Password}</th><td><input type="password" name="{passw_fld}" /></td></tr>
 <tr></tr>
 </table>
-<input type="hidden" name="url_required" value="<#=get_back_page()#>" />
+<#php $dismissed_url_var = $this->get_user_descriptor().'_dismissed_url'; #>
+<input type="hidden" name="url_required" value="<?=(isset($_SESSION[$dismissed_url_var]))? $_SESSION[$dismissed_url_var] : ""?>" />
 <#php $frm->submit('#{Log in}'); #>

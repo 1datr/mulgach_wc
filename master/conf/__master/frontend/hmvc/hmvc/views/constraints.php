@@ -9,11 +9,11 @@ $sbplugin->template_start('bindings_item');
 	<label><?=Lang::__t('Required:') ?></label>		
 	<input type="checkbox" name="constraints[{idx}][required]"  class="cb_required" />	
 	<label><?=Lang::__t('Field:') ?></label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$fields,'name'=>'constraints[{idx}][field]','htmlattrs'=>array('class'=>'fld_select','onchange'=>'check_required(this)'))); ?>
+	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],'name'=>'constraints[{idx}][field]','htmlattrs'=>array('class'=>'fld_select','onchange'=>'check_required(this)'))); ?>
 	<label><?=Lang::__t('Table:') ?></label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$tables,'name'=>'constraints[{idx}][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
+	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['tables'],'name'=>'constraints[{idx}][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
 	<label><?=Lang::__t('field to:') ?></label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$first_table_fields,'name'=>'constraints[{idx}][field_to]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>	
+	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['first_table_fields'],'name'=>'constraints[{idx}][field_to]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>	
 	<button type="button" class="bindings_item_drop">x</button>
 <?php 
 $sbplugin->template_end();
@@ -73,36 +73,28 @@ $this->inline_css('
  	<div id="main" class="tab-pane active tab-page" role="tabpanel">
  	<?php 
   	$this->out_view('main',array(
-							'fields'=>$fields,
-							'tables'=>$tables,							
-							'first_table_fields'=>$first_table_fields,
+						//	'tables'=>$tables,							
+						//	'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
   							'sbplugin'=>$sbplugin,
-				  			// def fields
-				  			'fld_login_'=>$fld_login_,
-				  			'fld_passw_'=>$fld_passw_,
-				  			'fld_hash_'=>$fld_hash_,
-				  			'fld_email_'=>$fld_email_,
+			  			
   							'triads'=>$triads,
   							'_hmvc'=>$_hmvc,
   							'authcon'=>$authcon,
+  							'table_info'=>$table_info,
   	));
   	?>
  	</div>
   	<div id="capts" class="tab-pane tab-page" role="tabpanel">
   	<?php 
   	$this->out_view('captions',array(
-							'fields'=>$fields,
-							'tables'=>$tables,							
-							'first_table_fields'=>$first_table_fields,
+						//	'tables'=>$tables,							
+						//	'first_table_fields'=>$first_table_fields,
 							'settings'=>$settings,
 							'sbplugin'=>$sbplugin,
   							'triads'=>$triads,
-  							// def fields
-				  			'fld_login_'=>$fld_login_,
-				  			'fld_passw_'=>$fld_passw_,
-				  			'fld_hash_'=>$fld_hash_,
-  							'fld_email_'=>$fld_email_,
+				  		
+  							'table_info'=>$table_info,
   							'_hmvc'=>$_hmvc,
   							
   	));

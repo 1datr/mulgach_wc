@@ -30,10 +30,14 @@ class ActionAccessRule {
 		
 		if($res==false)
 		{
+			$_SESSION[$controller->get_user_descriptor().'_dismissed_url']=$_SERVER['REQUEST_URI'];
 			if(is_string($this->_redirect) && (!empty($this->_redirect)))
+			{
 				$controller->redirect(as_url($this->_redirect));
+			}
 			elseif(is_callable($this->redirect))
 			{
+				
 				$this->redirect();
 			}
 		}

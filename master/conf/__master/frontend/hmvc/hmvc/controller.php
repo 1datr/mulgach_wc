@@ -259,15 +259,14 @@ class HmvcController extends BaseController
 						require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 						$cfg = new scaff_conf($_SESSION['makeinfo']['conf']);
 						$cfg->connect_db_if_exists($this);
-						$_hmvc = $cfg->get_triada('frontend', $_SESSION['makeinfo']['table']);
-					
-						//mul_dbg($_hmvc);
-						//$dbparams = $this->ConnectDBIfExists($_SESSION['makeinfo']['conf']);											
 						
-						$fields = $this->_ENV['_CONNECTION']->get_table_fields($_SESSION['makeinfo']['table']);
-						$tables = $this->_ENV['_CONNECTION']->get_tables();					
-						$first_table_fields = $this->_ENV['_CONNECTION']->get_table_fields($tables[0]);
 						$this->add_js('#js/constraints.js');
+						
+						$dbw = new DbWatcher($this->_CONNECTION);
+						
+						$table_info = $dbw->get_basic_table_info($_SESSION['makeinfo']['table']);
+						
+						$_hmvc = $cfg->get_triada('frontend', $_SESSION['makeinfo']['table']);										
 						
 						if($_hmvc!=null)
 						{
@@ -303,82 +302,40 @@ class HmvcController extends BaseController
 									$('#items_block').jqStructBlock();
 									$('#fields_block').jqStructBlock();
 								});
-								");
-						// подыскать поля
-						$fld_login_='';
-						$fld_passw_="";
-						$fld_hash_="";
-						$fld_email_="";
-					//	mul_dbg($fields);
-						foreach ($fields as $fld => $val)
-						{
-							if(strstr($fld,'login')!=false)
-							{
-								$fld_login_=$fld;
-							}
-							
-							if(strstr($fld,'passw')!=false)
-							{
-								$fld_passw_=$fld;
-							}
-							
-							if( (strstr($fld,'hash')!=false) || (strstr($fld,'token')!=false) )  
-							{
-								$fld_hash_=$fld;
-							}
-							
-							if( (strstr($fld,'e-mail')!=false) || (strstr($fld,'email')!=false) )
-							{
-								$fld_email_=$fld;
-							}
-						}
-					
+								");										
 						$table_warnings=array();
-						$primary = $this->_ENV['_CONNECTION']->get_primary($fields);
-						if($primary!=null)
+						
+						if(isset($table_info['primary']))
 						{
-							//mul_dbg
-							if($fields[$primary]['Extra'] != 'auto_increment')
+							if(!$table_info['primary']['ai'])
 							{
 								$table_warnings[]=Lang::__t('Primary key field is not autoincrement');
 							}
-							/*
-							foreach ($fields as $fld => $finfo)
-							{
-								mul_dbg($fld);
-								mul_dbg($finfo);
-							}*/
 						}
 						else 
 						{
 							$table_warnings[]=Lang::__t('Primary key of this table is empty');
 						}
-							
+						
 						$authcon=$_hmvc->is_auth();
 						
 						$this->out_view('constraints',array(
-								'fields'=>$fields,
-								'tables'=>$tables,							
-								'first_table_fields'=>$first_table_fields,
+//								'tables'=>$tables,							
+//								'first_table_fields'=>$first_table_fields,
 								'settings'=>$settings,
 								'sbplugin'=>$sbplugin,
 								'triads'=>$triads,
 								'table'=>$_SESSION['makeinfo']['table'],
-								'warnings'=>$table_warnings,
-								'fld_login_'=>$fld_login_,
-								'fld_passw_'=>$fld_passw_,
-								'fld_hash_'=>$fld_hash_,
-								'fld_email_'=>$fld_email_,
+								'warnings'=>$table_warnings,	
 								'_hmvc'=>$_hmvc,
 								'authcon'=>$authcon,
+								
+								'table_info'=>$table_info,
 						));
 					};break;
 			case 'makefiles': {
 					
 						$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
-						
-						if(isset($_SESSION['makeinfo']['ep']['install']))
-							$_SESSION['makeinfo']['authcon']['install']=$_SESSION['makeinfo']['authcon']['backend'];
 						
 						$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
 						

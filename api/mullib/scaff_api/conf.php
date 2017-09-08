@@ -197,7 +197,7 @@ EOT;
 				
 				//GLOBAL $_MUL_DBG_WORK;
 				//print_r($_MODULES['db']);
-				
+				$controller->_CONNECTION = $result;
 				return $_MODULES['db'];
 			}
 			

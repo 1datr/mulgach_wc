@@ -367,8 +367,9 @@ class BaseController
 		if($this->get_ep_param('print_template_path'))
 		echo "<!-- {$_view_path} -->";
 		include $_view_path;
+		
 		//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
-				
+	
 	}
 	
 	function x_out_view($view,$vars=array())
@@ -383,8 +384,7 @@ class BaseController
 			x_file_put_contents($_view_path, '
 ');
 		include $_view_path;
-		//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
-	
+		
 	}
 	
 	function out_json($object,$json_opts=JSON_UNESCAPED_UNICODE)
@@ -441,7 +441,7 @@ class BaseController
 	
 	function redirect($url)
 	{
-		$_SESSION['back_page']=$_SERVER['HTTP_REFERER'];
+	//	set_back_page($_SERVER['HTTP_REFERER']);
 		?>
 		<script type="text/javascript">
 <!--
@@ -453,8 +453,7 @@ class BaseController
 	
 	function redirect_back()
 	{
-		$_SESSION['back_page']=$_SERVER['HTTP_REFERER'];
-		$this->redirect($_SERVER['HTTP_REFERER']);
+	//	set_back_page($_SERVER['HTTP_REFERER']);
 	}
 	
 	function get_view_path($view)

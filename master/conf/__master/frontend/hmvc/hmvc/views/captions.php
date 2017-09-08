@@ -34,7 +34,7 @@ foreach ($eps as $idx => $_ep)
     	<th>#{FieldCaption}</th>
   	</tr>
 	<?php 
-	foreach ($fields as $fld => $fldinfo)
+	foreach ($table_info['fields'] as $fld => $fldinfo)
 	{
 		?>
 		<tr>

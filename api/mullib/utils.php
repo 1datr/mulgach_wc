@@ -368,8 +368,15 @@ function filter_array($array1,$ev_onelement)
 	return $res;
 }
 
+function set_back_page($_URL)
+{
+	if($_SESSION['back_page']['change'])
+		$_SESSION['back_page']['url']=$_URL;
+}
+
 function _redirect($_url)
 {
+	
 	?>
 	<script language="javascript">
 		document.location = "<?=$_url?>";
@@ -493,14 +500,6 @@ function array_to_pages($the_array,$pagesize=7)
 function as_uri($str)
 {
 	return url_seg_add('/', $str);
-}
-
-function get_back_page()
-{
-	if(isset($_SESSION['back_page']))
-		return $_SESSION['back_page'];
-	else 
-		return $_SERVER['HTTP_REFERER'];
 }
 
 function as_url($str)

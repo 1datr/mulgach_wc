@@ -7,5 +7,6 @@ $frm=new mulForm(as_url('workers/auth'),$this);
 <tr><th>#{Password}</th><td><input type="password" name="password" /></td></tr>
 <tr></tr>
 </table>
-<input type="hidden" name="url_required" value="<?=get_back_page()?>" />
+<?php $dismissed_url_var = $this->get_user_descriptor().'_dismissed_url'; ?>
+<input type="hidden" name="url_required" value="" />
 <?php $frm->submit('#{Log in}'); ?>
