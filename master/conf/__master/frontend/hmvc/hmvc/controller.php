@@ -228,20 +228,7 @@ class HmvcController extends BaseController
 		}
 		return NULL;
 	}
-	
-	private function SearchViewFld($fieldlist)
-	{
-		foreach ($fieldlist as $fld => $fldinfo)
-		{
-			if( ($fldinfo['Type']=='text') || (strstr($fldinfo['Type'],"varchar")!=false) )
-			{
-				return "{".$fld."}";
-			}			
-		}
-		$primary = $this->_ENV['_CONNECTION']->get_primary($fieldlist);
-		return "#{".$primary."}";
-	}
-		
+			
 	public function ActionMake($step='begin')
 	{
 		
@@ -273,7 +260,8 @@ class HmvcController extends BaseController
 							$settings = $_hmvc->getModelInfo();
 						}
 						else 
-							$settings = array();
+							$settings = array('view'=>$table_info['view']);
+						
 						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 						$sbplugin = use_jq_plugin('structblock',$this);
 						$this->_TITLE=$_SESSION['makeinfo']['table']." ". Lang::__t("Bindings and settings");
@@ -291,12 +279,12 @@ class HmvcController extends BaseController
 						}
 //						get_files_in_folder($dir_path);
 						//$triads 
-						
+						/*
 						if(empty($settings['view']))
 						{
 							
 							$settings['view']=$this->SearchViewFld($fields);
-						}
+						}*/
 						jq_onready($this,"
 								$( document ).ready(function() {
 									$('#items_block').jqStructBlock();

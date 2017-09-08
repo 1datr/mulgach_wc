@@ -454,6 +454,7 @@ class BaseController
 	function redirect_back()
 	{
 	//	set_back_page($_SERVER['HTTP_REFERER']);
+		$this->redirect($_SERVER['HTTP_REFERER']);
 	}
 	
 	function get_view_path($view)
