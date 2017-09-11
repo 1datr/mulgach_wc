@@ -1,5 +1,7 @@
 <?php
-class ModelBykva extends BaseModel
+namespace Edulab\Frontend;
+
+class ModelBykva extends \BaseModel
 {
 	
 }

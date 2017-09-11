@@ -1,5 +1,7 @@
 <?php
-class ModelUrok extends BaseModel
+namespace Edulab\Frontend;
+
+class ModelUrok extends \BaseModel
 {
 	
 }

@@ -1,11 +1,13 @@
 <?php 
-class ConfigsController extends BaseController
+namespace __master\Frontend;
+
+class ConfigsController extends \BaseController
 {
 	public function Rules()
 	{
 		return array(
 				'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','?r=site/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
 				),
 		);
 	}
@@ -98,4 +100,6 @@ class ConfigsController extends BaseController
 	}
 	
 }
+
+
 ?>

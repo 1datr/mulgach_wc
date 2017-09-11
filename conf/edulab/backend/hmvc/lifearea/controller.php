@@ -1,5 +1,7 @@
 <?php 
-class LifeareaController extends BaseController
+namespace Edulab\Backend;
+
+class LifeareaController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class LifeareaController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
@@ -24,8 +26,7 @@ class LifeareaController extends BaseController
 		
 		$this->add_block("BASE_MENU", "users", "menu");
 
-		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-		
+		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);		
 		
 		$this->inline_script("
 		    $( document ).ready(function() {

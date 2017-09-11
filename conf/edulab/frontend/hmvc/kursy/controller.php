@@ -1,5 +1,7 @@
 <?php 
-class KursyController extends BaseController
+namespace Edulab\Frontend;
+
+class KursyController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class KursyController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}

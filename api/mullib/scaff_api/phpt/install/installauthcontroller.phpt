@@ -1,10 +1,12 @@
 <#php 
-class <?=UcaseFirst($triada)?>Controller extends InstallAuthController
+namespace {_CONFIG}\{_EP};
+
+class <?=UcaseFirst($triada)?>Controller extends \InstallAuthController
 {
 
 	function ActionMakeadmin()
 	{
-		$this->_TITLE=Lang::__t('User registration');
+		$this->_TITLE=\Lang::__t('User registration');
 		$this->connect_db_if_exists();
 		$reg_form_struct = $this->_MODEL->empty_row_form_model();
 		$this->out_view('adduserform',array('reg_struct'=>$reg_form_struct));

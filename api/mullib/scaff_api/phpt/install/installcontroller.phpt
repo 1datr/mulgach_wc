@@ -1,5 +1,7 @@
 <#php 
-class <?=UcaseFirst($triada)?>Controller extends InstallController
+namespace {_CONFIG}\{_EP};
+
+class <?=UcaseFirst($triada)?>Controller extends \InstallController
 {
 
 

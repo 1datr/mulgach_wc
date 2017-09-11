@@ -1,5 +1,7 @@
 <?php 
-class ZadanieController extends BaseController
+namespace Edulab\Frontend;
+
+class ZadanieController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class ZadanieController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}

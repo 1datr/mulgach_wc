@@ -8,18 +8,18 @@ $sbplugin->block_start('bindings_item',array('id'=>'items_block'));
 ?>
 <!-- десь все связки -->
 <?php 
-if(!empty($settings))
+if(!empty($table_info))
 {
-	if(!empty($settings['constraints']))
+	if(!empty($table_info['constraints']))
 	{
 		$idx=0;
-		foreach ($settings['constraints'] as $fld_from => $con)
+		foreach ($table_info['constraints'] as $fld_from => $con)
 		{
 			?>
 			<div class="multiform_block" role="item">
 			<label><?=Lang::__t('Required:')?></label>
 			<?php 
-			if($fields[$fld_from]['Null']=='NO')
+			if($table_info['fields'][$fld_from]['Null']=='NO')
 			{
 				?>
 				<input type="hidden" name="constraints[<?=$idx?>][required]" value="on" />
@@ -110,7 +110,7 @@ $sbplugin->block_end(function(){
 		{
 			$checked_selected = "checked disabled";
 		}
-		elseif (fld_in_settings($fld,$settings['view']))
+		elseif (fld_in_settings($fld,$table_info['view']))
 		{
 			$checked_selected = "checked";
 		}
@@ -175,7 +175,7 @@ $sbplugin->block_end(function(){
 ?>
 
 	<div>
-	<label for="_view">#{View:}&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$settings['view']?>" />
+	<label for="_view">#{View:}&nbsp;</label><input type="text" name="view" size="60" id="_view" value="<?=$table_info['view']?>" />
 	<p><label>#{Fields:}&nbsp;</label>
 	<?php 
 	foreach($table_info['fields'] as $fld => $fldinfo)

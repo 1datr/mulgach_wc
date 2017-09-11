@@ -1,7 +1,7 @@
 
 	public function ActionLogin()
 	{
-		$this->_TITLE=Lang::__t('Authorization');
+		$this->_TITLE=\Lang::__t('Authorization');
 		$this->use_layout('layout_login');
 		$this->out_view('loginform',array());
 	}

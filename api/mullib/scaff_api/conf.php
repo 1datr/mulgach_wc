@@ -180,6 +180,19 @@ EOT;
 	
 	}
 	
+	// Найти контроллер авторизации 
+	function get_auth_con()
+	{
+		$triads = $this->get_triads('frontend');
+		foreach ($triads as $trname)
+		{
+			$tr_obj = $this->get_triada('frontend', $trname);
+			if($tr_obj->is_auth())
+				return $trname;
+		}
+		return NULL;
+	}
+	
 	function connect_db_if_exists($controller)
 	{
 		GLOBAL $_BASEDIR;

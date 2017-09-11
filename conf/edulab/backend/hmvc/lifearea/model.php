@@ -1,5 +1,7 @@
 <?php
-class ModelLifearea extends BaseModel
+namespace Edulab\Backend;
+
+class ModelLifearea extends \BaseModel
 {
 	
 }

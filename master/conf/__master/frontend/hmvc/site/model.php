@@ -1,6 +1,9 @@
 <?php
-class ModelSite extends AuthModel
+namespace __master\Frontend;
+
+class ModelSite extends \AuthModel
 {
 	
 	//$this->getinfo('basemenu');
 }
+

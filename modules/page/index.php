@@ -836,6 +836,10 @@ class mul_page extends mul_Module
 		
 		$old_controller = $this->_CONTROLLER;
 		//$controller_object
+		$namespace = UcaseFirst($_CONFIG).'\\'.UcaseFirst($_EP);
+		
+		$controller_name = $namespace."\\".$controller_name;
+		
 		$this->_CONTROLLER = new $controller_name(
 						array(
 								'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],
@@ -925,6 +929,8 @@ class mul_page extends mul_Module
 		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
 	
 		require_once $con_info['_CONTROLLER_FILE'];
+		
+		$controller_namespace = UcaseFirst($_EP);
 	
 		$controller_name = $con_info['_CONTROLLER_CLASS'];
 	

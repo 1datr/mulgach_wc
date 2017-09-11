@@ -77,4 +77,20 @@ class DbWatcher {
 		return "#{".$primary."}";
 	}
 	
+	// Проход по триаде
+	function watch_triada($tr,$_fields)
+	{
+		$settings = $_fields;
+		if($tr!=null)
+		{
+			$tr_info = $tr->getModelInfo();
+			$settings['view']=$tr_info['view'];
+			
+			$settings['constraints']=$tr_info['constraints'];
+			
+			$con_auth = $tr->_PARENT_CONF->get_auth_con();
+		}
+		return $settings;
+	}
+	
 }

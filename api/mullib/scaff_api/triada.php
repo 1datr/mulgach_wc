@@ -37,8 +37,6 @@ class scaff_triada
 			include $baseinfo;
 			$this->_SETTINGS=$settings;
 		}
-
-	//	$this->_AUTH = $this->is_auth();
 	}
 	
 	function is_auth()
@@ -46,9 +44,10 @@ class scaff_triada
 		$_CONTROLLER_FILE = url_seg_add($this->_PATH,'controller.php');
 		if(file_exists( $_CONTROLLER_FILE))
 		{
-			require $_CONTROLLER_FILE;
+			require_once $_CONTROLLER_FILE;
 			
 			$controller_name = BaseController::ControllerName($this->NAME);
+			$controller_name = ucfirst($this->_PARENT_CONF->_NAME).'\\'.ucfirst($this->_EP).'\\'.$controller_name;
 			$con_obj = new $controller_name('#test');
 			if($this->_EP=='install')
 				return method_exists($con_obj, "ActionregAdmin");
@@ -138,6 +137,10 @@ class scaff_triada
 			$vars['table_uc_first']=UcaseFirst($_params['table']);
 			$vars['TABLE_UC']=strtoupper($_params['table']);
 			$vars['table'] = $_params['table'];
+			
+			$vars['_EP'] = ucfirst($this->_EP);
+			$vars['_CONFIG'] = ucfirst($this->_PARENT_CONF->_NAME);
+			
 			$vars['BaseModelClass'] = 'BaseModel';
 			if(isset($_params['authcon']['enable']))				
 				$vars['BaseModelClass'] = 'AuthModel';
@@ -376,6 +379,8 @@ class scaff_triada
 	{
 		$_template = url_seg_add(__DIR__,'/phpt/',$template.'.phpt');
 		$this->_CONTROLLER_PATH=url_seg_add($this->_PATH,'controller.php');
+		$vars['_EP'] = ucfirst($this->_EP);
+		$vars['_CONFIG'] = ucfirst($this->_PARENT_CONF->_NAME);
 		if(!file_exists($this->_CONTROLLER_PATH) || $rewrite)
 		{
 			x_file_put_contents($this->_CONTROLLER_PATH, parse_code_template($_template, $vars));
@@ -497,6 +502,9 @@ class scaff_triada
 			$this->make_install_user_form();
 
 		}		
+		
+		$vars_menu['_EP'] = ucfirst($this->_EP);
+		$vars_menu['_CONFIG'] = ucfirst($this->_PARENT_CONF->_NAME);
 		
 		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
 				parse_code_template(url_seg_add(__DIR__,'/phpt/install',$template_file_name.'.phpt'),$vars_menu));

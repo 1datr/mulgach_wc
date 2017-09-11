@@ -1,11 +1,13 @@
-<?php 
-class SiteController extends BaseController
+<?php
+namespace __master\Frontend;
+
+class SiteController extends \BaseController
 {
 	public function Rules()
 	{
 		return array(
 			'action_access'=>array(
-				new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','site/login')	
+				new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','site/login')	
 			),
 		);
 	}
@@ -16,7 +18,7 @@ class SiteController extends BaseController
 		$this->add_css($this->get_current_dir()."/css/style.css");
 		
 		$this->add_block('BASE_MENU', 'site', 'menu');
-		$this->add_keyword('xxx');
+	//	$this->add_keyword('xxx');
 		$this->out_view('index',array());
 	}
 	
@@ -31,7 +33,7 @@ class SiteController extends BaseController
 	{
 	//	print_r($_SESSION);
 		
-		$this->_TITLE=Lang::__t('Master. Authorization');
+		$this->_TITLE=\Lang::__t('Master. Authorization');
 		$this->use_layout('layout_login');
 		$this->out_view('loginform',array());
 	}

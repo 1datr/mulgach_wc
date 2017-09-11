@@ -1,5 +1,7 @@
 <?php 
-class BykvaController extends InstallTableController 
+namespace Edulab\Install;
+
+class BykvaController extends \InstallTableController 
 {
 
 

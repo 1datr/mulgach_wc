@@ -73,9 +73,7 @@ $this->inline_css('
  	<div id="main" class="tab-pane active tab-page" role="tabpanel">
  	<?php 
   	$this->out_view('main',array(
-						//	'tables'=>$tables,							
-						//	'first_table_fields'=>$first_table_fields,
-							'settings'=>$settings,
+
   							'sbplugin'=>$sbplugin,
 			  			
   							'triads'=>$triads,
@@ -88,9 +86,7 @@ $this->inline_css('
   	<div id="capts" class="tab-pane tab-page" role="tabpanel">
   	<?php 
   	$this->out_view('captions',array(
-						//	'tables'=>$tables,							
-						//	'first_table_fields'=>$first_table_fields,
-							'settings'=>$settings,
+
 							'sbplugin'=>$sbplugin,
   							'triads'=>$triads,
 				  		

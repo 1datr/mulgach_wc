@@ -1,5 +1,7 @@
 <?php
-class ModelLang extends BaseModel
+namespace __master\Frontend;
+
+class ModelLang extends \BaseModel
 {
 	function rules()
 	{

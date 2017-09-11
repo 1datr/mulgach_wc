@@ -1,11 +1,13 @@
 <?php 
-class HmvcController extends BaseController
+namespace __master\Frontend;
+
+class HmvcController extends \BaseController
 {
 	public function Rules()
 	{
 		return array(
 				'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
 				),
 		);
 	}
@@ -28,7 +30,7 @@ class HmvcController extends BaseController
 		
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-		$_cfg = new scaff_conf($cfg);		
+		$_cfg = new \scaff_conf($cfg);		
 		
 		$dbparams = $_cfg->connect_db_if_exists($this);
 	
@@ -69,7 +71,7 @@ class HmvcController extends BaseController
 	{
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-		$_cfg = new scaff_conf($cfg);
+		$_cfg = new \scaff_conf($cfg);
 		
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		
@@ -88,7 +90,7 @@ class HmvcController extends BaseController
 			ser_post('makepure');
 			GLOBAL $_BASEDIR;
 			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-			$conf = new scaff_conf($_POST['conf']);
+			$conf = new \scaff_conf($_POST['conf']);
 								
 			foreach ($_POST['ep'] as $ep => $val)
 			{			
@@ -176,7 +178,7 @@ class HmvcController extends BaseController
 		
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-		$conf_obj = new scaff_conf($_POST['dbinfo']['conf']);
+		$conf_obj = new \scaff_conf($_POST['dbinfo']['conf']);
 		
 		$dbconf_file = url_seg_add($conf_dir,'dbconf.php');
 		
@@ -244,27 +246,22 @@ class HmvcController extends BaseController
 			case 'binds': {
 						GLOBAL $_BASEDIR;
 						require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-						$cfg = new scaff_conf($_SESSION['makeinfo']['conf']);
+						$cfg = new \scaff_conf($_SESSION['makeinfo']['conf']);
 						$cfg->connect_db_if_exists($this);
 						
 						$this->add_js('#js/constraints.js');
 						
-						$dbw = new DbWatcher($this->_CONNECTION);
+						$dbw = new \DbWatcher($this->_CONNECTION);
 						
 						$table_info = $dbw->get_basic_table_info($_SESSION['makeinfo']['table']);
 						
 						$_hmvc = $cfg->get_triada('frontend', $_SESSION['makeinfo']['table']);										
 						
-						if($_hmvc!=null)
-						{
-							$settings = $_hmvc->getModelInfo();
-						}
-						else 
-							$settings = array('view'=>$table_info['view']);
+						$table_info = $dbw->watch_triada($_hmvc, $table_info);
 						
 						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 						$sbplugin = use_jq_plugin('structblock',$this);
-						$this->_TITLE=$_SESSION['makeinfo']['table']." ". Lang::__t("Bindings and settings");
+						$this->_TITLE=$_SESSION['makeinfo']['table']." ". \Lang::__t("Bindings and settings");
 						
 						$eps=array('frontend','backend');
 						$triads=array();
@@ -277,14 +274,7 @@ class HmvcController extends BaseController
 							$triads[$ep]=$hmvcs;
 							//print_r($files);
 						}
-//						get_files_in_folder($dir_path);
-						//$triads 
-						/*
-						if(empty($settings['view']))
-						{
-							
-							$settings['view']=$this->SearchViewFld($fields);
-						}*/
+
 						jq_onready($this,"
 								$( document ).ready(function() {
 									$('#items_block').jqStructBlock();
@@ -312,9 +302,7 @@ class HmvcController extends BaseController
 						}
 						
 						$this->out_view('constraints',array(
-//								'tables'=>$tables,							
-//								'first_table_fields'=>$first_table_fields,
-								'settings'=>$settings,
+						//		'settings'=>$settings,
 								'sbplugin'=>$sbplugin,
 								'triads'=>$triads,
 								'table'=>$_SESSION['makeinfo']['table'],
@@ -337,7 +325,7 @@ class HmvcController extends BaseController
 						$this->redirect(as_url('hmvc/make/success'));
 					};break;
 			case 'success': {
-						$this->_TITLE=Lang::__t('HMVC made successed');
+						$this->_TITLE=\Lang::__t('HMVC made successed');
 						$this->x_out_view('success',array('hmvc_name'=>$_SESSION['hmvc_name']));
 					};break;
 		}
@@ -458,7 +446,7 @@ class HmvcController extends BaseController
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
 		
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-		$conf_obj = new scaff_conf($_params['conf']);
+		$conf_obj = new \scaff_conf($_params['conf']);
 
 	//	print_r($_params);
 		$dbparams = $conf_obj->connect_db_if_exists($this); 

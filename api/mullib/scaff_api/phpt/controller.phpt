@@ -1,5 +1,7 @@
 <#php 
-class {table_uc_first}Controller extends {ParentControllerClass}
+namespace {_CONFIG}\{_EP};
+
+class {table_uc_first}Controller extends \{ParentControllerClass}
 {
 
 	public function Rules()

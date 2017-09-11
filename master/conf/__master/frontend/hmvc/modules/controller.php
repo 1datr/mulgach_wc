@@ -1,11 +1,13 @@
 <?php 
-class ModulesController extends BaseController
+namespace __master\Frontend;
+
+class ModulesController extends \BaseController
 {
 	public function Rules()
 	{
 		return array(
 				'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
 				),
 		);
 	}

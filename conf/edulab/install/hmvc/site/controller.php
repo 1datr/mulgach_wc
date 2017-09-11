@@ -1,5 +1,7 @@
 <?php 
-class SiteController extends InstallController
+namespace Edulab\Install;
+
+class SiteController extends \InstallController
 {
 			
 	

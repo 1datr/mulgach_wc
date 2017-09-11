@@ -1,5 +1,7 @@
 <?php
-class ModelKursy extends BaseModel
+namespace Edulab\Backend;
+
+class ModelKursy extends \BaseModel
 {
 	
 }

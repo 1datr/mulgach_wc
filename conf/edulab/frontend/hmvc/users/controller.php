@@ -1,5 +1,7 @@
 <?php 
-class UsersController extends AuthController
+namespace Edulab\Frontend;
+
+class UsersController extends \AuthController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class UsersController extends AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser','regsuccess')),'anonym','users/login')
+						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser','regsuccess')),'anonym','users/login')
 				),	
 		);
 	}
@@ -103,7 +105,7 @@ class UsersController extends AuthController
 	}
 	public function ActionLogin()
 	{
-		$this->_TITLE=Lang::__t('Authorization');
+		$this->_TITLE=\Lang::__t('Authorization');
 		$this->use_layout('layout_login');
 		$this->out_view('loginform',array());
 	}

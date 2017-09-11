@@ -1,5 +1,7 @@
 <?php
-class ModelUsers extends AuthModel
+namespace Edulab\Backend;
+
+class ModelUsers extends \AuthModel
 {
 	
 }

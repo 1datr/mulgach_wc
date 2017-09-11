@@ -1,5 +1,7 @@
 <?php 
-class KursyController extends InstallTableController 
+namespace Edulab\Install;
+
+class KursyController extends \InstallTableController 
 {
 
 

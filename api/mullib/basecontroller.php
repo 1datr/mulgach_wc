@@ -39,7 +39,8 @@ class BaseController
 			require_once $model_file;
 			$thename = $this->get_this_name();
 			//echo $thename;
-			$model_class_name = "Model".ucfirst(strtolower($thename));
+			$model_ns = new \ReflectionClass($this);
+			$model_class_name = $model_ns->getNamespaceName()."\Model".ucfirst(strtolower($thename));
 			$model_env = $this->_ENV;
 			$model_env['_CONTROLLER']=$this;
 			$this->_MODEL = new $model_class_name($this->_CONTROLLER_DIR,$model_env);
@@ -103,7 +104,8 @@ class BaseController
 	
 	function get_this_name()// имя текущего контроллера
 	{
-		$myclassname = get_class($this);
+	//	$myclassname = get_class($this);
+		$myclassname = (new \ReflectionClass($this))->getShortName();
 		$matches=array();
 		preg_match("/(.*)Controller/", $myclassname, $matches, PREG_OFFSET_CAPTURE);
 		//print_r($matches);

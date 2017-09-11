@@ -1,5 +1,7 @@
 <#php 
-class <?=UcaseFirst($triada)?>Controller extends InstallTableController 
+namespace {_CONFIG}\{_EP};
+
+class <?=UcaseFirst($triada)?>Controller extends \InstallTableController 
 {
 
 

@@ -1,5 +1,7 @@
 <?php
-class ModelZnak extends BaseModel
+namespace Edulab\Frontend;
+
+class ModelZnak extends \BaseModel
 {
 	
 }
