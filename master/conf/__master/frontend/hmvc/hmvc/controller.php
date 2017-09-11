@@ -292,20 +292,20 @@ class HmvcController extends \BaseController
 						{
 							$table_warnings[]=Lang::__t('Primary key of this table is empty');
 						}
-						
+						/*
 						$authcon = false;
 						if($_hmvc!=null)
 						{
 							$authcon=$_hmvc->is_auth();
 						}
-						
+						*/
 						$this->out_view('constraints',array(
 						//		'settings'=>$settings,
 								'sbplugin'=>$sbplugin,
 								'triads'=>$triads,
 								'table'=>$_SESSION['makeinfo']['table'],
 								'warnings'=>$table_warnings,	
-								'_hmvc'=>$_hmvc,
+								//'_hmvc'=>$_hmvc,
 								//'authcon'=>$authcon,
 								
 								'table_info'=>$table_info,

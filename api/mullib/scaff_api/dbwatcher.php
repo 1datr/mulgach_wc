@@ -93,6 +93,8 @@ class DbWatcher {
 			$settings['authhost'] = $tr_front->_PARENT_CONF->get_auth_con();
 			$settings['authcon'] = ($settings['authhost'] == $settings['table']);
 			
+			$settings['menu']['frontend']['con'] = $cfg->find_menu_triada('frontend');
+			$settings['menu']['backend']['con']= $cfg->find_menu_triada('backend');
 			//$tr_back = $cfg->get_triada('frontend', $trname);
 		}
 		return $settings;
