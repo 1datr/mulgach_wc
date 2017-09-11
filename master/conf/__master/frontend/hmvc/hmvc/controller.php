@@ -255,9 +255,7 @@ class HmvcController extends \BaseController
 						
 						$table_info = $dbw->get_basic_table_info($_SESSION['makeinfo']['table']);
 						
-						$_hmvc = $cfg->get_triada('frontend', $_SESSION['makeinfo']['table']);										
-						
-						$table_info = $dbw->watch_triada($_hmvc, $table_info);
+						$table_info = $dbw->watch_triada($cfg,$_SESSION['makeinfo']['table'], $table_info);
 						
 						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 						$sbplugin = use_jq_plugin('structblock',$this);
@@ -308,7 +306,7 @@ class HmvcController extends \BaseController
 								'table'=>$_SESSION['makeinfo']['table'],
 								'warnings'=>$table_warnings,	
 								'_hmvc'=>$_hmvc,
-								'authcon'=>$authcon,
+								//'authcon'=>$authcon,
 								
 								'table_info'=>$table_info,
 						));

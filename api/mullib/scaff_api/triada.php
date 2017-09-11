@@ -169,6 +169,23 @@ class scaff_triada
 		unlink_folder($this->_PATH); 
 	}
 	
+	function action_exists($act)
+	{
+		$_CONTROLLER_FILE = url_seg_add($this->_PATH,'controller.php');
+		if(file_exists( $_CONTROLLER_FILE))
+		{
+			require_once $_CONTROLLER_FILE;
+				
+			$controller_name = BaseController::ControllerName($this->NAME);
+			$controller_name = ucfirst($this->_PARENT_CONF->_NAME).'\\'.ucfirst($this->_EP).'\\'.$controller_name;
+			$con_obj = new $controller_name('#test');
+			
+			$con_obj->_action_exists($act);
+		}
+		return false;
+		
+	}
+	
 	function add_std_data_views($_params,$controller)
 	{
 		include $this->_BASEFILE_PATH;

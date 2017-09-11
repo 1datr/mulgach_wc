@@ -14,6 +14,7 @@ class DbWatcher {
 	{
 		$result = [];
 		
+		$result['table']=$_table;
 		$result['fields'] = $this->_CONNECTION->get_table_fields($_SESSION['makeinfo']['table']);
 		$result['tables'] = $this->_CONNECTION->get_tables();
 		$result['first_table_fields'] = $this->_CONNECTION->get_table_fields($result['tables'][0]);
@@ -78,19 +79,25 @@ class DbWatcher {
 	}
 	
 	// Проход по триаде
-	function watch_triada($tr,$_fields)
+	function watch_triada($cfg,$trname,$_fields)
 	{
 		$settings = $_fields;
-		if($tr!=null)
+		
+		$tr_front = $cfg->get_triada('frontend', $trname);
+		if($tr_front!=null)
 		{
-			$tr_info = $tr->getModelInfo();
+			$tr_info = $tr_front->getModelInfo();
 			$settings['view']=$tr_info['view'];
 			
-			$settings['constraints']=$tr_info['constraints'];
+			$settings['constraints']=$tr_info['constraints'];			
+			$settings['authhost'] = $tr_front->_PARENT_CONF->get_auth_con();
+			$settings['authcon'] = ($settings['authhost'] == $settings['table']);
 			
-			$con_auth = $tr->_PARENT_CONF->get_auth_con();
+			//$tr_back = $cfg->get_triada('frontend', $trname);
 		}
 		return $settings;
 	}
+	
+	
 	
 }

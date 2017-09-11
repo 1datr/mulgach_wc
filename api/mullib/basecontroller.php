@@ -112,6 +112,12 @@ class BaseController
 		return $matches[1][0];
 	}
 	
+	function _action_exists($act)
+	{
+		$act_name="Action".ucfirst($act);
+		return method_exists($this, $act_name);
+	}
+	
 	function get_image($img)
 	{
 		$controller_dir = $this->get_current_dir();

@@ -193,6 +193,18 @@ EOT;
 		return NULL;
 	}
 	
+	function find_menu_triada($_ep)
+	{
+		$triads = $this->get_triads($_ep);
+		foreach ($triads as $trname)
+		{
+			$tr_obj = $this->get_triada('frontend', $trname);
+			if($tr_obj->is_auth())
+				return $trname;
+		}
+		return NULL;
+	}
+	
 	function connect_db_if_exists($controller)
 	{
 		GLOBAL $_BASEDIR;

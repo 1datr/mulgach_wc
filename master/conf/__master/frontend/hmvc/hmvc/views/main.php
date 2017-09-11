@@ -196,7 +196,7 @@ $sbplugin->block_end(function(){
 $checked="";
 $display="display: none;";
 $display_authcon="";
-if($authcon)
+if($table_info['authcon'])
 {
 	$checked=" checked ";
 	$display="";
@@ -225,7 +225,7 @@ if($authcon)
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads['frontend'],
 							'name'=>"con_auth",											
 							'htmlattrs'=>array('id'=>'cb_con_auth_'.$_ep),
-							'value'=>(isset($_SESSION['authhost']) ? $_SESSION['authhost'] : ''),
+							'value'=> ( (isset($table_info['authhost'])) ? $table_info['authhost'] : ((isset($_SESSION['authhost']) ? $_SESSION['authhost'] : ''))),
 							)							
 						); ?>
 	</div>
