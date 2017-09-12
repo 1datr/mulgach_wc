@@ -91,13 +91,13 @@ $sbplugin->block_end(function(){
 
 	$idx=0;
 	
-	foreach($table_info['fields'] as $fld => $finfo)
+	foreach($table_info['model_fields'] as $fldidx => $finfo)
 	{
 		//print_r($finfo);
 		?>
 		<tr class="multiform_block" role="item">
-		<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$fld?>"/></td>
-		<td><?=$finfo['Type']?></td>			
+		<td><input type="text" name="model_fields[<?=$idx?>][name]" value="<?=$finfo['name']?>"/></td>
+		<td><?=$finfo['type']?></td>			
 		<td>
 		<?php
 		$checked_selected = "";
@@ -105,7 +105,7 @@ $sbplugin->block_end(function(){
 		//$typeinfo = $this->_ENV['_MODEL']->get_field_type($fld);
 		//mul_dbg($typeinfo);
 		
-		
+		/*
 		if( ($finfo['Null']=='NO') && (!in_array($finfo['Type'],array('text','mediumtext','longtext'))) )  
 		{
 			$checked_selected = "checked disabled";
@@ -114,10 +114,12 @@ $sbplugin->block_end(function(){
 		{
 			$checked_selected = "checked";
 		}
+		*/
+		
 		?>
-		<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=$checked_selected?> />
+		<input type="checkbox" name="model_fields[<?=$idx?>][required]" id="field_<?=$fld?>_required" <?=($finfo['checked_disabled'] ? 'disabled' : '')?> <?=(($finfo['required']) ? 'checked' : '' )?> />
 		<?php 
-		if($checked_selected=='checked disabled') 
+		if($finfo['checked_disabled']) 
 		{
 			?>
 			<input type="hidden" name="model_fields[<?=$idx?>][required]" value="on" />
@@ -127,7 +129,7 @@ $sbplugin->block_end(function(){
 		</td>		
 		<?php 
 		//mul_dbg($finfo);
-		if( in_array($finfo['Type'],array('text','blob') ))
+		if( in_array($finfo['maybe_file'],array('text','blob') ))
 		{
 			?>
 			<td>
@@ -135,21 +137,21 @@ $sbplugin->block_end(function(){
 			$_CHECKED='';
 			$_FILTER='';			
 			$_DISPLAY='display:none';
-			
-		//	mul_dbg($_hmvc->_SETTINGS['file_fields']);
-		//	mul_dbg($_hmvc->_SETTINGS['file_fields'][$fld]);
-			
-			if(isset($_hmvc->_SETTINGS['file_fields'][$fld]))
+				
+			if(!empty($finfo['file_fields']))
 			{
 				$_CHECKED='checked';
-				$_DISPLAY='';
-				if(isset($_hmvc->_SETTINGS['file_fields'][$fld]['type']))
-					$_FILTER='value="'.$_hmvc->_SETTINGS['file_fields'][$fld]['type'].'"';
+			}
+			
+			if(!empty($finfo['filter']))
+			{
+				$_DISPLAY="";
+				$_FILTER=$finfo['filter'];
 			}
 			?>
 			<input type="checkbox" name="model_fields[<?=$idx?>][file_fields]" value="on" onclick='$(fileinfo_<?=$idx?>).toggle()' <?=$_CHECKED?> />
 			<span id="fileinfo_<?=$idx?>" style="<?=$_DISPLAY?>">
-			<label>#{File type:}&nbsp;</lable></label><input type="text" name="model_fields[<?=$idx?>][filter]" <?=$_FILTER?> />
+			<label>#{File type:}&nbsp;</lable></label><input type="text" name="model_fields[<?=$idx?>][filter]" value="<?=$_FILTER?>" />
 			</span>
 			</td>
 			<?php 
@@ -196,7 +198,7 @@ $sbplugin->block_end(function(){
 $checked="";
 $display="display: none;";
 $display_authcon="";
-if($table_info['authcon'])
+if($table_info['authcon']['enable'])
 {
 	$checked=" checked ";
 	$display="";
@@ -225,7 +227,7 @@ if($table_info['authcon'])
 	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads['frontend'],
 							'name'=>"con_auth",											
 							'htmlattrs'=>array('id'=>'cb_con_auth_'.$_ep),
-							'value'=> ( (isset($table_info['authhost'])) ? $table_info['authhost'] : ((isset($_SESSION['authhost']) ? $_SESSION['authhost'] : ''))),
+							'value'=> ( (isset($table_info['con_auth'])) ? $table_info['con_auth'] : ((isset($_SESSION['authhost']) ? $_SESSION['authhost'] : ''))),
 							)							
 						); ?>
 	</div>

@@ -34,7 +34,30 @@ class DbWatcher {
 			else 
 				$result['primary']['ai']=TRUE;
 		}
-		return $result;
+		
+		$result['model_fields']=array();
+		foreach($result['fields'] as $fld_idx => $fld)
+		{
+			$result['model_fields'][$fld_idx]=array('name'=>$fld['Field'],'type'=>$fld['Type'],'checked_disabled'=>false);
+			if( ($fld['Null']=='NO') && (!in_array($fld['Type'],array('text','mediumtext','longtext'))) )
+			{
+				$result['model_fields'][$fld_idx]['checked_disabled']=true;
+				$result['model_fields'][$fld_idx]['required']=true;
+			}
+			$result['model_fields'][$fld_idx]['maybe_file']= in_array($fld['Type'],array('text','blob'));
+		}
+		
+		return $result;			
+	}
+	
+	function fld_in_settings($fld,$settings_str)
+	{
+		$str_to_find='{'.$fld.'}';
+		if(stristr($settings_str, $str_to_find)!= FALSE)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	function search_auth_fields($_fields)
@@ -78,6 +101,7 @@ class DbWatcher {
 		return "#{".$primary."}";
 	}
 	
+	
 	// Проход по триаде
 	function watch_triada($cfg,$trname,$_fields)
 	{
@@ -90,12 +114,30 @@ class DbWatcher {
 			$settings['view']=$tr_info['view'];
 			
 			$settings['constraints']=$tr_info['constraints'];			
-			$settings['authhost'] = $tr_front->_PARENT_CONF->get_auth_con();
-			$settings['authcon'] = ($settings['authhost'] == $settings['table']);
+			$settings['con_auth'] = $tr_front->_PARENT_CONF->get_auth_con();
+			$settings['authcon']['enable'] = ($settings['con_auth'] == $settings['table']);
 			
-			$settings['menu']['frontend']['con'] = $cfg->find_menu_triada('frontend');
-			$settings['menu']['backend']['con']= $cfg->find_menu_triada('backend');
+			$settings['connect_from']['frontend'] = $cfg->find_menu_triada('frontend');
+			if($settings['connect_from']['frontend']==$tr_front->NAME)	$settings['mainmenu']['frontend']='On';
+			$settings['connect_from']['backend'] = $cfg->find_menu_triada('backend');
+			if($settings['connect_from']['backend']==$tr_front->NAME)	$settings['mainmenu']['backend']='On';
 			//$tr_back = $cfg->get_triada('frontend', $trname);
+		}
+		// настройки полей модели	
+		foreach($settings['model_fields'] as $fld_idx => $fld)
+		{
+			if(isset($tr_info['required'][$fld_idx]))
+				$settings['model_fields'][$fld_idx]['required']=true;
+			
+			if($this->fld_in_settings($fld['name'],$settings['view']))
+				$settings['model_fields'][$fld_idx]['required']=true;
+			
+			if(isset($tr_info['file_fields'][$fld_idx]))
+			{
+				$settings['model_fields'][$fld_idx]['file_fields']=true;
+				$settings['model_fields'][$fld_idx]['filter']=$tr_info['file_fields'][$fld['name']]['type'];
+			}
+				
 		}
 		return $settings;
 	}

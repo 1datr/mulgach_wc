@@ -83,18 +83,18 @@ $eps=array('frontend','backend');
 	?>
 	<div class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" id="mainmenu_<?=$_ep?>" role="tabpanel">
 	<label for="cb_menu_<?=$_ep?>">#{Generate main menu}</label>
-	<input id="cb_menu_<?=$_ep?>" type="checkbox" name="mainmenu[<?=$_ep?>]" <?=( ($table_info['menu'][$_ep]['con']==$table_info['table']) ? 'checked' : '') ?>  onchange="$('#connect_from_<?=$_ep?>').toggle();" />
+	<input id="cb_menu_<?=$_ep?>" type="checkbox" name="mainmenu[<?=$_ep?>]" <?=( (!empty($table_info['mainmenu'][$_ep])) ? 'checked' : '') ?>  onchange="$('#connect_from_<?=$_ep?>').toggle();" />
 	
 	<?php 
 	//print_r($_SESSION);
 	?>
 	
-		<div id="connect_from_<?=$_ep?>" <?=( ($table_info['menu'][$_ep]['con']==$table_info['table']) ? 'style="display:none"' : '') ?>>
+		<div id="connect_from_<?=$_ep?>" <?=( (!empty($table_info['mainmenu'][$_ep])) ? 'style="display:none"' : '') ?>>
 		<label for="menu_connect_from_<?=$_ep?>">#{Connect menu from :}</label>
 		<?php $this->usewidget(new ComboboxWidget(),array('data'=>$triads[$_ep],
 						'name'=>"connect_from[".$_ep."]",					
 						//'value'=>$con['model'],
-						'value'=> ( (!empty($table_info['menu'][$_ep]['con'])) ? $table_info['menu'][$_ep]['con'] : (isset($_SESSION['connect_from'][$_ep]) ? $_SESSION['connect_from'][$_ep] : '')),
+						'value'=> ( (!empty($table_info['connect_from'][$_ep])) ? $table_info['connect_from'][$_ep] : (isset($_SESSION['connect_from'][$_ep]) ? $_SESSION['connect_from'][$_ep] : '')),
 						'htmlattrs'=>array())
 						); ?>
 		</div>
