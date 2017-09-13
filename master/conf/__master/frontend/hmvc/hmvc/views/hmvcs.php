@@ -30,5 +30,12 @@ $this->out_view('form_from_actionlist',array('tables'=>$tables,'config'=>$config
 ?>
 
 </div>
+</div>
 
+<div class="row">
+<div class="col-sm-12">
+<?php 
+$this->out_view('total_build',array('tables'=>$tables,'config'=>$config,'sbplugin'=>$sbplugin));
+?>
+</div>
 </div>

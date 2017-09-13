@@ -1,5 +1,7 @@
 <?php
-class ModelBykva extends BaseModel
+namespace Kursy\Install;
+
+class ModelBykva extends \BaseModel
 {
 	
 }

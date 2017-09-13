@@ -109,4 +109,9 @@ $_LANG['Change database config']='Change database config';
 $_LANG['Connect config the database']='Connect config the database';
 $_LANG['Make current']='Make current';
 $_LANG['Entities editor']='Entities editor';
+$_LANG['Ignore existing settings']='Ignore existing settings';
+$_LANG['CFG']='CFG';
+$_LANG['TOTAL UPDATE']='TOTAL UPDATE';
+$_LANG['settings_total.caption']='settings_total.caption';
+$_LANG['Autofind authorize controller']='Autofind authorize controller';
 ?>

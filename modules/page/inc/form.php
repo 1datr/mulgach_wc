@@ -152,6 +152,13 @@ class mulForm
 		<?php 
 	}
 	
+	function scenario($model_row)
+	{
+		?>
+		<input type="hidden" name="#scenario" value="<?=$model_row->_MODEL->scenario()?>" />
+		<?php 
+	}
+	
 	function close()
 	{
 		?></form><?php 

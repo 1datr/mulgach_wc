@@ -127,6 +127,11 @@ class HmvcController extends \BaseController
 				'plugs'=>$plugs,'drv_first'=>$plugs[0],'config'=>$cfg,));
 	}
 	
+	public function ActionMaketotal()
+	{
+		
+	}
+	
 	public function ActionLoadconnform($cfg=NULL,$drv=NULL)
 	{
 		if($cfg==NULL)
@@ -255,7 +260,8 @@ class HmvcController extends \BaseController
 						
 						$table_info = $dbw->get_basic_table_info($_SESSION['makeinfo']['table']);
 						
-						$table_info = $dbw->watch_triada($cfg,$_SESSION['makeinfo']['table'], $table_info);
+						if(empty($_SESSION['makeinfo']['ignore_existing']))
+							$table_info = $dbw->watch_triada($cfg,$_SESSION['makeinfo']['table'], $table_info);
 						
 						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
 						$sbplugin = use_jq_plugin('structblock',$this);

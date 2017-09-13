@@ -1,5 +1,7 @@
 <?php 
-class BykvaController extends BaseController
+namespace Kursy\Frontend;
+
+class BykvaController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class BykvaController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}

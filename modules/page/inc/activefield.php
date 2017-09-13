@@ -359,5 +359,11 @@ class ActiveField
 		<?php
 		$this->error_div();
 	}
+	
+	// вывод кастомного виджета ввода
+	function custom_widget($params)
+	{
+		
+	}
 }
 

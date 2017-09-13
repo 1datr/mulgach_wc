@@ -31,7 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{bykva.sound}</label></th><td>
-	<?php $form->field($bykva,'sound')->file();	 ?>	</td>
+	<?php $form->field($bykva,'sound')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{bykva.type}</label></th><td>

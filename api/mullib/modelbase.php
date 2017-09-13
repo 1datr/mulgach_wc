@@ -43,9 +43,16 @@ class BaseModel
 				$this->_SETTINGS=$rules;
 			else 
 				$this->_SETTINGS=$this->read_base_info();
+			
+			$this->OnScenarioChange();
 		}
 		
 		return NULL;
+	}
+	
+	function OnScenarioChange()
+	{
+		
 	}
 	
 	function get_base_info()
@@ -96,9 +103,21 @@ class BaseModel
 			$this->_TABLE=$this->_SETTINGS['table'];
 	}
 	
+	function set_table_or_domen()
+	{
+		if($this->_SETTINGS['table']) $this->_TABLE = $this->_SETTINGS['table'];
+		if($this->_SETTINGS['domen']) $this->_TABLE = $this->_SETTINGS['domen'];
+	}
+	
 	function validate($data)
 	{
 		//mul_dbg($data);
+		if(isset($data['#scenario']))
+		{
+			$this->scenario($data['#scenario']);
+			unset($data['#scenario']);
+			$this->set_table_or_domen();
+		}
 		
 		$res = array();
 		if(isset($data[$this->_TABLE]))
