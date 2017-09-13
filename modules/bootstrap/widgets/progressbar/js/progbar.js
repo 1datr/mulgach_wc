@@ -5,10 +5,10 @@ function pb_set_procent(pbid,proc)
 
 function pb_show(id)
 {
-	$('#'+pbid+'_inside').show();
+	$('#'+pbid).show();
 } 
 
 function pb_hide(id)
 {
-	$('#'+pbid+'_inside').hide();
+	$('#'+pbid).hide();
 } 

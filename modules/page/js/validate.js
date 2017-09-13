@@ -42,10 +42,12 @@ function load_ajax_block(sel,url)
 	});
 }
 
-function process_submit()
+function process_submit(the_form)
 {
-	
-
+	pbid = $(that_form).attr('pbid');
+	//alert(pbid);
+	pb_show(pbid);
+	//$(the_form).find('#'.pbid).show();
 }
 
 $( document ).ready(function() 
@@ -136,11 +138,12 @@ $( document ).ready(function()
 				}
 				else
 				{
-					if( $(that_form)[0].hasAttribute('pbid') )	
+				/*	if( $(that_form)[0].hasAttribute('pbid') )	
 					{
 						e.preventDefault();
 						return false;
 					}
+				*/
 				}
 				
 				e.preventDefault();
