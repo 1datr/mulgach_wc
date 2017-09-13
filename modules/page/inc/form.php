@@ -79,15 +79,12 @@ class mulForm
 		def_options(array('method'=>$method,'class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['htmlattrs']);		
 		
 		$params['htmlattrs']['action']=$action;
+		if(isset($params['pbid']))
+			$params['htmlattrs']['pbid']=$params['pbid'];
 		?>
 		<form <?=xx_implode($params['htmlattrs'], ' ', '{idx}="{%val}"') ?> >		
 		<?php 
-		/*
-		 <form action="<?=$action?>" class="mul_form" method="<?=$params['method']?>"  enctype="multipart/form-data" <?php if(!empty($params['target'])) echo 'target="'.$params['target'].'"'; ?>> 
-		 
-		list($csrf_key,$csrf_val) = $this->make_csrf($action);
-		echo "<input type=\"hidden\" name=\"".$csrf_key."\" value=\"".$csrf_val."\" />";
-		*/
+		
 		$this->_UPLOAD_MODE=$this->get_upload_mode();
 		if($this->_UPLOAD_MODE=='progress')
 		{

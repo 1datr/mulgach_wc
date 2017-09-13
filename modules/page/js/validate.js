@@ -42,6 +42,12 @@ function load_ajax_block(sel,url)
 	});
 }
 
+function process_submit()
+{
+	
+
+}
+
 $( document ).ready(function() 
 {
 			//		$('#items_block').jqStructBlock();
@@ -102,7 +108,9 @@ $( document ).ready(function()
 						    	}
 						    	if(typeof show_procent_timer !='undefined')
 						    		clearTimeout(show_procent_timer);
+						    	
 						    	that_form.submit();
+						    	
 						    },
 						    error: function(jqXHR, textStatus, errorThrown) 
 						    {
@@ -117,7 +125,22 @@ $( document ).ready(function()
 								
 					}
 					
-					return true;
+					if( $(that_form)[0].hasAttribute('pbid') )
+		    		{
+						process_submit(that_form);
+		    		}
+					else
+		    		{
+						return true;
+		    		}
+				}
+				else
+				{
+					if( $(that_form)[0].hasAttribute('pbid') )	
+					{
+						e.preventDefault();
+						return false;
+					}
 				}
 				
 				e.preventDefault();
@@ -208,9 +231,13 @@ $( document ).ready(function()
 						console.log(textStatus);
 						console.log(errorThrown);
 					}
-				});
+				}
 				
-			});
+				);
+				
+			}
+			
+			);
 });	
 
 function clear_file(table,fld)

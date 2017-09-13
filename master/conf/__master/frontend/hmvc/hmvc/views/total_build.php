@@ -3,7 +3,7 @@ use BootstrapProgressBar\ProgressBarWidget as ProgressBarWidget;
 ?>
 <h3>#{TOTAL UPDATE}</h3>
 <?php
-$form=new mulForm(as_url("hmvc/maketotal/"),$this);
+$form=new mulForm(as_url("hmvc/maketotal"),$this,['pbid'=>'pb_compile']);
 $this->_MODEL->scenario('total');
 $row_total = $this->_MODEL->empty_row_form_model();
 $row_total->setField('cfg',$config);
@@ -11,7 +11,7 @@ $form->scenario($row_total);
 ?>
 <?=$form->field($row_total,'cfg')->hidden()?>
 <?php $this->usewidget(new ProgressBarWidget(),array(
-						'value'=>66,
+						'value'=>66,'id'=>'pb_compile',
 	)); ?>
 <table>
 <tr><td><label>#{Rewrite all files}&nbsp;</label></td><td><?=$form->field($row_total,'rewrite_all')->checkbox()?></td></tr>

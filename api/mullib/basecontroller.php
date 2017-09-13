@@ -535,3 +535,30 @@ class AuthController extends BaseController
 		$this->redirect_back();
 	}
 }
+
+class Process
+{
+	VAR $PID;
+	VAR $PASSW;
+	
+	function __construct($pid=NULL,$_passw=NULL)
+	{
+		if($pid==NULL)
+		{
+			if(!isset($_SESSION['processes'])) // Инициализируем хранилище процессов в сессии
+			{
+				$_SESSION['processes']=[];
+			}
+			
+			$_p_passw = GenRandStr();
+			$_SESSION['processes'][]=['passw'=>$_p_passw];
+			$this->PID=count($_SESSION['processes'])-1;
+			
+		//	$this->PID = GenRandStr()
+		}
+		else 
+		{
+			
+		}
+	}
+}
