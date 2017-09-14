@@ -536,10 +536,13 @@ class AuthController extends BaseController
 	}
 }
 
-class Process
+class StepProcess
 {
 	VAR $PID;
 	VAR $PASSW;
+	VAR $ERROR=0;
+	VAR $ERROR_MSG="";
+	VAR $TERMINATED=FALSE;
 	
 	function __construct($pid=NULL,$_passw=NULL)
 	{
@@ -550,15 +553,53 @@ class Process
 				$_SESSION['processes']=[];
 			}
 			
-			$_p_passw = GenRandStr();
-			$_SESSION['processes'][]=['passw'=>$_p_passw];
+			$this->PASSW = GenRandStr();
+			$_SESSION['processes'][]=['passw'=>$this->PASSW,'Data'=>[],'terminated'=>false];
 			$this->PID=count($_SESSION['processes'])-1;
 			
 		//	$this->PID = GenRandStr()
 		}
 		else 
 		{
-			
+			$this->PID=$pid;
+			if(isset($_SESSION['processes'][$pid]))
+			{
+				if($_SESSION['processes'][$pid]['passw']!=$_passw)
+				{
+					$this->ERROR=2;
+					$this->ERROR_MSG="Wrong password";
+				}
+				else	// без ошибокподключились  
+				{
+					$this->TERMINATED=$_SESSION['processes'][$pid]['terminated'];
+					
+				}
+			}
+			else 
+			{
+				$this->ERROR=1;
+				$this->ERROR_MSG="Process not exists";
+			}
+		}
+	}
+	
+	function terminate($_ERROR=0,$ERR_TEXT="")
+	{
+		$this->TERMINATED=true;
+		$this->ERROR=$_ERROR;
+		$this->ERROR_MSG=$ERR_TEXT;
+		unset($_SESSION['processes'][$this->PID]);
+	}
+	
+	function Data($data_key,$data_val=NULL)
+	{
+		if($data_val==NULL)
+		{
+			return $_SESSION['processes'][$this->PID]['Data'][$data_key];
+		}
+		else 
+		{
+			$_SESSION['processes'][$this->PID]['Data'][$data_key]=$data_val;
 		}
 	}
 }

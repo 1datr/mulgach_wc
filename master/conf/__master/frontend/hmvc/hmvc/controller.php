@@ -129,6 +129,44 @@ class HmvcController extends \BaseController
 	
 	public function ActionMaketotal()
 	{
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+				
+		if(isset($_POST['pid']))
+		{
+		//
+			$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
+			
+			// установки начальных настроек			
+			$sp->Data('procent',$sp->Data('procent')+1);
+				
+		//	mul_dbg($sp->Data('settings') );
+			$_cfg = new \scaff_conf($sp->Data('settings')['cfg']);	
+			
+			
+			$dbparams = $_cfg->connect_db_if_exists($this);
+			
+
+			$pid = $sp->PID;
+			if($sp->Data('procent')==100)
+				$sp->terminate();
+			$this->out_json(['pid'=>$sp->PID,'procent'=>$sp->Data('procent'),'terminated'=>$sp->TERMINATED]);
+		}
+		else 
+		{
+		//	mul_dbg($_POST);
+			// мочим таблицу
+			$_cfg = new \scaff_conf($_POST['settings_total']['cfg']);
+			$dbparams = $_cfg->connect_db_if_exists($this);
+			$tablelist = $this->_CONNECTION->get_tables();
+			
+			$sp = new \StepProcess();
+			$sp->Data('procent',0);
+			$sp->Data('settings',$_POST['settings_total']);
+			$sp->Data('tables',$tablelist);
+			
+			$this->out_json(['pid'=>$sp->PID,'passw'=>$sp->PASSW]);			
+		}
 		
 	}
 	
@@ -310,10 +348,7 @@ class HmvcController extends \BaseController
 								'sbplugin'=>$sbplugin,
 								'triads'=>$triads,
 								'table'=>$_SESSION['makeinfo']['table'],
-								'warnings'=>$table_warnings,	
-								//'_hmvc'=>$_hmvc,
-								//'authcon'=>$authcon,
-								
+								'warnings'=>$table_warnings,									
 								'table_info'=>$table_info,
 						));
 					};break;

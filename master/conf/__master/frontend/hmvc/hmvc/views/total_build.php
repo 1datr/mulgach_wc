@@ -11,7 +11,9 @@ $form->scenario($row_total);
 ?>
 <?=$form->field($row_total,'cfg')->hidden()?>
 <?php $this->usewidget(new ProgressBarWidget(),array(
-						'value'=>66,'id'=>'pb_compile',
+					//'value'=>0,
+					'class'=>'progress-striped active',
+					'id'=>'pb_compile',
 	)); ?>
 <table>
 <tr><td><label>#{Rewrite all files}&nbsp;</label></td><td><?=$form->field($row_total,'rewrite_all')->checkbox()?></td></tr>

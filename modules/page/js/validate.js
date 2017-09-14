@@ -42,12 +42,81 @@ function load_ajax_block(sel,url)
 	});
 }
 
-function process_submit(the_form)
+function exe_process(pid,pwd,form_action,fun_onstep=null,fun_onterminate=null)
+{
+	frm_data = new FormData();
+	frm_data.append('pid',pid);
+	frm_data.append('passw',pwd);
+	
+	$.ajax({
+        url: form_action,
+        type: 'POST',
+        data: frm_data,
+        mimeType:"multipart/form-data",
+        contentType: false,
+        cache: false,
+        processData:false,
+        dataType: 'json',
+	    success: function(data, textStatus, jqXHR)
+	    	{
+	    	//	Получили идентификатор и пароль
+	    	if(data.terminated)
+	    		{
+		    		if(fun_onterminate!=null)
+	    			{
+		    			fun_onterminate(data);
+	    			}
+	    		}
+	    	else
+	    		{
+		    		if(fun_onstep!=null)
+	    			{
+	    				fun_onstep(data);
+	    			}
+		    		
+		    		exe_process(pid,pwd,form_action,fun_onstep,fun_onterminate);
+	    		}
+	    	}
+		});
+}
+
+function process_submit(that_form)
 {
 	pbid = $(that_form).attr('pbid');
 	//alert(pbid);
 	pb_show(pbid);
-	//$(the_form).find('#'.pbid).show();
+	form_action = $(that_form).attr('action');
+	var the_data = new FormData(that_form[0]);
+	$.ajax({
+        url: form_action,
+        type: 'POST',
+        data: the_data,
+        mimeType:"multipart/form-data",
+        contentType: false,
+        cache: false,
+        processData:false,
+        dataType: 'json',
+	    success: function(data, textStatus, jqXHR)
+	    	{
+	    	//	Получили идентификатор и пароль
+	    	exe_process(data.pid,data.passw,form_action,
+	    			function(jsondata)
+	    				{
+	    					pb_set_procent(pbid,jsondata.procent);
+	    				},
+			    	function(jsondata)
+						{
+	    					pb_hide(pbid);
+						}
+	    			)
+	    	},
+		error: function(jqXHR, textStatus, errorThrown) 
+	    {	    	
+	    	console.log(textStatus);	    	
+	    },
+		});
+    
+	return false;
 }
 
 $( document ).ready(function() 
@@ -130,6 +199,7 @@ $( document ).ready(function()
 					if( $(that_form)[0].hasAttribute('pbid') )
 		    		{
 						process_submit(that_form);
+						return false;
 		    		}
 					else
 		    		{
