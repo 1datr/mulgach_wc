@@ -15,8 +15,11 @@ class DbWatcher {
 		$result = [];
 		
 		$result['table']=$_table;
-		$result['fields'] = $this->_CONNECTION->get_table_fields($_SESSION['makeinfo']['table']);
+	
+		$result['fields'] = $this->_CONNECTION->get_table_fields($_table);
+		
 		$result['tables'] = $this->_CONNECTION->get_tables();
+	//	mul_dbg($result);
 		$result['first_table_fields'] = $this->_CONNECTION->get_table_fields($result['tables'][0]);
 		$result['view'] = $this->SearchViewFld($result['fields']);
 		
@@ -108,14 +111,25 @@ class DbWatcher {
 		$settings = $_fields;
 		
 		$tr_front = $cfg->get_triada('frontend', $trname);
+		
+	
 		if($tr_front!=null)
 		{
 			$tr_info = $tr_front->getModelInfo();
+						
 			$settings['view']=$tr_info['view'];
 			
-			$settings['constraints']=$tr_info['constraints'];			
+			//
+			if(isset($tr_info['constraints']))
+				$settings['constraints']=$tr_info['constraints'];	
+				
 			$settings['con_auth'] = $tr_front->_PARENT_CONF->get_auth_con();
+			
+		//	mul_dbg($settings);
+			
 			$settings['authcon']['enable'] = ($settings['con_auth'] == $settings['table']);
+			
+			
 			
 			$settings['connect_from']['frontend'] = $cfg->find_menu_triada('frontend');
 			if($settings['connect_from']['frontend']==$tr_front->NAME)	$settings['mainmenu']['frontend']='On';
@@ -123,6 +137,8 @@ class DbWatcher {
 			if($settings['connect_from']['backend']==$tr_front->NAME)	$settings['mainmenu']['backend']='On';
 			//$tr_back = $cfg->get_triada('frontend', $trname);
 		}
+		
+		
 		// настройки полей модели	
 		foreach($settings['model_fields'] as $fld_idx => $fld)
 		{

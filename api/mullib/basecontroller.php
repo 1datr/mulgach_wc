@@ -593,7 +593,7 @@ class StepProcess
 	
 	function Data($data_key,$data_val=NULL)
 	{
-		if($data_val==NULL)
+		if($data_val===NULL)
 		{
 			return $_SESSION['processes'][$this->PID]['Data'][$data_key];
 		}

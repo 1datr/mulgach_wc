@@ -137,20 +137,26 @@ class HmvcController extends \BaseController
 		//
 			$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
 			
-			// установки начальных настроек			
-			$sp->Data('procent',$sp->Data('procent')+1);
-				
-		//	mul_dbg($sp->Data('settings') );
-			$_cfg = new \scaff_conf($sp->Data('settings')['cfg']);	
-			
+			// компилируем таблицу
+			$table = $sp->Data('tables')[$sp->Data('index')];
+			//mul_dbg($table);
+			$_cfg = new \scaff_conf($sp->Data('settings')['cfg']);
 			
 			$dbparams = $_cfg->connect_db_if_exists($this);
 			
-
+			$dbw = new \DbWatcher($this->_CONNECTION);
+			$table_info = $dbw->get_basic_table_info($table);
+				
+			if(empty($sp->Data('settings')['ignore_existing']))	$table_info = $dbw->watch_triada($_cfg,$table, $table_info);
+			
+			// установки начальных настроек			
+			$sp->Data('procent',$sp->Data('procent')+$sp->Data('delta'));
+			$sp->Data('index',$sp->Data('index')+1);
+			
 			$pid = $sp->PID;
-			if($sp->Data('procent')==100)
+			if($sp->Data('procent')>=100)
 				$sp->terminate();
-			$this->out_json(['pid'=>$sp->PID,'procent'=>$sp->Data('procent'),'terminated'=>$sp->TERMINATED]);
+			$this->out_json(['pid'=>$sp->PID,'procent'=> number_format($sp->Data('procent'), 2, '.', ','),'terminated'=>$sp->TERMINATED]);
 		}
 		else 
 		{
@@ -159,11 +165,14 @@ class HmvcController extends \BaseController
 			$_cfg = new \scaff_conf($_POST['settings_total']['cfg']);
 			$dbparams = $_cfg->connect_db_if_exists($this);
 			$tablelist = $this->_CONNECTION->get_tables();
+			$delta = 100/count($tablelist);
 			
 			$sp = new \StepProcess();
 			$sp->Data('procent',0);
+			$sp->Data('index',0);
 			$sp->Data('settings',$_POST['settings_total']);
 			$sp->Data('tables',$tablelist);
+			$sp->Data('delta',$delta);
 			
 			$this->out_json(['pid'=>$sp->PID,'passw'=>$sp->PASSW]);			
 		}

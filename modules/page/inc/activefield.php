@@ -331,11 +331,17 @@ class ActiveField
 	{
 		def_options(array('htmlattrs'=>array()), $opts);
 		$opts['htmlattrs']['type']='checkbox';
+		
+		if(!isset($opts['name']))
+			$opts['htmlattrs']['name']= $this->get_var_name();
+		else
+			$opts['htmlattrs']['name']= $opts['name'];
+		/*
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
-		
+		*/
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
 		if(!empty($fldval))
 			$opts['htmlattrs']['checked']=true;
