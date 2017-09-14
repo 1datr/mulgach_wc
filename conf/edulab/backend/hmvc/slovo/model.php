@@ -1,5 +1,7 @@
 <?php
-class ModelSlovo extends BaseModel
+namespace Edulab\Backend;
+
+class ModelSlovo extends \BaseModel
 {
 	
 }

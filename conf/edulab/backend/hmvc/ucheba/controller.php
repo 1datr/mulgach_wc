@@ -1,5 +1,7 @@
 <?php 
-class UchebaController extends BaseController
+namespace Edulab\Backend;
+
+class UchebaController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class UchebaController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}

@@ -1,5 +1,7 @@
 <?php
-class ModelSlog extends BaseModel
+namespace Edulab\Backend;
+
+class ModelSlog extends \BaseModel
 {
 	
 }

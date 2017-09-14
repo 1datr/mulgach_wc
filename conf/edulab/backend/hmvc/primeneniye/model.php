@@ -1,5 +1,7 @@
 <?php
-class ModelPrimeneniye extends BaseModel
+namespace Edulab\Backend;
+
+class ModelPrimeneniye extends \BaseModel
 {
 	
 }

@@ -937,6 +937,11 @@ class mul_page extends mul_Module
 		// получить страницу из контроллера
 	
 		$this->_ENV_INFO['page_module']=$this;
+		
+		$namespace = UcaseFirst($_CONFIG).'\\'.UcaseFirst($_EP);
+		
+		$controller_name = $namespace."\\".$controller_name;
+		
 		$controller_object = new $controller_name(
 				array(
 						'_CONTROLLER_DIR' => $con_info['_DIR_CONTROLLER'],

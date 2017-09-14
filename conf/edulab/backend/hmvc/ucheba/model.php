@@ -1,5 +1,7 @@
 <?php
-class ModelUcheba extends BaseModel
+namespace Edulab\Backend;
+
+class ModelUcheba extends \BaseModel
 {
 	
 }

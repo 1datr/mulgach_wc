@@ -1,5 +1,7 @@
 <?php 
-class SiteController extends BaseController
+namespace Edulab\Backend;
+
+class SiteController extends \BaseController
 {
 
 		public function ActionIndex()
