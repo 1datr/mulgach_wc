@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelStudent extends \BaseModel
+class ModelStudent extends \AuthModel
 {
 	
 }

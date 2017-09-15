@@ -10,7 +10,7 @@ class DbWatcher {
 		$this->_CONNECTION = $dbconnection;
 	}
 	
-	function get_basic_table_info($_table)
+	function get_basic_table_info($_table,$autofind_authcon=false)
 	{
 		$result = [];
 		
@@ -48,6 +48,16 @@ class DbWatcher {
 				$result['model_fields'][$fld_idx]['required']=true;
 			}
 			$result['model_fields'][$fld_idx]['maybe_file']= in_array($fld['Type'],array('text','blob'));
+		}
+		
+		if($autofind_authcon)
+		{
+			$auth_fields = $this->search_auth_fields($result['fields']);
+			if( isset($auth_fields['login']) && isset($auth_fields['passw']) && isset($auth_fields['hash']) && isset($auth_fields['email']) )
+			{
+				$result['con_auth'] = $result['table'];					
+				$result['authcon']['enable'] = true;
+			}
 		}
 		
 		return $result;			

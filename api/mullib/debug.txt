@@ -58,3 +58,24 @@
         )
 
 )
+
+				
+	09-15-2017 13:34:14.000000: Array
+(
+    [#scenario] => total
+    [settings_total] => Array
+        (
+            [conf] => kursy
+            [rewrite_all] => on
+            [autofind_auth] => on
+            [ep] => Array
+                (
+                    [frontend] => on
+                    [backend] => on
+                    [install] => on
+                    [rest] => on
+                )
+
+        )
+
+)

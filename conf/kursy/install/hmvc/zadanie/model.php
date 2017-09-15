@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelZadanie extends \BaseModel
+class ModelZadanie extends \AuthModel
 {
 	
 }

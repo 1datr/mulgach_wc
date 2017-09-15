@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelUrok extends \BaseModel
+class ModelUrok extends \AuthModel
 {
 	
 }
