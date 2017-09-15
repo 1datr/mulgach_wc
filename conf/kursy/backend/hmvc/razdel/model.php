@@ -1,5 +1,7 @@
 <?php
-class ModelRazdel extends BaseModel
+namespace Kursy\Backend;
+
+class ModelRazdel extends \BaseModel
 {
 	
 }

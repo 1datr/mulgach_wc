@@ -23,16 +23,7 @@ else
 
 	<tr>
 	<th><label>#{urok.id_razdel}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('razdel')->_MODEL->find() ,'required'=>true, 'name'=>'urok[id_razdel]');
-					if(!empty($urok))
-		{
-			$params['value']=$urok->getField('id_razdel',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_id_razdel' role="alert"></div>
-			</td>
+	<?php $form->field($urok,'id_razdel')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{urok.number}</label></th><td>
@@ -56,11 +47,11 @@ else
 	</tr>
 		<tr>
 	<th><label>#{urok.document1}</label></th><td>
-	<?php $form->field($urok,'document1')->file();	 ?>	</td>
+	<?php $form->field($urok,'document1')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{urok.document2}</label></th><td>
-	<?php $form->field($urok,'document2')->file();	 ?>	</td>
+	<?php $form->field($urok,'document2')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{urok.hometask}</label></th><td>

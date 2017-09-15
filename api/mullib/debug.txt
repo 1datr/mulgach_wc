@@ -1,0 +1,60 @@
+
+				
+	09-15-2017 10:59:13.000000: Array
+(
+    [#scenario] => total
+    [settings_total] => Array
+        (
+            [conf] => kursy
+            [rewrite_all] => on
+            [ignore_existing] => on
+            [autofind_auth] => on
+            [ep[frontend] => on
+            [ep[backend] => on
+            [ep[install] => on
+            [ep[rest] => on
+        )
+
+)
+
+				
+	09-15-2017 11:25:49.000000: Array
+(
+    [#scenario] => total
+    [settings_total] => Array
+        (
+            [conf] => kursy
+            [rewrite_all] => on
+            [ignore_existing] => on
+            [autofind_auth] => on
+            [ep] => Array
+                (
+                    [frontend] => on
+                    [backend] => on
+                    [install] => on
+                    [rest] => on
+                )
+
+        )
+
+)
+
+				
+	09-15-2017 11:29:01.000000: Array
+(
+    [#scenario] => total
+    [settings_total] => Array
+        (
+            [conf] => kursy
+            [autofind_auth] => on
+            [ep] => Array
+                (
+                    [frontend] => on
+                    [backend] => on
+                    [install] => on
+                    [rest] => on
+                )
+
+        )
+
+)

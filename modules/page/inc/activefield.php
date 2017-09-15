@@ -15,14 +15,39 @@ class ActiveField
 		$this->_OPTIONS=$opts;
 	}
 	
+	private function unbracket_fld_name($fldname,$first_in_domen=true)
+	{
+		$fld_parts = explode('[',$fldname);
+		if(count($fld_parts)>1)
+		{
+			$res_str="";
+			$part_list=[];
+			foreach($fld_parts as $idx => $part)
+			{
+				while($part[strlen($part)-1]==']')
+				{
+					$part = substr($part, 0, strlen($part)-1);
+				}
+				
+				$part_list[]=$part;
+			
+			}
+			return implode('][', $part_list);
+		}
+		return $fldname;
+	}
+	
 	private function get_var_name()
 	{
+		
+		
 		if($this->_FORM->_MODE=='post')
 		{
+			$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
 			if(isset($this->_CONTROLLER->_MODEL->_SETTINGS['domen']))
-				return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$this->_FLDNAME.']';
+				return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$own_fld_name.']';
 			else
-				return $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
+				return $this->_ROW->_MODEL->_TABLE.'['.$own_fld_name.']';
 		}
 		elseif($this->_FORM->_MODE=='get')
 		{
@@ -329,7 +354,7 @@ class ActiveField
 	
 	function checkbox($opts=array())
 	{
-		def_options(array('htmlattrs'=>array()), $opts);
+		def_options(array('htmlattrs'=>array(),'noerrbox'=>true), $opts);
 		$opts['htmlattrs']['type']='checkbox';
 		
 		if(!isset($opts['name']))
@@ -348,7 +373,7 @@ class ActiveField
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
-		$this->error_div();
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	function password($opts=array())

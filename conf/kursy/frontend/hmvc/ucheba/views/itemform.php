@@ -23,29 +23,11 @@ else
 
 	<tr>
 	<th><label>#{ucheba.id_uchenik}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('student')->_MODEL->find() ,'required'=>true, 'name'=>'ucheba[id_uchenik]');
-					if(!empty($ucheba))
-		{
-			$params['value']=$ucheba->getField('id_uchenik',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_id_uchenik' role="alert"></div>
-			</td>
+	<?php $form->field($ucheba,'id_uchenik')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{ucheba.id_kurs}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('kursy')->_MODEL->find() ,'required'=>true, 'name'=>'ucheba[id_kurs]');
-					if(!empty($ucheba))
-		{
-			$params['value']=$ucheba->getField('id_kurs',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_id_kurs' role="alert"></div>
-			</td>
+	<?php $form->field($ucheba,'id_kurs')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{ucheba.dostup}</label></th><td>

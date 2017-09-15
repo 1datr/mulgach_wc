@@ -5,14 +5,12 @@
 	<tr>
 	<th valign="top"><label>#{ucheba.id_uchenik}</label></th>
 	<td valign="top">
-			<?=$ucheba->getField('id_uchenik')->getView() ?>	
-			</td>
+	<?=$ucheba->getField('id_uchenik',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{ucheba.id_kurs}</label></th>
 	<td valign="top">
-			<?=$ucheba->getField('id_kurs')->getView() ?>	
-			</td>
+	<?=$ucheba->getField('id_kurs',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{ucheba.dostup}</label></th>

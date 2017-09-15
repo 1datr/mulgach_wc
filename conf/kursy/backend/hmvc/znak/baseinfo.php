@@ -7,6 +7,14 @@ $settings = array(
 	'required'=>array('id_znak','znak','type'),
 	'rules'=>array(),	
 	'view'=>'{znak}',
-	'file_fields'=>array('sound'=>array('type'=>''),),
-	
+	'file_fields'=>array(),
+	'authdata'=>array(
+		'type'=>'db',
+		'src'=>'znak',
+		// fields
+		'login_field'=>'',
+		'passw_field'=>'',
+		'hash_tag'=>'',
+		'email_field'=>'',
+	),
 );

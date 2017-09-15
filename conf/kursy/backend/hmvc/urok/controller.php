@@ -1,5 +1,7 @@
 <?php 
-class UrokController extends BaseController
+namespace Kursy\Backend;
+
+class UrokController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class UrokController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','/login')
 				),	
 		);
 	}
@@ -22,7 +24,7 @@ class UrokController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -45,14 +47,14 @@ class UrokController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$this->_TITLE="CREATE UROK";
 		$this->out_view('itemform',array('urok'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$urok = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$urok->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('urok'=>$urok));
@@ -89,7 +91,7 @@ class UrokController extends BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$urok = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$urok->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('urok'=>$urok));

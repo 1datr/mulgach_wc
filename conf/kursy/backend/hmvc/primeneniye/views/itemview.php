@@ -5,13 +5,11 @@
 	<tr>
 	<th valign="top"><label>#{primeneniye.id_predlogenie}</label></th>
 	<td valign="top">
-			<?=$primeneniye->getField('id_predlogenie')->getView() ?>	
-			</td>
+	<?=$primeneniye->getField('id_predlogenie',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{primeneniye.id_lifearea}</label></th>
 	<td valign="top">
-			<?=$primeneniye->getField('id_lifearea')->getView() ?>	
-			</td>
+	<?=$primeneniye->getField('id_lifearea',true) ?>	</td>
 	</tr>
 	</table>

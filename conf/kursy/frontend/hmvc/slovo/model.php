@@ -1,5 +1,7 @@
 <?php
-class ModelSlovo extends BaseModel
+namespace Kursy\Frontend;
+
+class ModelSlovo extends \BaseModel
 {
 	
 }

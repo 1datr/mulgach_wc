@@ -1,5 +1,7 @@
 <?php 
-class PrepsController extends BaseController
+namespace Kursy\Frontend;
+
+class PrepsController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class PrepsController extends BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','/login')
 				),	
 		);
 	}
@@ -22,7 +24,7 @@ class PrepsController extends BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -45,14 +47,14 @@ class PrepsController extends BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$this->_TITLE="CREATE PREPS";
 		$this->out_view('itemform',array('preps'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$preps = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$preps->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('preps'=>$preps));
@@ -89,7 +91,7 @@ class PrepsController extends BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$preps = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$preps->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('preps'=>$preps));

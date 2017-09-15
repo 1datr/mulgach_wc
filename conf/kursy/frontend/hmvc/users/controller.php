@@ -1,5 +1,7 @@
 <?php 
-class UsersController extends AuthController
+namespace Kursy\Frontend;
+
+class UsersController extends \BaseController
 {
 
 	public function Rules()
@@ -11,7 +13,7 @@ class UsersController extends AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser','regsuccess')),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','/login')
 				),	
 		);
 	}
@@ -22,7 +24,7 @@ class UsersController extends AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -45,14 +47,14 @@ class UsersController extends AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$this->_TITLE="CREATE USERS";
 		$this->out_view('itemform',array('users'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$users->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('users'=>$users));
@@ -89,81 +91,12 @@ class UsersController extends AuthController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "", "menu");
 		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$users->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('users'=>$users));
 	}
 	
-	public function ActionMenu()
-	{
-		$menu = $this->getinfo('basemenu');
-		//print_r($menu);
-		$this->out_view('menu',array('menu'=>$menu));
-	}
-	public function ActionLogin()
-	{
-		$this->_TITLE=Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('loginform',array());
-	}
 	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
-		if($auth_res)
-		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
-			
-			if(!empty($_POST['url_required']))
-				$this->redirect($_POST['url_required']);
-			else
-				$this->redirect(as_url('users'));
-		}
-		else 
-			$this->redirect_back();
-
-		//$this->out_view('loginform',array());
-	}
-	
-	
-	
-	public function ActionLogout()
-	{
-		$this->logout();
-		$this->redirect(as_url('users/login'));
-	}public function ActionRegister()
-{
-	$this->_TITLE=Lang::__t('User registration');
-	$reg_form_struct = $this->_MODEL->empty_row_form_model();
-	$this->out_view('register',array('captcha'=>$captcha,'reg_struct'=>$reg_form_struct));
-}
-	
-public function ActionMakeuser()
-{
-	$this->_MODEL->reguser($_POST['users']);
-	$this->redirect(as_url('users/regsuccess'));
-}
-
-public function ActionRegsuccess()
-{
-	$this->out_view('regsuccess',[]);
-}
-
-public function BeforeAction(&$params)
-{
-	if(in_array($params['action'],array('makeuser')))
-	{
-		$this->_MODEL->scenario("register");
-	}	
-	elseif($params['action']=='validate')
-	{
-		$req = $this->getRequest();
-		if($req->_args[0]=="makeuser")
-		{
-			$this->_MODEL->scenario('register');			
-		}
-	}
-}
 }
 ?>

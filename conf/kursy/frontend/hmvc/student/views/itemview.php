@@ -20,7 +20,6 @@
 		<tr>
 	<th valign="top"><label>#{student.user_id}</label></th>
 	<td valign="top">
-			<?=$student->getField('user_id')->getView() ?>	
-			</td>
+	<?=$student->getField('user_id',true) ?>	</td>
 	</tr>
 	</table>

@@ -31,7 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{znak.sound}</label></th><td>
-	<?php $form->field($znak,'sound')->file();	 ?>	</td>
+	<?php $form->field($znak,'sound')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{znak.type}</label></th><td>

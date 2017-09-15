@@ -1,5 +1,7 @@
 <?php
-class ModelZnak extends BaseModel
+namespace Kursy\Frontend;
+
+class ModelZnak extends \BaseModel
 {
 	
 }

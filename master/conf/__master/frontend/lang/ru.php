@@ -114,4 +114,6 @@ $_LANG['CFG']='CFG';
 $_LANG['TOTAL UPDATE']='TOTAL UPDATE';
 $_LANG['settings_total.caption']='settings_total.caption';
 $_LANG['Autofind authorize controller']='Autofind authorize controller';
+$_LANG['settings_total.conf']='settings_total.conf';
+$_LANG['Set current']='Set current';
 ?>

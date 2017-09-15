@@ -1,5 +1,7 @@
 <?php
-class ModelUcheba extends BaseModel
+namespace Kursy\Frontend;
+
+class ModelUcheba extends \BaseModel
 {
 	
 }

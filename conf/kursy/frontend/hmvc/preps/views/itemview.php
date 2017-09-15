@@ -15,8 +15,7 @@
 		<tr>
 	<th valign="top"><label>#{preps.user_id}</label></th>
 	<td valign="top">
-			<?=$preps->getField('user_id')->getView() ?>	
-			</td>
+	<?=$preps->getField('user_id',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{preps.sostoyanie_dopuska}</label></th>

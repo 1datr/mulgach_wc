@@ -1,5 +1,7 @@
 <?php
-class ModelLifearea extends BaseModel
+namespace Kursy\Frontend;
+
+class ModelLifearea extends \BaseModel
 {
 	
 }

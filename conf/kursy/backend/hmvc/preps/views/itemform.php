@@ -31,16 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{preps.user_id}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'required'=>true, 'name'=>'preps[user_id]');
-					if(!empty($preps))
-		{
-			$params['value']=$preps->getField('user_id',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_user_id' role="alert"></div>
-			</td>
+	<?php $form->field($preps,'user_id')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{preps.sostoyanie_dopuska}</label></th><td>

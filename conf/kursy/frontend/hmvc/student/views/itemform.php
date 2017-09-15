@@ -35,16 +35,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{student.user_id}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'required'=>true, 'name'=>'student[user_id]');
-					if(!empty($student))
-		{
-			$params['value']=$student->getField('user_id',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_user_id' role="alert"></div>
-			</td>
+	<?php $form->field($student,'user_id')->text();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

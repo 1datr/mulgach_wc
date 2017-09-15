@@ -8,5 +8,13 @@ $settings = array(
 	'rules'=>array(),	
 	'view'=>'{title_ru}',
 	'file_fields'=>array(),
-	
+	'authdata'=>array(
+		'type'=>'db',
+		'src'=>'lifearea',
+		// fields
+		'login_field'=>'',
+		'passw_field'=>'',
+		'hash_tag'=>'',
+		'email_field'=>'',
+	),
 );

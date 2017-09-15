@@ -140,7 +140,7 @@ class HmvcController extends \BaseController
 			// компилируем таблицу
 			$table = $sp->Data('tables')[$sp->Data('index')];
 			//mul_dbg($table);
-			$_cfg = new \scaff_conf($sp->Data('settings')['cfg']);
+			$_cfg = new \scaff_conf($sp->Data('settings')['conf']);
 			
 			$dbparams = $_cfg->connect_db_if_exists($this);
 			
@@ -148,6 +148,13 @@ class HmvcController extends \BaseController
 			$table_info = $dbw->get_basic_table_info($table);
 				
 			if(empty($sp->Data('settings')['ignore_existing']))	$table_info = $dbw->watch_triada($_cfg,$table, $table_info);
+			
+					
+			$table_info = array_merge($sp->Data('settings'),$table_info);
+			
+		//	mul_dbg($table_info);
+			
+			$this->make_hmvc($table_info);
 			
 			// установки начальных настроек			
 			$sp->Data('procent',$sp->Data('procent')+$sp->Data('delta'));
@@ -160,9 +167,9 @@ class HmvcController extends \BaseController
 		}
 		else 
 		{
-		//	mul_dbg($_POST);
+			mul_dbg($_POST);
 			// мочим таблицу
-			$_cfg = new \scaff_conf($_POST['settings_total']['cfg']);
+			$_cfg = new \scaff_conf($_POST['settings_total']['conf']);
 			$dbparams = $_cfg->connect_db_if_exists($this);
 			$tablelist = $this->_CONNECTION->get_tables();
 			$delta = 100/count($tablelist);
@@ -366,7 +373,7 @@ class HmvcController extends \BaseController
 						$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
 						
 						$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
-						
+												
 						$this->make_hmvc($_SESSION['makeinfo']);
 						unset($_SESSION['makeinfo']);
 						

@@ -27,7 +27,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slovo.zvuk_ru}</label></th><td>
-	<?php $form->field($slovo,'zvuk_ru')->file();	 ?>	</td>
+	<?php $form->field($slovo,'zvuk_ru')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.en}</label></th><td>
@@ -35,11 +35,11 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slovo.risunok}</label></th><td>
-	<?php $form->field($slovo,'risunok')->file();	 ?>	</td>
+	<?php $form->field($slovo,'risunok')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.zvuk_en}</label></th><td>
-	<?php $form->field($slovo,'zvuk_en')->file();	 ?>	</td>
+	<?php $form->field($slovo,'zvuk_en')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slovo.transcription}</label></th><td>

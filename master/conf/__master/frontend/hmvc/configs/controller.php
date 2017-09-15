@@ -94,7 +94,7 @@ class ConfigsController extends \BaseController
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		
-		scaff_conf::set_current_cfg($_POST['cfg']);
+		\scaff_conf::set_current_cfg($_POST['cfg']);
 		
 		$this->redirect_back();
 	}

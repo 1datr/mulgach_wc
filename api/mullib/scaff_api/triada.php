@@ -358,6 +358,8 @@ class scaff_triada
 		$vars['authparams']='';
 	//	mul_dbg($_params['authcon']);
 	//	mul_dbg($_params['authcon'][$this->_EP]['enable']);
+		$_basic_req_fields_auth=[];
+		
 		if(isset($_params['authcon']['enable']))
 		{			
 			

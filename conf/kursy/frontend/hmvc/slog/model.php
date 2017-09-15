@@ -1,5 +1,7 @@
 <?php
-class ModelSlog extends BaseModel
+namespace Kursy\Frontend;
+
+class ModelSlog extends \BaseModel
 {
 	
 }

@@ -31,7 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{slog.sound}</label></th><td>
-	<?php $form->field($slog,'sound')->file();	 ?>	</td>
+	<?php $form->field($slog,'sound')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{slog.type}</label></th><td>

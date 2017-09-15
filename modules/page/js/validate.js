@@ -76,7 +76,11 @@ function exe_process(pid,pwd,form_action,fun_onstep=null,fun_onterminate=null)
 		    		
 		    		exe_process(pid,pwd,form_action,fun_onstep,fun_onterminate);
 	    		}
-	    	}
+	    	},
+	    error: function(jqXHR, textStatus, errorThrown) 
+		    {	    	
+		    	console.log(textStatus);	    	
+		    },
 		});
 }
 

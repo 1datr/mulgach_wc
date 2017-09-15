@@ -1,5 +1,7 @@
 <?php
-class ModelZadanie extends BaseModel
+namespace Kursy\Backend;
+
+class ModelZadanie extends \BaseModel
 {
 	
 }

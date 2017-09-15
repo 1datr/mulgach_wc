@@ -5,8 +5,7 @@
 	<tr>
 	<th valign="top"><label>#{razdel.id_kurs}</label></th>
 	<td valign="top">
-			<?=$razdel->getField('id_kurs')->getView() ?>	
-			</td>
+	<?=$razdel->getField('id_kurs',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{razdel.number}</label></th>

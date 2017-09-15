@@ -1,5 +1,7 @@
 <?php
-class ModelPrimeneniye extends BaseModel
+namespace Kursy\Install;
+
+class ModelPrimeneniye extends \BaseModel
 {
 	
 }

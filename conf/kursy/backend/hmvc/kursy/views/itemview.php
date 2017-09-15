@@ -5,8 +5,7 @@
 	<tr>
 	<th valign="top"><label>#{kursy.id_prep}</label></th>
 	<td valign="top">
-			<?=$kursy->getField('id_prep')->getView() ?>	
-			</td>
+	<?=$kursy->getField('id_prep',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{kursy.name}</label></th>

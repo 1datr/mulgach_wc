@@ -23,16 +23,7 @@ else
 
 	<tr>
 	<th><label>#{zadanie.id_urok}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('urok')->_MODEL->find() ,'required'=>true, 'name'=>'zadanie[id_urok]');
-					if(!empty($zadanie))
-		{
-			$params['value']=$zadanie->getField('id_urok',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_id_urok' role="alert"></div>
-			</td>
+	<?php $form->field($zadanie,'id_urok')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{zadanie.proverka}</label></th><td>

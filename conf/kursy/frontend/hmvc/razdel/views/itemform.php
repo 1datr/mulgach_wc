@@ -23,16 +23,7 @@ else
 
 	<tr>
 	<th><label>#{razdel.id_kurs}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('kursy')->_MODEL->find() ,'required'=>true, 'name'=>'razdel[id_kurs]');
-					if(!empty($razdel))
-		{
-			$params['value']=$razdel->getField('id_kurs',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_id_kurs' role="alert"></div>
-			</td>
+	<?php $form->field($razdel,'id_kurs')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{razdel.number}</label></th><td>

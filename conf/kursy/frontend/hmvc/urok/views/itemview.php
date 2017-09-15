@@ -5,8 +5,7 @@
 	<tr>
 	<th valign="top"><label>#{urok.id_razdel}</label></th>
 	<td valign="top">
-			<?=$urok->getField('id_razdel')->getView() ?>	
-			</td>
+	<?=$urok->getField('id_razdel',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{urok.number}</label></th>

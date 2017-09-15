@@ -5,8 +5,7 @@
 	<tr>
 	<th valign="top"><label>#{zadanie.id_urok}</label></th>
 	<td valign="top">
-			<?=$zadanie->getField('id_urok')->getView() ?>	
-			</td>
+	<?=$zadanie->getField('id_urok',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{zadanie.proverka}</label></th>

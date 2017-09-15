@@ -7,6 +7,14 @@ $settings = array(
 	'required'=>array('id_predlogenie','ru','type'),
 	'rules'=>array(),	
 	'view'=>'{ru}',
-	'file_fields'=>array('zvuk_ru'=>array('type'=>'audio/*'),'zvuk_en'=>array('type'=>'audio/*'),'sound'=>array('type'=>'audio/*'),),
-	
+	'file_fields'=>array(),
+	'authdata'=>array(
+		'type'=>'db',
+		'src'=>'predlogenie',
+		// fields
+		'login_field'=>'',
+		'passw_field'=>'',
+		'hash_tag'=>'',
+		'email_field'=>'',
+	),
 );

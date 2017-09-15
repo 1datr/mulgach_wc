@@ -38,8 +38,8 @@ foreach ($files as $the_file)
 			<?php 
 			$frm = new mulForm(as_url('configs/setcurrent'),$this,['htmlattrs'=>['style'=>'margin:0px;padding:0px;']]);
 			?>
-			<button style = "width: 20px; height:20px; padding:0px;margin:0px;cursor:hand;border:none;">
-			<img src="<?=$this->get_image('../../images/makecurr.jpg')?>" width="18px" height="18px" alt="#{Translation}" />
+			<button style = "width: 20px; height:20px; padding:0px;margin:0px;cursor:hand;border:none;" title="#{Set current}">
+			<img src="<?=$this->get_image('../../images/makecurr.jpg')?>" width="18px" height="18px"  />
 			<input type="hidden" name="cfg" value="<?=basename($the_file)?>" />
 			</button>
 			<?php 
