@@ -1,7 +1,7 @@
 <?php 
 namespace Kursy\Backend;
 
-class RazdelController extends \AuthController
+class RazdelController extends \BaseController
 {
 
 	public function Rules()
@@ -13,7 +13,7 @@ class RazdelController extends \AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','razdel/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class RazdelController extends \AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -47,14 +47,14 @@ class RazdelController extends \AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE RAZDEL";
 		$this->out_view('itemform',array('razdel'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$razdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$razdel->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('razdel'=>$razdel));
@@ -91,44 +91,12 @@ class RazdelController extends \AuthController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$razdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$razdel->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('razdel'=>$razdel));
 	}
 	
 	
-	public function ActionLogin()
-	{
-		$this->_TITLE=\Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('loginform',array());
-	}
-	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST[''],$_POST['']);
-		if($auth_res)
-		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array(''=>$_POST['']);
-			
-			if(!empty($_POST['url_required']))
-				$this->redirect($_POST['url_required']);
-			else
-				$this->redirect(as_url('razdel'));
-		}
-		else 
-			$this->redirect_back();
-
-		//$this->out_view('loginform',array());
-	}
-	
-	
-	
-	public function ActionLogout()
-	{
-		$this->logout();
-		$this->redirect(as_url('razdel/login'));
-	}
 }
 ?>

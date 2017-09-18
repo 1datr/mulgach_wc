@@ -4,17 +4,9 @@ $settings = array(
 	'fields'=>array('id_predlogenie'=>array('Type'=>'bigint','TypeInfo'=>"20"),'ru'=>array('Type'=>'text','TypeInfo'=>""),'zvuk_ru'=>array('Type'=>'text','TypeInfo'=>""),'en'=>array('Type'=>'text','TypeInfo'=>""),'zvuk_en'=>array('Type'=>'text','TypeInfo'=>""),'transcription'=>array('Type'=>'text','TypeInfo'=>""),'sound'=>array('Type'=>'text','TypeInfo'=>""),'type'=>array('Type'=>'bigint','TypeInfo'=>"20")),
 	'primary'=>'id_predlogenie',
 	'constraints'=>array(),	
-	'required'=>array('id_predlogenie','ru','type'),
+	'required'=>array('id_predlogenie','type'),
 	'rules'=>array(),	
 	'view'=>'{ru}',
 	'file_fields'=>array(),
-	'authdata'=>array(
-		'type'=>'db',
-		'src'=>'predlogenie',
-		// fields
-		'login_field'=>'',
-		'passw_field'=>'',
-		'hash_tag'=>'',
-		'email_field'=>'',
-	),
+	
 );

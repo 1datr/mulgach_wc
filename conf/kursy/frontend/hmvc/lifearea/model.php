@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Frontend;
 
-class ModelLifearea extends \AuthModel
+class ModelLifearea extends \BaseModel
 {
 	
 }

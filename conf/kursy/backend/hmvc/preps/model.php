@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Backend;
 
-class ModelPreps extends \AuthModel
+class ModelPreps extends \BaseModel
 {
 	
 }

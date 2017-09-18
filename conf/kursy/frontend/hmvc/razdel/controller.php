@@ -1,7 +1,7 @@
 <?php 
 namespace Kursy\Frontend;
 
-class RazdelController extends \AuthController
+class RazdelController extends \BaseController
 {
 
 	public function Rules()
@@ -13,7 +13,7 @@ class RazdelController extends \AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser','regsuccess')),'anonym','razdel/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class RazdelController extends \AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -47,14 +47,14 @@ class RazdelController extends \AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE RAZDEL";
 		$this->out_view('itemform',array('razdel'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$razdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$razdel->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('razdel'=>$razdel));
@@ -91,76 +91,12 @@ class RazdelController extends \AuthController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$razdel = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$razdel->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('razdel'=>$razdel));
 	}
 	
 	
-	public function ActionLogin()
-	{
-		$this->_TITLE=\Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('loginform',array());
-	}
-	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST[''],$_POST['']);
-		if($auth_res)
-		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array(''=>$_POST['']);
-			
-			if(!empty($_POST['url_required']))
-				$this->redirect($_POST['url_required']);
-			else
-				$this->redirect(as_url('razdel'));
-		}
-		else 
-			$this->redirect_back();
-
-		//$this->out_view('loginform',array());
-	}
-	
-	
-	
-	public function ActionLogout()
-	{
-		$this->logout();
-		$this->redirect(as_url('razdel/login'));
-	}public function ActionRegister()
-{
-	$this->_TITLE=Lang::__t('User registration');
-	$reg_form_struct = $this->_MODEL->empty_row_form_model();
-	$this->out_view('register',array('captcha'=>$captcha,'reg_struct'=>$reg_form_struct));
-}
-	
-public function ActionMakeuser()
-{
-	$this->_MODEL->reguser($_POST['razdel']);
-	$this->redirect(as_url('razdel/regsuccess'));
-}
-
-public function ActionRegsuccess()
-{
-	$this->out_view('regsuccess',[]);
-}
-
-public function BeforeAction(&$params)
-{
-	if(in_array($params['action'],array('makeuser')))
-	{
-		$this->_MODEL->scenario("register");
-	}	
-	elseif($params['action']=='validate')
-	{
-		$req = $this->getRequest();
-		if($req->_args[0]=="makeuser")
-		{
-			$this->_MODEL->scenario('register');			
-		}
-	}
-}
 }
 ?>

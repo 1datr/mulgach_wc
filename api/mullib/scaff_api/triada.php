@@ -716,6 +716,8 @@ class scaff_triada
 		{
 			if( in_array($this->_EP,array('backend','frontend')))
 			{
+			//	mul_dbg($_params);
+				
 				$vars['ADV_RULES']=$vars['ADV_RULES']. parse_code_template( url_seg_add(__DIR__,'phpt/backend/backend_rules.phpt' ), array(
 						'auth_con' => $_params['con_auth'],
 				));

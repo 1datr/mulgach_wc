@@ -49,7 +49,7 @@ class DbWatcher {
 			}
 			$result['model_fields'][$fld_idx]['maybe_file']= in_array($fld['Type'],array('text','blob'));
 		}
-		
+		/*
 		if($autofind_authcon)
 		{
 			$auth_fields = $this->search_auth_fields($result['fields']);
@@ -59,8 +59,23 @@ class DbWatcher {
 				$result['authcon']['enable'] = true;
 			}
 		}
-		
+		*/
 		return $result;			
+	}
+	
+	function check_auth_con($table_info)
+	{
+		$result=[];
+		$auth_fields = $this->search_auth_fields($table_info['fields']);
+		if( isset($auth_fields['login']) && isset($auth_fields['passw']) && isset($auth_fields['hash']) && isset($auth_fields['email']) )
+		{
+			$result['login'] = $auth_fields['login'];
+			$result['passw'] = $auth_fields['passw'];
+			$result['hash'] = $auth_fields['hash'];
+			$result['email'] = $auth_fields['email'];
+			
+		}
+		return $result;
 	}
 	
 	function fld_in_settings($fld,$settings_str)

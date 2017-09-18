@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelSlovo extends \AuthModel
+class ModelSlovo extends \BaseModel
 {
 	
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Frontend;
 
-class ModelSlog extends \AuthModel
+class ModelSlog extends \BaseModel
 {
 	
 }

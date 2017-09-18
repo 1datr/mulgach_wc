@@ -5,20 +5,16 @@ $captcha = mul_captcha::use_captcha($this,['model'=>&$reg_form_struct,'form'=>&$
 ?>
 <table>
 	<tr>
-	<th><label>#{users.}</label></th><td>
-	<?php $form->field($reg_struct,'')->password();	 ?>	</td>
-	</tr>
-		<tr>
-	<th><label>#{users._re}</label></th><td>
-	<?php $form->field($reg_struct,'_re')->password();	 ?>	</td>
-	</tr>
-		<tr>
 	<th><label>#{users.login}</label></th><td>
 	<?php $form->field($reg_struct,'login')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.password}</label></th><td>
-	<?php $form->field($reg_struct,'password')->text();	 ?>	</td>
+	<?php $form->field($reg_struct,'password')->password();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{users.password_re}</label></th><td>
+	<?php $form->field($reg_struct,'password_re')->password();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.email}</label></th><td>
@@ -55,10 +51,6 @@ $captcha = mul_captcha::use_captcha($this,['model'=>&$reg_form_struct,'form'=>&$
 		<tr>
 	<th><label>#{users.status}</label></th><td>
 	<?php $form->field($reg_struct,'status')->ComboBox();	 ?>	</td>
-	</tr>
-		<tr>
-	<th><label>#{users.hash}</label></th><td>
-	<?php $form->field($reg_struct,'hash')->text();	 ?>	</td>
 	</tr>
 	  <tr> 	  
     <td rowspan="2">#{CAPTCHA_CAPTION}</td>

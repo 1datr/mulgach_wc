@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelLifearea extends \AuthModel
+class ModelLifearea extends \BaseModel
 {
 	
 }

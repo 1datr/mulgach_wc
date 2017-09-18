@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelUcheba extends \AuthModel
+class ModelUcheba extends \BaseModel
 {
 	
 }

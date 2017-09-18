@@ -24,7 +24,7 @@ class UsersController extends \AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -47,14 +47,14 @@ class UsersController extends \AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE USERS";
 		$this->out_view('itemform',array('users'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$users->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('users'=>$users));
@@ -91,13 +91,18 @@ class UsersController extends \AuthController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$users->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('users'=>$users));
 	}
 	
-	
+	public function ActionMenu()
+	{
+		$menu = $this->getinfo('basemenu');
+		//print_r($menu);
+		$this->out_view('menu',array('menu'=>$menu));
+	}
 	public function ActionLogin()
 	{
 		$this->_TITLE=\Lang::__t('Authorization');
@@ -107,10 +112,10 @@ class UsersController extends \AuthController
 	
 	public function ActionAuth()
 	{
-		$auth_res = $this->_MODEL->auth($_POST[''],$_POST['']);
+		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
 		if($auth_res)
 		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array(''=>$_POST['']);
+			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
 			
 			if(!empty($_POST['url_required']))
 				$this->redirect($_POST['url_required']);

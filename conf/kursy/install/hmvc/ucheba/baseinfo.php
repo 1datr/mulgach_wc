@@ -8,13 +8,5 @@ $settings = array(
 	'rules'=>array(),	
 	'view'=>'#{id}',
 	'file_fields'=>array(),
-	'authdata'=>array(
-		'type'=>'db',
-		'src'=>'ucheba',
-		// fields
-		'login_field'=>'',
-		'passw_field'=>'',
-		'hash_tag'=>'',
-		'email_field'=>'',
-	),
+	
 );

@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelRazdel extends \AuthModel
+class ModelRazdel extends \BaseModel
 {
 	
 }

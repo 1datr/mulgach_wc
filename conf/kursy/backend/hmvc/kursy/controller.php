@@ -1,7 +1,7 @@
 <?php 
 namespace Kursy\Backend;
 
-class KursyController extends \AuthController
+class KursyController extends \BaseController
 {
 
 	public function Rules()
@@ -13,7 +13,7 @@ class KursyController extends \AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','kursy/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class KursyController extends \AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -47,14 +47,14 @@ class KursyController extends \AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE KURSY";
 		$this->out_view('itemform',array('kursy'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$kursy->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('kursy'=>$kursy));
@@ -91,44 +91,12 @@ class KursyController extends \AuthController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "bykva", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$kursy = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$kursy->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('kursy'=>$kursy));
 	}
 	
 	
-	public function ActionLogin()
-	{
-		$this->_TITLE=\Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('loginform',array());
-	}
-	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST[''],$_POST['']);
-		if($auth_res)
-		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array(''=>$_POST['']);
-			
-			if(!empty($_POST['url_required']))
-				$this->redirect($_POST['url_required']);
-			else
-				$this->redirect(as_url('kursy'));
-		}
-		else 
-			$this->redirect_back();
-
-		//$this->out_view('loginform',array());
-	}
-	
-	
-	
-	public function ActionLogout()
-	{
-		$this->logout();
-		$this->redirect(as_url('kursy/login'));
-	}
 }
 ?>

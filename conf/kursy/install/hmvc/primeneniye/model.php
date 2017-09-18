@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelPrimeneniye extends \AuthModel
+class ModelPrimeneniye extends \BaseModel
 {
 	
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Frontend;
 
-class ModelPrimeneniye extends \AuthModel
+class ModelPrimeneniye extends \BaseModel
 {
 	
 }

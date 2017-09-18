@@ -152,7 +152,27 @@ class HmvcController extends \BaseController
 					
 			$table_info = array_merge($sp->Data('settings'),$table_info);
 			
-		//	mul_dbg($table_info);
+	//	mul_dbg($sp->Data('con_auth')['con_info']['table']);
+			if($sp->Data('con_auth')['con_info']['table']==$table)	// контроллер авторизации
+			{
+				$table_info['authcon']['login']=$sp->Data('con_auth')['con_info']['auth_fields']['login'];
+				$table_info['authcon']['passw']=$sp->Data('con_auth')['con_info']['auth_fields']['passw'];
+				$table_info['authcon']['email']=$sp->Data('con_auth')['con_info']['auth_fields']['email'];
+				$table_info['authcon']['hash']=$sp->Data('con_auth')['con_info']['auth_fields']['hash'];
+				$table_info['authcon']['enable']=true;
+				
+				$table_info['mainmenu']['frontend']=true;
+				
+				$table_info['mainmenu']['backend']=true;				
+			}
+			else 
+			{
+				$table_info['con_auth']=$sp->Data('con_auth')['con_info']['table'];
+				
+				$table_info['connect_from']['frontend']=$sp->Data('con_auth')['con_info']['table'];
+				
+				$table_info['connect_from']['backend']=$sp->Data('con_auth')['con_info']['table'];
+			}
 			
 			$this->make_hmvc($table_info);
 			
@@ -167,7 +187,7 @@ class HmvcController extends \BaseController
 		}
 		else 
 		{
-			mul_dbg($_POST);
+		//	mul_dbg($_POST);
 			// мочим таблицу
 			$_cfg = new \scaff_conf($_POST['settings_total']['conf']);
 			$dbparams = $_cfg->connect_db_if_exists($this);
@@ -181,6 +201,31 @@ class HmvcController extends \BaseController
 			$sp->Data('tables',$tablelist);
 			$sp->Data('delta',$delta);
 			
+			// найти контроллер авторизации 
+			if(isset($_POST['settings_total']['autofind_auth']))
+			{		
+				$auth_cons=[];
+				$dbw = new \DbWatcher($this->_CONNECTION);
+				foreach ($tablelist as $tindex => $_table)
+				{
+					$table_info = $dbw->get_basic_table_info($_table);
+					$auth_con_res = $dbw->check_auth_con($table_info);
+					if(count($auth_con_res))//таблица может служить для авторизации
+					{
+						//mul_dbg($auth_con_res);
+						$auth_cons[]=['con_info'=>$table_info,'auth_fields'=>$auth_con_res];
+					}
+				}
+				
+				if(count($auth_cons))
+				{
+					$sp->Data('con_auth',$auth_cons[0]);
+				//mul_dbg($sp->Data('con_auth'));
+					
+					$sp->Data('settings',$_POST['settings_total']);
+				}
+				
+			}
 			$this->out_json(['pid'=>$sp->PID,'passw'=>$sp->PASSW]);			
 		}
 		
