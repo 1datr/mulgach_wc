@@ -416,7 +416,7 @@ class BaseController
 		include $_view_path;
 		$str = ob_get_clean();
 		
-		$obj_json = array('html'=>$str,'js'=>$this->_JS,'css'=>$this->_CSS);
+		$obj_json = array('html'=>$str,'js'=>$this->_JS,'css'=>$this->_CSS,'inline_js'=>$this->_INLINE_SCRIPT);
 			//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
 		$this->_RESULT_TYPE="application/json";
 		echo json_encode($obj_json);

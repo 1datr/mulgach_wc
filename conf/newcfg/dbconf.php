@@ -4,8 +4,8 @@
 			'host'=>'localhost',
 			'user'=>'root',
 			'password'=>'123456',
-			'dbname'=>'edulab',
-			'prefix'=>'edu_',
+			'dbname'=>'newbase',
+			'prefix'=>'nb_',
 			'charset'=>'cp1251_general_ci',
 			'dbkey'=>'main',
 );

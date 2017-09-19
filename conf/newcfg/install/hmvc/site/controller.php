@@ -1,5 +1,5 @@
 <?php 
-namespace {_CONFIG}\{_EP};
+namespace Newcfg\Install;
 
 class SiteController extends \InstallController
 {

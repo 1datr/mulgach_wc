@@ -89,7 +89,7 @@ class scaff_triada
 	{
 		file_put_contents(url_seg_add($this->_PATH,'controller.php'), 
 				parse_code_template( url_seg_add(__DIR__,'/phpt/install/installcontroller.phpt'),
-						['triada'=>$this->NAME]
+						['triada'=>$this->NAME,'_EP'=> ucfirst($this->_EP),'_CONFIG'=>ucfirst($this->_PARENT_CONF->_NAME)]
 					) );
 	}
 	

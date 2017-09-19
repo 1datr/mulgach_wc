@@ -23,3 +23,9 @@ function make_db(element)
          }
     });	
 }
+
+$(document).ready(function() {
+	//
+	//alert(999);
+	$('dbname').autocomplete('index.php?srv=db.drv_mysql.dblist');
+});

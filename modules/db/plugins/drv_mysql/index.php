@@ -46,6 +46,33 @@ class plg_drv_mysql extends mod_plugin
 		return $res_array;
 	}
 	
+	public function SrvDblist()
+	{
+		//mul_dbg($_POST);
+		
+		$this->_DB_PARAMS=$_POST['dbinfo'];
+		$dbname = $this->_DB_PARAMS['dbname'];
+		$this->_DB_PARAMS['dbname']=NULL;
+		$this->_CONNECTION_EMPTY=false;
+		$this->connect(false);
+		
+		$str_query = "show databases where `Database` like '%".$_GET['term']."%'";
+		$res = $this->query($str_query);
+		
+	//	mul_dbg($str_query);
+		
+		$res_array=array();
+		while($row = $this->get_row($res))
+		{
+			
+			
+			$res_array[]=$row[ array_keys($row)[0] ];	
+		}
+		
+		mul_dbg($res_array);
+		echo json_encode($res_array);
+	}
+	
 	public function dbconfig_code($_params)
 	{
 		$str="<?php 
@@ -382,7 +409,48 @@ class plg_drv_mysql extends mod_plugin
 		$drv_base['fields']['host']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'localhost');
 		$drv_base['fields']['user']=array('Type'=>'text','TypeInfo'=>"20",'defval'=>'root');
 		$drv_base['fields']['password']=array('Type'=>'text','TypeInfo'=>"20",'password'=>true);
-		$drv_base['fields']['dbname']=array('Type'=>'text','TypeInfo'=>"20");
+		// index.php?srv=db.drv_mysql.dblist&term=i
+		$drv_base['fields']['dbname']=array('Type'=>'text','TypeInfo'=>"20",
+				'fldparams'=>[
+						//index.php?srv=db.drv_mysql.dblist
+						/*
+						 $('#acInput').autocomplete({
+                source: flowers
+            })
+						 * */
+						'htmlattrs'=>['id'=>'dbname']
+						]);
+		$cntrlr = find_module('page')->getController();
+		use_jq_plugin('__ui',$cntrlr);
+		$cntrlr->inline_script("
+\$('#dbname').on('input', function () {
+    var term = \$(this).val();
+    var db_list_url = '/index.php?srv=db.drv_mysql.dblist&term='+term;
+	the_form = \$(this).parents('form');
+	the_data=new FormData(the_form[0]);
+	\$.ajax({
+        url: db_list_url,
+        type: 'POST',
+        data: the_data,
+        mimeType:'multipart/form-data',
+        contentType: false,
+        cache: false,
+        processData:false,
+        dataType: 'json',
+		success: function(data, textStatus, jqXHR)
+	    {	    
+			$('#dbname').autocomplete({
+                source: data,
+            })
+	    //	console.log(data);	
+	    },
+		error: function(jqXHR, textStatus, errorThrown) 
+	    {	    	
+	    //	console.log(jqXHR);	    	
+	    },
+	});
+});");
+		// $('#dbname').autocomplete({ source: '/index.php?srv=db.drv_mysql.dblist' });
 		$drv_base['fields']['prefix']=array('Type'=>'text','TypeInfo'=>"20");
 		
 		$drv_base['required']= array_merge($drv_base['required'], array('host','user','dbname'));

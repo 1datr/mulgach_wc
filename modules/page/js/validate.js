@@ -16,7 +16,7 @@ function clone_form(form_selector)
 	return newfrm;
 }
 
-function load_ajax_block(sel,url)
+function load_ajax_block(sel,url)//,afterload=null
 {
 	$.getJSON(url,function(data)
 	{
@@ -33,7 +33,10 @@ function load_ajax_block(sel,url)
 
 		}
 		
-	/*	if(afterload!=null)
+		if(data.inline_js!="")
+			res = eval(data.inline_js);
+		/*
+		if(afterload!=null)
 			afterload();*/
 		
 	}).fail(function( jqxhr, textStatus, error ) {
