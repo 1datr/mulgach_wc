@@ -75,13 +75,18 @@ function exe_process(pid,pwd,form_action,fun_onstep=null,fun_onterminate=null)
 	    			}
 		    		
 		    		exe_process(pid,pwd,form_action,fun_onstep,fun_onterminate);
-	    		}
+	    		}	    	
 	    	},
 	    error: function(jqXHR, textStatus, errorThrown) 
 		    {	    	
 		    	console.log(textStatus);	    	
 		    },
 		});
+}
+
+function show_dialog(dlg_info)
+{
+	
 }
 
 function process_submit(that_form)
@@ -200,7 +205,7 @@ $( document ).ready(function()
 								
 					}
 					
-					if( $(that_form)[0].hasAttribute('pbid') )
+					if( $(that_form)[0].hasAttribute('process') )
 		    		{
 						process_submit(that_form);
 						return false;

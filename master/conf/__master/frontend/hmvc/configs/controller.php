@@ -74,7 +74,7 @@ class ConfigsController extends \BaseController
 		{
 			GLOBAL $_BASEDIR;		
 			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-			$cnf = new scaff_conf($_POST['newcfg'],array('rewrite'=>true));
+			$cnf = new \scaff_conf($_POST['newcfg'],array('rewrite'=>true));
 		}
 		$this->redirect_back();
 	}

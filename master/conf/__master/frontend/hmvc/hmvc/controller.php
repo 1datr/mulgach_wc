@@ -115,7 +115,7 @@ class HmvcController extends \BaseController
 			$cfg= $this->getCurrCFG();
 		}
 		
-		$this->_TITLE = Lang::__t('Database configuration connection');
+		$this->_TITLE = \Lang::__t('Database configuration connection');
 		$model=array();
 		
 		//	$model = $this->UseModel(base_driver_model_settings());
@@ -310,7 +310,7 @@ class HmvcController extends \BaseController
 	
 	public function GetPlugs()
 	{
-		$plugs = mul_Module::getModulePlugins('db');
+		$plugs = \mul_Module::getModulePlugins('db');
 		$plugs = filter_array($plugs,function(&$el){
 			$matchez=array();
 			if( preg_match_all('/^drv_(.+)$/Uis', $el['value'],$matchez))

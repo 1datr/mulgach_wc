@@ -79,8 +79,11 @@ class mulForm
 		def_options(array('method'=>$method,'class'=>"mul_form",'enctype'=>"multipart/form-data"), $params['htmlattrs']);		
 		
 		$params['htmlattrs']['action']=$action;
+		if(isset($params['process']))
+			$params['htmlattrs']['process']=$params['process'];
 		if(isset($params['pbid']))
 			$params['htmlattrs']['pbid']=$params['pbid'];
+		
 		?>
 		<form <?=xx_implode($params['htmlattrs'], ' ', '{idx}="{%val}"') ?> >		
 		<?php 
