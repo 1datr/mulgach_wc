@@ -41,20 +41,20 @@ if(!empty($table_info))
 								'nametemplate'=>"constraints[#idx#][field]",
 								'onchange'=>'check_required(this)',
 			),
-						'value'=>$fld_from,
+						'value'=>$con['field'],
 					)); ?>
 			<label><?=Lang::__t('Table:')?></label>
 			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['tables'],
-					'name'=>"constraints[".$idx."][table]",					
+					'name'=>"constraints[".$idx."][model]",					
 					'value'=>$con['model'],
 					'htmlattrs'=>array('class'=>'table_to_select','nametemplate'=>"constraints[#idx#][table]",
 						'onchange'=>'load_fields(this)'))
 					); ?>
 							
 			<label><?=Lang::__t('field to:')?></label>
-			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_ENV['_CONNECTION']->get_table_fields($con['model']), //$first_table_fields,
+			<?php $this->usewidget(new ComboboxWidget(),array('data'=>$this->_CONNECTION->get_table_fields($con['model']), //$first_table_fields,
 					'name'=>"constraints[".$idx."][field_to]",					
-					'value'=>$con['fld'],
+					'value'=>$con['field_to'],
 					'htmlattrs'=>array('class'=>'fld_to_select','nametemplate'=>"constraints[#idx#][field_to]",))); ?>
 									
 			<button type="button" class="bindings_item_drop">x</button>

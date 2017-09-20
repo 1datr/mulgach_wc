@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Frontend;
 
-class ModelRazdel extends \BaseModel
+class ModelRazdel extends \AuthModel
 {
 	
 }

@@ -146,16 +146,28 @@ class DbWatcher {
 			
 			//
 			if(isset($tr_info['constraints']))
-				$settings['constraints']=$tr_info['constraints'];	
+			{
+				$settings['constraints']=[];
+				foreach ($tr_info['constraints'] as $fld_from => $fld_settings)
+				{
+					$newcon = ['model'=>$fld_settings['model'],'field'=>$fld_from,'field_to'=>$fld_settings['fld']];
+					if(isset($fld_settings['required']))
+						$newcon['required']=$fld_settings['required'];
+					
+					$settings['constraints'][] = $newcon;
+				}
+				
+			}
+			
+		//	mul_dbg($settings['constraints']);
+					
 				
 			$settings['con_auth'] = $tr_front->_PARENT_CONF->get_auth_con();
 			
 		//	mul_dbg($settings);
 			
-			$settings['authcon']['enable'] = ($settings['con_auth'] == $settings['table']);
-			
-			
-			
+			$settings['authcon']['enable'] = ($settings['con_auth'] == $settings['table']);		
+						
 			$settings['connect_from']['frontend'] = $cfg->find_menu_triada('frontend');
 			if($settings['connect_from']['frontend']==$tr_front->NAME)	$settings['mainmenu']['frontend']='On';
 			$settings['connect_from']['backend'] = $cfg->find_menu_triada('backend');

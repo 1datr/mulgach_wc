@@ -1,7 +1,7 @@
 <?php 
 namespace Kursy\Backend;
 
-class StudentController extends \BaseController
+class StudentController extends \AuthController
 {
 
 	public function Rules()
@@ -13,7 +13,7 @@ class StudentController extends \BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','student/login')
 				),	
 		);
 	}
@@ -98,5 +98,37 @@ class StudentController extends \BaseController
 	}
 	
 	
+	public function ActionLogin()
+	{
+		$this->_TITLE=\Lang::__t('Authorization');
+		$this->use_layout('layout_login');
+		$this->out_view('loginform',array());
+	}
+	
+	public function ActionAuth()
+	{
+		$auth_res = $this->_MODEL->auth($_POST[''],$_POST['']);
+		if($auth_res)
+		{
+			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array(''=>$_POST['']);
+			
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else
+				$this->redirect(as_url('student'));
+		}
+		else 
+			$this->redirect_back();
+
+		//$this->out_view('loginform',array());
+	}
+	
+	
+	
+	public function ActionLogout()
+	{
+		$this->logout();
+		$this->redirect(as_url('student/login'));
+	}
 }
 ?>

@@ -339,12 +339,15 @@ class scaff_triada
 		
 		
 		$con_str="";
+		
+		mul_dbg($_params['constraints']);
+		
 		if(!empty($_params['constraints']))
 		{
 			foreach ($_params['constraints'] as $idx => $binding)
 			{
 				$required = ((!empty($binding['required'])) ? true : false);
-				$con_str = $con_str."'".$binding['field']."'=>array('model'=>'".$binding['table']."','fld'=>'".$binding['field_to']."','required'=>".json_encode($required)."),";
+				$con_str = $con_str."'".$binding['field']."'=>array('model'=>'".$binding['model']."','fld'=>'".$binding['field_to']."','required'=>".json_encode($required)."),";
 			}
 		}
 		$constraints="";
@@ -360,7 +363,7 @@ class scaff_triada
 	//	mul_dbg($_params['authcon'][$this->_EP]['enable']);
 		$_basic_req_fields_auth=[];
 		
-		if(isset($_params['authcon']['enable']))
+		if( eql_ife($_params['authcon'], 'enable', true))
 		{			
 			
 			$vars['authparams']=parse_code_template(url_seg_add(__DIR__,'phpt/authparams.phpt') , 

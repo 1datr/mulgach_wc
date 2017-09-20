@@ -1,7 +1,7 @@
 <?php 
 namespace Kursy\Frontend;
 
-class ZnakController extends \BaseController
+class ZnakController extends \AuthController
 {
 
 	public function Rules()
@@ -13,7 +13,7 @@ class ZnakController extends \BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth','register','makeuser','regsuccess')),'anonym','znak/login')
 				),	
 		);
 	}
@@ -98,5 +98,69 @@ class ZnakController extends \BaseController
 	}
 	
 	
+	public function ActionLogin()
+	{
+		$this->_TITLE=\Lang::__t('Authorization');
+		$this->use_layout('layout_login');
+		$this->out_view('loginform',array());
+	}
+	
+	public function ActionAuth()
+	{
+		$auth_res = $this->_MODEL->auth($_POST[''],$_POST['']);
+		if($auth_res)
+		{
+			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array(''=>$_POST['']);
+			
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else
+				$this->redirect(as_url('znak'));
+		}
+		else 
+			$this->redirect_back();
+
+		//$this->out_view('loginform',array());
+	}
+	
+	
+	
+	public function ActionLogout()
+	{
+		$this->logout();
+		$this->redirect(as_url('znak/login'));
+	}public function ActionRegister()
+{
+	$this->_TITLE=Lang::__t('User registration');
+	$reg_form_struct = $this->_MODEL->empty_row_form_model();
+	$this->out_view('register',array('captcha'=>$captcha,'reg_struct'=>$reg_form_struct));
+}
+	
+public function ActionMakeuser()
+{
+	$this->_MODEL->reguser($_POST['znak']);
+	$this->redirect(as_url('znak/regsuccess'));
+}
+
+public function ActionRegsuccess()
+{
+	$this->out_view('regsuccess',[]);
+}
+
+public function BeforeAction(&$params)
+{
+	if(in_array($params['action'],array('makeuser')))
+	{
+		$this->_MODEL->scenario("register");
+	}	
+	elseif($params['action']=='validate')
+	{
+		$req = $this->getRequest();
+		if($req->_args[0]=="makeuser")
+		{
+			$this->_MODEL->scenario('register');			
+		}
+	}
+}
 }
 ?>

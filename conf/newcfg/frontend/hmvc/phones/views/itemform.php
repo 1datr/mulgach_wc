@@ -24,7 +24,7 @@ else
 	<tr>
 	<th><label>#{phones.user_id}</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'name'=>'phones[user_id]');			
+					$params = array('ds'=> $this->get_controller('')->_MODEL->find() ,'name'=>'phones[user_id]');			
 					if(!empty($phones))
 		{
 			$params['value']=$phones->getField('user_id',true);

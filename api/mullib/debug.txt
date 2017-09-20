@@ -1,327 +1,174 @@
 
 				
-	09-19-2017 18:04:24.000000: Array
+	09-20-2017 18:17:56.000000: 
+				
+	09-20-2017 18:17:57.000000: 
+				
+	09-20-2017 18:17:57.000000: 
+				
+	09-20-2017 18:17:57.000000: 
+				
+	09-20-2017 18:17:57.000000: 
+				
+	09-20-2017 18:17:57.000000: 
+				
+	09-20-2017 18:18:36.000000: Array
 (
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [table] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:05:21.000000: Array
+	09-20-2017 18:18:37.000000: Array
 (
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [table] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:20.000000: Array
+	09-20-2017 18:18:37.000000: Array
 (
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [table] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:28.000000: Array
+	09-20-2017 18:23:08.000000: Array
 (
-    [0] => information_schema
-    [1] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [table] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:37.000000: Array
+	09-20-2017 18:23:08.000000: Array
 (
-    [0] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [table] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:37.000000: Array
+	09-20-2017 18:23:11.000000: Array
 (
-    [0] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [table] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:38.000000: Array
+	09-20-2017 18:23:45.000000: Array
 (
-    [0] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [model] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:39.000000: Array
+	09-20-2017 18:23:45.000000: Array
 (
-    [0] => information_schema
-    [1] => edulab
-    [2] => ideaman
-    [3] => im2
-    [4] => kursy
-    [5] => mysql
-    [6] => newbase
-    [7] => newcfgdb
-    [8] => perevody
-    [9] => performance_schema
-    [10] => tms
-    [11] => tms2
-    [12] => tmscloud
-    [13] => undcms
-    [14] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [model] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:41.000000: Array
+	09-20-2017 18:23:45.000000: Array
 (
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
+    [0] => Array
+        (
+            [field] => user_id
+            [model] => users
+            [field_to] => id
+        )
+
 )
 
 				
-	09-19-2017 18:24:46.000000: Array
+	09-20-2017 18:23:55.000000: Array
 (
-    [0] => im2
+    [0] => Array
+        (
+            [model] => users
+            [field] => user_id
+            [field_to] => id
+            [required] => 
+        )
+
 )
 
 				
-	09-19-2017 18:24:47.000000: Array
+	09-20-2017 18:23:55.000000: Array
 (
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
+    [0] => Array
+        (
+            [model] => users
+            [field] => user_id
+            [field_to] => id
+            [required] => 
+        )
+
 )
 
 				
-	09-19-2017 18:24:49.000000: Array
+	09-20-2017 18:23:55.000000: Array
 (
-    [0] => information_schema
-    [1] => edulab
-    [2] => ideaman
-    [3] => im2
-    [4] => kursy
-    [5] => mysql
-    [6] => newbase
-    [7] => newcfgdb
-    [8] => perevody
-    [9] => performance_schema
-    [10] => tms
-    [11] => tms2
-    [12] => tmscloud
-    [13] => undcms
-    [14] => zinh
+    [0] => Array
+        (
+            [model] => users
+            [field] => user_id
+            [field_to] => id
+            [required] => 
+        )
+
 )
 
 				
-	09-19-2017 18:24:51.000000: Array
-(
-    [0] => information_schema
-    [1] => kursy
-    [2] => mysql
-    [3] => newbase
-    [4] => performance_schema
-    [5] => tms
-    [6] => tms2
-    [7] => tmscloud
-    [8] => undcms
-)
-
-				
-	09-19-2017 18:25:17.000000: Array
-(
-    [0] => information_schema
-    [1] => edulab
-    [2] => ideaman
-    [3] => im2
-    [4] => kursy
-    [5] => mysql
-    [6] => newbase
-    [7] => newcfgdb
-    [8] => perevody
-    [9] => performance_schema
-    [10] => tms
-    [11] => tms2
-    [12] => tmscloud
-    [13] => undcms
-    [14] => zinh
-)
-
-				
-	09-19-2017 18:25:19.000000: Array
-(
-    [0] => information_schema
-    [1] => kursy
-    [2] => mysql
-    [3] => newbase
-    [4] => performance_schema
-    [5] => tms
-    [6] => tms2
-    [7] => tmscloud
-    [8] => undcms
-)
-
-				
-	09-19-2017 18:25:24.000000: Array
-(
-    [0] => information_schema
-    [1] => kursy
-    [2] => mysql
-    [3] => newbase
-    [4] => performance_schema
-    [5] => tms
-    [6] => tms2
-    [7] => tmscloud
-    [8] => undcms
-)
-
-				
-	09-19-2017 18:25:32.000000: Array
-(
-    [0] => information_schema
-    [1] => kursy
-    [2] => mysql
-    [3] => newbase
-    [4] => performance_schema
-    [5] => tms
-    [6] => tms2
-    [7] => tmscloud
-    [8] => undcms
-)
-
-				
-	09-19-2017 18:26:44.000000: Array
-(
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
-)
-
-				
-	09-19-2017 18:26:46.000000: Array
-(
-    [0] => information_schema
-    [1] => zinh
-)
-
-				
-	09-19-2017 18:26:46.000000: Array
+	09-20-2017 18:23:55.000000: Array
 (
 )
 
 				
-	09-19-2017 18:26:48.000000: Array
+	09-20-2017 18:23:55.000000: Array
 (
-    [0] => information_schema
-    [1] => zinh
 )
 
 				
-	09-19-2017 18:26:49.000000: Array
+	09-20-2017 18:23:55.000000: Array
 (
-    [0] => information_schema
-    [1] => ideaman
-    [2] => im2
-    [3] => zinh
-)
-
-				
-	09-19-2017 18:26:52.000000: Array
-(
-    [0] => information_schema
-    [1] => edulab
-    [2] => ideaman
-    [3] => im2
-    [4] => kursy
-    [5] => mysql
-    [6] => newbase
-    [7] => newcfgdb
-    [8] => perevody
-    [9] => performance_schema
-    [10] => tms
-    [11] => tms2
-    [12] => tmscloud
-    [13] => undcms
-    [14] => zinh
-)
-
-				
-	09-19-2017 18:26:54.000000: Array
-(
-    [0] => information_schema
-    [1] => kursy
-    [2] => mysql
-    [3] => newbase
-    [4] => performance_schema
-    [5] => tms
-    [6] => tms2
-    [7] => tmscloud
-    [8] => undcms
-)
-
-				
-	09-19-2017 18:27:01.000000: Array
-(
-    [0] => information_schema
-    [1] => edulab
-    [2] => ideaman
-    [3] => im2
-    [4] => kursy
-    [5] => mysql
-    [6] => newbase
-    [7] => newcfgdb
-    [8] => perevody
-    [9] => performance_schema
-    [10] => tms
-    [11] => tms2
-    [12] => tmscloud
-    [13] => undcms
-    [14] => zinh
-)
-
-				
-	09-19-2017 18:27:03.000000: Array
-(
-    [0] => information_schema
-    [1] => kursy
-    [2] => mysql
-    [3] => newbase
-    [4] => performance_schema
-    [5] => tms
-    [6] => tms2
-    [7] => tmscloud
-    [8] => undcms
-)
-
-				
-	09-19-2017 18:27:40.000000: Array
-(
-    [0] => information_schema
-    [1] => ideaman
-    [2] => newbase
-    [3] => newcfgdb
-    [4] => performance_schema
-    [5] => undcms
-    [6] => zinh
-)
-
-				
-	09-19-2017 18:41:36.000000: Array
-(
-    [0] => information_schema
-    [1] => ideaman
-    [2] => newbase
-    [3] => newcfgdb
-    [4] => performance_schema
-    [5] => undcms
-    [6] => zinh
-)
-
-				
-	09-19-2017 18:41:37.000000: Array
-(
-    [0] => newbase
 )
