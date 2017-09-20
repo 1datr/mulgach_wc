@@ -29,4 +29,8 @@ $_LANG['DELETE']='DELETE';
 $_LANG['PHONES LIST']='PHONES LIST';
 $_LANG['Create PHONES']='Create PHONES';
 $_LANG['SAVE']='SAVE';
+$_LANG['Create USERS']='Create USERS';
+$_LANG['users.password']='users.password';
+$_LANG['newusers']='newusers';
+$_LANG['NEWUSERS LIST']='NEWUSERS LIST';
 ?>

@@ -1,7 +1,7 @@
 <?php
 namespace Newcfg\Backend;
 
-class ModelUsers extends \BaseModel
+class ModelNewusers extends \AuthModel
 {
 	
 }
