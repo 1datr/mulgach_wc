@@ -141,98 +141,135 @@ class HmvcController extends \BaseController
 			$dbparams = $_cfg->connect_db_if_exists($this);
 			$dbw = new \DbWatcher($this->_CONNECTION);
 			
-			switch($sp->Data('mode'))
+			if(isset($_POST['settings']))	// отклик от формы
 			{
-				case 'make': { 			// режим мейк																	
-					// компилируем таблицу
-					$table = $sp->Data('tables')[$sp->Data('index')];										
-					
-					$table_info = $dbw->get_basic_table_info($table);
-					
-					if(empty($sp->Data('settings')['ignore_existing']))	$table_info = $dbw->watch_triada($_cfg,$table, $table_info);
-						
-						
-					$table_info = array_merge($sp->Data('settings'),$table_info);
-						
-					//	mul_dbg($sp->Data('con_auth')['con_info']['table']);
-					if($sp->Data('con_auth')['con_info']['table']==$table)	// контроллер авторизации
-					{
-						$table_info['authcon']['login']=$sp->Data('con_auth')['con_info']['auth_fields']['login'];
-						$table_info['authcon']['passw']=$sp->Data('con_auth')['con_info']['auth_fields']['passw'];
-						$table_info['authcon']['email']=$sp->Data('con_auth')['con_info']['auth_fields']['email'];
-						$table_info['authcon']['hash']=$sp->Data('con_auth')['con_info']['auth_fields']['hash'];
-						$table_info['authcon']['enable']=true;
-					
-						$table_info['mainmenu']['frontend']=true;
-					
-						$table_info['mainmenu']['backend']=true;
-					}
-					else
-					{
-						$table_info['con_auth']=$sp->Data('con_auth')['con_info']['table'];
-					
-						$table_info['connect_from']['frontend']=$sp->Data('con_auth')['con_info']['table'];
-					
-						$table_info['connect_from']['backend']=$sp->Data('con_auth')['con_info']['table'];
-					}
-						
-					$this->make_hmvc($table_info);
-						
-					// установки начальных настроек
-					$sp->Data('procent',$sp->Data('procent')+$sp->Data('delta'));
-					
-				//	mul_dbg($sp->Data('index'));
-					
-					$sp->Data('index',$sp->Data('index')+1);
-						
-					$pid = $sp->PID;
-					if($sp->Data('procent')>=100)
-						$sp->terminate();
-					
-				}break;
-				case 'detect_auth': {	// режим найти контроллер авторизации 
-					
-					$auth_cons=[];
-										
-					$_table = $sp->Data('tables')[$sp->Data('index')];
-					
-										
-					$table_info = $dbw->get_basic_table_info($_table);
-					$auth_con_res = $dbw->check_auth_con($table_info);
-					if(count($auth_con_res))//таблица может служить для авторизации
-					{
-							//mul_dbg($auth_con_res);
-						$auth_cons = $sp->Data('auth_cons');
-						$auth_cons[]=['con_info'=>$table_info,'auth_fields'=>$auth_con_res];
-						$sp->Data('auth_cons',$auth_cons);
-					}
+				$sp->Data('mode','make');
+				$sp->Data('index',0);
 				
-					$sp->Data('index',$sp->Data('index')+1);
-		//			mul_dbg('index : '.$sp->Data('index'));
-					
-	//				mul_dbg( "count = ".count($sp->Data('tables')) );
-					
-					if($sp->Data('index')>=count($sp->Data('tables')))
+				$sp->Data('con_auth',$sp->Data('auth_cons')[0]);
+				
+				//Диалог выбрать контроллер авторизации
+				$authcons=[];
+				foreach ($sp->Data('auth_cons') as $idx => $con_nfo)
+				{
+					if($_POST['settings']['authcon']==$con_nfo['con_info']['table'])
 					{
-											
-						if(count($sp->Data('auth_cons')))
-						{
-							$sp->Data('con_auth',$sp->Data('auth_cons')[0]);
-							
-						//	mul_dbg( $sp->Data('auth_cons')[0] );
-								
-							//$sp->Data('settings',$_POST['settings_total']);
-						}
-						$sp->Data('mode','make');
-						$sp->Data('index',0);
+						$sp->Data('con_auth',$sp->Data('auth_cons')[$idx]);
 					}
 					
+				}
+			}
+			else 
+			{			
+				switch($sp->Data('mode'))
+				{
+					case 'make': { 			// режим мейк																	
+						// компилируем таблицу
+						$table = $sp->Data('tables')[$sp->Data('index')];										
+						
+						$table_info = $dbw->get_basic_table_info($table);
+						
+						if(empty($sp->Data('settings')['ignore_existing']))	$table_info = $dbw->watch_triada($_cfg,$table, $table_info);
+							
+							
+						$table_info = array_merge($sp->Data('settings'),$table_info);
+							
+						//	mul_dbg($sp->Data('con_auth')['con_info']['table']);
+						if($sp->Data('con_auth')['con_info']['table']==$table)	// контроллер авторизации
+						{
+							$table_info['authcon']['login']=$sp->Data('con_auth')['con_info']['auth_fields']['login'];
+							$table_info['authcon']['passw']=$sp->Data('con_auth')['con_info']['auth_fields']['passw'];
+							$table_info['authcon']['email']=$sp->Data('con_auth')['con_info']['auth_fields']['email'];
+							$table_info['authcon']['hash']=$sp->Data('con_auth')['con_info']['auth_fields']['hash'];
+							$table_info['authcon']['enable']=true;
+						
+							$table_info['mainmenu']['frontend']=true;
+						
+							$table_info['mainmenu']['backend']=true;
+						}
+						else
+						{
+							$table_info['con_auth']=$sp->Data('con_auth')['con_info']['table'];
+						
+							$table_info['connect_from']['frontend']=$sp->Data('con_auth')['con_info']['table'];
+						
+							$table_info['connect_from']['backend']=$sp->Data('con_auth')['con_info']['table'];
+						}
+							
+						$this->make_hmvc($table_info);
+							
+						// установки начальных настроек
+						$sp->Data('procent',$sp->Data('procent')+$sp->Data('delta'));
+						
+					//	mul_dbg($sp->Data('index'));
+						
+						$sp->Data('index',$sp->Data('index')+1);
+							
+						$pid = $sp->PID;
+						if($sp->Data('procent')>=100)
+							$sp->terminate();
+						
+					}break;
+					case 'detect_auth': {	// режим найти контроллер авторизации 
+						
+						$auth_cons=[];
+											
+						$_table = $sp->Data('tables')[$sp->Data('index')];
+						
+											
+						$table_info = $dbw->get_basic_table_info($_table);
+						$auth_con_res = $dbw->check_auth_con($table_info);
+						if(count($auth_con_res))//таблица может служить для авторизации
+						{
+		
+							$auth_cons = $sp->Data('auth_cons');
+							$auth_cons[]=['con_info'=>$table_info,'auth_fields'=>$auth_con_res];
+							$sp->Data('auth_cons',$auth_cons);
+						}
 					
-				}break;
+						$sp->Data('index',$sp->Data('index')+1);
+						
+						$sp->Data('procent',$sp->Data('procent')+$sp->Data('delta'));
+							
+						if($sp->Data('index')>=count($sp->Data('tables')))
+						{
+												
+							if(count($sp->Data('auth_cons')))
+							{
+								$sp->Data('con_auth',$sp->Data('auth_cons')[0]);
+								
+								//Диалог выбрать контроллер авторизации
+								$authcons=[];
+								foreach ($sp->Data('auth_cons') as $idx => $con_nfo)
+								{
+									$authcons[]=$con_nfo['con_info']['table'];
+								}
+								
+								$sp_model['fields']['settings[authcon]']=['settings[authcon]'=>array(
+										'Type'=>'text',
+										'TypeInfo'=>"20",
+								)];
+								
+								$sp_model = $sp->getBasicModel();
+								$sp_model['required'][]='settings[authcon]';
+								$sp->Dialog($this,'select_authcon_form',['sp'=>$sp,'authcons'=>$authcons,'sp_model'=>$sp_model],[]);
+								
+							}
+							$sp->Data('mode','make');
+							$sp->Data('index',0);
+							$sp->Data('procent',0);
+						}
+						
+						
+					}break;
+				}
+			
 			}
 			
-		
-			$this->out_json(['pid'=>$sp->PID,'procent'=> number_format($sp->Data('procent'), 2, '.', ','),'terminated'=>$sp->TERMINATED]);
+			$this->out_json(['pid'=>$sp->PID,
+					'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
+					'terminated'=>$sp->TERMINATED,
+					'dialog'=>$sp->getDialog()]);
 		}
 		else 
 		{

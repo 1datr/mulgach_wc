@@ -23,7 +23,16 @@ else
 
 	<tr>
 	<th><label>#{phones.user_id}</label></th><td>
-	<?php $form->field($phones,'user_id')->text();	 ?>	</td>
+			<?php 
+					$params = array('ds'=> $this->get_controller('')->_MODEL->find() ,'name'=>'phones[user_id]');			
+					if(!empty($phones))
+		{
+			$params['value']=$phones->getField('user_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+		<div class="error" id='err_user_id' role="alert"></div>
+			</td>
 	</tr>
 		<tr>
 	<th><label>#{phones.name}</label></th><td>

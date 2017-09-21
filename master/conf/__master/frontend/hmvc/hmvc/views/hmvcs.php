@@ -4,6 +4,7 @@
 
 <div class="row">
 <?php 
+	
   	$this->out_view('triads',array(
 							'fields'=>$fields,
 							'tables'=>$tables,	

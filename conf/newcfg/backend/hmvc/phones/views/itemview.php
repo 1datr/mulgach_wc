@@ -5,7 +5,8 @@
 	<tr>
 	<th valign="top"><label>#{phones.user_id}</label></th>
 	<td valign="top">
-	<?=$phones->getField('user_id',true) ?>	</td>
+			<?=$phones->getField('user_id')->getView() ?>	
+			</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{phones.name}</label></th>

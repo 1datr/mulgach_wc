@@ -33,4 +33,5 @@ $_LANG['Create USERS']='Create USERS';
 $_LANG['users.password']='users.password';
 $_LANG['newusers']='newusers';
 $_LANG['NEWUSERS LIST']='NEWUSERS LIST';
+$_LANG['Wrong login or password']='Wrong login or password';
 ?>

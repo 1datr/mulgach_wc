@@ -401,7 +401,7 @@ class BaseController
 		echo json_encode($object);
 	}
 		
-	function out_ajax_block($view,$vars=array())
+	function out_ajax_block($view,$vars=array(),$out_js=true)
 	{
 		foreach ($vars as $var => $val)
 		{
@@ -417,9 +417,14 @@ class BaseController
 		$str = ob_get_clean();
 		
 		$obj_json = array('html'=>$str,'js'=>$this->_JS,'css'=>$this->_CSS,'inline_js'=>$this->_INLINE_SCRIPT);
-			//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
-		$this->_RESULT_TYPE="application/json";
-		echo json_encode($obj_json);
+		if($out_js)
+		{
+			$this->_RESULT_TYPE="application/json";
+			echo json_encode($obj_json);
+			return null;
+		}
+		else 
+			return $obj_json;
 	}
 	
 	function draw_controller_request($req)
@@ -543,9 +548,12 @@ class StepProcess
 	VAR $ERROR=0;
 	VAR $ERROR_MSG="";
 	VAR $TERMINATED=FALSE;
+	VAR $_DIALOG;
 	
 	function __construct($pid=NULL,$_passw=NULL)
 	{
+		use_jq_plugin('__ui', find_module('page')->getController() );
+		
 		if($pid==NULL)
 		{
 			if(!isset($_SESSION['processes'])) // Инициализируем хранилище процессов в сессии
@@ -572,7 +580,7 @@ class StepProcess
 				else	// без ошибокподключились  
 				{
 					$this->TERMINATED=$_SESSION['processes'][$pid]['terminated'];
-					
+					$this->PASSW = $_passw;
 				}
 			}
 			else 
@@ -601,5 +609,25 @@ class StepProcess
 		{
 			$_SESSION['processes'][$this->PID]['Data'][$data_key]=$data_val;
 		}
+	}
+	
+	function Dialog($_controller,$tpl,$tplvars=[],$dlgopts=[])
+	{
+		$dlg_js = $_controller->out_ajax_block($tpl,$tplvars,false);
+		use_jq_plugin('__ui',$_controller);
+		$this->_DIALOG = $dlg_js;
+	}
+	
+	function getBasicModel()
+	{
+		return [
+				'fields'=>array('pid'=>array('Type'=>'bigint','TypeInfo'=>"20"),'passw'=>array('Type'=>'text','TypeInfo'=>""),),
+				'required'=>array('id','passw')
+				];
+	}
+	
+	function getDialog()
+	{
+		return $this->_DIALOG;
 	}
 }

@@ -45,11 +45,13 @@ function load_ajax_block(sel,url)//,afterload=null
 	});
 }
 
-function exe_process(pid,pwd,form_action,fun_onstep=null,fun_onterminate=null)
+function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 {
 	frm_data = new FormData();
 	frm_data.append('pid',pid);
 	frm_data.append('passw',pwd);
+	
+	form_action = theform.attr('action');
 	
 	$.ajax({
         url: form_action,
@@ -69,15 +71,23 @@ function exe_process(pid,pwd,form_action,fun_onstep=null,fun_onterminate=null)
 	    			{
 		    			fun_onterminate(data);
 	    			}
-	    		}
+	    		}	    	
 	    	else
 	    		{
-		    		if(fun_onstep!=null)
+	    		if(data.dialog)
 	    			{
-	    				fun_onstep(data);
+	    				show_dialog(data.dialog,theform);
 	    			}
+	    		else
+	    			{
+	    				if(fun_onstep!=null)
+	    				{
+	    					fun_onstep(data);
+	    				}
 		    		
-		    		exe_process(pid,pwd,form_action,fun_onstep,fun_onterminate);
+		    			exe_process(pid,pwd,theform,fun_onstep,fun_onterminate);
+	    			}	    		
+		    		
 	    		}	    	
 	    	},
 	    error: function(jqXHR, textStatus, errorThrown) 
@@ -87,9 +97,47 @@ function exe_process(pid,pwd,form_action,fun_onstep=null,fun_onterminate=null)
 		});
 }
 
-function show_dialog(dlg_info)
+function show_dialog(dlg_info,theform)
 {
+	dlg_div = $('<div></div>');
+	$('body').append(dlg_div);
+	dlg_div.html(dlg_info.html);	// html в див
 	
+	for (var key in dlg_info.js) 
+	{
+		$('head').append($("<script src=\""+dlg_info.js[key]+"\"><\/script>")[0]);
+	}
+	// css
+	for (var key in dlg_info.css) 
+	{
+		$('head').append($("<link rel=\"stylesheet\" type=\"text/css\" href=\""+dlg_info.css[key]+"\">"));
+	}
+	
+		
+	if(dlg_info.inline_js!="")
+		res = eval(dlg_info.inline_js);
+	
+	the_dialog_form = $(dlg_div).find('form');
+	
+	arr = $.map(theform[0].attributes, function (attribute) {
+		the_dialog_form.attr(attribute.name, attribute.value);
+		  });
+	
+    $(dlg_div).dialog({
+    	modal: true,
+        resizable: false,
+        height: "auto",
+        width: 400,
+        
+    /*    buttons: {
+          "Delete all items": function() {
+            $( this ).dialog( "close" );
+          },
+          Cancel: function() {
+            $( this ).dialog( "close" );
+          }
+        }*/
+      });
 }
 
 function process_submit(that_form)
@@ -111,7 +159,7 @@ function process_submit(that_form)
 	    success: function(data, textStatus, jqXHR)
 	    	{
 	    	//	Получили идентификатор и пароль
-	    	exe_process(data.pid,data.passw,form_action,
+	    	exe_process(data.pid,data.passw,that_form,
 	    			function(jsondata)
 	    				{
 	    					pb_set_procent(pbid,jsondata.procent);

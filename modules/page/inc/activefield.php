@@ -15,9 +15,11 @@ class ActiveField
 		$this->_OPTIONS=$opts;
 	}
 	
-	private function unbracket_fld_name($fldname,$first_in_domen=true)
+	private function unbracket_fld_name($fldname,$in_domen=true)
 	{
 		$fld_parts = explode('[',$fldname);
+		
+		
 		if(count($fld_parts)>1)
 		{
 			$res_str="";
@@ -32,22 +34,43 @@ class ActiveField
 				$part_list[]=$part;
 			
 			}
-			return implode('][', $part_list);
+			//return xx_implode($part_list, '][', '%val',);
+			if($in_domen)
+				return implode('][', $part_list).']';
+			else 
+			{
+				$first_part = $part_list[0];
+				unset($part_list[0]);
+				return $first_part."[".implode('][', $part_list).']';
+			}
 		}
 		return $fldname;
 	}
 	
 	private function get_var_name()
 	{
-		
-		
+				
 		if($this->_FORM->_MODE=='post')
 		{
-			$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
-			if(isset($this->_CONTROLLER->_MODEL->_SETTINGS['domen']))
-				return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$own_fld_name.']';
-			else
-				return $this->_ROW->_MODEL->_TABLE.'['.$own_fld_name.']';
+			
+			
+		//	mul_dbg($this->_CONTROLLER->_MODEL->_SETTINGS);
+			
+			if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
+			{
+				$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME,false);
+				
+				return $own_fld_name;
+			}
+			else 
+			{
+				$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
+				
+				if(isset($this->_CONTROLLER->_MODEL->_SETTINGS['domen']))
+					return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$own_fld_name.']';
+				else
+					return $this->_ROW->_MODEL->_TABLE.'['.$own_fld_name.']';
+			}
 		}
 		elseif($this->_FORM->_MODE=='get')
 		{
@@ -149,9 +172,11 @@ class ActiveField
 			}
 		}
 		
-		//mul_dbg($data);
+		
 		if(($data==NULL)&&(isset($this->_ROW->_MODEL->_SETTINGS['fields'][$this->_FLDNAME]['fldparams']['valuelist'])))
 		{
+			//mul_dbg($this->_ROW->_MODEL->_SETTINGS['fields']);
+			
 			$valuelist = $this->_ROW->_MODEL->_SETTINGS['fields'][$this->_FLDNAME]['fldparams']['valuelist'];
 			if(is_array($valuelist))
 				$data = $valuelist;

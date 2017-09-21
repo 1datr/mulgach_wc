@@ -340,7 +340,7 @@ class scaff_triada
 		
 		$con_str="";
 		
-		mul_dbg($_params['constraints']);
+	//	mul_dbg($_params['constraints']);
 		
 		if(!empty($_params['constraints']))
 		{
