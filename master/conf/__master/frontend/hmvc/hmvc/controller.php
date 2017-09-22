@@ -108,6 +108,23 @@ class HmvcController extends \BaseController
 		$this->redirect_back();
 	}
 	
+	// Регистрация первого пользователя
+	public function ActionAddbasicuser($cfg=NULL)
+	{
+		if($cfg==NULL)
+		{
+			$cfg= $this->getCurrCFG();
+		}
+		
+		$cfg_obj = new \scaff_conf($cfg);
+		
+		$auth_tr = $cfg_obj->get_auth_con();
+		if($auth_tr!=NULL)
+		{
+			
+		}
+	}
+	
 	public function ActionConnectdb($cfg=NULL)
 	{
 		if($cfg==NULL)
@@ -216,8 +233,14 @@ class HmvcController extends \BaseController
 							
 						$pid = $sp->PID;
 						if($sp->Data('procent')>=100)
-							$sp->terminate();
+						{
+							$sp->Data('mode','detect_admin');
+						}
 						
+					}break;
+					case 'detect_admin': {
+						
+						$sp->terminate();
 					}break;
 					case 'detect_auth': {	// режим найти контроллер авторизации 
 						
