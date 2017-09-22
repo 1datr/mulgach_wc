@@ -676,7 +676,9 @@ class scaff_triada
 		$vars['ParentControllerClass']='BaseController';
 
 		// add controller file
-		if(isset($_params['authcon']['enable']))	// Контроллер авторизации
+		//mul_dbg($_params);		
+		
+		if(!empty($_params['authcon']['enable']))	// Контроллер авторизации
 		{
 			$vars['ParentControllerClass']='AuthController';
 			

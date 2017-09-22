@@ -414,9 +414,11 @@ class BaseController
 		
 		ob_start();
 		include $_view_path;
-		$str = ob_get_clean();
+		$the_content = ob_get_clean();
 		
-		$obj_json = array('html'=>$str,'js'=>$this->_JS,'css'=>$this->_CSS,'inline_js'=>$this->_INLINE_SCRIPT);
+		$the_content =	Lang::translate_str($the_content);
+		
+		$obj_json = array('html'=>$the_content,'js'=>$this->_JS,'css'=>$this->_CSS,'inline_js'=>$this->_INLINE_SCRIPT);
 		if($out_js)
 		{
 			$this->_RESULT_TYPE="application/json";
@@ -616,6 +618,7 @@ class StepProcess
 		$dlg_js = $_controller->out_ajax_block($tpl,$tplvars,false);
 		use_jq_plugin('__ui',$_controller);
 		$this->_DIALOG = $dlg_js;
+		$this->_DIALOG['settings']=$dlgopts;
 	}
 	
 	function getBasicModel()

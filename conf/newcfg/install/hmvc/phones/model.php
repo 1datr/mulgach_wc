@@ -1,7 +1,7 @@
 <?php
 namespace Newcfg\Install;
 
-class ModelPhones extends \BaseModel
+class ModelPhones extends \AuthModel
 {
 	
 }

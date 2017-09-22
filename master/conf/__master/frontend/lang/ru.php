@@ -116,4 +116,8 @@ $_LANG['settings_total.caption']='settings_total.caption';
 $_LANG['Autofind authorize controller']='Autofind authorize controller';
 $_LANG['settings_total.conf']='settings_total.conf';
 $_LANG['Set current']='Set current';
+$_LANG['Finded several tables to be authorize']='Finded several tables to be authorize';
+$_LANG['Choose authorization table']='Choose authorization table';
+$_LANG['SELECT']='SELECT';
+$_LANG['Select authorization table']='Select authorization table';
 ?>

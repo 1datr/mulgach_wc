@@ -1,7 +1,7 @@
 <?php
 namespace Newcfg\Backend;
 
-class ModelPhones extends \BaseModel
+class ModelPhones extends \AuthModel
 {
 	
 }

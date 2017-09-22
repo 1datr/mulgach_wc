@@ -131,8 +131,7 @@ class HmvcController extends \BaseController
 	{
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-		
-		
+				
 		if(isset($_POST['pid']))
 		{
 			$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
@@ -150,11 +149,17 @@ class HmvcController extends \BaseController
 				
 				//Диалог выбрать контроллер авторизации
 				$authcons=[];
+				
+				//mul_dbg($_POST);
+				
 				foreach ($sp->Data('auth_cons') as $idx => $con_nfo)
 				{
+										
+				//	mul_dbg($con_nfo['con_info']['table']);					
 					if($_POST['settings']['authcon']==$con_nfo['con_info']['table'])
 					{
-						$sp->Data('con_auth',$sp->Data('auth_cons')[$idx]);
+						//mul_dbg($con_nfo);
+						$sp->Data('con_auth',$con_nfo);
 					}
 					
 				}
@@ -174,7 +179,8 @@ class HmvcController extends \BaseController
 							
 						$table_info = array_merge($sp->Data('settings'),$table_info);
 							
-						//	mul_dbg($sp->Data('con_auth')['con_info']['table']);
+						//	mul_dbg($table_info);
+						
 						if($sp->Data('con_auth')['con_info']['table']==$table)	// контроллер авторизации
 						{
 							$table_info['authcon']['login']=$sp->Data('con_auth')['con_info']['auth_fields']['login'];
@@ -186,6 +192,8 @@ class HmvcController extends \BaseController
 							$table_info['mainmenu']['frontend']=true;
 						
 							$table_info['mainmenu']['backend']=true;
+							
+							$table_info['authcon']['enable']=true;
 						}
 						else
 						{
@@ -194,6 +202,7 @@ class HmvcController extends \BaseController
 							$table_info['connect_from']['frontend']=$sp->Data('con_auth')['con_info']['table'];
 						
 							$table_info['connect_from']['backend']=$sp->Data('con_auth')['con_info']['table'];
+							$table_info['authcon']['enable']=false;
 						}
 							
 						$this->make_hmvc($table_info);
@@ -252,7 +261,7 @@ class HmvcController extends \BaseController
 								
 								$sp_model = $sp->getBasicModel();
 								$sp_model['required'][]='settings[authcon]';
-								$sp->Dialog($this,'select_authcon_form',['sp'=>$sp,'authcons'=>$authcons,'sp_model'=>$sp_model],[]);
+								$sp->Dialog($this,'select_authcon_form',['sp'=>$sp,'authcons'=>$authcons,'sp_model'=>$sp_model],['title'=>\Lang::__t('Select authorization table')]);
 								
 							}
 							$sp->Data('mode','make');

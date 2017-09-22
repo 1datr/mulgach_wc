@@ -99,7 +99,17 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 
 function show_dialog(dlg_info,theform)
 {
+		
 	dlg_div = $('<div></div>');
+	
+	if(dlg_info.settings)
+	{
+		if(dlg_info.settings.title)
+		{
+			$(dlg_div).attr('title',dlg_info.settings.title);
+		}
+	}
+	
 	$('body').append(dlg_div);
 	dlg_div.html(dlg_info.html);	// html в див
 	
@@ -123,21 +133,25 @@ function show_dialog(dlg_info,theform)
 		the_dialog_form.attr(attribute.name, attribute.value);
 		  });
 	
-    $(dlg_div).dialog({
-    	modal: true,
-        resizable: false,
-        height: "auto",
-        width: 400,
-        
+	var dlg_options = { "height": "auto","width": "auto","resizable": false,};
+	if(dlg_info.settings)
+		{
+		dlg_options = dlg_info.settings;
+		}
+	
+	dlg_options['modal']=true;
+	//var dlg_options = dlg_info;
+/*	var dlg_options = {     
     /*    buttons: {
           "Delete all items": function() {
             $( this ).dialog( "close" );
-          },
-          Cancel: function() {
+          },*/
+/*          Cancel: function() {
             $( this ).dialog( "close" );
           }
-        }*/
-      });
+      };*/
+	
+    $(dlg_div).dialog(dlg_options);
 }
 
 function process_submit(that_form)
@@ -158,6 +172,9 @@ function process_submit(that_form)
         dataType: 'json',
 	    success: function(data, textStatus, jqXHR)
 	    	{
+	    	dialog_divs = $(that_form).parents('[role="dialog"]');
+	    	
+	    	
 	    	//	Получили идентификатор и пароль
 	    	exe_process(data.pid,data.passw,that_form,
 	    			function(jsondata)
@@ -169,6 +186,14 @@ function process_submit(that_form)
 	    					pb_hide(pbid);
 						}
 	    			)
+	    	
+	    	if(dialog_divs.length>0)
+	    		{
+	    			//$(dialog_divs[0]).remove();	    		
+	    			nested_div = $(dialog_divs[0]).children("div.ui-dialog-content")[0];
+	    			$(nested_div).dialog( "close" );
+	    		}
+	    	
 	    	},
 		error: function(jqXHR, textStatus, errorThrown) 
 	    {	    	
