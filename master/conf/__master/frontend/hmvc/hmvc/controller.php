@@ -111,6 +111,9 @@ class HmvcController extends \BaseController
 	// Регистрация первого пользователя
 	public function ActionAddbasicuser($cfg=NULL)
 	{
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+				
 		if($cfg==NULL)
 		{
 			$cfg= $this->getCurrCFG();
@@ -121,10 +124,62 @@ class HmvcController extends \BaseController
 		$auth_tr = $cfg_obj->get_auth_con();
 		if($auth_tr!=NULL)
 		{
+		//	mul_dbg($auth_tr);
 			
+			$triada_obj = new \scaff_triada($cfg_obj, 'backend', $auth_tr);
+			$auth_model = $triada_obj->getModelInfo();
+			$this->UseModel($auth_model);
+			
+			$user_row = $this->_MODEL->empty_row_form_model();
+			$viewpath = $triada_obj->getView('itemform');
+			$html = $this->get_view_code($viewpath,[$auth_tr=>$user_row]);
+			
+			$html = preg_replace(
+					['/action=\"(.+)\"/','/name=\\"'.$auth_tr.'\[(.+)\]\\"/'], 
+					["action=\"". as_url(url_seg_add('hmvc/addadmin',$cfg))."\"",'name="baseadmin[${1}]"'], $html);
+			echo $html;
+			$this->_TITLE=\Lang::__t('Creation of basic administrator');
+		//mul_dbg($user_row);
 		}
 	}
 	
+	public function ActionAddadmin($cfg)
+	{
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		
+		if($cfg==NULL)
+		{
+			$cfg= $this->getCurrCFG();
+		}
+		
+		$cfg_obj = new \scaff_conf($cfg);
+		$dbparams = $cfg_obj->connect_db_if_exists($this);
+		
+		$auth_tr = $cfg_obj->get_auth_con();
+		if($auth_tr!=NULL)
+		{
+			//	mul_dbg($_POST);
+				
+			$triada_obj = new \scaff_triada($cfg_obj, 'backend', $auth_tr);
+			$auth_model = $triada_obj->getModelInfo();
+			$this->UseModel($auth_model);		
+			$this->_MODEL->set_table_or_domen();
+		
+			$newitem = $this->_MODEL->findByPrimary($_POST['baseadmin']);
+			
+			$newitem = $this->_MODEL->empty_row_form_model();
+									
+			$newitem->FillFromArray($_POST['baseadmin']);
+			
+		//	mul_dbg($newitem);
+			
+			$newitem->save();
+			
+			$this->redirect_back();
+		}
+	}
+		
 	public function ActionConnectdb($cfg=NULL)
 	{
 		if($cfg==NULL)
@@ -399,7 +454,32 @@ class HmvcController extends \BaseController
 	public function BeforeValidate()
 	{
 		//mul_dbg($_POST);
-		if(isset($_POST['dbinfo']))
+		if(isset($_POST['baseadmin']))	// 
+		{
+			GLOBAL $_BASEDIR;
+			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			
+			if($cfg==NULL)
+			{
+				$cfg= $this->getCurrCFG();
+			}
+			
+			$cfg_obj = new \scaff_conf($cfg);
+			
+			$auth_tr = $cfg_obj->get_auth_con();
+			if($auth_tr!=NULL)
+			{
+				//	mul_dbg($auth_tr);
+					
+				$triada_obj = new \scaff_triada($cfg_obj, 'backend', $auth_tr);
+				$auth_model = $triada_obj->getModelInfo();
+				$auth_model['domen']='baseadmin';
+				$this->UseModel($auth_model);
+				$this->_MODEL->set_table_or_domen();
+				//mul_dbg($user_row);
+			}
+		}
+		elseif(isset($_POST['dbinfo']))
 		{
 			$driver = $_POST['dbinfo']['driver'];
 			$drv_obj = $this->get_plug_obj("drv_".$driver);

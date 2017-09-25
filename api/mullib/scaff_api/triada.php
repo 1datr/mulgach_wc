@@ -750,6 +750,11 @@ class scaff_triada
 		return NULL;
 	}
 	
+	function getView($_viewname)
+	{
+		return url_seg_add($this->_PATH,'views',$_viewname).".php";
+	}
+	
 	function getExistingModelInfo($triada,$ep="frontend")
 	{
 		GLOBAL $_BASEDIR;

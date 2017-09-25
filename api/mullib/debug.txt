@@ -1,3030 +1,404 @@
 
 				
-	09-22-2017 14:03:32.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => newusers
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => thehash
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [thehash] => Array
-                (
-                    [name] => thehash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => newusers
-    [authcon] => Array
-        (
-            [enable] => 1
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => newusers
-            [backend] => newusers
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => On
-            [backend] => On
-        )
-
-)
-
+	09-25-2017 18:59:09.000000: 
 				
-	09-22-2017 14:03:32.000000: Array
+	09-25-2017 18:59:57.000000: DataRecord Object
 (
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => phones
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [user_id] => Array
-                (
-                    [Field] => user_id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [name] => Array
-                (
-                    [Field] => name
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [phone] => Array
-                (
-                    [Field] => phone
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {name}
-    [auth_fields] => Array
-        (
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [user_id] => Array
-                (
-                    [name] => user_id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [name] => Array
-                (
-                    [name] => name
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [phone] => Array
-                (
-                    [name] => phone
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => newusers
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => newusers
-            [backend] => newusers
-        )
-
-)
-
-				
-	09-22-2017 14:03:32.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => users
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [hash] => Array
-                (
-                    [Field] => hash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [fio] => Array
-                (
-                    [Field] => fio
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [hash] => hash
-            [email] => email
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [hash] => Array
-                (
-                    [name] => hash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [fio] => Array
-                (
-                    [name] => fio
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => newusers
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => newusers
-            [backend] => newusers
-        )
-
-)
-
-				
-	09-22-2017 14:17:50.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => newusers
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => thehash
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [thehash] => Array
-                (
-                    [name] => thehash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => newusers
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => users
-            [backend] => users
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => On
-            [backend] => On
-        )
-
-)
-
-				
-	09-22-2017 14:17:50.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => newusers
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => thehash
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [thehash] => Array
-                (
-                    [name] => thehash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => newusers
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => users
-            [backend] => users
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => On
-            [backend] => On
-        )
-
-)
-
-				
-	09-22-2017 14:17:50.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => newusers
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => thehash
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [thehash] => Array
-                (
-                    [name] => thehash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => users
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => users
-            [backend] => users
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => On
-            [backend] => On
-        )
-
-)
-
-				
-	09-22-2017 14:17:50.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => phones
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [user_id] => Array
-                (
-                    [Field] => user_id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [name] => Array
-                (
-                    [Field] => name
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [phone] => Array
-                (
-                    [Field] => phone
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {name}
-    [auth_fields] => Array
-        (
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [user_id] => Array
-                (
-                    [name] => user_id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [name] => Array
-                (
-                    [name] => name
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [phone] => Array
-                (
-                    [name] => phone
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => users
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => users
-            [backend] => users
-        )
-
-)
-
-				
-	09-22-2017 14:17:50.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => phones
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [user_id] => Array
-                (
-                    [Field] => user_id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [name] => Array
-                (
-                    [Field] => name
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [phone] => Array
-                (
-                    [Field] => phone
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {name}
-    [auth_fields] => Array
-        (
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [user_id] => Array
-                (
-                    [name] => user_id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [name] => Array
-                (
-                    [name] => name
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [phone] => Array
-                (
-                    [name] => phone
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => users
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => users
-            [backend] => users
-        )
-
-)
-
-				
-	09-22-2017 14:17:51.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => phones
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [user_id] => Array
-                (
-                    [Field] => user_id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [name] => Array
-                (
-                    [Field] => name
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [phone] => Array
-                (
-                    [Field] => phone
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {name}
-    [auth_fields] => Array
-        (
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [user_id] => Array
-                (
-                    [name] => user_id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [name] => Array
-                (
-                    [name] => name
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [phone] => Array
-                (
-                    [name] => phone
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => users
-    [authcon] => Array
-        (
-            [enable] => 
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => users
-            [backend] => users
-        )
-
-)
-
-				
-	09-22-2017 14:17:51.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => users
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [hash] => Array
-                (
-                    [Field] => hash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [fio] => Array
-                (
-                    [Field] => fio
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [hash] => hash
-            [email] => email
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [hash] => Array
-                (
-                    [name] => hash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [fio] => Array
-                (
-                    [name] => fio
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => users
-    [authcon] => Array
-        (
-            [enable] => 1
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => hash
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => newusers
-            [backend] => newusers
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => 1
-            [backend] => 1
-        )
-
-)
-
-				
-	09-22-2017 14:17:51.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => users
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [hash] => Array
-                (
-                    [Field] => hash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [fio] => Array
-                (
-                    [Field] => fio
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [hash] => hash
-            [email] => email
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [hash] => Array
-                (
-                    [name] => hash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [fio] => Array
-                (
-                    [name] => fio
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => users
-    [authcon] => Array
-        (
-            [enable] => 1
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => hash
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => newusers
-            [backend] => newusers
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => 1
-            [backend] => 1
-        )
-
-)
-
-				
-	09-22-2017 14:17:51.000000: Array
-(
-    [conf] => newcfg
-    [rewrite_all] => on
-    [autofind_auth] => on
-    [ep] => Array
-        (
-            [frontend] => on
-            [backend] => on
-            [install] => on
-            [rest] => on
-        )
-
-    [table] => users
-    [fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [hash] => Array
-                (
-                    [Field] => hash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [fio] => Array
-                (
-                    [Field] => fio
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [tables] => Array
-        (
-            [0] => newusers
-            [1] => phones
-            [2] => users
-        )
-
-    [first_table_fields] => Array
-        (
-            [id] => Array
-                (
-                    [Field] => id
-                    [Type] => bigint
-                    [Collation] => 
-                    [Null] => NO
-                    [Key] => PRI
-                    [Default] => 
-                    [Extra] => auto_increment
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 20
-                )
-
-            [login] => Array
-                (
-                    [Field] => login
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [password] => Array
-                (
-                    [Field] => password
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [email] => Array
-                (
-                    [Field] => email
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-            [thehash] => Array
-                (
-                    [Field] => thehash
-                    [Type] => text
-                    [Collation] => utf8_general_ci
-                    [Null] => NO
-                    [Key] => 
-                    [Default] => 
-                    [Extra] => 
-                    [Privileges] => select,insert,update,references
-                    [Comment] => 
-                    [TypeInfo] => 
-                )
-
-        )
-
-    [view] => {login}
-    [auth_fields] => Array
-        (
-            [login] => login
-            [passw] => password
-            [hash] => hash
-            [email] => email
-        )
-
-    [primary] => Array
-        (
-            [field] => id
-            [ai] => 1
-        )
-
-    [model_fields] => Array
-        (
-            [id] => Array
-                (
-                    [name] => id
-                    [type] => bigint
-                    [checked_disabled] => 1
-                    [required] => 1
-                    [maybe_file] => 
-                )
-
-            [login] => Array
-                (
-                    [name] => login
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                    [required] => 1
-                )
-
-            [password] => Array
-                (
-                    [name] => password
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [hash] => Array
-                (
-                    [name] => hash
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [email] => Array
-                (
-                    [name] => email
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-            [fio] => Array
-                (
-                    [name] => fio
-                    [type] => text
-                    [checked_disabled] => 
-                    [maybe_file] => 1
-                )
-
-        )
-
-    [constraints] => Array
-        (
-        )
-
-    [con_auth] => newusers
-    [authcon] => Array
-        (
-            [enable] => 1
-            [login] => login
-            [passw] => password
-            [email] => email
-            [hash] => hash
-        )
-
-    [connect_from] => Array
-        (
-            [frontend] => newusers
-            [backend] => newusers
-        )
-
-    [mainmenu] => Array
-        (
-            [frontend] => 1
-            [backend] => 1
-        )
-
+    [_TABLE] => 
+    [_ENV] => Array
+        (
+        )
+
+    [_MODEL] => BaseModel Object
+        (
+            [_TABLE] => users
+            [_LOOKUPS] => 
+            [_SETTINGS] => Array
+                (
+                    [table] => users
+                    [fields] => Array
+                        (
+                            [id] => Array
+                                (
+                                    [Type] => bigint
+                                    [TypeInfo] => 20
+                                )
+
+                            [login] => Array
+                                (
+                                    [Type] => text
+                                    [TypeInfo] => 
+                                )
+
+                            [password] => Array
+                                (
+                                    [Type] => text
+                                    [TypeInfo] => 
+                                )
+
+                            [hash] => Array
+                                (
+                                    [Type] => text
+                                    [TypeInfo] => 
+                                )
+
+                            [email] => Array
+                                (
+                                    [Type] => text
+                                    [TypeInfo] => 
+                                )
+
+                            [fio] => Array
+                                (
+                                    [Type] => text
+                                    [TypeInfo] => 
+                                )
+
+                        )
+
+                    [primary] => id
+                    [constraints] => Array
+                        (
+                        )
+
+                    [required] => Array
+                        (
+                            [0] => id
+                            [1] => login
+                            [2] => password
+                            [3] => email
+                        )
+
+                    [rules] => Array
+                        (
+                        )
+
+                    [view] => {login}
+                    [file_fields] => Array
+                        (
+                        )
+
+                    [authdata] => Array
+                        (
+                            [type] => db
+                            [src] => users
+                            [login_field] => login
+                            [passw_field] => password
+                            [hash_tag] => hash
+                            [email_field] => email
+                        )
+
+                )
+
+            [_LOCATION] => ../master/conf/__master/frontend/hmvc/hmvc
+            [_ENV] => Array
+                (
+                    [page_module] => mul_page Object
+                        (
+                            [_DIR_CONFIG] => ../master/conf/__master
+                            [_CONFIG] => __master
+                            [_DIR_EP] => ../master/conf/__master/frontend
+                            [_THEME] => master_base
+                            [CFG_INFO] => Array
+                                (
+                                    [_DIR_CONFIG] => ../master/conf/__master
+                                    [_ACTION_NAME] => 
+                                    [_DIR_EP] => ../master/conf/__master/frontend
+                                    [_CONTROLLER_NAME] => 
+                                    [_DIR_CONTROLLER] => ../master/conf/__master/frontend/hmvc
+                                    [_CONTROLLER_CLASS] => Controller
+                                    [_CONTROLLER_FILE] => ../master/conf/__master/frontend/hmvc/controller.php
+                                    [_ACTION] => Action
+                                )
+
+                            [_ENV_INFO] => Array
+                                (
+                                    [page_module] => mul_page Object
+ *RECURSION*
+                                )
+
+                            [CONF_BASE] => Array
+                                (
+                                )
+
+                            [CONF_EP] => Array
+                                (
+                                    [_HTML_CHARSET] => windows-1251
+                                    [_FAVICO] => /master/../master/conf/__master/themes/master_base/images/admin.gif
+                                    [_FAVICO_FORMAT] => image/gif
+                                    [_THEME] => master_base
+                                    [sess_user_descriptor] => master
+                                    [_APPLE_TOUCH_ICONS] => Array
+                                        (
+                                            [0] => /master/../master/conf/__master/themes/master_base/images/admin.gif
+                                        )
+
+                                    [_URL_FORMAT] => folder_like
+                                    [print_template_path] => 
+                                )
+
+                            [theme_obj] => XTheme Object
+                                (
+                                    [_PATH] => ../master/conf/__master/themes/master_base
+                                    [_CONFIG] => Array
+                                        (
+                                            [css] => Array
+                                                (
+                                                )
+
+                                            [js] => Array
+                                                (
+                                                )
+
+                                            [_FAVICO] => /master/../master/conf/__master/themes/master_base/images/admin.gif
+                                            [_FAVICO_FORMAT] => image/gif
+                                        )
+
+                                )
+
+                            [_REQUEST] => HMVCRequest Object
+                                (
+                                    [_controller] => hmvc
+                                    [_action] => addadmin
+                                    [_args] => Array
+                                        (
+                                            [cfg] => newcfg
+                                        )
+
+                                    [_fun_map] => Array
+                                        (
+                                            [0] => cfg
+                                        )
+
+                                    [_URL_FORMAT] => folder_like
+                                )
+
+                            [_CONTROLLER] => __master\Frontend\HmvcController Object
+                                (
+                                    [_JS] => Array
+                                        (
+                                        )
+
+                                    [_CSS] => Array
+                                        (
+                                        )
+
+                                    [_BLOCKS] => Array
+                                        (
+                                            [SIDEBAR_LEFT] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [controller] => configs
+                                                            [action] => conflist
+                                                            [args] => Array
+                                                                (
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                            [BASE_MENU] => Array
+                                                (
+                                                    [0] => Array
+                                                        (
+                                                            [controller] => site
+                                                            [action] => menu
+                                                            [args] => Array
+                                                                (
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [_TITLE] => 
+                                    [_LAYOUT] => basic_layout.php
+                                    [_META] => Array
+                                        (
+                                        )
+
+                                    [_INLINE_SCRIPT] => 
+                                    [_INLINE_STYLE] => 
+                                    [_RESULT_TYPE] => text/html
+                                    [_CONTROLLER_DIR] => ../master/conf/__master/frontend/hmvc/hmvc
+                                    [_ENV] => Array
+                                        (
+                                            [page_module] => mul_page Object
+ *RECURSION*
+                                        )
+
+                                    [_MODEL] => BaseModel Object
+ *RECURSION*
+                                    [_HEADERS] => 
+                                    [_CONNECTION] => 
+                                )
+
+                        )
+
+                    [_CONTROLLER] => __master\Frontend\HmvcController Object
+                        (
+                            [_JS] => Array
+                                (
+                                )
+
+                            [_CSS] => Array
+                                (
+                                )
+
+                            [_BLOCKS] => Array
+                                (
+                                    [SIDEBAR_LEFT] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [controller] => configs
+                                                    [action] => conflist
+                                                    [args] => Array
+                                                        (
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [BASE_MENU] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [controller] => site
+                                                    [action] => menu
+                                                    [args] => Array
+                                                        (
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                            [_TITLE] => 
+                            [_LAYOUT] => basic_layout.php
+                            [_META] => Array
+                                (
+                                )
+
+                            [_INLINE_SCRIPT] => 
+                            [_INLINE_STYLE] => 
+                            [_RESULT_TYPE] => text/html
+                            [_CONTROLLER_DIR] => ../master/conf/__master/frontend/hmvc/hmvc
+                            [_ENV] => Array
+                                (
+                                    [page_module] => mul_page Object
+                                        (
+                                            [_DIR_CONFIG] => ../master/conf/__master
+                                            [_CONFIG] => __master
+                                            [_DIR_EP] => ../master/conf/__master/frontend
+                                            [_THEME] => master_base
+                                            [CFG_INFO] => Array
+                                                (
+                                                    [_DIR_CONFIG] => ../master/conf/__master
+                                                    [_ACTION_NAME] => 
+                                                    [_DIR_EP] => ../master/conf/__master/frontend
+                                                    [_CONTROLLER_NAME] => 
+                                                    [_DIR_CONTROLLER] => ../master/conf/__master/frontend/hmvc
+                                                    [_CONTROLLER_CLASS] => Controller
+                                                    [_CONTROLLER_FILE] => ../master/conf/__master/frontend/hmvc/controller.php
+                                                    [_ACTION] => Action
+                                                )
+
+                                            [_ENV_INFO] => Array
+ *RECURSION*
+                                            [CONF_BASE] => Array
+                                                (
+                                                )
+
+                                            [CONF_EP] => Array
+                                                (
+                                                    [_HTML_CHARSET] => windows-1251
+                                                    [_FAVICO] => /master/../master/conf/__master/themes/master_base/images/admin.gif
+                                                    [_FAVICO_FORMAT] => image/gif
+                                                    [_THEME] => master_base
+                                                    [sess_user_descriptor] => master
+                                                    [_APPLE_TOUCH_ICONS] => Array
+                                                        (
+                                                            [0] => /master/../master/conf/__master/themes/master_base/images/admin.gif
+                                                        )
+
+                                                    [_URL_FORMAT] => folder_like
+                                                    [print_template_path] => 
+                                                )
+
+                                            [theme_obj] => XTheme Object
+                                                (
+                                                    [_PATH] => ../master/conf/__master/themes/master_base
+                                                    [_CONFIG] => Array
+                                                        (
+                                                            [css] => Array
+                                                                (
+                                                                )
+
+                                                            [js] => Array
+                                                                (
+                                                                )
+
+                                                            [_FAVICO] => /master/../master/conf/__master/themes/master_base/images/admin.gif
+                                                            [_FAVICO_FORMAT] => image/gif
+                                                        )
+
+                                                )
+
+                                            [_REQUEST] => HMVCRequest Object
+                                                (
+                                                    [_controller] => hmvc
+                                                    [_action] => addadmin
+                                                    [_args] => Array
+                                                        (
+                                                            [cfg] => newcfg
+                                                        )
+
+                                                    [_fun_map] => Array
+                                                        (
+                                                            [0] => cfg
+                                                        )
+
+                                                    [_URL_FORMAT] => folder_like
+                                                )
+
+                                            [_CONTROLLER] => __master\Frontend\HmvcController Object
+ *RECURSION*
+                                        )
+
+                                )
+
+                            [_MODEL] => BaseModel Object
+ *RECURSION*
+                            [_HEADERS] => 
+                            [_CONNECTION] => 
+                        )
+
+                    [model] => BaseModel Object
+ *RECURSION*
+                )
+
+            [_SCENARIO] => default
+        )
+
+    [_FIELDS] => Array
+        (
+            [id] => 
+            [login] => xyi
+            [password] => xyi
+            [hash] => 
+            [email] => xyi@local
+            [fio] => xyi xyi
+        )
+
+    [_MODIFIED] => 1
+    [_DB] => 1
+    [_EXISTS_IN_DB] => 1
 )

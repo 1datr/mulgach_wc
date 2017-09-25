@@ -289,6 +289,8 @@ class BaseController
 		$res = array();
 		$this->CallEvent('BeforeValidate', ['controller'=>$this,'row'=>$therow,'res'=>&$res]);
 		
+	//	mul_dbg($therow);
+		
 		if(!empty($this->_MODEL))
 		{	
 			// валидуем по модели
@@ -371,12 +373,35 @@ class BaseController
 			$$var = $val;
 		}
 		
-		$_view_path = $this->get_view_path($view);
-		if($this->get_ep_param('print_template_path'))
-		echo "<!-- {$_view_path} -->";
+		if(file_exists($view)) 
+			$_view_path = $view;
+		else 
+			$_view_path = $this->get_view_path($view);
+		if($this->get_ep_param('print_template_path'))		echo "<!-- {$_view_path} -->";
 		include $_view_path;
 		
 		//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
+	
+	}
+	
+	function get_view_code($view,$vars=array())
+	{
+		foreach ($vars as $var => $val)
+		{
+			$$var = $val;
+		}
+	
+		if(file_exists($view))
+			$_view_path = $view;
+		else
+			$_view_path = $this->get_view_path($view);
+		
+		ob_start();
+		if($this->get_ep_param('print_template_path'))		echo "<!-- {$_view_path} -->";
+		include $_view_path;
+		$_content = ob_get_clean();
+		return $_content;
+				//url_seg_add($this->get_current_dir(),url_seg_add("/views/",$view)).".php";
 	
 	}
 	
@@ -391,6 +416,7 @@ class BaseController
 		if(!file_exists($_view_path))
 			x_file_put_contents($_view_path, '
 ');
+		if($this->get_ep_param('print_template_path'))		echo "<!-- {$_view_path} -->";
 		include $_view_path;
 		
 	}

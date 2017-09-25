@@ -120,4 +120,15 @@ $_LANG['Finded several tables to be authorize']='Finded several tables to be aut
 $_LANG['Choose authorization table']='Choose authorization table';
 $_LANG['SELECT']='SELECT';
 $_LANG['Select authorization table']='Select authorization table';
+$_LANG['Edit USERS']='Edit USERS';
+$_LANG['users.login']='users.login';
+$_LANG['users.password']='users.password';
+$_LANG['users.hash']='users.hash';
+$_LANG['users.email']='users.email';
+$_LANG['users.fio']='users.fio';
+$_LANG['SAVE']='SAVE';
+$_LANG['Creation of basic administrator']='Creation of basic administrator';
+$_LANG['baseadmin.login']='baseadmin.login';
+$_LANG['baseadmin.password']='baseadmin.password';
+$_LANG['baseadmin.email']='baseadmin.email';
 ?>

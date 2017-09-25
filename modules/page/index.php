@@ -357,6 +357,8 @@ class mul_page extends mul_Module
 	
 	function hmvc_request($reqstr)
 	{
+		//mul_dbg($reqstr);
+		
 		$this->_REQUEST = new HMVCRequest($reqstr);
 		//print_r($req_obj);
 		$con_info = $this->controller_info($this->_REQUEST->_controller,$this->_REQUEST->_action);
