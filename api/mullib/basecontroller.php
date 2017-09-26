@@ -577,6 +577,7 @@ class StepProcess
 	VAR $ERROR_MSG="";
 	VAR $TERMINATED=FALSE;
 	VAR $_DIALOG;
+	VAR $_REDIR_URL;
 	
 	function __construct($pid=NULL,$_passw=NULL)
 	{
@@ -625,6 +626,11 @@ class StepProcess
 		$this->ERROR=$_ERROR;
 		$this->ERROR_MSG=$ERR_TEXT;
 		unset($_SESSION['processes'][$this->PID]);
+	}
+	
+	function redirect($redir_url)
+	{
+		$this->_REDIR_URL = $redir_url;
 	}
 	
 	function Data($data_key,$data_val=NULL)

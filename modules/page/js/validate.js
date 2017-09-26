@@ -71,6 +71,10 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 	    			{
 		    			fun_onterminate(data);
 	    			}
+		    		if(data.redirect)
+		    		{
+		    			document.location=data.redirect;
+		    		}
 	    		}	    	
 	    	else
 	    		{

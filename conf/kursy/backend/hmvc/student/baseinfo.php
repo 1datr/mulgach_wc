@@ -8,13 +8,5 @@ $settings = array(
 	'rules'=>array(),	
 	'view'=>'{login}',
 	'file_fields'=>array(),
-	'authdata'=>array(
-		'type'=>'db',
-		'src'=>'student',
-		// fields
-		'login_field'=>'',
-		'passw_field'=>'',
-		'hash_tag'=>'',
-		'email_field'=>'',
-	),
+	
 );

@@ -313,7 +313,10 @@ class plg_drv_mysql extends mod_plugin
 	// get new row
 	public function get_row($res,$idx=NULL)
 	{
-		return mysql_fetch_assoc($res);		
+		if($idx==NULL)
+			return mysql_fetch_assoc($res);
+		else 
+			return mysql_result($res,$idx); 
 	}
 	
 	public function last_insert_id(){

@@ -176,7 +176,7 @@ class HmvcController extends \BaseController
 			
 			$newitem->save();
 			
-			$this->redirect_back();
+			$this->redirect(as_url("hmvc/$cfg"));
 		}
 	}
 		
@@ -293,8 +293,20 @@ class HmvcController extends \BaseController
 						}
 						
 					}break;
-					case 'detect_admin': {
+					case 'detect_admin': 
+						{
+						// проверка есть ли админ в таблице
+						$_sql = "SELECT COUNT(*) as `count` FROM `@+".$sp->Data('con_auth')['con_info']['table']."`";
+						//mul_dbg($_sql);
+						$res = $this->_CONNECTION->query($_sql);
+						$row = $this->_CONNECTION->get_row($res);
 						
+						mul_dbg($row);
+						
+						if($row['count']==0)
+						{
+							$sp->redirect(as_url('/hmvc/addbasicuser/'.$sp->Data('settings')['conf']));	
+						}												
 						$sp->terminate();
 					}break;
 					case 'detect_auth': {	// режим найти контроллер авторизации 
@@ -321,7 +333,7 @@ class HmvcController extends \BaseController
 						if($sp->Data('index')>=count($sp->Data('tables')))
 						{
 												
-							if(count($sp->Data('auth_cons')))
+							if(count($sp->Data('auth_cons'))>1)
 							{
 								$sp->Data('con_auth',$sp->Data('auth_cons')[0]);
 								
@@ -342,6 +354,10 @@ class HmvcController extends \BaseController
 								$sp->Dialog($this,'select_authcon_form',['sp'=>$sp,'authcons'=>$authcons,'sp_model'=>$sp_model],['title'=>\Lang::__t('Select authorization table')]);
 								
 							}
+							elseif(count($sp->Data('auth_cons'))==1) 
+							{
+								$sp->Data('con_auth',$sp->Data('auth_cons')[0]);
+							}
 							$sp->Data('mode','make');
 							$sp->Data('index',0);
 							$sp->Data('procent',0);
@@ -356,7 +372,9 @@ class HmvcController extends \BaseController
 			$this->out_json(['pid'=>$sp->PID,
 					'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
 					'terminated'=>$sp->TERMINATED,
-					'dialog'=>$sp->getDialog()]);
+					'dialog'=>$sp->getDialog(),
+					'redirect'=>$sp->_REDIR_URL,
+			]);
 		}
 		else 
 		{
