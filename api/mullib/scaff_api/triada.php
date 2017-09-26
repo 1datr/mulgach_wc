@@ -214,9 +214,9 @@ class scaff_triada
 			$vars['settings']=$settings;
 			$vars['constraints']=$_params['constraints'];
 			$vars['fld_passw']='';
-			if(isset($_params['authcon'][$this->_EP]['enable']))
+			if(isset($_params['authcon']['enable']))
 			{
-				$vars['fld_passw'] = $_params['authcon'][$this->_EP]['passw'];
+				$vars['fld_passw'] = $_params['authcon']['passw'];
 			}
 			$this->add_view('itemform','view_itemform',$vars,$_params['rewrite_all']);
 		}
@@ -232,9 +232,9 @@ class scaff_triada
 			$vars['settings']=$settings;
 			$vars['constraints']=$_params['constraints'];
 			$vars['fld_passw']='';
-			if(isset($_params['authcon'][$this->_EP]['enable']))
+			if(isset($_params['authcon']['enable']))
 			{
-				$vars['fld_passw'] = $_params['authcon'][$this->_EP]['passw'];
+				$vars['fld_passw'] = $_params['authcon']['passw'];
 			}
 			$this->add_view('itemview','itemview',$vars,$_params['rewrite_all']);
 		}
@@ -249,6 +249,7 @@ class scaff_triada
 				$vars['this_controller'] = $_params['table'];
 				$vars['login_fld']=$_params['authcon']['login'];
 				$vars['passw_fld']=$_params['authcon']['passw'];
+				$vars['fld_passw']=$_params['authcon']['passw'];
 			
 			//	$vars['settings']=$settings;
 			//	$vars['constraints']=$_params['constraints'];
