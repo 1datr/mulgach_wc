@@ -205,7 +205,7 @@
 		
 			if($data['row'][self::VarName()]!=$_SESSION[$this->params['code_var']])
 			{
-				$data['res'][self::VarName()]=Lang::__t('Captcha error');
+				$data['res'][self::VarName()]=\Lang::__t('Captcha error');
 				
 			}
 		}

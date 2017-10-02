@@ -100,7 +100,7 @@ class plg_drv_mysql extends mod_plugin
 			{
 				if(mysql_select_db($conn_params['dbname'], $conn) === false)
 				{
-					$res_arr['database'] = mysql_error().". ".Lang::__t('Create this database?');
+					$res_arr['database'] = mysql_error().". ".\Lang::__t('Create this database?');
 					return $res_arr;
 				}
 				return true;
@@ -402,7 +402,7 @@ class plg_drv_mysql extends mod_plugin
 	
 	private function OK_button_code()
 	{
-		$str = '&nbsp;<button class="btn btn-sm btn-xs" onclick="make_db(this);return false;">'.Lang::__t('OK').'</button>';
+		$str = '&nbsp;<button class="btn btn-sm btn-xs" onclick="make_db(this);return false;">'.\Lang::__t('OK').'</button>';
 		return $str;
 	}
 	// Ìועמהû הכÿ נאבמעû ס ןאנאלוענאלט הנאיגונמג

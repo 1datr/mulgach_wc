@@ -4,7 +4,7 @@ class InstallTableController extends BaseController
 	
 	public function ActionIndex()
 	{
-		$this->_TITLE = Lang::__t('Installation');
+		$this->_TITLE = \Lang::__t('Installation');
 		$model=array();
 	
 		//	$model = $this->UseModel(base_driver_model_settings());
@@ -19,7 +19,7 @@ class InstallTableController extends BaseController
 			$this->_CONNECTION->create_table($this->_MODEL->_SETTINGS);
 		}
 	
-		$arr_json=['message'=>Lang::__t('Table ').$_TABLE.Lang::__t(' was created')];
+		$arr_json=['message'=>\Lang::__t('Table ').$_TABLE.\Lang::__t(' was created')];
 		
 		$this->out_json($arr_json);
 	}

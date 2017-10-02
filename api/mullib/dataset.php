@@ -240,7 +240,7 @@ class DataRecord	// запись из БД
 			{
 				?>
 				<tr>
-				<th><?=Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th>
+				<th><?=\Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th>
     			<td><?php 
     			
     			$fparams=[];

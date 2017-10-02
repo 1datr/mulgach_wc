@@ -301,7 +301,7 @@ class HmvcController extends \BaseController
 						$res = $this->_CONNECTION->query($_sql);
 						$row = $this->_CONNECTION->get_row($res);
 						
-						mul_dbg($row);
+					//	mul_dbg($row);
 						
 						if($row['count']==0)
 						{
@@ -589,12 +589,12 @@ class HmvcController extends \BaseController
 						{
 							if(!$table_info['primary']['ai'])
 							{
-								$table_warnings[]=Lang::__t('Primary key field is not autoincrement');
+								$table_warnings[]=\Lang::__t('Primary key field is not autoincrement');
 							}
 						}
 						else 
 						{
-							$table_warnings[]=Lang::__t('Primary key of this table is empty');
+							$table_warnings[]=\Lang::__t('Primary key of this table is empty');
 						}
 						/*
 						$authcon = false;

@@ -7,7 +7,7 @@ class Lang {
 		
 		GLOBAL $_EP_PATH;
 		
-		$langfile=new Lang($_lang);
+		$langfile=new \Lang($_lang);
 		
 		if($langfile->getkey($key)==NULL)
 			$langfile->add_key($key);
@@ -30,13 +30,13 @@ class Lang {
 	
 	static function search($lng,$srch,$val)
 	{
-		$lng_object = new Lang($lng);
+		$lng_object = new \Lang($lng);
 		return $lng_object->search_fuzzy($srch,$val);
 	}
 	
 	static function translate_str($str,$_lang=NULL)
 	{
-		$langfile=new Lang($_lang);
+		$langfile=new \Lang($_lang);
 		$langfile->read();
 		$strtr_buf=array();
 		
@@ -46,7 +46,7 @@ class Lang {
 		$to_strtr=array();
 		foreach ($matches[1] as $idx => $key)
 		{
-			$lng_val = Lang::__t($key);
+			$lng_val = \Lang::__t($key);
 			$to_strtr[$matches[0][$idx]]=$lng_val;
 		}
 		//$str = preg_match() ('/\#\{(.+)\}/', '=Lang::__t()', $str);

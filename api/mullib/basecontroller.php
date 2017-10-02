@@ -442,7 +442,7 @@ class BaseController
 		include $_view_path;
 		$the_content = ob_get_clean();
 		
-		$the_content =	Lang::translate_str($the_content);
+		$the_content =	\Lang::translate_str($the_content);
 		
 		$obj_json = array('html'=>$the_content,'js'=>$this->_JS,'css'=>$this->_CSS,'inline_js'=>$this->_INLINE_SCRIPT);
 		if($out_js)
@@ -541,7 +541,7 @@ class AuthController extends BaseController
 	
 	public function ActionLogin()
 	{
-		$this->_TITLE=Lang::__t('Authorization');
+		$this->_TITLE=\Lang::__t('Authorization');
 		$this->use_layout('layout_login');
 		$this->out_view('login',array());
 	}

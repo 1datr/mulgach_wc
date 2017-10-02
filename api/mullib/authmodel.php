@@ -189,7 +189,7 @@ class AuthModel extends BaseModel
 			$res_auth = $this->auth($data['login'], $data['password']);
 			if($res_auth==false)
 			{
-				add_keypair($res,'auth',Lang::__t('Wrong login or password'));
+				add_keypair($res,'auth',\Lang::__t('Wrong login or password'));
 			}
 			$this->OnValidate($_POST, $res);
 			return $res;

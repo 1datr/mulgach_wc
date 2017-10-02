@@ -200,7 +200,7 @@ class plg_simple extends mod_plugin
 	{
 	//	mul_dbg($_SESSION);
 		if($data['row'][self::VarName()]!=$_SESSION[$this->params['code_var']])
-			$data['res']['captcha_value']=Lang::__t('Captcha error');
+			$data['res']['captcha_value']=\Lang::__t('Captcha error');
 	}
 	
 	public function full_html(&$form,&$model_row)

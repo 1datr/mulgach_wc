@@ -130,7 +130,7 @@ class BaseModel
 				{
 					if(empty($data[$this->_TABLE][$fld]))
 					{
-						add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+						add_keypair($res,$fld,\Lang::__t($this->_TABLE.".".$fld)." could not be empty");
 					}
 					
 					

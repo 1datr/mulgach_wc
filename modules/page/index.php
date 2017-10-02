@@ -570,7 +570,7 @@ class mul_page extends mul_Module
 		</html>
 		<?php 
 		$the_content = ob_get_clean();
-		$the_content =	Lang::translate_str($the_content);
+		$the_content =	\Lang::translate_str($the_content);
 		echo $the_content;
 	}
 	

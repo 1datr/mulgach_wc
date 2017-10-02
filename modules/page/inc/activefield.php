@@ -195,7 +195,7 @@ class ActiveField
 				switch($enum_mode)
 				{
 					case 'lang': 
-						$theval['%capt']=Lang::__t($fld_capt_prefix.".".$theval['%val']);
+						$theval['%capt']=\Lang::__t($fld_capt_prefix.".".$theval['%val']);
 						break;
 					case 'raw': 
 						$theval['%capt']=$theval['%val'];

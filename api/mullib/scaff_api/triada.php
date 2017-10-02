@@ -475,7 +475,7 @@ class scaff_triada
 		// прокачиваем надписи
 		if(!empty($_params['captions'][$ep]))
 		{
-			$thelang=new Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
+			$thelang=new \Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
 			foreach ($_params['captions'][$ep] as $fld_key => $val)
 			{
 				$thelang->add_key($fld_key,$val);
@@ -647,7 +647,7 @@ class scaff_triada
 		// прокачиваем надписи
 		if(!empty($_params['captions'][$ep]))
 		{
-			$thelang=new Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
+			$thelang=new \Lang(NULL, $this->_PARENT_CONF->_NAME,$this->_EP);
 			foreach ($_params['captions'][$ep] as $fld_key => $val)
 			{
 				$thelang->add_key($fld_key,$val);

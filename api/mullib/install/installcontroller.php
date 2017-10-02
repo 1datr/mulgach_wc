@@ -5,7 +5,7 @@ class InstallController extends BaseController
 	public function ActionIndex()
 	{
 		GLOBAL $_CONFIG;
-		$this->_TITLE = Lang::__t('Installation')." ".$_CONFIG;
+		$this->_TITLE = \Lang::__t('Installation')." ".$_CONFIG;
 		$model=array();
 		
 	//	$model = $this->UseModel(base_driver_model_settings());
