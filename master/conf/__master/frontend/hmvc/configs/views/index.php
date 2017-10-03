@@ -64,3 +64,7 @@ $frm=new mulForm(as_url("configs/new"),$this);
 <?php 
 $frm->close();
 ?>
+
+<?php 
+$this->out_view('install_cfg',array());
+?>

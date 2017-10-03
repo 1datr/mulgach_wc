@@ -238,6 +238,11 @@ function url_seg_add()
 	$numargs = func_num_args();
 	$arg_list = func_get_args();
 	$resstr="";
+	$flg_backslash=true;
+	if(is_bool($arg_list[$numargs-1]))
+	{
+		$flg_backslash=$arg_list[$numargs-1];
+	}
 	foreach ($arg_list as $idx => $arg)
 	{
 		if((substr($arg,-1)=="/") || (substr($arg,-1)=="\\"))
@@ -249,6 +254,9 @@ function url_seg_add()
 		{
 			$arg = substr($arg,1,strlen($arg)-1);
 		}
+		
+		if($flg_backslash)
+			$arg = strtr($arg,['\\'=>'/']);
 		
 		if($idx==0)
 		{

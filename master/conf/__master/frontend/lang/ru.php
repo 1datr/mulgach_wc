@@ -131,4 +131,5 @@ $_LANG['Creation of basic administrator']='Creation of basic administrator';
 $_LANG['baseadmin.login']='baseadmin.login';
 $_LANG['baseadmin.password']='baseadmin.password';
 $_LANG['baseadmin.email']='baseadmin.email';
+$_LANG['Install config']='Install config';
 ?>

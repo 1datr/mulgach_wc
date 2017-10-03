@@ -41,7 +41,7 @@ class ModulesController extends \BaseController
 			GLOBAL $_BASEDIR;
 			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 			
-			$module = new scaff_module($_POST['module']);
+			$module = new \scaff_module($_POST['module']);
 			$module->create_plugin($_POST['plgname'],array('rewrite'=>true));
 		
 			$this->redirect(as_url('modules'));

@@ -6,5 +6,6 @@ $_MODULES = array(
 	'bootstrap'=>array(),
 	'route'=>array(),
 	'captcha'=>array(),
+	'archive'=>array(),
 );
 ?>
