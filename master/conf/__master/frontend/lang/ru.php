@@ -132,4 +132,5 @@ $_LANG['baseadmin.login']='baseadmin.login';
 $_LANG['baseadmin.password']='baseadmin.password';
 $_LANG['baseadmin.email']='baseadmin.email';
 $_LANG['Install config']='Install config';
+$_LANG['Make configuration archive']='Make configuration archive';
 ?>

@@ -26,7 +26,7 @@ class ConfigsController extends \BaseController
 		GLOBAL $_CONFIG;
 		
 		$this->out_view('index',array('files'=>$files_in_conf_dir,'curr_config'=>$this->getCurrCFG() ));
-	}
+	}	
 	
 	public function BeforeAction(&$params)
 	{
@@ -66,6 +66,35 @@ class ConfigsController extends \BaseController
 		$cnf = new scaff_conf($cfg); 
 		
 		$this->out_view('configform',array('cfg'=>$cfg,'conf_code'=>$cnf->get_db_conf_code()));
+	}
+	
+	public function ActionPack($cfg=null)
+	{
+		if($cfg==NULL)
+		{				
+			$cfg= $this->getCurrCFG();
+		}
+		
+		GLOBAL $_BASEDIR;
+		$this->_TITLE=$cfg.' #{Edit database connection config}';
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$cnf = new \scaff_conf($cfg);
+		
+		$arcplg = \mul_archive::use_archive_plg('zip');
+		
+		$zip_file_name = time().'.zip';
+		if ($arcplg->ARCMAN->open($zip_file_name, \ZipArchive::CREATE) === true){
+			
+			$fldr = $arcplg->AddFolder($cnf->_PATH,['/dbconf.php']);
+			//$zip->addFile($cfg->_PATH);
+		
+			$arcplg->ARCMAN->close();
+			$this->OutFile($zip_file_name);
+			
+			unlink($zip_file_name);
+		}else{
+			echo 'Не могу создать архив!';
+		}
 	}
 	
 	public function ActionNew()

@@ -522,6 +522,17 @@ class BaseController
 				);
 	}
 	
+	function OutFile($the_file,$mime_type=NULL)
+	{
+		if($mime_type==NULL)
+		{
+			$mime_type=mime_content_type($the_file);
+		}
+	
+		$this->_RESULT_TYPE=$mime_type;
+		echo file_get_contents($the_file);
+	}
+	
 	function get_controller($controller)
 	{
 		return $this->_ENV['page_module']->get_controller($controller);
@@ -665,4 +676,6 @@ class StepProcess
 	{
 		return $this->_DIALOG;
 	}
+	
+	
 }

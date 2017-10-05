@@ -20,6 +20,15 @@ class mul_Module
 		return $name;
 	}
 	
+	static function st_get_mod_name()
+	{
+		$classname = get_called_class();
+	
+		$name="";
+		list($name) = sscanf( $classname,__module_class_prefix__.'%s'.__module_class_suffix__);
+		return $name;
+	}
+	
 	function get_srv()
 	{
 		return $this->get_request('srv');

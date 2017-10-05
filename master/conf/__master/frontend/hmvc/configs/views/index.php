@@ -24,17 +24,25 @@ foreach ($files as $the_file)
 		</a>
 	</td>
 	
+	<td>
 	<?php
 	if(basename($the_file)!=$curr_config)
 	{
 		?>
-		<td>
+		
 		<a href="<?=as_url('configs/drop/'.basename($the_file))?>" class="ref_delete" conf_message="#{Delete this configuration?}" title="Drop it">
 			<img alt="" src="<?=$this->get_image('../../images/trash-circle.png')?>" width="18px" height="18px" />
 		</a>
+		<?php 
+	}
+	?>
 		</td>
 		
-		<td>
+	<td>
+	<?php
+	if(basename($the_file)!=$curr_config)
+	{
+		?>
 			<?php 
 			$frm = new mulForm(as_url('configs/setcurrent'),$this,['htmlattrs'=>['style'=>'margin:0px;padding:0px;']]);
 			?>
@@ -45,10 +53,19 @@ foreach ($files as $the_file)
 			<?php 
 			$frm->close();
 			?>
-		</td>
+		
+		
+		
 		<?php 
 	}
 	?>
+	</td>
+	
+	<td>
+		<a href="<?=as_url('configs/pack/'.basename($the_file))?>" title="#{Make configuration archive}" >
+			<img alt="" src="<?=$this->get_image('../../images/pack.png')?>" width="18px" height="18px" />
+		</a>
+	</td>
 	
 	</tr>
 	<?php 

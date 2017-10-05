@@ -11,7 +11,7 @@ class mul_archive extends mul_Module
 	
 	static function use_archive_plg($plg,$params=[])
 	{
-		$plg = find_module($this->get_mod_name())->use_plugin($plg,$params);
+		$plg = find_module(self::st_get_mod_name())->use_plugin($plg,$params);
 		if($plg!=NULL)
 			return $plg->get_arc_man($params);
 		
