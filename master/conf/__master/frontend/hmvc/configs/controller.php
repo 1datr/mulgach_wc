@@ -118,6 +118,12 @@ class ConfigsController extends \BaseController
 		$this->redirect_back();
 	}
 	
+	// параметры POST - file
+	public function ActionInstall()
+	{
+		
+	}
+	
 	public function ActionSetcurrent()
 	{
 		GLOBAL $_BASEDIR;
