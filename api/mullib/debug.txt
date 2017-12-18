@@ -1,0 +1,14 @@
+
+				
+	12-18-2017 16:35:04.000000: Array
+(
+    [cfgfile] => Array
+        (
+            [name] => kursy.mca.zip
+            [type] => application/x-zip-compressed
+            [tmp_name] => E:\OpenServer\userdata\temp\php2C0C.tmp
+            [error] => 0
+            [size] => 59626067
+        )
+
+)

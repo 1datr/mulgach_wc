@@ -124,15 +124,30 @@ class ConfigsController extends \BaseController
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		//form_req_cfg_name
-		/*
-		if(isset($_POST['']))
-		{*/
-			//$_FILES['cfgfile']['tmp_name']
-			mul_dbg($_FILES,true);
-			die();
-			/*
+		
+		if(isset($_POST['pid']))
+		{
+			$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
 		}
-		*/
+		else 
+		{
+			// опируем файл во времянку
+			if(isset($_FILES['cfgfile']['tmp_name'])) // есть файл конфы
+			{
+				$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
+					
+				//	mul_dbg($_FILES,true);
+				die();
+					
+			}
+			
+			$cfgname = basename($_FILES['cfgfile']['name']);
+			
+			// зачинаем процесс
+			$sp = new \StepProcess();
+			$sp->Data('procent',0);
+		}			
+		
 	}
 	
 	public function ActionSetcurrent()
