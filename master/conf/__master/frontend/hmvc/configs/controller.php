@@ -82,7 +82,7 @@ class ConfigsController extends \BaseController
 		
 		$arcplg = \mul_archive::use_archive_plg('zip');
 		
-		$zip_file_name = time().'.zip';
+		$zip_file_name = time().'.mca.zip';
 		if ($arcplg->ARCMAN->open($zip_file_name, \ZipArchive::CREATE) === true){
 			
 			$fldr = $arcplg->AddFolder($cnf->_PATH,['/dbconf.php']);
@@ -121,7 +121,18 @@ class ConfigsController extends \BaseController
 	// параметры POST - file
 	public function ActionInstall()
 	{
-		
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		//form_req_cfg_name
+		/*
+		if(isset($_POST['']))
+		{*/
+			//$_FILES['cfgfile']['tmp_name']
+			mul_dbg($_FILES,true);
+			die();
+			/*
+		}
+		*/
 	}
 	
 	public function ActionSetcurrent()
