@@ -1,15 +1,20 @@
 function pb_set_procent(pbid,proc)
 {
-	$('#'+pbid+'_inside').css('width',proc+'%');
-	$('#'+pbid+'_inside').html(proc+'%');
+	if($('#'+pbid+'_inside').length)
+	{
+		$('#'+pbid+'_inside').css('width',proc+'%');
+		$('#'+pbid+'_inside').html(proc+'%');	
+	}
 }
 
 function pb_show(pbid)
 {
-	$('#'+pbid).show();
+	if($('#'+pbid).length)
+		$('#'+pbid).show();
 } 
 
 function pb_hide(pbid)
 {
-	$('#'+pbid).hide();
+	if($('#'+pbid).length)
+		$('#'+pbid).hide();
 } 

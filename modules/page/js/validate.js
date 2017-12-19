@@ -162,7 +162,8 @@ function process_submit(that_form)
 {
 	pbid = $(that_form).attr('pbid');
 	//alert(pbid);
-	pb_show(pbid);
+	if($('#'+pbid).length)
+		pb_show(pbid);
 	form_action = $(that_form).attr('action');
 	var the_data = new FormData(that_form[0]);
 	$.ajax({

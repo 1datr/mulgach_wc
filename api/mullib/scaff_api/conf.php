@@ -143,6 +143,18 @@ $conf = array(
 		}
 	}
 	
+	static function exists($conf)
+	{
+		GLOBAL $_BASEDIR;
+		
+		$opts=[];
+		def_options(array('conf_dir'=>'conf','rewrite'=>false), $opts);
+			
+		$_PATH = url_seg_add($_BASEDIR,$opts['conf_dir'],$conf);
+		
+		return file_exists($_PATH);
+	}
+	
 	static function set_current_cfg($_cfg)
 	{
 		global $_BASEDIR;

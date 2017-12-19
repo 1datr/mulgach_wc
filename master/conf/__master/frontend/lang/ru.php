@@ -133,4 +133,6 @@ $_LANG['baseadmin.password']='baseadmin.password';
 $_LANG['baseadmin.email']='baseadmin.email';
 $_LANG['Install config']='Install config';
 $_LANG['Make configuration archive']='Make configuration archive';
+$_LANG['Install new configuration']='Install new configuration';
+$_LANG['NEXT>']='NEXT>';
 ?>

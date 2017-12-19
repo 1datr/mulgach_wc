@@ -121,31 +121,88 @@ class ConfigsController extends \BaseController
 	// параметры POST - file
 	public function ActionInstall()
 	{
+		function get_conf_name($file_key)
+		{
+			$file_info = pathinfo($_FILES[$file_key]['name']);
+			
+			$finfo2 = pathinfo($file_info['filename']);
+			if($finfo2['extension']=='mca')
+				return $finfo2['filename'];
+			
+			return $file_info['filename'];
+		}
+		
 		GLOBAL $_BASEDIR;
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		//form_req_cfg_name
 		
-		if(isset($_POST['pid']))
+		$the_post=$_POST;
+		
+		if(!isset($_POST['pid']))	// первый степ
 		{
-			$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
+			$sp = new \StepProcess();
+			$sp->Data('step','req_cfg_name');
+		//	mul_dbg($sp->PASSW);
+			// Копируем файл во времянку
+			if(isset($_FILES['cfgfile']['tmp_name'])) // есть файл конфы
+			{
+				$cfgname = get_conf_name('cfgfile');
+				//basename($_FILES['cfgfile']['name']);
+				// зачинаем процесс
+					
+				$sp->Data('procent',0);
+			
+			
+				// Проверяем наличие конфы с таким именем
+				$conf_str = $cfgname;
+				$i=1;
+				while( \scaff_conf::exists($conf_str) )
+				{
+					$conf_str=$cfgname.$i;
+					$i++;
+				}
+			
+				$sp->Data('name_must_be',$conf_str);
+				
+				$sp_model = $sp->getBasicModel();
+				$sp_model['fields']['newcfgname']=['newcfgname'=>array(
+						'Type'=>'text',
+						'TypeInfo'=>"20",
+				)];
+				
+				$this->out_json(['pid'=>$sp->PID,'passw'=>$sp->PASSW]);								
+				
+			}
+			
+			
 		}
 		else 
 		{
-			// опируем файл во времянку
-			if(isset($_FILES['cfgfile']['tmp_name'])) // есть файл конфы
-			{
-				$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
-					
-				//	mul_dbg($_FILES,true);
-				die();
-					
+			$sp = new \StepProcess($_POST['pid'],$_POST['passw']);
+			if($sp->Data('step')=='req_cfg_name')	// второй степ
+			{						
+			//	mul_dbg($sp->PASSW);
+				
+				$sp_model = $sp->getBasicModel();
+				$sp->Dialog($this,'form_req_cfg_name',['sp'=>$sp,'newcfg_model'=>$sp_model,],['title'=>\Lang::__t('Install new configuration')]);
+				$sp->Data('step','unpack_config');
+				$this->out_json(['pid'=>$sp->PID,
+						'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
+						'terminated'=>$sp->TERMINATED,
+						'dialog'=>$sp->getDialog(),
+						'redirect'=>$sp->_REDIR_URL,
+				]);
 			}
-			
-			$cfgname = basename($_FILES['cfgfile']['name']);
-			
-			// зачинаем процесс
-			$sp = new \StepProcess();
-			$sp->Data('procent',0);
+			elseif($sp->Data('step')=='unpack_config') // третий степ
+			{
+				
+				$this->out_json(['pid'=>$sp->PID,
+						'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
+						'terminated'=>$sp->TERMINATED,
+						'dialog'=>$sp->getDialog(),
+						'redirect'=>$sp->_REDIR_URL,
+				]);
+			}
 		}			
 		
 	}
