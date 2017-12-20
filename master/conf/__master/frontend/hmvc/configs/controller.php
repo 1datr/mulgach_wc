@@ -212,15 +212,9 @@ class ConfigsController extends \BaseController
 						$arcplg->ARCMAN->extractTo($new_cfg_dir);
 						$arcplg->ARCMAN->close();
 						// меняем неймспейсы
+						unlink($sp->Data('zip_file'));
 						$scaff_cfg = new \scaff_conf($sp->Data('name_must_be'));
-						$triads = $scaff_cfg->get_triads();
-						foreach ($triads as $_ep => $trlist)
-						{
-							foreach ($trlist as $tr)
-							{
-								
-							}
-						}
+						$scaff_cfg->rename_namespaces();
 						//mul_dbg($triads);
 					}
 					else 
@@ -229,6 +223,7 @@ class ConfigsController extends \BaseController
 					}
 										
 					$sp->terminate();
+					$sp->redirect('/configs');
 					$this->out_json(['pid'=>$sp->PID,
 							'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
 							'terminated'=>$sp->TERMINATED,

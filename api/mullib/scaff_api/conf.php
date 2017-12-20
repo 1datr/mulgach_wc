@@ -114,6 +114,49 @@ $conf = array(
 		return $res;
 	}
 	
+	// переименовать неимспейсы
+	public function rename_namespaces()
+	{
+		$triads = $this->get_triads();
+		foreach ($triads as $_ep => $trlist)
+		{
+			foreach ($trlist as $tr)
+			{
+				$path_controller = $this->get_controller_file($_ep,$tr);				
+				$controller_code = file_get_contents($path_controller);
+												
+				$_matches=[];
+				//preg_match_all('/namespace\s+(.+)\\(.+)\;/Uis', $controller_code, $_matches);
+				//mul_dbg($_matches);
+				
+				//mul_dbg($path_controller);
+				$path_model = $this->get_model_file($_ep,$tr);
+				//mul_dbg($path_model);
+			}
+		}
+	}
+	
+	// путь к файлу контроллера для ep и hmvc
+	public function  get_controller_file($_ep,$_hmvc)
+	{
+		GLOBAL $_BASEDIR;
+			
+		$conf_dir="conf";
+		$_PATH = url_seg_add($_BASEDIR,$conf_dir,$this->_NAME,$_ep,'hmvc',$_hmvc,'controller.php');
+		return $_PATH;
+	}
+	
+	// путь к файлу контроллера для ep и hmvc
+	public function  get_model_file($_ep,$_hmvc)
+	{
+		GLOBAL $_BASEDIR;
+			
+		$conf_dir="conf";
+		$_PATH = url_seg_add($_BASEDIR,$conf_dir,$this->_NAME,$_ep,'hmvc',$_hmvc,'model.php');
+		return $_PATH;
+	}
+	
+	
 	public function set_db_conf_code($code)
 	{
 		$conf_file = url_seg_add($this->_PATH,'dbconf.php');
