@@ -63,6 +63,15 @@ $conf = array(
 		$this->make_def_controller();
 	}
 	
+	public static function get_cfg_dir($_conf)
+	{
+		GLOBAL $_BASEDIR;
+			
+		$conf_dir="conf";
+		$_PATH = url_seg_add($_BASEDIR,$conf_dir,$_conf);
+		return $_PATH;
+	}
+	
 	public function get_config_code()
 	{
 		$conf_file = url_seg_add($this->_PATH,'config.php');
@@ -143,6 +152,7 @@ $conf = array(
 		}
 	}
 	
+	// проверка существует ли конфигурация
 	static function exists($conf)
 	{
 		GLOBAL $_BASEDIR;
@@ -153,6 +163,13 @@ $conf = array(
 		$_PATH = url_seg_add($_BASEDIR,$opts['conf_dir'],$conf);
 		
 		return file_exists($_PATH);
+	}
+	
+	// удалить конфигурацию
+	static function _delete($_conf)
+	{
+		$_dir = self::get_cfg_dir($_conf);
+		unlink_folder($_dir);
 	}
 	
 	static function set_current_cfg($_cfg)

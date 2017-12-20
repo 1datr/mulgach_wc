@@ -147,11 +147,14 @@ class ConfigsController extends \BaseController
 			if(isset($_FILES['cfgfile']['tmp_name'])) // есть файл конфы
 			{
 				$cfgname = get_conf_name('cfgfile');
+				
+				$new_file_name = "./temp/".time()."_".$_FILES['cfgfile']['name'];
+				x_file_put_contents($new_file_name, file_get_contents($_FILES['cfgfile']['tmp_name']));
 				//basename($_FILES['cfgfile']['name']);
 				// зачинаем процесс
 					
 				$sp->Data('procent',0);
-			
+				$sp->Data('zip_file',$new_file_name);
 			
 				// Проверяем наличие конфы с таким именем
 				$conf_str = $cfgname;
@@ -165,16 +168,12 @@ class ConfigsController extends \BaseController
 				$sp->Data('name_must_be',$conf_str);
 				
 				$sp_model = $sp->getBasicModel();
-				$sp_model['fields']['newcfgname']=['newcfgname'=>array(
-						'Type'=>'text',
-						'TypeInfo'=>"20",
-				)];
+				
 				
 				$this->out_json(['pid'=>$sp->PID,'passw'=>$sp->PASSW]);								
 				
 			}
-			
-			
+						
 		}
 		else 
 		{
@@ -184,6 +183,10 @@ class ConfigsController extends \BaseController
 			//	mul_dbg($sp->PASSW);
 				
 				$sp_model = $sp->getBasicModel();
+				$sp_model['fields']['newcfgname']=['newcfgname'=>array(
+						'Type'=>'text',
+						'TypeInfo'=>"20",
+				)];
 				$sp->Dialog($this,'form_req_cfg_name',['sp'=>$sp,'newcfg_model'=>$sp_model,],['title'=>\Lang::__t('Install new configuration')]);
 				$sp->Data('step','unpack_config');
 				$this->out_json(['pid'=>$sp->PID,
@@ -193,16 +196,47 @@ class ConfigsController extends \BaseController
 						'redirect'=>$sp->_REDIR_URL,
 				]);
 			}
-			elseif($sp->Data('step')=='unpack_config') // третий степ
+			elseif (isset($_POST['newcfgname']))
 			{
-				
-				$this->out_json(['pid'=>$sp->PID,
-						'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
-						'terminated'=>$sp->TERMINATED,
-						'dialog'=>$sp->getDialog(),
-						'redirect'=>$sp->_REDIR_URL,
-				]);
-			}
+				$sp->Data('name_must_be',$_POST['newcfgname']);
+				if($sp->Data('step')=='unpack_config') // третий степ
+				{
+					$arcplg = \mul_archive::use_archive_plg('zip');
+					
+					// распаковываем файлы
+					if ($arcplg->ARCMAN->open($sp->Data('zip_file')) === TRUE)
+					{
+						// Извлекаем файлы из архива в папку конфы
+						$new_cfg_dir = \scaff_conf::get_cfg_dir($sp->Data('name_must_be'));
+												
+						$arcplg->ARCMAN->extractTo($new_cfg_dir);
+						$arcplg->ARCMAN->close();
+						// меняем неймспейсы
+						$scaff_cfg = new \scaff_conf($sp->Data('name_must_be'));
+						$triads = $scaff_cfg->get_triads();
+						foreach ($triads as $_ep => $trlist)
+						{
+							foreach ($trlist as $tr)
+							{
+								
+							}
+						}
+						//mul_dbg($triads);
+					}
+					else 
+					{
+						//echo 'Ошибка при извлечении файлов из архива';
+					}
+										
+					$sp->terminate();
+					$this->out_json(['pid'=>$sp->PID,
+							'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
+							'terminated'=>$sp->TERMINATED,
+							'dialog'=>$sp->getDialog(),
+							'redirect'=>$sp->_REDIR_URL,
+					]);
+					}
+				}
 		}			
 		
 	}

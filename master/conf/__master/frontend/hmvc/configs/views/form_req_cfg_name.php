@@ -11,6 +11,8 @@ $nc_row->setField('pid',$sp->PID);
 $nc_row->setField('passw',$sp->PASSW);
 $nc_row->setField('newcfgname',$sp->Data('name_must_be'));
 ?>
+
+
 <?php $form->field($nc_row, 'pid')->hidden() ?>
 <?php $form->field($nc_row, 'passw')->hidden() ?>
 <?php $form->field($nc_row, 'newcfgname')->text() ?>

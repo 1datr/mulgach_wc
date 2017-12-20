@@ -135,4 +135,5 @@ $_LANG['Install config']='Install config';
 $_LANG['Make configuration archive']='Make configuration archive';
 $_LANG['Install new configuration']='Install new configuration';
 $_LANG['NEXT>']='NEXT>';
+$_LANG['NEXT']='NEXT';
 ?>
