@@ -96,7 +96,8 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 	    	},
 	    error: function(jqXHR, textStatus, errorThrown) 
 		    {	    	
-		    	console.log(textStatus);	    	
+		    	console.log(textStatus);	  
+		    	$('body').html(jqXHR.responseText);
 		    },
 		});
 }

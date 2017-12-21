@@ -213,17 +213,16 @@ class ConfigsController extends \BaseController
 						$arcplg->ARCMAN->close();
 						// меняем неймспейсы
 						unlink($sp->Data('zip_file'));
-						$scaff_cfg = new \scaff_conf($sp->Data('name_must_be'));
-						$scaff_cfg->rename_namespaces();
+						
 						//mul_dbg($triads);
 					}
 					else 
 					{
 						//echo 'Ошибка при извлечении файлов из архива';
 					}
-										
-					$sp->terminate();
-					$sp->redirect('/configs');
+							
+					$sp->Data('step','rename_namespaces');
+					
 					$this->out_json(['pid'=>$sp->PID,
 							'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
 							'terminated'=>$sp->TERMINATED,
@@ -231,7 +230,21 @@ class ConfigsController extends \BaseController
 							'redirect'=>$sp->_REDIR_URL,
 					]);
 					}
-				}
+			}
+			elseif($sp->Data('step')=='rename_namespaces')
+			{
+				$scaff_cfg = new \scaff_conf($sp->Data('name_must_be'));
+				$scaff_cfg->rename_namespaces();
+				
+				$sp->terminate();
+				$sp->redirect('/configs');
+				$this->out_json(['pid'=>$sp->PID,
+						'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
+						'terminated'=>$sp->TERMINATED,
+						'dialog'=>$sp->getDialog(),
+						'redirect'=>$sp->_REDIR_URL,
+				]);
+			}
 		}			
 		
 	}

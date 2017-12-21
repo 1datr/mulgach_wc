@@ -118,20 +118,32 @@ $conf = array(
 	public function rename_namespaces()
 	{
 		$triads = $this->get_triads();
+		$_name_to_namespace = UcaseFirst($this->_NAME);
 		foreach ($triads as $_ep => $trlist)
 		{
 			foreach ($trlist as $tr)
 			{
-				$path_controller = $this->get_controller_file($_ep,$tr);				
-				$controller_code = file_get_contents($path_controller);
-												
-				$_matches=[];
-				//preg_match_all('/namespace\s+(.+)\\(.+)\;/Uis', $controller_code, $_matches);
-				//mul_dbg($_matches);
+				$path_controller = $this->get_controller_file($_ep,$tr);
+				
+				if(file_exists($path_controller))
+				{
+					$controller_code = file_get_contents($path_controller);							
+					// заменяем
+					$controller_code = preg_replace("/namespace\s+(.+)\\\\(.+)\;/Uis", "namespace ".$_name_to_namespace.'\\\\'.'$2;', $controller_code);
+					// сохраняем
+					file_put_contents($path_controller, $controller_code);
+				}
 				
 				//mul_dbg($path_controller);
 				$path_model = $this->get_model_file($_ep,$tr);
-				//mul_dbg($path_model);
+				if(file_exists($path_model))
+				{
+					$model_code = file_get_contents($path_model);
+					
+					$model_code = preg_replace("/namespace\s+(.+)\\\\(.+)\;/Uis", "namespace ".$_name_to_namespace.'\\\\'.'$2;', $model_code);
+					// сохраняем
+					file_put_contents($path_model, $model_code);
+				}
 			}
 		}
 	}
