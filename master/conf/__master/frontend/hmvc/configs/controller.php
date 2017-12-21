@@ -222,7 +222,7 @@ class ConfigsController extends \BaseController
 					}
 							
 					$sp->Data('step','rename_namespaces');
-					
+					//
 					$this->out_json(['pid'=>$sp->PID,
 							'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
 							'terminated'=>$sp->TERMINATED,
