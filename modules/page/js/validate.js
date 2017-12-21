@@ -97,7 +97,7 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 	    error: function(jqXHR, textStatus, errorThrown) 
 		    {	    	
 		    	console.log(textStatus);	  
-		    	$('body').html(jqXHR.responseText);
+		    	$('#error_div').html(jqXHR.responseText);
 		    },
 		});
 }
@@ -165,6 +165,9 @@ function process_submit(that_form)
 	//alert(pbid);
 	if($('#'+pbid).length)
 		pb_show(pbid);
+	
+	$(that_form).find('#mul_form_progress').show();
+	
 	form_action = $(that_form).attr('action');
 	var the_data = new FormData(that_form[0]);
 	$.ajax({
@@ -178,6 +181,7 @@ function process_submit(that_form)
         dataType: 'json',
 	    success: function(data, textStatus, jqXHR)
 	    	{
+	    	$(that_form).find('#mul_form_progress').hide();
 	    	dialog_divs = $(that_form).parents('[role="dialog"]');
 	    	
 	    	
@@ -189,7 +193,8 @@ function process_submit(that_form)
 	    				},
 			    	function(jsondata)
 						{
-	    					pb_hide(pbid);
+	    					if($('#'+pbid).length)
+	    						pb_hide(pbid);
 						}
 	    			)
 	    	
@@ -203,6 +208,7 @@ function process_submit(that_form)
 	    	},
 		error: function(jqXHR, textStatus, errorThrown) 
 	    {	    	
+			$(that_form).find('#mul_form_progress').hide();
 	    	console.log(textStatus);	    	
 	    },
 		});

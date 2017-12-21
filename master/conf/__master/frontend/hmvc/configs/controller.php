@@ -237,7 +237,7 @@ class ConfigsController extends \BaseController
 				$scaff_cfg->rename_namespaces();
 				
 				$sp->terminate();
-				$sp->redirect('/configs');
+				$sp->redirect('configs');
 				$this->out_json(['pid'=>$sp->PID,
 						'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
 						'terminated'=>$sp->TERMINATED,
