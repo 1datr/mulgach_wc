@@ -63,7 +63,7 @@ class ConfigsController extends \BaseController
 		GLOBAL $_BASEDIR;		
 		$this->_TITLE=$cfg.' #{Edit database connection config}';
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
-		$cnf = new scaff_conf($cfg); 
+		$cnf = new \scaff_conf($cfg); 
 		
 		$this->out_view('configform',array('cfg'=>$cfg,'conf_code'=>$cnf->get_db_conf_code()));
 	}
