@@ -11,6 +11,7 @@ class ConfigsController extends \BaseController
 				),
 		);
 	}
+	//
 	public function ActionIndex()
 	{
 		$this->_TITLE="CONFIGS";
