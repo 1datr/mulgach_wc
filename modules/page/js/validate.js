@@ -80,7 +80,10 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 	    		{
 	    		if(data.dialog)
 	    			{
-	    				show_dialog(data.dialog,theform);
+	    			pdata = new FormData();
+	    			pdata.append('pid',pid);
+	    			pdata.append('passw',pwd);
+	    			show_proc_dialog(data.dialog,theform,pdata);
 	    			}
 	    		else
 	    			{
@@ -102,7 +105,12 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 		});
 }
 
-function show_dialog(dlg_info,theform)
+function proc_abort()
+{
+	
+}
+
+function show_proc_dialog(dlg_info,theform,pdata)
 {
 		
 	dlg_div = $('<div></div>');
@@ -138,10 +146,45 @@ function show_dialog(dlg_info,theform)
 		the_dialog_form.attr(attribute.name, attribute.value);
 		  });
 	
-	var dlg_options = { "height": "auto","width": "auto","resizable": false,};
+	var dlg_options = { 
+			height: "auto",
+			width: "auto",
+			resizable: false,	
+			close: function () 
+				{
+					// signal to abort process
+				
+				
+				form_action = theform.attr('action');
+				// abort to true
+				pdata.append('abort',true);
+				
+				$.ajax({
+			        url: form_action,
+			        type: 'POST',
+			        data: pdata,
+			        mimeType:"multipart/form-data",
+			        contentType: false,
+			        cache: false,
+			        processData:false,
+			        dataType: 'json',
+				    success: function(data, textStatus, jqXHR)
+				    	{
+				    	
+				    	}
+					}
+					);
+		        },
+			
+			};
+	
 	if(dlg_info.settings)
 		{
-		dlg_options = dlg_info.settings;
+			for(var setting in dlg_info.settings)
+			{
+				dlg_options[setting]=dlg_info.settings[setting];
+			}
+		//dlg_options = dlg_info.settings;
 		}
 	
 	dlg_options['modal']=true;
@@ -157,6 +200,7 @@ function show_dialog(dlg_info,theform)
       };*/
 	
     $(dlg_div).dialog(dlg_options);
+  //  console.log(dlgres);
 }
 
 function process_submit(that_form)

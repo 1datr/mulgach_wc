@@ -197,6 +197,17 @@ class ConfigsController extends \BaseController
 						'redirect'=>$sp->_REDIR_URL,
 				]);
 			}
+			elseif (isset($_POST['abort']))	// грохнуть процесс
+			{
+				unlink($sp->Data('zip_file'));
+				$sp->terminate();
+				$this->out_json(['pid'=>$sp->PID,
+						'procent'=> number_format($sp->Data('procent'), 2, '.', ','),
+						'terminated'=>$sp->TERMINATED,
+						'dialog'=>$sp->getDialog(),
+						'redirect'=>$sp->_REDIR_URL,
+				]);
+			}
 			elseif (isset($_POST['newcfgname']))
 			{
 				$sp->Data('name_must_be',$_POST['newcfgname']);
