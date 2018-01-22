@@ -20,6 +20,15 @@ class HMVCRequest
 			}
 
 	}
+	
+	function getArg($key)
+	{
+		if(isset($this->_args[$key]))
+			return $this->_args[$key];
+		else 
+			return null;
+		
+	}
 
 	function from_str($req_str)
 	{
@@ -116,6 +125,58 @@ class HMVCRequest
 			unset($_REQUEST['args']);
 		}
 		//mul_dbg($this->_args);
+	}
+	
+	function get_array_url($varname,$arr)
+	{
+		$str_res="";		
+		foreach ($arr as $key => $val)
+		{
+			if(is_array($val))
+			{
+				
+				$str_res=$str_res."/".$this->get_array_url($varname.'['.$key.']',$val);
+			}
+			else 
+			{
+				$str_res=$str_res."/".$varname.'['.$key.']:'.$val;
+			}
+		}
+		return $str_res;
+	}
+	// полный url
+	function get_ref()
+	{
+		$res_url="/".$this->_controller;
+		if($this->_action!='index')
+			$res_url = $res_url."/".$this->_action;
+
+		$arr_args=array();
+		foreach ($this->_args as $idx => $argval)
+		{
+			if(is_string($idx))
+			{
+				if(is_array($argval))
+				{
+					$arr_args[$idx]=$argval;
+				}
+				else 
+				{
+					$res_url=$res_url."/".$idx.":".$argval;
+				}
+			}
+			else 
+			{
+				$res_url=$res_url."/".$argval;
+			}
+		}
+			
+		foreach ($arr_args as $_key => $arg_val )
+		{
+			$res_url = $res_url.$this->get_array_url($_key,$arg_val);
+		}		
+		
+		return $res_url; 
 	}
 	
 	function setmap($map)

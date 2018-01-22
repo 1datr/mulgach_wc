@@ -357,8 +357,20 @@ class BaseModel
 		
 		$base = ($page-1) * $pagesize;
 		if(!empty($orderby))
-			$_ORDER = "$orderby";
+		{
+			if(is_array($orderby))
+			{
+				$_ORDER = xx_implode($orderby, ', ', '{idx} {%val}');
+			}
+			else
+				$_ORDER = "$orderby";
+		}
+		
+		if($_ORDER!="")
+			$_ORDER = "ORDER BY ".$_ORDER;
+		
 		$query="SELECT `{$this->_TABLE}`.*{$sql_selects} FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where $_ORDER LIMIT $base,$pagesize";
+	//	mul_dbg($query);
 		$query_count="SELECT COUNT(*) as `COUNT` FROM @+{$this->_TABLE} as `{$this->_TABLE}` {$joins} WHERE $where";
 		return array('page_query'=>$query, 'query_count'=>$query_count);
 	}

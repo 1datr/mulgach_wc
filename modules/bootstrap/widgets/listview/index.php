@@ -11,6 +11,7 @@ namespace BootstrapListView
 		VAR $settings=array();
 		VAR $caption_template="";
 		VAR $fldinfo;
+		
 
 		function __construct($fld,$owner,$settings=array())
 		{
@@ -30,7 +31,7 @@ namespace BootstrapListView
 				$is_visible=false;
 			}
 			
-			def_options(array('html_template'=>$def_template,'caption_template'=>$def_capt_template,'visible'=>$is_visible), $settings);		
+			def_options(array('html_template'=>$def_template,'sortable'=>true,'caption_template'=>$def_capt_template,'visible'=>$is_visible), $settings);		
 			
 		//	mul_dbg($settings,false);
 			
@@ -127,9 +128,47 @@ if(!empty($value))
 			
 		}
 		
-		static function ref_column($template,$caption_template='')
+		function sort_block()
 		{
-			return array('caption'=>'','html_template'=>$template,'caption_template'=>$caption_template);
+			if($this->settings['sortable'])
+			{
+				$req = $this->owner_widget->_CONTROLLER->getRequest();
+				$str_asc="";
+				if($req->_args['ord'][$this->datafld]!='asc')
+				{
+					$req_asc = clone  $req;
+					$req_asc->_args['ord'][$this->datafld]='asc';
+					$str_asc = '<a href="'.as_url($req_asc->get_ref()).'" class="ord-ref ord-ref-asc">&#9660;</a>&nbsp;';
+				}
+				
+				$str_desc="";
+				if($req->_args['ord'][$this->datafld]!='desc')
+				{
+					$req_desc = clone  $req;
+					$req_desc->_args['ord'][$this->datafld]='desc';
+					$str_desc = '<a href="'.as_url($req_desc->get_ref()).'" class="ord-ref ord-ref-desc">&#9650;</a>&nbsp;';
+				}
+				
+				$str_drop="";
+				if(isset($req->_args['ord'][$this->datafld]))
+				{
+					$req_drop = clone  $req;
+					unset($req_drop->_args['ord'][$this->datafld]);
+					$str_drop = '<a href="'.as_url($req_drop->get_ref()).'" class="ord-ref ord-ref-drop">x</a>&nbsp;';
+				}
+				
+				
+				//print_r($req->_args);
+				return $str_asc.$str_desc.$str_drop;
+			}
+			else 
+				return "";
+		}
+		
+		static function ref_column($template,$caption_template='',$params=array())
+		{
+			def_options(array('caption'=>'','html_template'=>$template,'caption_template'=>$caption_template,'sortable'=>false), $params);
+			return $params;
 		}
 	}
 	
@@ -231,9 +270,10 @@ if(!empty($value))
 				foreach ($params['columns'] as $idx => $col)
 				{
 					$th_content = $col->draw_col_head();
+					$sort_html = $col->sort_block();
 					if(is_string($th_content) )
 					{
-						echo "<th>{$th_content}</th>";
+						echo "<th>{$th_content}{$sort_html}</th>";
 					}
 				}
 				?>
