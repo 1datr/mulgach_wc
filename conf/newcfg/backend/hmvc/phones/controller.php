@@ -13,7 +13,7 @@ class PhonesController extends \BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','newusers/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class PhonesController extends \BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -47,14 +47,14 @@ class PhonesController extends \BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 		$this->_TITLE="CREATE PHONES";
 		$this->out_view('itemform',array('phones'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 		$phones = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$phones->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('phones'=>$phones));
@@ -91,7 +91,7 @@ class PhonesController extends \BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 		$phones = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$phones->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('phones'=>$phones));

@@ -21,16 +21,33 @@ function load_ajax_block(sel,url)//,afterload=null
 	$.getJSON(url,function(data)
 	{
 		$(sel).html(data.html);
-		// javascripts
-		for (var key in data.js) 
+		
+/*		for (var key in data.js) 
 		{
 			$('head').append($("<script src=\""+data.js[key]+"\"><\/script>")[0]);
-		}
+		}*/
 		// css
 		for (var key in data.css) 
 		{
 			$('head').append($("<link rel=\"stylesheet\" type=\"text/css\" href=\""+data.css[key]+"\">"));
 
+		}
+		// javascripts
+		ctr = 0;
+		for (var key in data.js) 
+		{
+			$.getScript(data.js[key],function(data, textStatus, jqxhr )
+					{
+					ctr++;	
+						if(ctr==data.js.length)
+						{										
+							on_load();
+						}							
+					}) .fail(function( jqxhr, settings, exception ) {
+						  console.log( jqxhr ); // Data returned
+						  console.log( settings ); // Success
+						  console.log( exception ); // 200
+					});
 		}
 		
 		if(data.inline_js!="")
@@ -105,101 +122,159 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 		});
 }
 
+function UseCSS(href) {
+	  var cssLink = $("<link>");
+	  $("head").append(cssLink); //IE hack: append before setting href
+
+	  cssLink.attr({
+	    rel:  "stylesheet",
+	    type: "text/css",
+	    href: href
+	  });
+
+	};
+
 function proc_abort()
 {
 	
 }
 
-function show_proc_dialog(dlg_info,theform,pdata)
+function add_js_css(dlg_info,on_load)
 {
-		
-	dlg_div = $('<div></div>');
-	
-	if(dlg_info.settings)
-	{
-		if(dlg_info.settings.title)
-		{
-			$(dlg_div).attr('title',dlg_info.settings.title);
-		}
-	}
-	
-	$('body').append(dlg_div);
-	dlg_div.html(dlg_info.html);	// html в див
-	
-	for (var key in dlg_info.js) 
-	{
-		$('head').append($("<script src=\""+dlg_info.js[key]+"\"><\/script>")[0]);
-	}
-	// css
+	// css load
 	for (var key in dlg_info.css) 
 	{
-		$('head').append($("<link rel=\"stylesheet\" type=\"text/css\" href=\""+dlg_info.css[key]+"\">"));
+		UseCSS(dlg_info.css[key]);							
 	}
 	
-		
-	if(dlg_info.inline_js!="")
-		res = eval(dlg_info.inline_js);
-	
-	the_dialog_form = $(dlg_div).find('form');
-	
-	arr = $.map(theform[0].attributes, function (attribute) {
-		the_dialog_form.attr(attribute.name, attribute.value);
-		  });
-	
-	var dlg_options = { 
-			height: "auto",
-			width: "auto",
-			resizable: false,	
-			close: function () 
+	// js load
+	ctr = 0;
+	for (var key in dlg_info.js) 
+	{
+		$.getScript(dlg_info.js[key],function(data, textStatus, jqxhr )
 				{
-					// signal to abort process
-				
-				
-				form_action = theform.attr('action');
-				// abort to true
-				pdata.append('abort',true);
-				
-				$.ajax({
-			        url: form_action,
-			        type: 'POST',
-			        data: pdata,
-			        mimeType:"multipart/form-data",
-			        contentType: false,
-			        cache: false,
-			        processData:false,
-			        dataType: 'json',
-				    success: function(data, textStatus, jqXHR)
-				    	{
-				    	
-				    	}
-					}
-					);
-		        },
-			
-			};
+				ctr++;	
+					if(ctr==dlg_info.js.length)
+					{										
+						on_load();
+					}							
+				}) .fail(function( jqxhr, settings, exception ) {
+					  console.log( jqxhr ); // Data returned
+					  console.log( settings ); // Success
+					  console.log( exception ); // 200
+				});
+	}
+}
+
+function show_proc_dialog(dlg_info,theform,pdata)
+{
+	/*	
+	if($(".proc_dlg_box").length==0)
+	{
+		dlg_div = $('<div class="proc_dlg_box"></div>');
+		$('body').append(dlg_div);
+	}
+	else
+		dlg_div = $(".proc_dlg_box");*/
 	
-	if(dlg_info.settings)
-		{
-			for(var setting in dlg_info.settings)
+	/*
+	for (var key in dlg_info.js) 
+	{
+		$.getScript(dlg_info.js[key],function()
+				{
+								
+				});
+	}*/
+	// css
+	
+	
+	add_js_css(dlg_info,function()
+		{			
+		if(dlg_info.inline_js!="")
+			res = eval(dlg_info.inline_js);	
+	
+		
+		//$(dlg_div).attr('disabled',0);
+		
+		var dlg_options = { 
+				height: "auto",
+				width: "auto",
+				resizable: false,
+			//	autoOpen: false,
+				close: function () 
+					{
+					// signal to abort process								
+					form_action = theform.attr('action');
+					// abort to true
+					pdata.append('abort',true);
+					
+					$.ajax({
+				        url: form_action,
+				        type: 'POST',
+				        data: pdata,
+				        mimeType:"multipart/form-data",
+				        contentType: false,
+				        cache: false,
+				        processData:false,
+				        dataType: 'json',
+					    success: function(data, textStatus, jqXHR)
+					    	{
+					    	
+					    	}
+						}
+						);
+			        },
+				
+				};
+		
+		if(dlg_info.settings)
 			{
-				dlg_options[setting]=dlg_info.settings[setting];
+				for(var setting in dlg_info.settings)
+				{
+					dlg_options[setting]=dlg_info.settings[setting];
+				}
+			//dlg_options = dlg_info.settings;
 			}
-		//dlg_options = dlg_info.settings;
-		}
+		
+		dlg_options['modal']=true;
+		//var dlg_options = dlg_info;
+	/*	var dlg_options = {     
+	    /*    buttons: {
+	          "Delete all items": function() {
+	            $( this ).dialog( "close" );
+	          },*/
+	/*          Cancel: function() {
+	            $( this ).dialog( "close" );
+	          }
+	      };*/
+		
+		dlg_div = $('<div />');
+		
+		the_dialog_form = $(dlg_div).find('form');
+		arr = $.map(theform[0].attributes, function (attribute) {
+			the_dialog_form.attr(attribute.name, attribute.value);
+			  });
+		
+		if(dlg_info.settings)
+		{
+			if(dlg_info.settings.title)
+			{
+				$(dlg_div).attr('title',dlg_info.settings.title);
+			}
+		}	
+		
+		dlg_div.html(dlg_info.html);	// html в див
+		$(dlg_div).children('form').attr('process',pdata.get('pid'));
+		
+	    $(dlg_div).dialog(dlg_options);
 	
-	dlg_options['modal']=true;
-	//var dlg_options = dlg_info;
-/*	var dlg_options = {     
-    /*    buttons: {
-          "Delete all items": function() {
-            $( this ).dialog( "close" );
-          },*/
-/*          Cancel: function() {
-            $( this ).dialog( "close" );
-          }
-      };*/
+	});
+	/*$(function() {
+		$('.proc_dlg_box').dialog(dlg_options);
+		$(".proc_dlg_box").dialog( "open" );
+	});*/
 	
-    $(dlg_div).dialog(dlg_options);
+    //$(dlg_div).removeAttr('disabled');
   //  console.log(dlgres);
 }
 

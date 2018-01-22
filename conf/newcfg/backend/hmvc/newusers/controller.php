@@ -1,7 +1,7 @@
 <?php 
 namespace Newcfg\Backend;
 
-class NewusersController extends \BaseController
+class NewusersController extends \AuthController
 {
 
 	public function Rules()
@@ -13,7 +13,7 @@ class NewusersController extends \BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
+						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','newusers/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class NewusersController extends \BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
 		
@@ -47,14 +47,14 @@ class NewusersController extends \BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 		$this->_TITLE="CREATE NEWUSERS";
 		$this->out_view('itemform',array('newusers'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 		$newusers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$newusers->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('newusers'=>$newusers));
@@ -91,12 +91,49 @@ class NewusersController extends \BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "users", "menu");
+		$this->add_block("BASE_MENU", "newusers", "menu");
 		$newusers = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$newusers->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('newusers'=>$newusers));
 	}
 	
+	public function ActionMenu()
+	{
+		$menu = $this->getinfo('basemenu');
+		//print_r($menu);
+		$this->out_view('menu',array('menu'=>$menu));
+	}
+	public function ActionLogin()
+	{
+		$this->_TITLE=\Lang::__t('Authorization');
+		$this->use_layout('layout_login');
+		$this->out_view('loginform',array());
+	}
 	
+	public function ActionAuth()
+	{
+		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
+		if($auth_res)
+		{
+			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
+			
+			if(!empty($_POST['url_required']))
+				$this->redirect($_POST['url_required']);
+			else
+				$this->redirect(as_url('newusers'));
+		}
+		else 
+			$this->redirect_back();
+
+		//$this->out_view('loginform',array());
+	}
+	
+	
+	
+	public function ActionLogout()
+	{
+		$this->logout();
+		$this->redirect(as_url('newusers/login'));
+	}
 }
 ?>

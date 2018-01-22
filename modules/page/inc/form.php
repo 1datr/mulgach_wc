@@ -89,6 +89,12 @@ class mulForm
 		<?php 
 		
 		$this->_UPLOAD_MODE=$this->get_upload_mode();
+	/*	if(isset($params['process']))
+		{
+			?>
+			<div class="progress" class="proc_dlg_box" style="display:none">
+			<?php 
+		}*/
 		if($this->_UPLOAD_MODE=='progress')
 		{
 		

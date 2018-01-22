@@ -136,4 +136,11 @@ $_LANG['Make configuration archive']='Make configuration archive';
 $_LANG['Install new configuration']='Install new configuration';
 $_LANG['NEXT>']='NEXT>';
 $_LANG['NEXT']='NEXT';
+$_LANG['Edit NEWUSERS']='Edit NEWUSERS';
+$_LANG['newusers.login']='newusers.login';
+$_LANG['newusers.password']='newusers.password';
+$_LANG['newusers.email']='newusers.email';
+$_LANG['newusers.thehash']='newusers.thehash';
+$_LANG['baseadmin.sostoyanie_dopuska']='baseadmin.sostoyanie_dopuska';
+$_LANG['baseadmin.status']='baseadmin.status';
 ?>

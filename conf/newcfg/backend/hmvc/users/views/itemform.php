@@ -27,7 +27,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{users.password}</label></th><td>
-	<?php $form->field($users,'password')->password();	 ?>	</td>
+	<?php $form->field($users,'password')->text();	 ?>	</td>
 	</tr>
 		<tr>
 	<th><label>#{users.hash}</label></th><td>

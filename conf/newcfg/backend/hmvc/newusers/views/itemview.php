@@ -10,7 +10,7 @@
 		<tr>
 	<th valign="top"><label>#{newusers.password}</label></th>
 	<td valign="top">
-	<?=$newusers->getField('password',true) ?>	</td>
+		</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{newusers.email}</label></th>
