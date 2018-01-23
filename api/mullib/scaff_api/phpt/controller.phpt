@@ -24,7 +24,7 @@ class {table_uc_first}Controller extends \{ParentControllerClass}
 		
 		{menu_block_use}
 
-		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
+		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page,1,$this->getRequest()->getArg('ord'));
 		
 		
 		$this->inline_script("

@@ -1,7 +1,6 @@
 <?php 
 use BootstrapListView\ListViewWidget as ListViewWidget;
 use BootstrapListView\LVW_Column as LVW_Column;
-
 ?>
 <h3>#{LIFEAREA LIST}</h3>
 <a href="<?=as_url('lifearea/create')?>" class="btn btn-primary" role="button">#{CREATE NEW}</a>

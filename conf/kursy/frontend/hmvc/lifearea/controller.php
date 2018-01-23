@@ -26,8 +26,9 @@ class LifeareaController extends \BaseController
 		
 		$this->add_block("BASE_MENU", "users", "menu");
 
-		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page);
-				
+		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page,1,$this->getRequest()->getArg('ord'));
+		
+		
 		$this->inline_script("
 		    $( document ).ready(function() {
         		$('.ref_delete').click(function() 
