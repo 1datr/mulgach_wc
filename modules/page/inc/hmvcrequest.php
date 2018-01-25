@@ -4,6 +4,7 @@ class HMVCRequest
 	VAR $_controller='site';
 	VAR $_action='index';
 	VAR $_args=array();
+	VAR $_real_args=array();
 	VAR $_fun_map=array();
 	VAR $_URL_FORMAT='folder_like';
 
@@ -11,7 +12,10 @@ class HMVCRequest
 	{
 		$this->_URL_FORMAT = $_URL_FORMAT;
 		if(($action==NULL)&&($args==NULL))
-			$this->from_str($req_str);
+			{
+				$this->from_str($req_str);
+				
+			}
 			else
 			{
 				$this->_controller=$req_str;
@@ -21,6 +25,11 @@ class HMVCRequest
 
 	}
 	
+	function save_args_as_real()
+	{
+		$this->_real_args = $this->_args;
+	}
+	// получить аргумент
 	function getArg($key)
 	{
 		if(isset($this->_args[$key]))
@@ -96,6 +105,10 @@ class HMVCRequest
 						$strparams=$strparams."&{$idx}={$val}";
 						unset($req_pieces[$idx]);
 			}
+			else 
+			{
+				$_result[$idx]=$val['value'];
+			}
 		}
 
 
@@ -145,14 +158,38 @@ class HMVCRequest
 		return $str_res;
 	}
 	// полный url
-	function get_ref()
+	function get_ref($real_url=true)
 	{
 		$res_url="/".$this->_controller;
 		if($this->_action!='index')
 			$res_url = $res_url."/".$this->_action;
 
 		$arr_args=array();
-		foreach ($this->_args as $idx => $argval)
+		
+		if($real_url)
+			$_args = $this->_real_args;
+		else
+			$_args = $this->_args;
+		if(is_array($ref_map))
+		{
+			
+		/*	$_args_int = array();
+			$_args_str = array();
+			foreach ($ref_map as $key => $_val)
+			{
+				if(is_int($key))
+				{
+					$_args_int[$key]=$val;
+				}
+				else 
+				{
+					if($k)
+					$_args_int[$key]=$val;
+				}
+			}*/
+		}
+		
+		foreach ($_args as $idx => $argval)
 		{
 			if(is_string($idx))
 			{
@@ -161,8 +198,8 @@ class HMVCRequest
 					$arr_args[$idx]=$argval;
 				}
 				else 
-				{
-					$res_url=$res_url."/".$idx.":".$argval;
+				{								 					
+					$res_url=$res_url."/".$idx.":".$argval;					
 				}
 			}
 			else 

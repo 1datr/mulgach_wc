@@ -736,6 +736,7 @@ class mul_page extends mul_Module
 		}
 		
 		//print_r($arg_info);
+		$request->save_args_as_real();
 		
 		$_fun_map = array();
 		foreach ($method_params as $idx => $arg)

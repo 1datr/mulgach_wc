@@ -134,26 +134,26 @@ if(!empty($value))
 			{
 				$req = $this->owner_widget->_CONTROLLER->getRequest();
 				$str_asc="";
-				if($req->_args['ord'][$this->datafld]!='asc')
+				if($req->_real_args['ord'][$this->datafld]!='asc')
 				{
 					$req_asc = clone  $req;
-					$req_asc->_args['ord'][$this->datafld]='asc';
+					$req_asc->_real_args['ord'][$this->datafld]='asc';
 					$str_asc = '<a href="'.as_url($req_asc->get_ref()).'" class="ord-ref ord-ref-asc">&#9660;</a>&nbsp;';
 				}
 				
 				$str_desc="";
-				if($req->_args['ord'][$this->datafld]!='desc')
+				if($req->_real_args['ord'][$this->datafld]!='desc')
 				{
 					$req_desc = clone  $req;
-					$req_desc->_args['ord'][$this->datafld]='desc';
+					$req_desc->_real_args['ord'][$this->datafld]='desc';
 					$str_desc = '<a href="'.as_url($req_desc->get_ref()).'" class="ord-ref ord-ref-desc">&#9650;</a>&nbsp;';
 				}
 				
 				$str_drop="";
-				if(isset($req->_args['ord'][$this->datafld]))
+				if(isset($req->_real_args['ord'][$this->datafld]))
 				{
 					$req_drop = clone  $req;
-					unset($req_drop->_args['ord'][$this->datafld]);
+					unset($req_drop->_real_args['ord'][$this->datafld]);
 					$str_drop = '<a href="'.as_url($req_drop->get_ref()).'" class="ord-ref ord-ref-drop">x</a>&nbsp;';
 				}
 				

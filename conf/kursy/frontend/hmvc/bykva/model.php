@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Frontend;
 
-class ModelBykva extends \AuthModel
+class ModelBykva extends \BaseModel
 {
 	
 }
