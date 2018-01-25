@@ -28,7 +28,8 @@ class EmakerController extends \BaseController
 	{
 		if(isset($_POST['makenew']))
 		{
-			
+			$sbplugin = use_jq_plugin('structblock',$this);
+			$this->out_view('frm_editentity',['sbplugin'=>$newrow]);
 		}				
 	}
 	
