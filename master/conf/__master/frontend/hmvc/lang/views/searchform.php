@@ -1,5 +1,3 @@
-
-
 <?php 
 $form = new mulForm(as_url('lang/search'),$this
 		,array('mode'=>'get')

@@ -14,7 +14,22 @@ class EmakerController extends \BaseController
 	
 	public function ActionIndex($cfg=NULL)
 	{
-		$this->out_view('index',[]);
+		//$this->_MODEL->
+		$this->_MODEL->scenario('makenew');
+		$newrow = $this->_MODEL->empty_row_form_model();
+		$newrow->setfield('cfg',$cfg);
+		$newrow->setfield('ename','');
+	//	$newrow->setfield('auth_entity',false);
+		$this->_TITLE=\Lang::__t('Entity manager');
+		$this->out_view('index',['newrow'=>$newrow]);
+	}
+	
+	public function ActionCreate()
+	{
+		if(isset($_POST['makenew']))
+		{
+			
+		}				
 	}
 	
 	public function BeforeAction(&$params)

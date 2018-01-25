@@ -143,4 +143,10 @@ $_LANG['newusers.email']='newusers.email';
 $_LANG['newusers.thehash']='newusers.thehash';
 $_LANG['baseadmin.sostoyanie_dopuska']='baseadmin.sostoyanie_dopuska';
 $_LANG['baseadmin.status']='baseadmin.status';
+$_LANG['AUTH ENTITY']='AUTH ENTITY';
+$_LANG['Entity name']='Entity name';
+$_LANG['ENTITY FOR AUTH']='ENTITY FOR AUTH';
+$_LANG['FOR AUTH']='FOR AUTH';
+$_LANG['CREATE NEW ENTITY']='CREATE NEW ENTITY';
+$_LANG['Entity manager']='Entity manager';
 ?>
