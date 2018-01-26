@@ -122,30 +122,46 @@ class BaseModel
 		$res = array();
 		if(isset($data[$this->_TABLE]))
 		{
-			foreach ($this->_SETTINGS['required'] as $idx => $fld)
+		/*	if(is_array($data[$this->_TABLE]))
 			{
-				if($this->getPrimaryName()==$fld)
-					continue;
+				foreach ($data[$this->_TABLE] as $data_idx => $data_item)
+				{
+					$this->validate_item($data_item,$res);
+				}
+			}
+			else 
+			{*/
+				$this->validate_item($data[$this->_TABLE],$res);
+			//}
+			$this->OnValidate($data[$this->_TABLE], $res);
+		}				
+		return $res;
+	}
+	
+	// проходим по одному элементу
+	function validate_item($data,&$res)
+	{
+		foreach ($this->_SETTINGS['required'] as $idx => $fld)
+		{
+			if($this->getPrimaryName()==$fld)
+				continue;
 				if(isset($this->_SETTINGS['file_fields'][$fld]))
 				{
-					if(empty($data[$this->_TABLE][$fld]))
+					if(empty($data[$fld]))
 					{
 						add_keypair($res,$fld,\Lang::__t($this->_TABLE.".".$fld)." could not be empty");
 					}
-					
-					
+		
+		
 				}
-				else 
+				else
 				{
-					if(empty($data[$this->_TABLE][$fld]))
+					if(empty($data[$fld]))
 					{
 						add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
 					}
 				}
-			}
-			$this->OnValidate($data[$this->_TABLE], $res);
-		}				
-		return $res;
+		}
 	}
 	
 	function OnValidate($row,&$res)

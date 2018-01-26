@@ -247,10 +247,13 @@ class AuthModel extends BaseModel
 		if($object->Modified())
 		{
 			$the_data = $this->load_auth_data();
-			//print_r($object);
-			$passw = $object->getField($the_data['settings']['passw_field']);
-			//echo $passw;
-			$object->set_field($the_data['settings']['passw_field'], md5(md5($passw)) );
+			if($the_data['data']!=NULL)
+			{
+				//print_r($object);
+				$passw = $object->getField($the_data['settings']['passw_field']);
+				//echo $passw;
+				$object->set_field($the_data['settings']['passw_field'], md5(md5($passw)) );
+			}
 		}
 	}
 	
