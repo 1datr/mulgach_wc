@@ -7,6 +7,7 @@ class mulForm
 	VAR $_CONTROLLER;
 	VAR $_UPLOAD_MODE;
 	VAR $_MODE;
+	VAR $_PARAMS;
 	static function check_form($_POST_ARRAY)
 	{
 		if(!empty($_SESSION['csrf_codes']))
@@ -18,8 +19,6 @@ class mulForm
 					$res = ($_POST_ARRAY[$key]==$info['value']);					
 					if($_POST_ARRAY[$key]==$info['value'])
 					{
-					//	echo "XXX";
-					//	unset($_SESSION['csrf_codes'][$key]);
 						return true;
 					}
 				}
@@ -61,7 +60,7 @@ class mulForm
 		return $res;
 	}
 	
-	function __construct($action="",&$controller,$params=array())
+	function __construct($action="",&$controller,$params=array(),$autoshow=true)
 	{
 	//	print_r($_SESSION);
 		$this->_CONTROLLER = $controller;
@@ -84,8 +83,15 @@ class mulForm
 		if(isset($params['pbid']))
 			$params['htmlattrs']['pbid']=$params['pbid'];
 		
+		$this->_PARAMS = $params;
+		if($autoshow)
+			$this->draw_begin();
+	}
+	
+	function draw_begin()
+	{
 		?>
-		<form <?=xx_implode($params['htmlattrs'], ' ', '{idx}="{%val}"') ?> >		
+		<form <?=xx_implode($this->_PARAMS['htmlattrs'], ' ', '{idx}="{%val}"') ?> >		
 		<?php 
 		
 		$this->_UPLOAD_MODE=$this->get_upload_mode();

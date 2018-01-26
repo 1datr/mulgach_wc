@@ -12,6 +12,7 @@ class ActiveField
 	{
 		$this->_ROW=$row;
 		$this->_FLDNAME=$name;
+		def_options(['namemode'=>'single','name_parent'=>NULL], $opts);
 		$this->_OPTIONS=$opts;
 	}
 	
@@ -47,16 +48,48 @@ class ActiveField
 		return $fldname;
 	}
 	
+	private function get_name_root()
+	{
+		$root="";
+		if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
+		{
+			//$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME,false);
+		
+			$root = "";
+		}
+		else
+		{
+			//$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
+		
+			if(isset($this->_CONTROLLER->_MODEL->_SETTINGS['domen']))
+					$root = $this->_CONTROLLER->_MODEL->_SETTINGS['domen'];
+				else
+					$root = $this->_ROW->_MODEL->_TABLE;
+		}
+		
+		if($this->_OPTIONS['namemode']=='multi')
+		{
+			if(isset($this->_OPTIONS['nameidx']))
+				$root=$root.'['.$this->_OPTIONS['nameidx'].']';
+			elseif(isset($this->_OPTIONS['name_ptrn']))
+				$root=$root.'['.$this->_OPTIONS['name_ptrn'].']';
+		}
+		return $root;
+	}
+	
 	private function get_var_name()
 	{
 				
 		if($this->_FORM->_MODE=='post')
 		{
+			$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
+			$nameroot = $this->get_name_root();
+			if($nameroot=='')
+				return $own_fld_name;
+			else
+				return $nameroot.'['.$own_fld_name.']';
 			
-			
-		//	mul_dbg($this->_CONTROLLER->_MODEL->_SETTINGS);
-			
-			if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
+		/*	if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
 			{
 				$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME,false);
 				
@@ -70,7 +103,7 @@ class ActiveField
 					return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$own_fld_name.']';
 				else
 					return $this->_ROW->_MODEL->_TABLE.'['.$own_fld_name.']';
-			}
+			}*/
 		}
 		elseif($this->_FORM->_MODE=='get')
 		{

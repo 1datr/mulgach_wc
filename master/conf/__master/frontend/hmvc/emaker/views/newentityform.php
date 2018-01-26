@@ -1,5 +1,5 @@
 <?php 
-			$frm = new mulForm(as_url('emaker/create'),$this,['htmlattrs'=>['style'=>'margin:0px;']]);
+			$frm = new mulForm(as_url('emaker/creationform'),$this,['htmlattrs'=>['style'=>'margin:0px;']]);
 			?>
 			<h4>#{CREATE NEW ENTITY}</h4>
 			<table>

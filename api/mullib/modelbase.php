@@ -122,7 +122,8 @@ class BaseModel
 		$res = array();
 		if(isset($data[$this->_TABLE]))
 		{
-		/*	if(is_array($data[$this->_TABLE]))
+			$keylist = array_keys($data[$this->_TABLE]);
+			if(is_int($keylist[0]))
 			{
 				foreach ($data[$this->_TABLE] as $data_idx => $data_item)
 				{
@@ -130,9 +131,9 @@ class BaseModel
 				}
 			}
 			else 
-			{*/
+			{
 				$this->validate_item($data[$this->_TABLE],$res);
-			//}
+			}
 			$this->OnValidate($data[$this->_TABLE], $res);
 		}				
 		return $res;

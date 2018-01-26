@@ -1,15 +1,24 @@
 <?php 
-$sbplugin->template_start('bindings_item');
+$form = new mulForm(as_url("hmvc/emaker/makefiles"),$this,[],false);
 ?>
-	<label><?=Lang::__t('Required:') ?></label>		
-	<input type="checkbox" name="constraints[{idx}][required]"  class="cb_required" />	
-	<label><?=Lang::__t('Field:') ?></label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['fields'],'name'=>'constraints[{idx}][field]','htmlattrs'=>array('class'=>'fld_select','onchange'=>'check_required(this)'))); ?>
-	<label><?=Lang::__t('Table:') ?></label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['tables'],'name'=>'constraints[{idx}][table]','htmlattrs'=>array('class'=>'table_to_select','onchange'=>'load_fields(this)'))); ?>
-	<label><?=Lang::__t('field to:') ?></label>
-	<?php $this->usewidget(new ComboboxWidget(),array('data'=>$table_info['first_table_fields'],'name'=>'constraints[{idx}][field_to]','htmlattrs'=>array('class'=>'fld_to_select'))); ?>	
-	<button type="button" class="bindings_item_drop">x</button>
+<?php 
+$sbplugin->template_start('fields_item');
+?>
+	<label><?=Lang::__t('Field name:') ?></label>		
+	<?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?>
+	<label><?=Lang::__t('Primary:') ?></label>
+	<?php $form->field($emptyfld, 'primary',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?>	
+	<button type="button" class="efld_drop">x</button>
 <?php 
 $sbplugin->template_end();
 ?>
+
+<?php $form->draw_begin(); ?>
+<div class="multiform_block">
+	<label><?=Lang::__t('Field name:') ?></label>		
+	<?php $form->field($primaryfld, 'fldname',['namemode'=>'multi','nameidx'=>0])->text([]);  ?>
+	<label><?=Lang::__t('Primary:') ?></label>
+	<?php $form->field($primaryfld, 'primary',['namemode'=>'multi','nameidx'=>0])->checkbox([]);  ?>	
+	<button type="button" class="efld_drop">x</button>
+</div>	
+<?php $form->close(); ?>
