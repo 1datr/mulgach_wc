@@ -10,7 +10,7 @@ class BaseModel
 	VAR $_ENV;	
 	VAR $_SCENARIO='default';
 	
-	function __construct($_LOCATION="",$the_ENV=array())
+	function __construct($_LOCATION="",$the_ENV=array(),$_settings=NULL)
 	{
 		$this->_LOCATION=$_LOCATION;
 		$this->_ENV = $the_ENV;
@@ -21,7 +21,10 @@ class BaseModel
 		else 
 			$this->_SETTINGS=$rules;
 		
-		//mul_dbg($this->)
+		if($_settings!=NULL)
+		{
+			$this->_SETTINGS=$_settings;
+		}
 	}
 	
 	function rules()
@@ -255,7 +258,17 @@ class BaseModel
 		{
 			foreach ($this->_SETTINGS['fields'] as $fld => $fldinfo)
 			{
-				$dr->setField($fld, (isset($fldinfo['defval']) ? $fldinfo['defval'] : null ));
+				if(is_object($fldinfo))
+				{
+					if(get_class($fldinfo)=="ModelInfo")
+					{
+						
+					}
+				}
+				else 
+				{
+					$dr->setField($fld, (isset($fldinfo['defval']) ? $fldinfo['defval'] : null ));
+				}
 			}
 		}
 		return $dr;
@@ -267,6 +280,22 @@ class BaseModel
 		$res = $this->db_query($sql);
 		$ds =new  DataSet($res,$this->_ENV);
 		return $ds;
+	}
+	
+	function nested($nes_name)
+	{
+		if(isset($this->_SETTINGS['fields'][$nes_name]))
+		{
+			$nested = new BaseModel($this->_LOCATION,$this->_ENV,$this->_SETTINGS['fields'][$nes_name]->get_info_array());
+			if(isset($this->_SETTINGS['domen']))
+				$nested->_SETTINGS['domen']=$this->_SETTINGS['domen'];
+			if(isset($this->_SETTINGS['name']))
+				$nested->_SETTINGS['name']=$this->_SETTINGS['name'];
+			if(isset($this->_SETTINGS['table']))
+				$nested->_SETTINGS['table']=$this->_SETTINGS['table'];
+			return $nested;
+		}
+		return null;
 	}
 	
 	function getPrimaryName()
@@ -525,5 +554,18 @@ class BaseModel
 	{
 		$ctrlr = $this->_ENV['_CONTROLLER']->get_controller($triada);
 		return $ctrlr->_MODEL;
+	}
+}
+
+class ModelInfo {
+	VAR $minfo;
+	function __construct($minfo=[]) 
+	{
+		$this->minfo = $minfo;
+	}
+	
+	function get_info_array()
+	{
+		return $this->minfo;
 	}
 }

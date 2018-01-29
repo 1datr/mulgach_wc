@@ -8,6 +8,7 @@ class mulForm
 	VAR $_UPLOAD_MODE;
 	VAR $_MODE;
 	VAR $_PARAMS;
+	VAR $_NAME_PARTS;
 	static function check_form($_POST_ARRAY)
 	{
 		if(!empty($_SESSION['csrf_codes']))
@@ -28,7 +29,7 @@ class mulForm
 	}
 	
 	function field($model,$fld_name,$opts=array())
-	{
+	{				
 		$newfld = new ActiveField($model, $fld_name, $opts);
 		$newfld->_CONTROLLER = $this->_CONTROLLER;
 		$newfld->_FORM = $this;

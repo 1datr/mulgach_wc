@@ -151,4 +151,5 @@ $_LANG['CREATE NEW ENTITY']='CREATE NEW ENTITY';
 $_LANG['Entity manager']='Entity manager';
 $_LANG['Field name:']='Field name:';
 $_LANG['Primary:']='Primary:';
+$_LANG['Add field']='Add field';
 ?>

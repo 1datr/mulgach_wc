@@ -25,14 +25,21 @@ class ModelEmaker extends \BaseModel
 			case 'efield':{
 				$this->_SETTINGS=array(
 					//	'table'=>'frm_makenew',
-						'domen'=>'field',
+						'domen'=>'entity',
 						//	'name'=>'makenew',
 						'fields'=>[
-								'fldname'=>['Type'=>'text'],
-								'type'=>['Type'=>'text'],
-								'primary'=>['Type'=>'boolean'],
-								'file'=>['Type'=>'boolean'],
-								'filetype'=>['Type'=>'text'],
+								'cfg'=>['Type'=>'text'],
+								'fieldlist'=>new \ModelInfo([
+									'domen'=>'field',
+									'fields'=>[
+										'fldname'=>['Type'=>'text'],
+										'type'=>['Type'=>'text'],
+										'primary'=>['Type'=>'boolean'],
+										'file'=>['Type'=>'boolean'],
+										'filetype'=>['Type'=>'text'],
+									]
+										
+								])
 						],
 						'required'=>['ename',]
 				

@@ -8,8 +8,9 @@ class ActiveField
 	VAR $_ENV;
 	VAR $_CONTROLLER;
 	VAR $_FORM;
+	VAR $_NAME_PARTS;
 	function __construct($row,$name,$opts=array())
-	{
+	{		
 		$this->_ROW=$row;
 		$this->_FLDNAME=$name;
 		def_options(['namemode'=>'single','name_parent'=>NULL], $opts);
@@ -18,8 +19,9 @@ class ActiveField
 	
 	private function unbracket_fld_name($fldname,$in_domen=true)
 	{
-		$fld_parts = explode('[',$fldname);
+		$fld_parts = explode('.',$fldname);
 		
+		//$this->_NAME_PARTS = explode('.', $this->_FLDNAME);
 		
 		if(count($fld_parts)>1)
 		{
@@ -48,9 +50,29 @@ class ActiveField
 		return $fldname;
 	}
 	
+	private function get_varname_from_array($elements)
+	{
+		$i=0;
+		$str="";
+		foreach ($elements as $idx => $element)
+		{
+			if($i==0)
+			{
+				$str=$str.$element;
+			}
+			else 
+			{
+				$str=$str."[".$element."]";
+			}
+			$i=$i+1;
+		}
+		return $str;
+	}
+	
 	private function get_name_root()
 	{
-		$root="";
+		$root="";			
+		
 		if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
 		{
 			//$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME,false);
@@ -67,13 +89,13 @@ class ActiveField
 					$root = $this->_ROW->_MODEL->_TABLE;
 		}
 		
-		if($this->_OPTIONS['namemode']=='multi')
+		/*if($this->_OPTIONS['namemode']=='multi')
 		{
 			if(isset($this->_OPTIONS['nameidx']))
 				$root=$root.'['.$this->_OPTIONS['nameidx'].']';
 			elseif(isset($this->_OPTIONS['name_ptrn']))
 				$root=$root.'['.$this->_OPTIONS['name_ptrn'].']';
-		}
+		}*/
 		return $root;
 	}
 	
@@ -82,12 +104,31 @@ class ActiveField
 				
 		if($this->_FORM->_MODE=='post')
 		{
+			$_pieces = explode('.', $this->_FLDNAME);
+			
+			$elements=[$this->get_name_root()];
+			for($i=0;$i<count($_pieces)-1;$i++)
+			{
+				$elements[]=$_pieces[$i];
+			}
+				
+			if(isset($this->_OPTIONS['nameidx']))
+				$elements[]=$this->_OPTIONS['nameidx'];
+			elseif(isset($this->_OPTIONS['name_ptrn']))
+				$elements[]=$this->_OPTIONS['name_ptrn'];
+			
+			$elements[]=$_pieces[count($_pieces)-1];
+			
+			return $this->get_varname_from_array($elements);
+			
+			/*
 			$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
 			$nameroot = $this->get_name_root();
 			if($nameroot=='')
 				return $own_fld_name;
 			else
 				return $nameroot.'['.$own_fld_name.']';
+			*/
 			
 		/*	if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
 			{

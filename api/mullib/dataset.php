@@ -133,6 +133,43 @@ class DataRecord	// запись из БД
 		return $this->_FIELDS[$this->_MODEL->_SETTINGS['primary']];
 	}
 	
+	function add_nested_row($nested_addr)
+	{
+		$exploded = explode('.', $nested_addr);
+		$curr_model = $this->_MODEL;
+		$prop = null;
+		foreach ($exploded as $idx => $addr_seg)
+		{
+			$curr_model = $curr_model->nested($addr_seg);
+			if($prop==null)
+			{
+				$prop = $this->getField($addr_seg);
+				if(empty($prop))
+				{
+					$this->setField($addr_seg,[]);
+				}
+			}
+			else 
+			{
+				if(empty($prop[$addr_seg]))
+					$prop[$addr_seg]=array();
+				$prop = $prop[$addr_seg];
+				
+			}
+		}
+		if($curr_model!=NULL)
+		{
+			$newrow = $curr_model->empty_row_form_model();
+			
+		}
+		return null;
+	}
+	
+	function get_nested_row($nested_addr,$idx)
+	{
+		
+	}
+
 	function foreach_fields($onfield)
 	{
 		foreach ($this->_FIELDS as $fld => $val)

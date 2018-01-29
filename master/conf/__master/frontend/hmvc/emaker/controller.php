@@ -30,12 +30,16 @@ class EmakerController extends \BaseController
 		{
 			$sbplugin = use_jq_plugin('structblock',$this);
 			$this->_MODEL->scenario("efield");
-			$emptyfld = $this->_MODEL->empty_row_form_model();
-			$primaryfld = $this->_MODEL->empty_row_form_model();
+			$newentity = $this->_MODEL->empty_row_form_model();
+			$newentity->setField('cfg', $_POST['makenew']['ename']);
+			
+			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			
+			$primaryfld = $this->_MODEL->add_nested_row('fieldlist');			 
 			$primaryfld->setField('fldname', 'id');
 			$primaryfld->setField('type', 'integer');
 			$primaryfld->setField('primary', true);
-			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
+			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
 	}
 	
