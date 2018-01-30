@@ -15,6 +15,7 @@ class BaseModel
 		$this->_LOCATION=$_LOCATION;
 		$this->_ENV = $the_ENV;
 		$this->_ENV['model']=$this;
+		$this->_ENV['parent']=null;
 		$rules = $this->rules();
 		if(count($rules)==0)
 			$this->read_base_info();
@@ -287,15 +288,23 @@ class BaseModel
 		if(isset($this->_SETTINGS['fields'][$nes_name]))
 		{
 			$nested = new BaseModel($this->_LOCATION,$this->_ENV,$this->_SETTINGS['fields'][$nes_name]->get_info_array());
+			
+			$this->_ENV['parent']=$this;
+			
 			if(isset($this->_SETTINGS['domen']))
-				$nested->_SETTINGS['domen']=$this->_SETTINGS['domen'];
+				$nested->_SETTINGS['domen']=$this->_SETTINGS['domen']."[".$nes_name."]";
 			if(isset($this->_SETTINGS['name']))
-				$nested->_SETTINGS['name']=$this->_SETTINGS['name'];
+				$nested->_SETTINGS['name']=$this->_SETTINGS['name']."[".$nes_name."]";
 			if(isset($this->_SETTINGS['table']))
-				$nested->_SETTINGS['table']=$this->_SETTINGS['table'];
+				$nested->_SETTINGS['table']=$this->_SETTINGS['table']."[".$nes_name."]";
 			return $nested;
 		}
 		return null;
+	}
+	
+	function get_name_array()
+	{
+		
 	}
 	
 	function getPrimaryName()
