@@ -31,8 +31,18 @@ class EmakerController extends \BaseController
 			$sbplugin = use_jq_plugin('structblock',$this);
 			$this->_MODEL->scenario("efield");
 			$newentity = $this->_MODEL->empty_row_form_model();
-			$newentity->setField('cfg', $_POST['makenew']['ename']);
+			//mul_dbg($_POST);
+			$newentity->setField('cfg', $_POST['makenew']['cfg']);
+			$newentity->setField('ename', $_POST['makenew']['ename']);
 			$newentity->setField('fieldlist', array());
+			
+			// подключаемся к базе и драйверу
+			GLOBAL $_BASEDIR;
+			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			$_cfg = new \scaff_conf($_POST['makenew']['cfg']);
+			
+			$dbparams = $_cfg->connect_db_if_exists($this);
+			$typelist = $this->_CONNECTION->Typelist();
 			
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			
@@ -42,7 +52,7 @@ class EmakerController extends \BaseController
 			$primaryfld->setField('primary', true);
 			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
 			
-			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
+			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
 	}
 	

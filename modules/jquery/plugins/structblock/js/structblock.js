@@ -14,6 +14,10 @@
 	  function add(  ) // добавить строку 
 	  {	      
 		  the_block = $(this).parents('.jqStructBlock').first(); // сам набор строк
+		  if(the_block.length==0)
+		  {
+			  the_block = $('#'+$(this).attr('target'));
+		  }
 		  
 		  id_attr = $(the_block).attr('itemtemplate');
 		  block_one_sel = '#'+id_attr;
@@ -66,8 +70,12 @@
 		  
 		id_attr = $(element).attr('itemtemplate');
 		$(element).addClass('jqStructBlock');
+		/*
 	    $(element).find('.'+id_attr+'_add').bind('click',add); 
 	    $(element).find('.'+id_attr+'_drop').bind('click',drop); 
+	    */
+		 $('.'+id_attr+'_add').bind('click',add); 
+		 $('.'+id_attr+'_drop').bind('click',drop); 
 		  
 	  /*    var dts = $(this).children('dt');
 	      dts.click(onClick);

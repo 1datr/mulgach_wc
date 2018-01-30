@@ -104,33 +104,9 @@ class ActiveField
 				
 		if($this->_FORM->_MODE=='post')
 		{
-			/*
-			$_pieces = explode('.', $this->_FLDNAME);
 			
-			$elements=[$this->get_name_root()];
-			for($i=0;$i<count($_pieces)-1;$i++)
-			{
-				$elements[]=$_pieces[$i];
-			}
-				
-			if(isset($this->_OPTIONS['nameidx']))
-				$elements[]=$this->_OPTIONS['nameidx'];
-			elseif(isset($this->_OPTIONS['name_ptrn']))
-				$elements[]=$this->_OPTIONS['name_ptrn'];
-			
-			$elements[]=$_pieces[count($_pieces)-1];
-			
-			return $this->get_varname_from_array($elements);
-			*/
 			$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
-			/*
 			
-			$nameroot = $this->get_name_root();
-			if($nameroot=='')
-				return $own_fld_name;
-			else
-				return $nameroot.'['.$own_fld_name.']';
-			*/
 			$nameroot = $this->get_name_root();
 			
 			$idx_str="";
@@ -141,22 +117,7 @@ class ActiveField
 			
 			return $nameroot.$idx_str.'['.$own_fld_name.']';
 			
-			/*
-			if( (empty($this->_CONTROLLER->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
-			{
-				$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME,false);
-				
-				return $own_fld_name;
-			}
-			else 
-			{
-				$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
-				
-				if(isset($this->_CONTROLLER->_MODEL->_SETTINGS['domen']))
-					return $this->_CONTROLLER->_MODEL->_SETTINGS['domen'].'['.$own_fld_name.']';
-				else
-					return $this->_ROW->_MODEL->_TABLE.'['.$own_fld_name.']';
-			}*/
+			
 		}
 		elseif($this->_FORM->_MODE=='get')
 		{

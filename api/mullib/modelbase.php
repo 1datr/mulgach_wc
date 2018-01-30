@@ -80,7 +80,11 @@ class BaseModel
 	function getFldInfo($fld)
 	{
 		$res = $this->_SETTINGS['fields'][$fld];
-		$res['required'] = isset($this->_SETTINGS['required'][$fld]) || in_array($fld,$this->_SETTINGS['required']);
+		$res['required'] = false;
+		if(isset($this->_SETTINGS['required']))
+		{
+			$res['required'] = isset($this->_SETTINGS['required'][$fld]) || in_array($fld,$this->_SETTINGS['required']);
+		}
 		$res['bindings'] = array();
 		
 		if(isset($this->_SETTINGS['constraints'][$fld]))
