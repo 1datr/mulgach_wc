@@ -132,6 +132,7 @@ class DataRecord	// запись из БД
 	{
 		return $this->_FIELDS[$this->_MODEL->_SETTINGS['primary']];
 	}
+		
 	
 	function add_nested_row($nested_addr)
 	{

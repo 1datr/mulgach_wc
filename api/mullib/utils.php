@@ -98,6 +98,16 @@ function array_insert(&$array, $position, $insert)
 	}
 }
 
+function x_array_push($arr,$newitem)
+{
+	if(is_array($newitem))
+	{
+		return merge_arrays($arr, $newitem);
+	}
+	array_push($arr, $newitem);
+	return $arr;
+}
+
 function _array_diff($arrA,$arrB)
 {
 	$newarray=array();

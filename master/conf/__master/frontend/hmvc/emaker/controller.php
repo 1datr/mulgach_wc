@@ -32,13 +32,16 @@ class EmakerController extends \BaseController
 			$this->_MODEL->scenario("efield");
 			$newentity = $this->_MODEL->empty_row_form_model();
 			$newentity->setField('cfg', $_POST['makenew']['ename']);
+			$newentity->setField('fieldlist', array());
 			
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			
-			$primaryfld = $this->_MODEL->add_nested_row('fieldlist');			 
+			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
 			$primaryfld->setField('type', 'integer');
 			$primaryfld->setField('primary', true);
+			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
+			
 			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
 	}
