@@ -9,6 +9,7 @@ class ActiveField
 	VAR $_CONTROLLER;
 	VAR $_FORM;
 	VAR $_NAME_PARTS;
+	VAR $_HTML_NAME;
 	function __construct($row,$name,$opts=array())
 	{		
 		$this->_ROW=$row;
@@ -139,7 +140,7 @@ class ActiveField
 	function error_div()
 	{
 		?>
-		<div class="error" id='err_<?=$this->_FLDNAME ?>' role="alert"></div>
+		<div class="error" id='err_<?=$this->_FLDNAME ?>' errtarget="<?=$this->_HTML_NAME ?>" role="alert"></div>
 		<?php 
 	}
 	
@@ -152,6 +153,8 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name']; 
 		
 		if(!isset($opts['value']))
 			$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
@@ -171,11 +174,13 @@ class ActiveField
 			else
 				$opts['htmlattrs']['name']= $opts['name'];
 			
-			$opts['value']=$this->_ROW->getField($this->_FLDNAME);
-			?>
-			<textarea <?=$this->get_attr_str($opts['htmlattrs'])?> ><?=$opts['value'] ?></textarea>
-			<?php
-			$this->error_div();
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+			
+		$opts['value']=$this->_ROW->getField($this->_FLDNAME);
+		?>
+		<textarea <?=$this->get_attr_str($opts['htmlattrs'])?> ><?=$opts['value'] ?></textarea>
+		<?php
+		$this->error_div();
 	}
 
 	/* параметры : 
@@ -189,6 +194,8 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		
 		$curr_value = $this->_ROW->getField($this->_FLDNAME);	
 		$fldparams = $this->_ROW->_MODEL->getFldInfo($this->_FLDNAME);
@@ -353,9 +360,11 @@ class ActiveField
 		}
 		
 		if(!isset($opts['name']))
-				$opts['htmlattrs']['name']= $this->get_var_name();
-			else
-				$opts['htmlattrs']['name']= $opts['name'];
+			$opts['htmlattrs']['name']= $this->get_var_name();
+		else
+			$opts['htmlattrs']['name']= $opts['name'];
+			
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
@@ -415,6 +424,8 @@ class ActiveField
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 				
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+			
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
@@ -433,6 +444,8 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		/*
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
@@ -456,6 +469,9 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+		
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
