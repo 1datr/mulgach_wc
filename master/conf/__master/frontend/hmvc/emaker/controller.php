@@ -52,8 +52,24 @@ class EmakerController extends \BaseController
 			$primaryfld->setField('primary', true);
 			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
 			
+			$this->_TITLE = \Lang::__t('New entity creation');
 			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
+	}
+	
+	public function BeforeValidate(&$bv_params)
+	{
+		//mul_dbg($_POST);
+		
+		if(isset($_POST['makenew']))
+		{
+			$this->_MODEL->scenario('makenew');
+			//mul_dbg($this->_MODEL);
+		}
+		elseif(isset($_POST['entity']))
+		{
+			$this->_MODEL->scenario('efield');
+		}
 	}
 	
 	public function BeforeAction(&$params)

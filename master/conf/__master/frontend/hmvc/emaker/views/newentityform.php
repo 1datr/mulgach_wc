@@ -1,6 +1,6 @@
 <?php 
 			$frm = new mulForm(as_url('emaker/creationform'),$this,['htmlattrs'=>['style'=>'margin:0px;']]);
-			
+
 			$frm->field($newrow, 'cfg')->hidden([]);  
 			?>
 			<h4>#{CREATE NEW ENTITY}</h4>

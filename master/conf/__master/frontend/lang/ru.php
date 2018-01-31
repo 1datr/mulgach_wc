@@ -156,4 +156,8 @@ $_LANG['ADD FIELD']='ADD FIELD';
 $_LANG['New entity creation']='New entity creation';
 $_LANG['Type:']='Type:';
 $_LANG['MAKE ENTITY']='MAKE ENTITY';
+$_LANG['makenew.ename']='makenew.ename';
+$_LANG['.ename']='.ename';
+$_LANG['ename']='ename';
+$_LANG['fldname']='fldname';
 ?>

@@ -1,1 +1,0 @@
-<h2>#{User successfully registered}</h2>

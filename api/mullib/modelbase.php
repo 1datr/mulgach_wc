@@ -70,6 +70,15 @@ class BaseModel
 		return array();
 	}
 	
+	function get_domen()
+	{
+		if(isset($this->_SETTINGS['domen']))
+			return $this->_SETTINGS['domen'];
+		
+		if(isset($this->_SETTINGS['table']))
+			return $this->_SETTINGS['table'];
+	}
+	
 	function read_base_info()
 	{		
 		$this->_SETTINGS = $this->get_base_info();
@@ -128,28 +137,77 @@ class BaseModel
 		}
 		
 		$res = array();
-		if(isset($data[$this->_TABLE]))
+		if(isset($data[$this->get_domen()]))
 		{
-			$keylist = array_keys($data[$this->_TABLE]);
+			$keylist = array_keys($data[$this->get_domen()]);
 			if(is_int($keylist[0]))
 			{
-				foreach ($data[$this->_TABLE] as $data_idx => $data_item)
+				foreach ($data[$this->get_domen()] as $data_idx => $data_item)
 				{
-					$this->validate_item($data_item,$res);
+					$this->validate_it($data_item,$res);
 				}
 			}
 			else 
 			{
-				$this->validate_item($data[$this->_TABLE],$res);
+				$this->validate_it($data[$this->get_domen()],$res);
 			}
-			$this->OnValidate($data[$this->_TABLE], $res);
+			$this->OnValidate($data[$this->get_domen()], $res);
 		}				
 		return $res;
 	}
 	
 	// проходим по одному элементу
-	function validate_item($data,&$res)
+	function validate_it($data,&$res)
 	{
+		//mul_dbg($data);
+		// ходим по полям
+		foreach ($data as $fld => $fld_val)
+		{
+	
+			if($this->getPrimaryName()==$fld)
+				continue;
+			
+			if(($nested=$this->nested($fld))!=null) // нестед данные
+			{
+			//	mul_dbg($nested);
+				$subres = array();
+				foreach ($fld_val as $_idx =>  $val)
+				{
+					$itemres = array();
+					$nested->validate_it($val,$itemres);	
+					//mul_dbg($itemres);
+				}
+			}
+			else 
+			{
+				
+				if(isset($this->_SETTINGS['required']))
+				{
+					if(in_array($fld,$this->_SETTINGS['required']))
+					{
+						//mul_dbg($fld);
+						//mul_dbg($data[$fld]);
+						// проверяем на существование
+						if(empty($data[$fld]))
+						{
+							add_keypair($res,$fld,\Lang::__t($fld)." could not be empty");
+						}
+					}
+				}
+				
+				if(isset($this->_SETTINGS['fields'][$fld]['onvalidate']))
+				{
+					$validate_hndlr = $this->_SETTINGS['fields'][$fld]['onvalidate'];
+					$validate_res = $validate_hndlr($fld_val);
+					if($validate_res!=null)
+					{
+						add_keypair($res,$fld,$validate_res);
+					}
+				}
+			
+			}
+		}
+		/*
 		foreach ($this->_SETTINGS['required'] as $idx => $fld)
 		{
 			if($this->getPrimaryName()==$fld)
@@ -158,7 +216,7 @@ class BaseModel
 				{
 					if(empty($data[$fld]))
 					{
-						add_keypair($res,$fld,\Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+						add_keypair($res,$fld,\Lang::__t($fld)." could not be empty");
 					}
 		
 		
@@ -167,10 +225,11 @@ class BaseModel
 				{
 					if(empty($data[$fld]))
 					{
-						add_keypair($res,$fld,Lang::__t($this->_TABLE.".".$fld)." could not be empty");
+						add_keypair($res,$fld,Lang::__t($fld)." could not be empty");
 					}
 				}
 		}
+		*/
 	}
 	
 	function OnValidate($row,&$res)
@@ -291,17 +350,23 @@ class BaseModel
 	{
 		if(isset($this->_SETTINGS['fields'][$nes_name]))
 		{
-			$nested = new BaseModel($this->_LOCATION,$this->_ENV,$this->_SETTINGS['fields'][$nes_name]->get_info_array());
-			
-			$this->_ENV['parent']=$this;
-			
-			if(isset($this->_SETTINGS['domen']))
-				$nested->_SETTINGS['domen']=$this->_SETTINGS['domen']."[".$nes_name."]";
-			if(isset($this->_SETTINGS['name']))
-				$nested->_SETTINGS['name']=$this->_SETTINGS['name']."[".$nes_name."]";
-			if(isset($this->_SETTINGS['table']))
-				$nested->_SETTINGS['table']=$this->_SETTINGS['table']."[".$nes_name."]";
-			return $nested;
+			if(is_object($this->_SETTINGS['fields'][$nes_name]))
+			{
+				if(get_class($this->_SETTINGS['fields'][$nes_name])=='ModelInfo')
+				{
+					$nested = new BaseModel($this->_LOCATION,$this->_ENV,$this->_SETTINGS['fields'][$nes_name]->get_info_array());
+					
+					$this->_ENV['parent']=$this;
+					
+					if(isset($this->_SETTINGS['domen']))
+						$nested->_SETTINGS['domen']=$this->_SETTINGS['domen']."[".$nes_name."]";
+					if(isset($this->_SETTINGS['name']))
+						$nested->_SETTINGS['name']=$this->_SETTINGS['name']."[".$nes_name."]";
+					if(isset($this->_SETTINGS['table']))
+						$nested->_SETTINGS['table']=$this->_SETTINGS['table']."[".$nes_name."]";
+					return $nested;
+				}
+			}
 		}
 		return null;
 	}

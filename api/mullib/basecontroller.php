@@ -287,6 +287,8 @@ class BaseController
 	function ActionValidate()
 	{				
 		$res = array();
+		
+		
 		$this->CallEvent('BeforeValidate', ['controller'=>$this,'row'=>$therow,'res'=>&$res]);
 		
 	//	mul_dbg($therow);
@@ -294,7 +296,9 @@ class BaseController
 		if(!empty($this->_MODEL))
 		{	
 			// валидуем по модели
-			$therow = $_POST[$this->_MODEL->_TABLE];			
+			//mul_dbg($_POST[$this->_MODEL->get_domen()]);
+			
+			$therow = $_POST[$this->_MODEL->get_domen()];//_TABLE];			
 			$res = $this->_MODEL->validate($_POST);			
 		}
 		
