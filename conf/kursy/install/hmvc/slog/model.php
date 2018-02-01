@@ -1,7 +1,7 @@
 <?php
 namespace Kursy\Install;
 
-class ModelSlog extends \AuthModel
+class ModelSlog extends \BaseModel
 {
 	
 }

@@ -191,4 +191,9 @@ $_LANG['Create ZNAK']='Create ZNAK';
 $_LANG['slovo.zzz']='zzz';
 $_LANG['title_ru']='title_ru';
 $_LANG['type']='type';
+$_LANG['first_name']='first_name';
+$_LANG['user_id']='user_id';
+$_LANG['id_kurs']='id_kurs';
+$_LANG['number']='number';
+$_LANG['name']='name';
 ?>

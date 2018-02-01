@@ -498,7 +498,9 @@ $( document ).ready(function()
 							}
 							else
 								full_str = full_str+json[key];
-							$("#err_"+key).html(full_str);
+							
+							$('[errtarget="'+key+'"]').html(full_str);
+							//$("#err_"+key).html(full_str);
 							counter++;
 						}
 						

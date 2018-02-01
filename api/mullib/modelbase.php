@@ -144,12 +144,12 @@ class BaseModel
 			{
 				foreach ($data[$this->get_domen()] as $data_idx => $data_item)
 				{
-					$this->validate_it($data_item,$res);
+					$this->validate_it($data_item,$res,$this->get_domen());
 				}
 			}
 			else 
 			{
-				$this->validate_it($data[$this->get_domen()],$res);
+				$this->validate_it($data[$this->get_domen()],$res,$this->get_domen());
 			}
 			$this->OnValidate($data[$this->get_domen()], $res);
 		}				
@@ -157,7 +157,7 @@ class BaseModel
 	}
 	
 	// проходим по одному элементу
-	function validate_it($data,&$res)
+	function validate_it($data,&$res,$prefix="")
 	{
 		//mul_dbg($data);
 		// ходим по полям
@@ -173,9 +173,9 @@ class BaseModel
 				$subres = array();
 				foreach ($fld_val as $_idx =>  $val)
 				{
-					$itemres = array();
-					$nested->validate_it($val,$itemres);	
-					//mul_dbg($itemres);
+					//$itemres = array();
+					$nested->validate_it($val,$res,$prefix."[$fld][$_idx]");	
+					//$res = merge_arrays($res,$itemres);
 				}
 			}
 			else 
@@ -190,7 +190,9 @@ class BaseModel
 						// проверяем на существование
 						if(empty($data[$fld]))
 						{
-							add_keypair($res,$fld,\Lang::__t($fld)." could not be empty");
+							$trgt = $fld;
+							if($prefix!="") $trgt=$prefix."[".$fld."]";								
+							add_keypair($res,$trgt,\Lang::__t($fld)." could not be empty");
 						}
 					}
 				}
@@ -201,7 +203,9 @@ class BaseModel
 					$validate_res = $validate_hndlr($fld_val);
 					if($validate_res!=null)
 					{
-						add_keypair($res,$fld,$validate_res);
+						$trgt = $fld;
+						if($prefix!="") $trgt=$prefix."[".$fld."]";
+						add_keypair($res,$trgt,$validate_res);
 					}
 				}
 			
