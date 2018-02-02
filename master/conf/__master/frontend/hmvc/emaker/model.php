@@ -36,8 +36,9 @@ class ModelEmaker extends \BaseModel
 										'fldname'=>['Type'=>'text'],
 										'type'=>['Type'=>'text'],
 										'primary'=>['Type'=>'boolean'],
+										'required'=>['Type'=>'boolean'],
 										'file'=>['Type'=>'boolean'],
-										'filetype'=>['Type'=>'text'],
+										'filetype'=>['Type'=>'text','dependency'=>['fld'=>'file','type'=>'iftrue']],
 									],
 									'required'=>['fldname','type']
 										

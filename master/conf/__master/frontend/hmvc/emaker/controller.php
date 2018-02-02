@@ -48,9 +48,31 @@ class EmakerController extends \BaseController
 			
 			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
-			$primaryfld->setField('type', 'integer');
+			$primaryfld->setField('type', 'BIGINT');
 			$primaryfld->setField('primary', true);
+			$primaryfld->setField('required', true);
 			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
+			if(isset($_POST['makenew']['auth_entity']))	// сущность авторизации
+			{
+				// login field
+				$fld_login = $this->_MODEL->nested('fieldlist')->empty_row_form_model(); 
+				$fld_login->setField('fldname', 'login');
+				$fld_login->setField('type', 'TEXT');
+				$fld_login->setField('required', true);
+				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_login));
+				// password field
+				$fld_passw = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+				$fld_passw->setField('fldname', 'password');
+				$fld_passw->setField('type', 'TEXT');
+				$fld_passw->setField('required', true);
+				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_passw));
+				// email field
+				$fld_email = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+				$fld_email->setField('fldname', 'email');
+				$fld_email->setField('type', 'TEXT');
+				$fld_email->setField('required', true);
+				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_email));
+			}
 			
 			$this->_TITLE = \Lang::__t('New entity creation');
 			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
