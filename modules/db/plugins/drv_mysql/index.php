@@ -262,6 +262,21 @@ class plg_drv_mysql extends mod_plugin
 		);
 	}
 	
+	public function get_basic_type($type_class)	// основной тип поля по классу
+	{
+		switch ($type_class)
+		{
+			case 'int': return 'BIGINT';break;
+			case 'text': return 'TEXT';break;
+			case 'datetime': return 'DATETIME';break;
+			case 'float': return 'DOUBLE';break;
+		}
+		$cmap = $this->class_map();
+		if(!isset($cmap[$type_class]))
+			return null;
+		return $cmap[$type_class][0]; 
+	}
+	
 	public function GetTypeClass($type)
 	{
 		$map = $this->class_map();

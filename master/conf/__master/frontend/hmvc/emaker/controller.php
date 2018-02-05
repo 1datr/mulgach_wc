@@ -46,9 +46,11 @@ class EmakerController extends \BaseController
 			
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			
+			$this->add_js('#/js/emaker.js');
+			
 			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
-			$primaryfld->setField('type', 'BIGINT');
+			$primaryfld->setField('type',  $this->_CONNECTION->get_basic_type('int'));
 			$primaryfld->setField('primary', true);
 			$primaryfld->setField('required', true);
 			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
@@ -57,21 +59,31 @@ class EmakerController extends \BaseController
 				// login field
 				$fld_login = $this->_MODEL->nested('fieldlist')->empty_row_form_model(); 
 				$fld_login->setField('fldname', 'login');
-				$fld_login->setField('type', 'TEXT');
+				$fld_login->setField('type', $this->_CONNECTION->get_basic_type('text'));
 				$fld_login->setField('required', true);
+				$fld_login->setField('file_enabled',false);
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_login));
 				// password field
 				$fld_passw = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 				$fld_passw->setField('fldname', 'password');
-				$fld_passw->setField('type', 'TEXT');
+				$fld_passw->setField('type', $this->_CONNECTION->get_basic_type('text'));
 				$fld_passw->setField('required', true);
+				$fld_passw->setField('file_enabled',false);
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_passw));
 				// email field
 				$fld_email = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 				$fld_email->setField('fldname', 'email');
-				$fld_email->setField('type', 'TEXT');
+				$fld_email->setField('type', $this->_CONNECTION->get_basic_type('text'));
 				$fld_email->setField('required', true);
+				$fld_email->setField('file_enabled',false);
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_email));
+				// hash field
+				$fld_token = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+				$fld_token->setField('fldname', 'token');
+				$fld_token->setField('type', $this->_CONNECTION->get_basic_type('text'));
+				$fld_token->setField('required', true);
+				$fld_token->setField('file_enabled',false);
+				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_token));
 			}
 			
 			$this->_TITLE = \Lang::__t('New entity creation');
@@ -90,6 +102,13 @@ class EmakerController extends \BaseController
 		}
 		elseif(isset($_POST['entity']))
 		{
+			// подключаемся к базе и драйверу
+			GLOBAL $_BASEDIR;
+			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			$_cfg = new \scaff_conf($_POST['entity']['cfg']);
+				
+			$dbparams = $_cfg->connect_db_if_exists($this);
+			
 			$this->_MODEL->scenario('efield');
 		}
 	}

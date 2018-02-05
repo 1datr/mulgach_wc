@@ -139,4 +139,8 @@ $_LANG['slovo.zzz']='zzz';
 $_LANG['Edit USERS']='Edit USERS';
 $_LANG['Create USERS']='Create USERS';
 $_LANG['BYKVA LIST']='BYKVA LIST';
+$_LANG['LIFEAREA LIST']='LIFEAREA LIST';
+$_LANG['Edit LIFEAREA']='Edit LIFEAREA';
+$_LANG['Create LIFEAREA']='Create LIFEAREA';
+$_LANG['title_ru']='title_ru';
 ?>

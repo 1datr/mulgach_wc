@@ -161,4 +161,6 @@ $_LANG['.ename']='.ename';
 $_LANG['ename']='ename';
 $_LANG['fldname']='fldname';
 $_LANG['dbname']='dbname';
+$_LANG['File field:']='File field:';
+$_LANG['For example : ']='For example : ';
 ?>

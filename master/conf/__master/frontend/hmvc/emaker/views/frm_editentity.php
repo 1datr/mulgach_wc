@@ -1,4 +1,6 @@
 <?php 
+$_TEXT_FOR_FILETYPE="#{For example : }audio/*, image/*";
+
 $form = new mulForm(as_url("/emaker/makenew"),$this,[],false);
 ?>
 <?php 
@@ -7,7 +9,16 @@ $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fieldit
 	<td><?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?></td>
 	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,[]);  ?></td>
 	<td><?php $form->field($emptyfld, 'primary',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>	
-	<td><?php $form->field($emptyfld, 'required',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>	
+	<td><?php $form->field($emptyfld, 'required',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>
+	<td>
+	<?php $form->field($emptyfld, 'file',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox(['htmlattrs'=>['onchange'=>'on_sel_file(this)']]);  ?>
+	<span class="filetype_div" style="display: none">
+	<?php $form->field($emptyfld, 'filetype',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text(['htmlattrs'=>['class'=>'filetype','placeholder'=>'File type']]); ?>
+	<div>
+	<?=$_TEXT_FOR_FILETYPE?>
+	</div>
+	</span>
+	</td>		
 	<td><button type="button" class="fields_item_drop">x</button></td>
 <?php 
 $sbplugin->template_table_end();
@@ -18,7 +29,7 @@ $sbplugin->template_table_end();
 <?php $form->field($newentity, 'cfg')->hidden([]);  ?>
 
 <?php $sbplugin->table_block_start('fields_item',array('id'=>'fields_block'),[],"
-<tr><th>#{Field name:}</th><th>#{Type:}</th><th>#{Primary:}</th><th>#{Required:}</th></tr>		
+<tr><th>#{Field name:}</th><th>#{Type:}</th><th>#{Primary:}</th><th>#{Required:}</th><th>#{File field:}</th></tr>		
 		");?>
 <h4>#{New entity creation}</h4>
 <label><?=Lang::__t('Field name:') ?></label>	
@@ -32,7 +43,19 @@ $sbplugin->template_table_end();
 	<td><?php $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>0])->text([]);  ?></td>
 	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>0])->ComboBox($typelist,[]);  ?></td>
 	<td><?php $form->field($fld, 'primary',['namemode'=>'multi','nameidx'=>0])->checkbox([]);  ?></td>	
-	<td><?php $form->field($fld, 'required',['namemode'=>'multi','nameidx'=>0])->checkbox([]);  ?></td>	
+	<td><?php $form->field($fld, 'required',['namemode'=>'multi','nameidx'=>0])->checkbox([]);  ?></td>
+	<td><?php 
+		if($fld->getField('file_enabled'))
+		{
+			$form->field($fld, 'file',['namemode'=>'multi','nameidx'=>0])->checkbox(['htmlattrs'=>['onchange'=>'on_sel_file(this)']]);
+			?>
+			<span class="filetype_div" style="display: none">
+			<?php $form->field($fld, 'filetype',['namemode'=>'multi','nameidx'=>0])->text(['htmlattrs'=>['class'=>'filetype','placeholder'=>'File type']]); ?>
+<div><?=$_TEXT_FOR_FILETYPE?></div>
+			</span>
+			<?php   
+		}
+	?></td>		
 	<td></td>
 </tr>
 <?php 

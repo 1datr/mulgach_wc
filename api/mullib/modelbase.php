@@ -151,7 +151,7 @@ class BaseModel
 			{
 				$this->validate_it($data[$this->get_domen()],$res,$this->get_domen());
 			}
-			$this->OnValidate($data[$this->get_domen()], $res);
+			//$this->OnValidate($data[$this->get_domen()], $res);
 		}				
 		return $res;
 	}
@@ -159,6 +159,7 @@ class BaseModel
 	// проходим по одному элементу
 	function validate_it($data,&$res,$prefix="")
 	{
+		$this->OnValidate($data, $res, $prefix);
 		//mul_dbg($data);
 		// ходим по полям
 		foreach ($data as $fld => $fld_val)
@@ -236,12 +237,12 @@ class BaseModel
 		*/
 	}
 	
-	function OnValidate($row,&$res)
+	function OnValidate($row,&$res,$prefix="")
 	{
 		if(isset($this->_SETTINGS['validate_proc']))
 		{
 			$proc = $this->_SETTINGS['validate_proc'];
-			$proc($row,$res);
+			$proc($row,$res,$prefix);
 		}
 	}
 	
