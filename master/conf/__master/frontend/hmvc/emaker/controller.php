@@ -42,7 +42,9 @@ class EmakerController extends \BaseController
 			$_cfg = new \scaff_conf($_POST['makenew']['cfg']);
 			
 			$dbparams = $_cfg->connect_db_if_exists($this);
+			
 			$typelist = $this->_CONNECTION->Typelist();
+			$typelist['_ref']=\Lang::__t('Entity reference');
 			
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			
@@ -91,6 +93,40 @@ class EmakerController extends \BaseController
 		}				
 	}
 	
+	public function ActionSave()
+	{
+		// подключаемся к базе и драйверу
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new \scaff_conf($_POST['entity']['cfg']);
+			
+		$dbparams = $_cfg->connect_db_if_exists($this);
+		
+		$table_info = array('fields'=>[],'table'=>$_POST['entity']['ename'],'required'=>[],'primary'=>[]);
+		
+	//	mul_dbg($_POST);
+		
+		foreach($_POST['entity']['fieldlist'] as $idx => $element)
+		{
+			if(isset($element['primary']))
+			{
+				
+				$table_info['primary'][]=$element['fldname'];
+			}
+			
+			if(isset($element['required']))
+			{
+			
+				$table_info['required'][]=$element['fldname'];
+			}
+			
+			$table_info['fields'][$element['fldname']]=['Type'=>$element['type'],'TypeInfo'=>''];
+		}
+		
+	//	mul_dbg($table_info);
+		$this->_CONNECTION->create_table($table_info);
+	}
+	
 	public function BeforeValidate(&$bv_params)
 	{
 		//mul_dbg($_POST);
@@ -100,7 +136,7 @@ class EmakerController extends \BaseController
 			$this->_MODEL->scenario('makenew');
 			//mul_dbg($this->_MODEL);
 		}
-		elseif(isset($_POST['entity']))
+		elseif(isset($_POST['entity'])) // при создании либоредактирование сущности
 		{
 			// подключаемся к базе и драйверу
 			GLOBAL $_BASEDIR;

@@ -48,6 +48,7 @@ class ModelEmaker extends \BaseModel
 									'fields'=>[
 										'fldname'=>['Type'=>'text'],
 										'type'=>['Type'=>'text'],
+										'typeinfo'=>['Type'=>'text'],
 										'primary'=>['Type'=>'boolean'],
 										'required'=>['Type'=>'boolean'],
 										'file_enabled'=>['Type'=>'boolean'],

@@ -163,4 +163,6 @@ $_LANG['fldname']='fldname';
 $_LANG['dbname']='dbname';
 $_LANG['File field:']='File field:';
 $_LANG['For example : ']='For example : ';
+$_LANG['Field with this type could not be a file']='Field with this type could not be a file';
+$_LANG['Entity reference']='Entity reference';
 ?>

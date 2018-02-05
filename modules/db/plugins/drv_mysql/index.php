@@ -153,6 +153,27 @@ class plg_drv_mysql extends mod_plugin
 		return $this->query($sql);
 	}
 	
+	public function table_exists($tablename)
+	{
+		$sql="SHOW FULL TABLES LIKE '".$this->_DB_PARAMS['prefix']."$tablename'";
+		//mul_dbg($sql);
+		$res = $this->query($sql);
+		if($this->rowcount($res)>0) 
+			return true;
+		return false;
+	}
+	
+	public function make_table($table_info)
+	{
+		if(!$this->table_exists($table_info['table']))
+		{
+			$this->create_table($table_info);
+		}
+		else 
+		{
+			$tinfo = get_table_fields($table_info['table']);
+		}
+	}
 	
 	public function create_table($table_info)
 	{
@@ -186,7 +207,13 @@ class plg_drv_mysql extends mod_plugin
 		$sql = $sql."( $str_fields )";
 		
 		//mul_dbg($sql);
+		
 		return $this->query($sql);
+	}
+	
+	public function get_def_type_value($_type)
+	{
+		
 	}
 	
 	public function SrvMakedb($params=[])

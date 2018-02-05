@@ -428,7 +428,9 @@ class BaseController
 	function out_json($object,$json_opts=JSON_UNESCAPED_UNICODE)
 	{
 		$this->_RESULT_TYPE="application/json";
-		echo json_encode($object);
+		$json_res_str = json_encode($object);
+		$json_res_str = Lang::translate_str($json_res_str);
+		echo $json_res_str;
 	}
 		
 	function out_ajax_block($view,$vars=array(),$out_js=true)

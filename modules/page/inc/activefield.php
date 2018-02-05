@@ -415,6 +415,11 @@ class ActiveField
 		
 	}
 	
+	function enum($opts=array())
+	{
+	
+	}
+	
 	function hidden($opts=array())
 	{
 		def_options(array('htmlattrs'=>array()), $opts);
