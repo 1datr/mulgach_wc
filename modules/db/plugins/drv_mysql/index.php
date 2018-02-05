@@ -479,7 +479,7 @@ class plg_drv_mysql extends mod_plugin
 					$test_res_str = $test_res['database'];
 					$test_res_str = $test_res_str.$this->OK_button_code();
 				}
-				$res['connect']=$test_res_str;
+				$res['dbinfo[dbname]']=$test_res_str;
 			}
 		};
 		return $drv_base;

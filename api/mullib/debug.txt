@@ -1,0 +1,75 @@
+
+				
+	02-05-2018 13:46:20.000000: Array
+(
+    [0] => information_schema
+    [1] => kursy
+    [2] => perevody
+    [3] => performance_schema
+)
+
+				
+	02-05-2018 13:46:21.000000: Array
+(
+    [0] => perevody
+)
+
+				
+	02-05-2018 13:46:21.000000: Array
+(
+)
+
+				
+	02-05-2018 13:46:46.000000: Array
+(
+    [0] => perevody
+)
+
+				
+	02-05-2018 13:46:46.000000: Array
+(
+    [0] => information_schema
+    [1] => kursy
+    [2] => perevody
+    [3] => performance_schema
+)
+
+				
+	02-05-2018 13:46:46.000000: Array
+(
+    [0] => information_schema
+    [1] => edulab
+    [2] => ideaman
+    [3] => im2
+    [4] => kursy
+    [5] => mysql
+    [6] => newbase
+    [7] => perevody
+    [8] => performance_schema
+    [9] => testuha
+    [10] => tms
+    [11] => tms2
+    [12] => tmscloud
+    [13] => undcms
+    [14] => zinh
+)
+
+				
+	02-05-2018 13:47:15.000000: Array
+(
+    [0] => information_schema
+    [1] => kursy
+    [2] => perevody
+    [3] => performance_schema
+)
+
+				
+	02-05-2018 13:47:16.000000: Array
+(
+    [0] => perevody
+)
+
+				
+	02-05-2018 13:47:16.000000: Array
+(
+)

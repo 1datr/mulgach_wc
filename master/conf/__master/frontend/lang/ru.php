@@ -160,4 +160,5 @@ $_LANG['makenew.ename']='makenew.ename';
 $_LANG['.ename']='.ename';
 $_LANG['ename']='ename';
 $_LANG['fldname']='fldname';
+$_LANG['dbname']='dbname';
 ?>
