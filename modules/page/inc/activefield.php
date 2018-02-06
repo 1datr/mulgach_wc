@@ -130,9 +130,16 @@ class ActiveField
 	{
 		return xx_implode($attrlist,' ','{idx}="{%val}"',
 				function(&$val,&$idx,&$thetemplate,&$ctr){
-					if( in_array($idx, array('selected','checked')) )
+					if($val==null)
 					{
 						$thetemplate='{idx}';
+					}
+					else
+					{
+						if( in_array($idx, array('selected','checked','disabled')) )
+						{
+							$thetemplate='{idx}';
+						}
 					}
 				});
 	}
@@ -156,6 +163,9 @@ class ActiveField
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name']; 
 		
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			$opts['htmlattrs']['disabled']=null;
+		
 		if(!isset($opts['value']))
 			$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
@@ -175,6 +185,9 @@ class ActiveField
 				$opts['htmlattrs']['name']= $opts['name'];
 			
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+		
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			$opts['htmlattrs']['disabled']=null;
 			
 		$opts['value']=$this->_ROW->getField($this->_FLDNAME);
 		?>
@@ -196,6 +209,9 @@ class ActiveField
 			$opts['htmlattrs']['name']= $opts['name'];
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+		
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			$opts['htmlattrs']['disabled']=null;
 		
 		$curr_value = $this->_ROW->getField($this->_FLDNAME);	
 		$fldparams = $this->_ROW->_MODEL->getFldInfo($this->_FLDNAME);
@@ -363,6 +379,9 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			$opts['htmlattrs']['disabled']=null;
 			
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
@@ -458,6 +477,9 @@ class ActiveField
 			$opts['htmlattrs']['name']= $opts['name'];
 		*/
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			$opts['htmlattrs']['disabled']=null;
+		
 		if(!empty($fldval))
 			$opts['htmlattrs']['checked']=true;
 		?>
@@ -476,6 +498,9 @@ class ActiveField
 			$opts['htmlattrs']['name']= $opts['name'];
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+		
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			$opts['htmlattrs']['disabled']=null;
 		
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		?>

@@ -24,7 +24,14 @@ class BaseModel
 		
 		if($_settings!=NULL)
 		{
-			$this->_SETTINGS=$_settings;
+			if(is_array($_settings))
+			{
+				$this->_SETTINGS=$_settings;
+			}
+			elseif(get_class($_settings)=='ModelInfo') 
+			{
+				$this->_SETTINGS=$_settings->get_info_array();
+			}			
 		}
 	}
 	
@@ -110,7 +117,15 @@ class BaseModel
 	
 	function set_settings($_settings)
 	{
-		$this->_SETTINGS=$_settings;
+		if(is_array($_settings))
+		{
+			$this->_SETTINGS=$_settings;
+		}
+		elseif(get_class($_settings)=='ModelInfo')
+		{
+			$this->_SETTINGS=$_settings->get_info_array();
+		}
+		
 		if(!isset($this->_SETTINGS['table']))
 		{
 			if(isset($this->_SETTINGS['domen']))

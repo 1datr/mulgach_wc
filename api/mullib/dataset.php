@@ -5,6 +5,7 @@ class DataRecord	// запись из БД
 	VAR $_ENV;
 	VAR $_MODEL;
 	VAR $_FIELDS=array();
+	VAR $_FIELDS_ENABLED=array();
 	VAR $_MODIFIED=false;
 	VAR $_DB=true;
 	VAR $_EXISTS_IN_DB=false;
@@ -103,6 +104,20 @@ class DataRecord	// запись из БД
 	{
 		if($this->FieldExists($fld))
 			$this->set_field($fld,$val);		
+	}
+	
+	function fldEnabled($fld,$val=NULL)
+	{
+		if($val===NULL) 	// получение значения
+		{
+			if(!isset($this->_FIELDS_ENABLED[$fld]))
+				$this->_FIELDS_ENABLED[$fld]=true;
+			return $this->_FIELDS_ENABLED[$fld];
+		}
+		else	// режим установки значения 
+		{
+			$this->_FIELDS_ENABLED[$fld]=$val;
+		}
 	}
 	
 	function format_html($fldval,$flags=NULL)
@@ -259,13 +274,14 @@ class DataRecord	// запись из БД
 		
 	}
 	
-	public function draw_def_form($form)
+	public function draw_def_form($form,$opts=[])
 	{
 		?>
 		<table>
 		<?php 
 		foreach($this->_FIELDS as $fld => $value)
 		{
+			
 			?>
 			
 			<?php 

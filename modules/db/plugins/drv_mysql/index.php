@@ -211,9 +211,30 @@ class plg_drv_mysql extends mod_plugin
 		return $this->query($sql);
 	}
 	
-	public function get_def_type_value($_type)
+	public function type_model($_type)
 	{
-		
+		if($this->GetTypeClass($_type)=='enums')
+		{
+			return new ModelInfo([
+					'domen'=>'finfo',
+					'fields'=>[
+						'valueset'=>new ModelInfo(
+						[
+							'domen'=>'valueset',
+							'fields'=>['Type'=>'text']				
+						]),
+					]
+			]);
+		}
+		else 
+		{
+			return new ModelInfo([
+					'domen'=>'finfo',
+					'fields'=>[
+						'size'=>['Type'=>'int'],
+					]
+			]);
+		}
 	}
 	
 	public function SrvMakedb($params=[])

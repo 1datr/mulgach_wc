@@ -165,4 +165,9 @@ $_LANG['File field:']='File field:';
 $_LANG['For example : ']='For example : ';
 $_LANG['Field with this type could not be a file']='Field with this type could not be a file';
 $_LANG['Entity reference']='Entity reference';
+$_LANG['.id']='.id';
+$_LANG['.name']='.name';
+$_LANG['.description']='.description';
+$_LANG['.forum_id']='.forum_id';
+$_LANG['finfo.size']='finfo.size';
 ?>

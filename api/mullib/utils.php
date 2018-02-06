@@ -280,6 +280,8 @@ function url_seg_add()
 	
 	$resstr = strtr($resstr,array('//'=>'/'));
 
+	//mul_dbg($arg_list);
+	
 	if(substr($arg_list[0],0,1)=='/')
 	{
 		if(substr($resstr[0],0,1)!='/')

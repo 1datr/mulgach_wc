@@ -7,7 +7,9 @@ $form = new mulForm(as_url("/emaker/save"),$this,[],false);
 $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fielditem']);
 ?>
 	<td><?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?></td>
-	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,[]);  ?></td>
+	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?>
+		<span class="fldinfo"></span>
+	</td>
 	<td><?php $form->field($emptyfld, 'primary',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>	
 	<td><?php $form->field($emptyfld, 'required',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>
 	<td>
@@ -39,9 +41,11 @@ $sbplugin->template_table_end();
 	foreach ($newentity->getField('fieldlist') as $idx => $fld)
 	{
 ?>
-<tr class="multiform_block" role="item" valign="top" class="fielditem">
+<tr class="fielditem multiform_block" role="item" valign="top" class="fielditem">
 	<td><?php $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx])->text([]);  ?></td>
-	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,[]);  ?></td>
+	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?>
+		<span class="fldinfo"></span>
+	</td>
 	<td><?php $form->field($fld, 'primary',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?></td>	
 	<td><?php $form->field($fld, 'required',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?></td>
 	<td><?php 

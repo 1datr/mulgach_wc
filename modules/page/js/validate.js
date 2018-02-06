@@ -59,6 +59,7 @@ function load_ajax_block(sel,url)//,afterload=null
 	}).fail(function( jqxhr, textStatus, error ) {
 	    var err = textStatus + ", " + error;
 	    console.log( "Request Failed: " + err );
+	    console.log( jqxhr.responseText );
 	});
 }
 
