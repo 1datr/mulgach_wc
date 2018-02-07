@@ -1,6 +1,6 @@
 (function( $ ){
   
-  $.fn.jqStructBlock = function( method ) {
+  $.fn.jqStructBlock = function( options ) {
     
     // логика вызова метода
    /* if ( methods[method] ) {
@@ -44,12 +44,21 @@
 			//new_element = $(nb_html);
 
 			$(the_block).find(".items").append(new_data_block);
+			if(options.onadd != null)
+				{
+				options.onadd(new_data_block);
+				}
 			new_data_block.find('.'+id_attr+'_drop').bind( "click",drop);
 	  };
 	  
 	  function drop() {
 			
 		  	the_block = $(this).parents('.jqStructBlock').first(); // сам набор строк
+		  	
+		  	if(options.ondelete != null)
+			{
+				options.ondelete(this);
+			}
 			$(this).parents('[role=item]').remove();	// Удаляем сам айтем
 			
 			// меняем все цифры в индексах
@@ -64,6 +73,7 @@
 						)
 				
 					});
+			
 	  };
 	  
 	  return this.each(function(i,element) {

@@ -170,7 +170,7 @@ class ActiveField
 	//	mul_dbg($opts);
 		$this->_ELEMENT_OPTIONS = $opts;
 		
-		$this->_HTML_NAME = $opts['htmlattrs']['name']; 
+		
 		
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->get_var_name();
@@ -183,6 +183,8 @@ class ActiveField
 		if(!isset($opts['value']))
 			$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
@@ -198,14 +200,14 @@ class ActiveField
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 		
-		$this->_ELEMENT_OPTIONS = $opts;
-			
-		$this->_HTML_NAME = $opts['htmlattrs']['name'];
-		
+		$this->_ELEMENT_OPTIONS = $opts;		
+				
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
 			$opts['htmlattrs']['disabled']=null;
 			
 		$opts['value']=$this->_ROW->getField($this->_FLDNAME);
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
 		<textarea <?=$this->get_attr_str($opts['htmlattrs'])?> ><?=$opts['value'] ?></textarea>
 		<?php
@@ -223,9 +225,7 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];				
-		
-		$this->_HTML_NAME = $opts['htmlattrs']['name'];
-		
+						
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
 			$opts['htmlattrs']['disabled']=null;
 		
@@ -233,6 +233,7 @@ class ActiveField
 		
 		$curr_value = $this->_ROW->getField($this->_FLDNAME);	
 		$fldparams = $this->_ROW->_MODEL->getFldInfo($this->_FLDNAME);
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>			
 		<select <?=$this->get_attr_str($opts['htmlattrs'])?> >
 		<?php
@@ -470,11 +471,12 @@ class ActiveField
 		
 		$this->_ELEMENT_OPTIONS = $opts;
 				
-		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+		
 			
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
+		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php

@@ -21,7 +21,7 @@ class BaseModel
 			$this->read_base_info();
 		else 
 			$this->_SETTINGS=$rules;
-		
+					
 		if($_settings!=NULL)
 		{
 			if(is_array($_settings))
@@ -33,6 +33,8 @@ class BaseModel
 				$this->_SETTINGS=$_settings->get_info_array();
 			}			
 		}
+		
+		def_options(['mode'=>'simple'], $this->_SETTINGS);
 	}
 	
 	function rules()
@@ -133,6 +135,8 @@ class BaseModel
 		}
 		else 
 			$this->_TABLE=$this->_SETTINGS['table'];
+		
+		def_options(['mode'=>'simple'], $this->_SETTINGS);
 	}
 	
 	function set_table_or_domen()
@@ -159,12 +163,12 @@ class BaseModel
 			{
 				foreach ($data[$this->get_domen()] as $data_idx => $data_item)
 				{
-					$this->validate_it($data_item,$res,$this->get_domen());
+					$this->validate_for_domen($data_item,$res,$this->get_domen());
 				}
 			}
 			else 
 			{
-				$this->validate_it($data[$this->get_domen()],$res,$this->get_domen());
+				$this->validate_for_domen($data[$this->get_domen()],$res,$this->get_domen());
 			}
 			//$this->OnValidate($data[$this->get_domen()], $res);
 		}				
@@ -172,7 +176,7 @@ class BaseModel
 	}
 	
 	// проходим по одному элементу
-	function validate_it($data,&$res,$prefix="")
+	function validate_for_domen($data,&$res,$prefix="")
 	{
 		$this->OnValidate($data, $res, $prefix);
 		//mul_dbg($data);
@@ -185,13 +189,21 @@ class BaseModel
 			
 			if(($nested=$this->nested($fld))!=null) // нестед данные
 			{
-			//	mul_dbg($nested);
-				$subres = array();
-				foreach ($fld_val as $_idx =>  $val)
+			//	mul_dbg($nested->_SETTINGS);
+				if($nested->_SETTINGS['mode']=='variant')
 				{
-					//$itemres = array();
-					$nested->validate_it($val,$res,$prefix."[$fld][$_idx]");	
-					//$res = merge_arrays($res,$itemres);
+				//	mul_dbg($nested->_SETTINGS);
+				}
+				else 
+				{
+				//	mul_dbg($nested);
+					$subres = array();
+					foreach ($fld_val as $_idx =>  $val)
+					{
+						//$itemres = array();
+						$nested->validate_for_domen($val,$res,$prefix."[$fld][$_idx]");	
+						//$res = merge_arrays($res,$itemres);
+					}
 				}
 			}
 			else 
@@ -227,29 +239,7 @@ class BaseModel
 			
 			}
 		}
-		/*
-		foreach ($this->_SETTINGS['required'] as $idx => $fld)
-		{
-			if($this->getPrimaryName()==$fld)
-				continue;
-				if(isset($this->_SETTINGS['file_fields'][$fld]))
-				{
-					if(empty($data[$fld]))
-					{
-						add_keypair($res,$fld,\Lang::__t($fld)." could not be empty");
-					}
 		
-		
-				}
-				else
-				{
-					if(empty($data[$fld]))
-					{
-						add_keypair($res,$fld,Lang::__t($fld)." could not be empty");
-					}
-				}
-		}
-		*/
 	}
 	
 	function OnValidate($row,&$res,$prefix="")

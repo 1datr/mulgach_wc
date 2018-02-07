@@ -28,7 +28,7 @@ class EmakerController extends \BaseController
 	{
 		if(isset($_POST['makenew']))
 		{
-			$sbplugin = use_jq_plugin('structblock',$this);
+			$sbplugin = use_jq_plugin('structblock',['controller'=>$this,'onadd'=>""]);
 			$this->_MODEL->scenario("efield");
 			$newentity = $this->_MODEL->empty_row_form_model();
 			//mul_dbg($_POST);
@@ -189,7 +189,7 @@ class EmakerController extends \BaseController
 				$table_info['required'][]=$element['fldname'];
 			}
 			
-			$table_info['fields'][$element['fldname']]=['Type'=>$element['type'],'TypeInfo'=>''];
+			$table_info['fields'][$element['fldname']]=['Type'=>$element['type'],'TypeInfo'=>$this->_CONNECTION->make_fld_info_from_data($element)];
 		}
 		
 	//	mul_dbg($table_info);

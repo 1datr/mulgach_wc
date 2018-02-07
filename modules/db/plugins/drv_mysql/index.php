@@ -213,6 +213,7 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function type_model($_type)
 	{
+		//mul_dbg($this->GetTypeClass($_type));
 		if($this->GetTypeClass($_type)=='enums')
 		{
 			return new ModelInfo([
@@ -231,10 +232,19 @@ class plg_drv_mysql extends mod_plugin
 			return new ModelInfo([
 					'domen'=>'finfo',
 					'fields'=>[
-						'size'=>['Type'=>'int'],
+						'size'=>['Type'=>'int','defval'=>20],
 					]
 			]);
 		}
+	}
+	
+	public function make_fld_info_from_data($data)
+	{
+		if($this->GetTypeClass($data['type']))
+		{
+			return "(".$data['typeinfo']['size'].")";
+		}
+		return "";
 	}
 	
 	public function SrvMakedb($params=[])

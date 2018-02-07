@@ -7,7 +7,7 @@ $form = new mulForm(as_url("/emaker/save"),$this,[],false);
 $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fielditem']);
 ?>
 	<td><?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?></td>
-	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?></td>
+	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['class'=>'fldtype','onchange'=>'on_type_change(this)']]);  ?></td>
 	<td><span class="fldinfo"></span></td>
 	<td><?php $form->field($emptyfld, 'primary',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>	
 	<td><?php $form->field($emptyfld, 'required',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>
@@ -45,7 +45,7 @@ $sbplugin->template_table_end();
 	$af_fldname = $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx]);
 ?>
 	<td><?php $af_fldname->text([]);  ?></td>
-	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?></td>
+	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['class'=>'fldtype','onchange'=>'on_type_change(this)']]);  ?></td>
 	<td><span class="fldinfo"><?php 
 	$fld_typeinfo = $fld->getField('typeinfo');
 	if(!empty($fld_typeinfo))
@@ -75,5 +75,10 @@ $sbplugin->template_table_end();
 <?php $sbplugin->table_block_end(); ?>
 <?php $form->submit('#{MAKE ENTITY}'); ?>
 <?php $form->close(); 
-jq_onready($this, "$('#fields_block').jqStructBlock();");
+jq_onready($this, "$('#fields_block').jqStructBlock({
+	onadd:function(newblock)
+		{
+			on_type_change($(newblock).find('select.fldtype'))
+		}
+});");
 ?>
