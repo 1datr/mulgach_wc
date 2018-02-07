@@ -7,9 +7,8 @@ $form = new mulForm(as_url("/emaker/save"),$this,[],false);
 $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fielditem']);
 ?>
 	<td><?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?></td>
-	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?>
-		<span class="fldinfo"></span>
-	</td>
+	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?></td>
+	<td><span class="fldinfo"></span></td>
 	<td><?php $form->field($emptyfld, 'primary',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>	
 	<td><?php $form->field($emptyfld, 'required',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>
 	<td>
@@ -31,7 +30,7 @@ $sbplugin->template_table_end();
 <?php $form->field($newentity, 'cfg')->hidden([]);  ?>
 
 <?php $sbplugin->table_block_start('fields_item',array('id'=>'fields_block'),[],"
-<tr><th>#{Field name:}</th><th>#{Type:}</th><th>#{Primary:}</th><th>#{Required:}</th><th>#{File field:}</th></tr>		
+<tr><th>#{Field name:}</th><th colspan=\"2\">#{Type:}</th><th>#{Primary:}</th><th>#{Required:}</th><th>#{File field:}</th></tr>		
 		");?>
 <h4>#{New entity creation}</h4>
 <label><?=Lang::__t('Field name:') ?></label>	
@@ -42,10 +41,18 @@ $sbplugin->template_table_end();
 	{
 ?>
 <tr class="fielditem multiform_block" role="item" valign="top" class="fielditem">
-	<td><?php $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx])->text([]);  ?></td>
-	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?>
-		<span class="fldinfo"></span>
-	</td>
+<?php 
+	$af_fldname = $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx]);
+?>
+	<td><?php $af_fldname->text([]);  ?></td>
+	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['onchange'=>'on_type_change(this)']]);  ?></td>
+	<td><span class="fldinfo"><?php 
+	$fld_typeinfo = $fld->getField('typeinfo');
+	if(!empty($fld_typeinfo))
+		$fld_typeinfo->draw_def_form($form,['show_labels'=>false,
+				'name_root'=>$af_fldname->get_name_root()."[".$idx."][typeinfo]"				
+	]);
+	?></span></td>
 	<td><?php $form->field($fld, 'primary',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?></td>	
 	<td><?php $form->field($fld, 'required',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?></td>
 	<td><?php 

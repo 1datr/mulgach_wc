@@ -5,6 +5,7 @@ class ActiveField
 	VAR $_ROW;
 	VAR $_FLDNAME;
 	VAR $_OPTIONS;
+	VAR $_ELEMENT_OPTIONS;	// параметры элемента
 	VAR $_ENV;
 	VAR $_CONTROLLER;
 	VAR $_FORM;
@@ -70,9 +71,16 @@ class ActiveField
 		return $str;
 	}
 	
-	private function get_name_root()
+	public function get_name_root()
 	{
-		$root="";			
+		$root="";		
+		
+		//mul_dbg($this->_ELEMENT_OPTIONS);
+		
+		if(isset($this->_ELEMENT_OPTIONS['name_root']))
+		{
+			return $this->_ELEMENT_OPTIONS['name_root'];
+		}
 		
 		if( (empty($this->_ROW->_MODEL->_SETTINGS['domen']) && empty($this->_ROW->_MODEL->_TABLE) ) )
 		{
@@ -109,6 +117,8 @@ class ActiveField
 			$own_fld_name = $this->unbracket_fld_name($this->_FLDNAME);
 			
 			$nameroot = $this->get_name_root();
+			
+			//mul_dbg($nameroot);
 			
 			$idx_str="";
 			if(isset($this->_OPTIONS['nameidx']))
@@ -155,13 +165,17 @@ class ActiveField
 	function text($opts=array())
 	{
 		def_options(array('htmlattrs'=>array()), $opts);
-		$opts['htmlattrs']['type']='text';
+		$opts['htmlattrs']['type']='text';		
+		
+	//	mul_dbg($opts);
+		$this->_ELEMENT_OPTIONS = $opts;
+		
+		$this->_HTML_NAME = $opts['htmlattrs']['name']; 
+		
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
-		
-		$this->_HTML_NAME = $opts['htmlattrs']['name']; 
 		
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
 			$opts['htmlattrs']['disabled']=null;
@@ -180,9 +194,11 @@ class ActiveField
 		def_options(array('htmlattrs'=>array('rows'=>5,'cols'=>10)), $opts);
 
 		if(!isset($opts['name']))
-				$opts['htmlattrs']['name']= $this->get_var_name();
-			else
-				$opts['htmlattrs']['name']= $opts['name'];
+			$opts['htmlattrs']['name']= $this->get_var_name();
+		else
+			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_ELEMENT_OPTIONS = $opts;
 			
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		
@@ -206,12 +222,14 @@ class ActiveField
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
-			$opts['htmlattrs']['name']= $opts['name'];
+			$opts['htmlattrs']['name']= $opts['name'];				
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
 			$opts['htmlattrs']['disabled']=null;
+		
+		$this->_ELEMENT_OPTIONS = $opts;
 		
 		$curr_value = $this->_ROW->getField($this->_FLDNAME);	
 		$fldparams = $this->_ROW->_MODEL->getFldInfo($this->_FLDNAME);
@@ -382,6 +400,8 @@ class ActiveField
 		
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
 			$opts['htmlattrs']['disabled']=null;
+		
+		$this->_ELEMENT_OPTIONS = $opts;
 			
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
@@ -431,12 +451,12 @@ class ActiveField
 	
 	function set($opts=array())
 	{
-		
+		$this->_ELEMENT_OPTIONS = $opts;
 	}
 	
 	function enum($opts=array())
 	{
-	
+		$this->_ELEMENT_OPTIONS = $opts;
 	}
 	
 	function hidden($opts=array())
@@ -447,6 +467,8 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_ELEMENT_OPTIONS = $opts;
 				
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 			
@@ -468,6 +490,8 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_ELEMENT_OPTIONS = $opts;
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		/*
@@ -496,6 +520,8 @@ class ActiveField
 			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
+		
+		$this->_ELEMENT_OPTIONS = $opts;
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		

@@ -300,7 +300,7 @@ class BaseModel
 		else 
 			return $this->_SETTINGS['fields'][$field]['Type'];
 	}
-	
+		
 	private function make_dbrec($row)
 	{
 		
@@ -390,6 +390,7 @@ class BaseModel
 		}
 		return null;
 	}
+	
 	
 	function get_name_array()
 	{

@@ -53,6 +53,12 @@ class EmakerController extends \BaseController
 			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
 			$primaryfld->setField('type',  $this->_CONNECTION->get_basic_type('int'));
+
+			// add typeinfo
+			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($primaryfld->getField('type')));
+			$typeinfo_row = $typemodel->empty_row_form_model();			
+			$primaryfld->setField('typeinfo', $typeinfo_row,$typemodel);
+			
 			$primaryfld->setField('primary', true);
 			$primaryfld->setField('required', true);
 			
@@ -74,6 +80,10 @@ class EmakerController extends \BaseController
 				$fld_login->fldEnabled('primary',false);
 				$fld_login->fldEnabled('required',false);
 				
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_login->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$fld_login->setField('typeinfo', $typeinfo_row,$typemodel);
+				
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_login));
 				// password field
 				$fld_passw = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
@@ -85,6 +95,10 @@ class EmakerController extends \BaseController
 				//$fld_passw->fldEnabled('type',false);
 				$fld_passw->fldEnabled('primary',false);
 				$fld_passw->fldEnabled('required',false);
+				
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_passw->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$fld_passw->setField('typeinfo', $typeinfo_row,$typemodel);
 				
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_passw));
 				// email field
@@ -98,6 +112,10 @@ class EmakerController extends \BaseController
 				$fld_email->fldEnabled('primary',false);
 				$fld_email->fldEnabled('required',false);
 				
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_email->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$fld_email->setField('typeinfo', $typeinfo_row,$typemodel);
+				
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_email));
 				// hash field
 				$fld_token = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
@@ -109,6 +127,10 @@ class EmakerController extends \BaseController
 				//$fld_token->fldEnabled('type',false);
 				$fld_token->fldEnabled('primary',false);
 				$fld_token->fldEnabled('required',false);
+				
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_token->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$fld_token->setField('typeinfo', $typeinfo_row,$typemodel);
 				
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_token));
 			}
@@ -136,7 +158,7 @@ class EmakerController extends \BaseController
 		$fld_prefix = $fld_name;
 		$matches =[];
 		preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
-		$fld_prefix = $matches[1][0];
+		$fld_prefix = $matches[1][0].'[typeinfo]';
 		$this->out_ajax_block('fldtype_base',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
 	}
 	

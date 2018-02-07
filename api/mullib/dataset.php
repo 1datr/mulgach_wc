@@ -9,6 +9,7 @@ class DataRecord	// запись из БД
 	VAR $_MODIFIED=false;
 	VAR $_DB=true;
 	VAR $_EXISTS_IN_DB=false;
+	VAR $_NESTED_MODELS=array();
 	
 	function __construct($model,$row_from_db=NULL,$env=array())
 	{
@@ -100,10 +101,20 @@ class DataRecord	// запись из БД
 		return array_key_exists($fld,$this->_FIELDS);
 	}
 	
-	function setField($fld,$val)
+	function setField($fld,$val,$nested_model=null)
 	{
 		if($this->FieldExists($fld))
-			$this->set_field($fld,$val);		
+		{
+			if($nested_model==null)
+			{
+				$this->set_field($fld,$val);
+			}
+			else 
+			{
+				$this->_NESTED_MODELS[$fld]=$nested_model;
+				$this->set_field($fld,$val);
+			}
+		}
 	}
 	
 	function fldEnabled($fld,$val=NULL)
@@ -276,6 +287,7 @@ class DataRecord	// запись из БД
 	
 	public function draw_def_form($form,$opts=[])
 	{
+		def_options(['show_labels'=>true], $opts)
 		?>
 		<table>
 		<?php 
@@ -294,12 +306,21 @@ class DataRecord	// запись из БД
 			{
 				?>
 				<tr>
-				<th><?=\Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th>
+				<?php if($opts['show_labels']) 
+				{
+					?><th><?=\Lang::__t($this->_MODEL->_SETTINGS['domen'].'.'.$fld)?></th><?php 	
+				}
+				?>
+				
     			<td><?php 
     			
     			$fparams=[];
     			if(isset($finfo['fldparams']))
     				$fparams=$finfo['fldparams'];
+    			
+    			$fparams = merge_arrays_assoc($finfo,$opts);
+    			
+    			
     			if($finfo['Type']=='enum')
     			{
     				$form->field($this,$fld)->ComboBox([],$fparams);
@@ -330,6 +351,16 @@ class DataRecord	// запись из БД
 	function getFieldNames()
 	{
 		return array_keys($this->_FIELDS);
+	}
+	
+	public function inherit($parent_row)
+	{
+		if(isset($this->_MODEL->_SETTINGS['domen']))
+			$this->_MODEL->_SETTINGS['domen']=$parent_row->_MODEL->_SETTINGS['domen'];
+		if(isset($this->_MODEL->_SETTINGS['name']))
+			$this->_MODEL->_SETTINGS['name']=$parent_row->_MODEL->_SETTINGS['name'];
+		if(isset($this->_MODEL->_SETTINGS['table']))
+			$this->_MODEL->_SETTINGS['table']=$parent_row->_MODEL->_SETTINGS['table'];
 	}
 	
 	

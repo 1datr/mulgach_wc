@@ -49,6 +49,7 @@ class ModelEmaker extends \BaseModel
 										'fldname'=>['Type'=>'text'],
 										'type'=>['Type'=>'text'],
 										'typeinfo'=>new \ModelInfo([
+											'mode'=>'variant',
 											'onload'=>function($parentrow)
 												{
 												
