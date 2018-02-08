@@ -164,7 +164,7 @@ class ActiveField
 	
 	function text($opts=array())
 	{
-		def_options(array('htmlattrs'=>array()), $opts);
+		def_options(array('htmlattrs'=>array(),'noerrbox'=>false,'hidden_if_d'=>true), $opts);
 		$opts['htmlattrs']['type']='text';		
 		
 	//	mul_dbg($opts);
@@ -177,23 +177,34 @@ class ActiveField
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 		
+		$hidden_out = false;
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+		{
 			$opts['htmlattrs']['disabled']=null;
+			if($opts['hidden_if_d'])
+			{
+				$hidden_out = true;
+			}
+		}
 		
 		if(!isset($opts['value']))
 			$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		if(isset($opts['value'])) $opts['htmlattrs']['value']=$opts['value'];
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
+		if($hidden_out)
+		{
+			$this->hidden();
+		}
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
-		$this->error_div();
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	function textarea($opts=array())
 	{
-		def_options(array('htmlattrs'=>array('rows'=>5,'cols'=>10)), $opts);
+		def_options(array('htmlattrs'=>array('rows'=>5,'cols'=>10),'noerrbox'=>false,'hidden_if_d'=>true), $opts);
 
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->get_var_name();
@@ -201,17 +212,30 @@ class ActiveField
 			$opts['htmlattrs']['name']= $opts['name'];
 		
 		$this->_ELEMENT_OPTIONS = $opts;		
-				
+		
+		$hidden_out = false;
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+		{
 			$opts['htmlattrs']['disabled']=null;
+			if($opts['hidden_if_d'])
+			{
+				$hidden_out = true;
+			}
+		}
 			
 		$opts['value']=$this->_ROW->getField($this->_FLDNAME);
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		?>
 		<textarea <?=$this->get_attr_str($opts['htmlattrs'])?> ><?=$opts['value'] ?></textarea>
+		
 		<?php
-		$this->error_div();
+		if($hidden_out)
+		{
+			$this->hidden();
+		}
+		
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 
 	/* параметры : 
@@ -220,14 +244,21 @@ class ActiveField
 	*/
 	function ComboBox($data=NULL,$opts=array())
 	{
-		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
+		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','err_box'=>true,'hidden_if_d'=>true,'required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->get_var_name();
 		else
 			$opts['htmlattrs']['name']= $opts['name'];				
 						
+		$hidden_out = false;
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+		{
 			$opts['htmlattrs']['disabled']=null;
+			if($opts['hidden_if_d'])
+			{
+				$hidden_out = true;
+			}
+		}
 		
 		$this->_ELEMENT_OPTIONS = $opts;
 		
@@ -337,7 +368,12 @@ class ActiveField
 		?>
 		</select>
 		<?php 
-		$this->error_div();
+		if($hidden_out)
+		{
+			$this->hidden(['noerrbox'=>true]);
+		}
+		
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	function get_upload_mode()
@@ -360,6 +396,8 @@ class ActiveField
 	
 	function file($opts=array())
 	{
+		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','err_box'=>true,'hidden_if_d'=>true,'required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
+		
 		$_UPLOAD_MODE=$this->get_upload_mode();
 		$view_src_def_template = '<a href="{file_url}" target="new_file">{file_name}</a>';
 		
@@ -399,8 +437,15 @@ class ActiveField
 		else
 			$opts['htmlattrs']['name']= $opts['name'];
 		
+		$hidden_out = false;
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+		{
 			$opts['htmlattrs']['disabled']=null;
+			if($opts['hidden_if_d'])
+			{
+				$hidden_out = true;
+			}
+		}
 		
 		$this->_ELEMENT_OPTIONS = $opts;
 			
@@ -446,8 +491,11 @@ class ActiveField
 			echo "<div id=\"file_source_{$this->_FLDNAME}\" style=\"display:inline;\">$source_html</div>";			
 		}
 		
-		
-		$this->error_div();
+		if($hidden_out)
+		{
+			$this->hidden(['noerrbox'=>true]);
+		}
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	function set($opts=array())
@@ -462,7 +510,7 @@ class ActiveField
 	
 	function hidden($opts=array())
 	{
-		def_options(array('htmlattrs'=>array()), $opts);
+		def_options(array('htmlattrs'=>array(),'noerrbox'=>false,), $opts);
 		$opts['htmlattrs']['type']='hidden';
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->get_var_name();
@@ -480,12 +528,12 @@ class ActiveField
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
-		$this->error_div();
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	function checkbox($opts=array())
 	{
-		def_options(array('htmlattrs'=>array(),'noerrbox'=>true), $opts);
+		def_options(array('htmlattrs'=>array(),'noerrbox'=>true,'hidden_if_d'=>true), $opts);
 		$opts['htmlattrs']['type']='checkbox';
 		
 		if(!isset($opts['name']))
@@ -503,20 +551,35 @@ class ActiveField
 			$opts['htmlattrs']['name']= $opts['name'];
 		*/
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
-		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
-			$opts['htmlattrs']['disabled']=null;
+		
+		$hidden_out = false;		
 		
 		if(!empty($fldval))
 			$opts['htmlattrs']['checked']=true;
+		
+		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+			{
+				$opts['htmlattrs']['disabled']=null;
+				if($opts['hidden_if_d'])
+				{
+					if($opts['htmlattrs']['checked'])
+						$hidden_out = true;
+				}
+			}
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
+		if($hidden_out)
+		{
+			$this->hidden();
+		}
+		
 		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	function password($opts=array())
 	{
-		def_options(array('htmlattrs'=>array()), $opts);
+		def_options(array('htmlattrs'=>array(),'noerrbox'=>false,'hidden_if_d'=>true), $opts);
 		$opts['htmlattrs']['type']='password';
 		if(!isset($opts['name']))
 			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
@@ -527,14 +590,25 @@ class ActiveField
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
 		
+		$hidden_out = false;
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))
+		{
 			$opts['htmlattrs']['disabled']=null;
+			if($opts['hidden_if_d'])
+			{
+				$hidden_out = true;
+			}
+		}
 		
 		$opts['htmlattrs']['value']=$this->_ROW->getField($this->_FLDNAME);
 		?>
 		<input <?=$this->get_attr_str($opts['htmlattrs'])?> />
 		<?php
-		$this->error_div();
+		if($hidden_out)
+		{
+			$this->hidden();
+		}
+		if(!$opts['noerrbox']) $this->error_div();
 	}
 	
 	// вывод кастомного виджета ввода

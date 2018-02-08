@@ -206,7 +206,7 @@ class plg_drv_mysql extends mod_plugin
 		);
 		$sql = $sql."( $str_fields )";
 		
-		//mul_dbg($sql);
+		mul_dbg($sql);
 		
 		return $this->query($sql);
 	}
@@ -240,9 +240,9 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function make_fld_info_from_data($data)
 	{
-		if($this->GetTypeClass($data['type']))
+		if($this->GetTypeClass($data['type'])=='int')
 		{
-			return "(".$data['typeinfo']['size'].")";
+			return "".$data['typeinfo']['size']."";
 		}
 		return "";
 	}

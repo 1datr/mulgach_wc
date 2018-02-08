@@ -189,7 +189,10 @@ class EmakerController extends \BaseController
 				$table_info['required'][]=$element['fldname'];
 			}
 			
-			$table_info['fields'][$element['fldname']]=['Type'=>$element['type'],'TypeInfo'=>$this->_CONNECTION->make_fld_info_from_data($element)];
+			$table_info['fields'][$element['fldname']]=[
+					'Type'=>$element['type'],
+					'TypeInfo'=>$this->_CONNECTION->make_fld_info_from_data($element)					
+			];
 		}
 		
 	//	mul_dbg($table_info);

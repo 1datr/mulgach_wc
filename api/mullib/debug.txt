@@ -1,0 +1,6 @@
+
+				
+				
+	02-08-2018 10:26:06.000000: CREATE TABLE `@+users` ( `id` BIGINT((20)) not null,`login` TEXT not null,`password` TEXT not null,`email` TEXT not null,`token` TEXT not null )
+				
+	02-08-2018 10:40:46.000000: CREATE TABLE `@+users` ( `id` BIGINT(20) not null,`login` TEXT not null,`password` TEXT not null,`email` TEXT not null,`token` TEXT not null,`birthdate` DATE null )
