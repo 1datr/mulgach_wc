@@ -479,7 +479,7 @@ function GenRandStr($length=6,$space=false) {
 	return $code;
 
 }
-
+// get equal if exists
 function eql_ife($arr,$key,$val)
 {
 	if(isset($arr[$key]))

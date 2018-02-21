@@ -180,7 +180,7 @@ class EmakerController extends \BaseController
 			if(isset($element['primary']))
 			{
 				
-				$table_info['primary'][]=$element['fldname'];
+				$table_info['primary']=$element['fldname'];
 			}
 			
 			if(isset($element['required']))

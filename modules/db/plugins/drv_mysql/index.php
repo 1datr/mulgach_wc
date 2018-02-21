@@ -197,6 +197,7 @@ class plg_drv_mysql extends mod_plugin
 				if($table_info['primary']==$idx)
 				{
 					$thetemplate=$thetemplate." PRIMARY KEY";
+				//	mul_dbg($table_fields);
 					if(!eql_ife($table_fields, 'not_a_i', true))
 					{
 						$thetemplate=$thetemplate." AUTO_INCREMENT";
@@ -206,7 +207,7 @@ class plg_drv_mysql extends mod_plugin
 		);
 		$sql = $sql."( $str_fields )";
 		
-		mul_dbg($sql);
+		//mul_dbg($sql);
 		
 		return $this->query($sql);
 	}
