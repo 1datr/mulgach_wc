@@ -170,4 +170,6 @@ $_LANG['.name']='.name';
 $_LANG['.description']='.description';
 $_LANG['.forum_id']='.forum_id';
 $_LANG['finfo.size']='finfo.size';
+$_LANG['ENTITY NAME']='ENTITY NAME';
+$_LANG['COMPILED']='COMPILED';
 ?>

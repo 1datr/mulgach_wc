@@ -21,7 +21,16 @@ class EmakerController extends \BaseController
 		$newrow->setfield('ename','');
 	//	$newrow->setfield('auth_entity',false);
 		$this->_TITLE=\Lang::__t('Entity manager');
-		$this->out_view('index',['newrow'=>$newrow]);
+		
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new \scaff_conf($cfg);
+		
+		$dbparams = $_cfg->connect_db_if_exists($this);
+		
+		$entities_table = $_cfg->get_entities($this->_CONNECTION,$_cfg);
+		
+		$this->out_view('index',['newrow'=>$newrow,'entities_table'=>$entities_table]);
 	}
 	
 	public function ActionCreationform()
@@ -173,8 +182,6 @@ class EmakerController extends \BaseController
 		
 		$table_info = array('fields'=>[],'table'=>$_POST['entity']['ename'],'required'=>[],'primary'=>[]);
 		
-	//	mul_dbg($_POST);
-		
 		foreach($_POST['entity']['fieldlist'] as $idx => $element)
 		{
 			if(isset($element['primary']))
@@ -195,8 +202,8 @@ class EmakerController extends \BaseController
 			];
 		}
 		
-	//	mul_dbg($table_info);
 		$this->_CONNECTION->create_table($table_info);
+		$this->redirect('emaker/'.$_POST['entity']['cfg']);
 	}
 	
 	public function BeforeValidate(&$bv_params)

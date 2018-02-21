@@ -72,6 +72,18 @@ $conf = array(
 		return $_PATH;
 	}
 	
+	public function get_entities($dbdrv,$_cfg)
+	{
+		$tables = $dbdrv->get_tables();
+		$res = [];
+		foreach($tables as $table)
+		{
+			$newentity = new scaff_entity($table,$_cfg);
+			$res[]=$newentity;
+		}
+		return $res;
+	}
+	
 	public function get_config_code()
 	{
 		$conf_file = url_seg_add($this->_PATH,'config.php');
