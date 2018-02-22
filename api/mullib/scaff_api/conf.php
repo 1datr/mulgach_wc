@@ -343,6 +343,11 @@ EOT;
 		return null;
 	}
 	
+	function delete_entity($ename)
+	{
+		
+	}
+	
 		
 	function create_triada($ep,$hmvc)
 	{

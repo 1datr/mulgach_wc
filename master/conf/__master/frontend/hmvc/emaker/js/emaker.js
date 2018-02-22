@@ -1,6 +1,13 @@
 $( document ).ready(function() 
 {
-	
+	$('.ref_delete').click(function(obj) 
+    		{
+    			if(confirm($(obj).attr('conf_message')))
+    			{
+    				return true;
+    			}
+    			return false;
+    		});
 });
 
 function on_sel_file(el)

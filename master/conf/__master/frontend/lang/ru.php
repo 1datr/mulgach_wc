@@ -172,4 +172,6 @@ $_LANG['.forum_id']='.forum_id';
 $_LANG['finfo.size']='finfo.size';
 $_LANG['ENTITY NAME']='ENTITY NAME';
 $_LANG['COMPILED']='COMPILED';
+$_LANG['Delete this entity?']='Delete this entity?';
+$_LANG['Edit the entity']='Edit the entity';
 ?>

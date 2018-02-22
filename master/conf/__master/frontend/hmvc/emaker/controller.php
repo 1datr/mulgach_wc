@@ -29,8 +29,20 @@ class EmakerController extends \BaseController
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		
 		$entities_table = $_cfg->get_entities($this->_CONNECTION,$_cfg);
+		$this->add_js('#/js/emaker.js');
 		
 		$this->out_view('index',['newrow'=>$newrow,'entities_table'=>$entities_table]);
+	}
+	
+	public function ActionDrop($cfg,$ename)
+	{
+		// подключаемся к базе и драйверу
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new \scaff_conf($cfg);
+		$dbparams = $_cfg->connect_db_if_exists($this);
+		$_cfg->delete_entity($ename);
+		$this->redirect_back();
 	}
 	
 	public function ActionCreationform()
