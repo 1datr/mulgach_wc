@@ -41,6 +41,7 @@ class EmakerController extends \BaseController
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		$_cfg = new \scaff_conf($cfg);
 		$dbparams = $_cfg->connect_db_if_exists($this);
+		$_cfg->_DRV = $this->_CONNECTION;
 		$_cfg->delete_entity($ename);
 		$this->redirect_back();
 	}

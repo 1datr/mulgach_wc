@@ -147,6 +147,13 @@ class plg_drv_mysql extends mod_plugin
 		@mysql_set_charset($this->_DB_PARAMS['charset']);
 	}
 	
+	public function delete_table($tbl)
+	{
+		$sql = "DROP TABLE @+$tbl";
+	//	mul_dbg($sql);
+		$this->query($sql);
+	}
+	
 	public function create_db($db_name)
 	{
 		$sql = QueryMaker::query_makedb($db_name);		

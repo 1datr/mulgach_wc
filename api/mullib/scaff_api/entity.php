@@ -16,4 +16,9 @@ class scaff_entity {
 		
 	}
 	
+	function delete()
+	{
+		$this->DATA_DRV->delete_table($this->TABLE);
+	}
+	
 }

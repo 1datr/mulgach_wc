@@ -4,6 +4,7 @@ class scaff_conf
 	VAR $_PATH;
 	VAR $_ERROR=false;
 	VAR $_NAME;
+	VAR $_DRV;
 	
 	function __construct($conf,$opts=array())
 	{
@@ -345,7 +346,9 @@ EOT;
 	
 	function delete_entity($ename)
 	{
-		
+		$entity = new scaff_entity($ename,$this);
+		$entity->DATA_DRV = $this->_DRV;
+		$entity->delete();
 	}
 	
 		
