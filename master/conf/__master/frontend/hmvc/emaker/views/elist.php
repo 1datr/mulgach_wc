@@ -18,7 +18,7 @@ foreach ($entities_table as $entity)
 		</a>	
 	</td>
 	<td>
-		<a href="<?=as_url('emaker/eedit/'.$entity->PARENT_CFG->_NAME.'/'.$entity->NAM)?>" title="#{Edit the entity}">
+		<a href="<?=as_url('emaker/edit/'.$entity->PARENT_CFG->_NAME.'/'.$entity->NAME)?>" title="#{Edit the entity}">
 			<img alt="" src="<?=$this->get_image('../../images/pen.jpg')?>" width="18px" height="18px">
 		<a />
 	</td>

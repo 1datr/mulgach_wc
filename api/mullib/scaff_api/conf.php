@@ -85,6 +85,13 @@ $conf = array(
 		return $res;
 	}
 	
+	public function get_entity($entity_name,$_cfg)
+	{
+		$newentity = new scaff_entity($entity_name,$_cfg);
+		
+		return $newentity;
+	}
+	
 	public function get_config_code()
 	{
 		$conf_file = url_seg_add($this->_PATH,'config.php');

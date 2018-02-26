@@ -174,4 +174,5 @@ $_LANG['ENTITY NAME']='ENTITY NAME';
 $_LANG['COMPILED']='COMPILED';
 $_LANG['Delete this entity?']='Delete this entity?';
 $_LANG['Edit the entity']='Edit the entity';
+$_LANG['Edit entity zoo']='Edit entity zoo';
 ?>

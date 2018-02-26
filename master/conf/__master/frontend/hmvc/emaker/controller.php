@@ -114,7 +114,6 @@ class EmakerController extends \BaseController
 				$fld_passw->setField('required', true);
 				$fld_passw->setField('file_enabled',false);
 				
-				//$fld_passw->fldEnabled('type',false);
 				$fld_passw->fldEnabled('primary',false);
 				$fld_passw->fldEnabled('required',false);
 				
@@ -157,9 +156,74 @@ class EmakerController extends \BaseController
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_token));
 			}
 			
+			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			
 			$this->_TITLE = \Lang::__t('New entity creation');
 			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
+	}
+
+	
+	public function ActionEdit($cfg,$_ename)
+	{
+		$sbplugin = use_jq_plugin('structblock',['controller'=>$this,'onadd'=>""]);
+		$this->_MODEL->scenario("efield");
+		
+		// подключаемся к базе и драйверу
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new \scaff_conf($cfg);
+		
+		$dbparams = $_cfg->connect_db_if_exists($this);
+		
+		$entity = $_cfg->get_entity($_ename,$_cfg);
+		
+		$entity->SetDrv($this->_CONNECTION);
+		
+		$fields = $entity->get_fields();
+		
+		$editing_entity = $this->_MODEL->empty_row_form_model();
+		//mul_dbg($_POST);
+		$editing_entity->setField('cfg', $cfg);
+		$editing_entity->setField('ename', $_ename);
+		$editing_entity->setField('fieldlist', array());
+		
+	//	mul_dbg($fields);
+		foreach ($fields as $fld =>$fld_params)
+		{
+			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			$thefld->setField('fldname', $fld);
+			$thefld->setField('type', $fld_params['Type']);
+			$thefld->setField('required', true);
+			$thefld->setField('file_enabled',false);
+			
+			//$fld_login->fldEnabled('type',false);
+		//	$thefld->fldEnabled('primary',false);
+		//	$thefld->fldEnabled('required',false);
+			
+			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
+			$typeinfo_row = $typemodel->empty_row_form_model();
+			$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+			
+			$editing_entity->setField('fieldlist', x_array_push($editing_entity->getField('fieldlist'), $thefld));
+			
+		} 
+		
+		$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+	//	$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($primaryfld->getField('type')));
+	//	$typeinfo_row = $typemodel->empty_row_form_model();
+	//	$primaryfld->setField('typeinfo', $typeinfo_row,$typemodel);
+		
+		
+		
+		$this->add_js('#/js/emaker.js');
+		$this->_TITLE = \Lang::__t('Edit entity '.$_ename);
+		
+		$typelist = $this->_CONNECTION->Typelist();
+		$typelist['_ref']=\Lang::__t('Entity reference');
+	
+		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$editing_entity,'emptyfld'=>$emptyfld]);
+		
 	}
 	
 	public function ActionTypeinfo($cfg,$fldtype,$fld_name)
@@ -193,30 +257,11 @@ class EmakerController extends \BaseController
 			
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		
-		$table_info = array('fields'=>[],'table'=>$_POST['entity']['ename'],'required'=>[],'primary'=>[]);
+		$the_entity = new \scaff_entity($_POST['entity'], $cfg);
+		$the_entity->DATA_DRV = $this->_CONNECTION;
+		$the_entity->make();
 		
-		foreach($_POST['entity']['fieldlist'] as $idx => $element)
-		{
-			if(isset($element['primary']))
-			{
-				
-				$table_info['primary']=$element['fldname'];
-			}
-			
-			if(isset($element['required']))
-			{
-			
-				$table_info['required'][]=$element['fldname'];
-			}
-			
-			$table_info['fields'][$element['fldname']]=[
-					'Type'=>$element['type'],
-					'TypeInfo'=>$this->_CONNECTION->make_fld_info_from_data($element)					
-			];
-		}
-		
-		$this->_CONNECTION->create_table($table_info);
-		$this->redirect('emaker/'.$_POST['entity']['cfg']);
+		$this->redirect(as_url('emaker/'.$_POST['entity']['cfg']));
 	}
 	
 	public function BeforeValidate(&$bv_params)
