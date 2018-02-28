@@ -193,6 +193,14 @@ function xx_implode($arr,$delimeter,$template,$onelement=NULL)
 	return $str;
 }
 
+function x_array_walk(&$arr,$onelement)
+{
+	foreach($arr as $idx => $val)
+	{
+		$onelement($idx,$val);
+	}
+}
+
 function x_make_str($str,$ptrn)
 {
 	$ptrn2=array("{%0}"=>$ptrn);

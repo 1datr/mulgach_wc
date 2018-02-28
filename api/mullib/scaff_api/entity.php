@@ -59,7 +59,24 @@ class scaff_entity {
 	
 	function get_fields()
 	{
-		return $this->DATA_DRV->get_table_fields($this->TABLE);
+		$fields = $this->DATA_DRV->get_table_fields($this->TABLE);
+		$this->COMPILED=false;
+		if(!empty($this->PARENT_CFG))
+		{
+			$triada = $this->PARENT_CFG->get_triada('front',$this->TABLE);
+			if($triada!=null)
+			{
+				$this->COMPILED=true;
+			}
+			else 
+				$this->COMPILED=false;
+		}
+		
+		if($this->COMPILED)
+		{
+			
+		}		
+		return $fields;
 	}
 	
 	function make()
@@ -71,7 +88,7 @@ class scaff_entity {
 	
 	function build_table()
 	{
-		$this->DATA_DRV->create_table($this->_TABLE_INFO);
+		$this->DATA_DRV->build_table($this->_TABLE_INFO);
 	}
 	
 	function build_hmvc()

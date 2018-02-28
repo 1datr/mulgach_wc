@@ -159,7 +159,7 @@ class EmakerController extends \BaseController
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			
 			$this->_TITLE = \Lang::__t('New entity creation');
-			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
+			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'mode'=>'create','newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
 	}
 
@@ -194,7 +194,8 @@ class EmakerController extends \BaseController
 			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			$thefld->setField('fldname', $fld);
 			$thefld->setField('type', $fld_params['Type']);
-			$thefld->setField('required', true);
+			$thefld->setField('primary', ($fld_params['Key']=='PRI'));
+			$thefld->setField('required',!($fld_params['Null']=='No'));
 			$thefld->setField('file_enabled',false);
 			
 			//$fld_login->fldEnabled('type',false);
@@ -222,7 +223,7 @@ class EmakerController extends \BaseController
 		$typelist = $this->_CONNECTION->Typelist();
 		$typelist['_ref']=\Lang::__t('Entity reference');
 	
-		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$editing_entity,'emptyfld'=>$emptyfld]);
+		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$editing_entity,'mode'=>'save','emptyfld'=>$emptyfld]);
 		
 	}
 	

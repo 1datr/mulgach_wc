@@ -182,6 +182,15 @@ class plg_drv_mysql extends mod_plugin
 		}
 	}
 	
+	function build_table($table_info)
+	{
+		$fieldlist = $this->get_table_fields($table_info['table']);
+		
+		//mul_dbg($table_info);
+		
+		$this->create_table($table_info);
+	}
+	
 	public function create_table($table_info)
 	{
 		// DROP TABLE IF EXISTS `@+{table}`
@@ -307,18 +316,25 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function Typelist()
 	{
-		return array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT','FLOAT','DOUBLE','DECIMAL', // integer types
+		$types = array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT','FLOAT','DOUBLE','DECIMAL', // integer types
 				'DATE','DATETIME','TIMESTAMP','TIME','YEAR', // date types
 						'CHAR','VARCHAR','TEXT','TINYTEXT','MEDIUMTEXT','LONGTEXT',// text types
 				'BLOB','TINYBLOB','MEDIUMBLOB','LONGBLOB',// blob types
 				'ENUM','SET' // set types
 				
 		);
+		
+		foreach($types as $idx => $val)
+		{
+			$types[$idx]=strtolower($val);
+		}
+		
+		return $types;
 	}
 	
 	public function class_map()
 	{
-		return array(
+		$map = array(
 				'int'=>array('INT','BIGINT','TINYINT','SMALLINT','MEDIUMINT'),
 				'float'=>array('FLOAT','DOUBLE','DECIMAL','REAL'),
 				'datetime'=>array('DATE','DATETIME','TIMESTAMP','TIME','YEAR'),
@@ -326,6 +342,16 @@ class plg_drv_mysql extends mod_plugin
 				'binary'=>array('BLOB','TINYBLOB','MEDIUMBLOB','LONGBLOB'),
 				'enums'=>array('ENUM','SET'),
 		);
+		
+		foreach($map as $key => $submap)
+		{
+			foreach ($submap as $idx => $val)
+			{
+				$map[$key][$idx]=strtolower($val);
+			}
+		}
+		
+		return $map;
 	}
 	
 	public function get_basic_type($type_class)	// основной тип поля по классу
@@ -446,6 +472,8 @@ class plg_drv_mysql extends mod_plugin
 		}
 		return $arr;
 	}
+	
+	
 	
 	function get_enum_field_values($table,$column)
 	{

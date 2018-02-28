@@ -73,7 +73,12 @@ $sbplugin->template_table_end();
 	}
 ?>	
 <?php $sbplugin->table_block_end(); ?>
-<?php $form->submit('#{MAKE ENTITY}'); ?>
+<?php 
+if($mode=='create')
+	$form->submit('#{MAKE ENTITY}'); 
+else
+	$form->submit('#{SAVE ENTITY}');
+?>
 <?php $form->close(); 
 jq_onready($this, "$('#fields_block').jqStructBlock({
 	onadd:function(newblock)
