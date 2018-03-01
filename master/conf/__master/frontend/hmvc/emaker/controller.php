@@ -75,6 +75,7 @@ class EmakerController extends \BaseController
 			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
 			$primaryfld->setField('type',  $this->_CONNECTION->get_basic_type('int'));
+			$primaryfld->setField('deletable', false);
 
 			// add typeinfo
 			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($primaryfld->getField('type')));
@@ -97,6 +98,7 @@ class EmakerController extends \BaseController
 				$fld_login->setField('type', $this->_CONNECTION->get_basic_type('text'));				
 				$fld_login->setField('required', true);								
 				$fld_login->setField('file_enabled',false);
+				$fld_login->setField('deletable', false);
 				
 				//$fld_login->fldEnabled('type',false);
 				$fld_login->fldEnabled('primary',false);
@@ -113,6 +115,7 @@ class EmakerController extends \BaseController
 				$fld_passw->setField('type', $this->_CONNECTION->get_basic_type('text'));
 				$fld_passw->setField('required', true);
 				$fld_passw->setField('file_enabled',false);
+				$fld_passw->setField('deletable', false);
 				
 				$fld_passw->fldEnabled('primary',false);
 				$fld_passw->fldEnabled('required',false);
@@ -128,6 +131,7 @@ class EmakerController extends \BaseController
 				$fld_email->setField('type', $this->_CONNECTION->get_basic_type('text'));
 				$fld_email->setField('required', true);
 				$fld_email->setField('file_enabled',false);
+				$fld_email->setField('deletable', false);
 				
 				//$fld_email->fldEnabled('type',false);
 				$fld_email->fldEnabled('primary',false);
@@ -148,6 +152,7 @@ class EmakerController extends \BaseController
 				//$fld_token->fldEnabled('type',false);
 				$fld_token->fldEnabled('primary',false);
 				$fld_token->fldEnabled('required',false);
+				$fld_token->setField('deletable', false);
 				
 				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_token->getField('type')));
 				$typeinfo_row = $typemodel->empty_row_form_model();
@@ -195,6 +200,7 @@ class EmakerController extends \BaseController
 			$thefld->setField('fldname', $fld);
 			$thefld->setField('type', $fld_params['Type']);
 			$thefld->setField('primary', ($fld_params['Key']=='PRI'));
+			$thefld->setField('deletable', ($fld_params['Key']!='PRI'));
 			$thefld->setField('required',!($fld_params['Null']=='No'));
 			$thefld->setField('file_enabled',false);
 			

@@ -57,6 +57,7 @@ class ModelEmaker extends \BaseModel
 										]),
 										'primary'=>['Type'=>'boolean'],
 										'required'=>['Type'=>'boolean'],
+										'deletable'=>['Type'=>'boolean','defval'=>true],
 										'file_enabled'=>['Type'=>'boolean'],
 										'file'=>['Type'=>'boolean'],
 										'filetype'=>['Type'=>'text','dependency'=>['fld'=>'file','type'=>'iftrue']],

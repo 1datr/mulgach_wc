@@ -172,19 +172,34 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function make_table($table_info)
 	{
-		if(!$this->table_exists($table_info['table']))
-		{
-			$this->create_table($table_info);
-		}
-		else 
-		{
-			$tinfo = get_table_fields($table_info['table']);
-		}
+		
+	}
+	
+	function delete_field($table,$fld)
+	{
+		$this->query( "ALTER TABLE `@+$table` DROP `$fld`");
+		//ALTER TABLE `test_zoo` ADD `zooname` TEXT NOT NULL AFTER `name`;
 	}
 	
 	function build_table($table_info)
 	{
-		$fieldlist = $this->get_table_fields($table_info['table']);
+		if(!$this->table_exists($table_info['table']))
+		{
+			$this->create_table($table_info);
+		}
+		else
+		{
+			$exist_table_info = $this->get_table_fields($table_info['table']);
+				
+			foreach ($exist_table_info as $fld => $finfo )
+			{
+				if(!isset($table_info['fields'][$fld]))
+				{
+					$this->delete_field($table_info['table'],$fld);
+				}
+			}
+				
+		}
 		
 		//mul_dbg($table_info);
 		

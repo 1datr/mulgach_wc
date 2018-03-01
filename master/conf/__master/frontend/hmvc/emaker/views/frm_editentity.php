@@ -67,9 +67,17 @@ $sbplugin->template_table_end();
 			<?php   
 		}
 	?></td>		
-	<td></td>
+	<?php 
+	if($fld->getField('deletable'))
+		{
+	?>
+	<td><button type="button" class="fields_item_drop">x</button></td>
+	<?php 
+		}
+	?>
 </tr>
-<?php 
+<?php
+		
 	}
 ?>	
 <?php $sbplugin->table_block_end(); ?>
