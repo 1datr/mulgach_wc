@@ -181,9 +181,9 @@ class plg_drv_mysql extends mod_plugin
 		
 	}
 	
-	function add_field($fld,$fld_info)
+	function add_field($table,$fld,$fld_info)
 	{
-		$this->query( "ALTER TABLE `@+$table` ADD `$fld` ".$fld_info['type']." NOT NULL AFTER `".$fld_info['fldafter']."`");
+		$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` ".$fld_info['Type']." NOT NULL AFTER `".$fld_info['fldafter']."`");
 		// ALTER TABLE `test_zoo` CHANGE `name` `name` TEXT NULL DEFAULT NULL;
 	}
 	
@@ -219,7 +219,7 @@ class plg_drv_mysql extends mod_plugin
 				else
 				{
 					$finfo['fldafter']=$fldold;
-					$this->add_field($fld,$finfo);
+					$this->add_field($table_info['table'],$fld,$finfo);
 				}
 				
 				$fldold = $fld;

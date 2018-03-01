@@ -203,11 +203,7 @@ class EmakerController extends \BaseController
 			$thefld->setField('deletable', ($fld_params['Key']!='PRI'));
 			$thefld->setField('required',!($fld_params['Null']=='No'));
 			$thefld->setField('file_enabled',false);
-			
-			//$fld_login->fldEnabled('type',false);
-		//	$thefld->fldEnabled('primary',false);
-		//	$thefld->fldEnabled('required',false);
-			
+				
 			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
 			$typeinfo_row = $typemodel->empty_row_form_model();
 			$thefld->setField('typeinfo', $typeinfo_row,$typemodel);

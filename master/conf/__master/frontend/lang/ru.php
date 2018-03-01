@@ -177,4 +177,5 @@ $_LANG['Edit the entity']='Edit the entity';
 $_LANG['Edit entity zoo']='Edit entity zoo';
 $_LANG['SAVE ENTITY']='SAVE ENTITY';
 $_LANG['Edit entity message']='Edit entity message';
+$_LANG['Edit entity users']='Edit entity users';
 ?>
