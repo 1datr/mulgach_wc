@@ -178,7 +178,18 @@ class plg_drv_mysql extends mod_plugin
 	function delete_field($table,$fld)
 	{
 		$this->query( "ALTER TABLE `@+$table` DROP `$fld`");
-		//ALTER TABLE `test_zoo` ADD `zooname` TEXT NOT NULL AFTER `name`;
+		
+	}
+	
+	function add_field($fld,$fld_info)
+	{
+		$this->query( "ALTER TABLE `@+$table` ADD `$fld` ".$fld_info['type']." NOT NULL AFTER `".$fld_info['fldafter']."`");
+		// ALTER TABLE `test_zoo` CHANGE `name` `name` TEXT NULL DEFAULT NULL;
+	}
+	
+	function change_field($fld,$fld_info)
+	{
+		//$this->query( "ALTER TABLE `@+$table` CHANGE `name` `name` TEXT NULL DEFAULT NULL");
 	}
 	
 	function build_table($table_info)
@@ -190,14 +201,30 @@ class plg_drv_mysql extends mod_plugin
 		else
 		{
 			$exist_table_info = $this->get_table_fields($table_info['table']);
-				
+			// дропаем филды которых нет	
 			foreach ($exist_table_info as $fld => $finfo )
 			{
 				if(!isset($table_info['fields'][$fld]))
 				{
 					$this->delete_field($table_info['table'],$fld);
 				}
+				
 			}
+			// добавляем и едитим филды
+			$fldold=null;
+			foreach ($table_info['fields'] as $fld => $finfo)
+			{
+				if(isset($exist_table_info[$fld]))
+					$this->change_field($fld,$finfo);
+				else
+				{
+					$finfo['fldafter']=$fldold;
+					$this->add_field($fld,$finfo);
+				}
+				
+				$fldold = $fld;
+			}
+			
 				
 		}
 		
@@ -373,10 +400,10 @@ class plg_drv_mysql extends mod_plugin
 	{
 		switch ($type_class)
 		{
-			case 'int': return 'BIGINT';break;
-			case 'text': return 'TEXT';break;
-			case 'datetime': return 'DATETIME';break;
-			case 'float': return 'DOUBLE';break;
+			case 'int': return 'bigint';break;
+			case 'text': return 'text';break;
+			case 'datetime': return 'datetime';break;
+			case 'float': return 'double';break;
 		}
 		$cmap = $this->class_map();
 		if(!isset($cmap[$type_class]))
@@ -390,7 +417,7 @@ class plg_drv_mysql extends mod_plugin
 		$matches=array();
 		foreach ($map as $class => $typelist)
 		{
-			if(in_array(strtoupper($type),$typelist))
+			if(in_array(strtolower($type),$typelist))
 			{
 				return $class;
 			}

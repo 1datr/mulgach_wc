@@ -176,4 +176,5 @@ $_LANG['Delete this entity?']='Delete this entity?';
 $_LANG['Edit the entity']='Edit the entity';
 $_LANG['Edit entity zoo']='Edit entity zoo';
 $_LANG['SAVE ENTITY']='SAVE ENTITY';
+$_LANG['Edit entity message']='Edit entity message';
 ?>
