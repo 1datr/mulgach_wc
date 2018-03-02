@@ -47,6 +47,7 @@ class ModelEmaker extends \BaseModel
 										},
 									'fields'=>[
 										'fldname'=>['Type'=>'text'],
+										'fldname_old'=>['Type'=>'text'],
 										'type'=>['Type'=>'text'],
 										'typeinfo'=>new \ModelInfo([
 											'mode'=>'variant',
@@ -55,6 +56,8 @@ class ModelEmaker extends \BaseModel
 												
 												}
 										]),
+										'defval'=>['Type'=>'text'],
+										'defval_enable'=>['Type'=>'boolean','defval'=>true],
 										'primary'=>['Type'=>'boolean'],
 										'required'=>['Type'=>'boolean'],
 										'deletable'=>['Type'=>'boolean','defval'=>true],

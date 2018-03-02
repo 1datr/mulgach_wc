@@ -198,11 +198,14 @@ class EmakerController extends \BaseController
 		{
 			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			$thefld->setField('fldname', $fld);
+			$thefld->setField('fldname_old', $fld);
 			$thefld->setField('type', $fld_params['Type']);
 			$thefld->setField('primary', ($fld_params['Key']=='PRI'));
 			$thefld->setField('deletable', ($fld_params['Key']!='PRI'));
-			$thefld->setField('required',!($fld_params['Null']=='No'));
+			$thefld->setField('required',($fld_params['Null']=='NO'));
 			$thefld->setField('file_enabled',false);
+			
+			$thefld->setField('defval', $fld_params['Defval']);
 				
 			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
 			$typeinfo_row = $typemodel->empty_row_form_model();

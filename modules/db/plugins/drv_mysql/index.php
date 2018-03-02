@@ -183,13 +183,19 @@ class plg_drv_mysql extends mod_plugin
 	
 	function add_field($table,$fld,$fld_info)
 	{
+		$str_default = "NULL";
+		if(!empty($fld_info['defval']))
+			$str_default = "'".$fld_info['defval']."'";
 		$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` ".$fld_info['Type']." NOT NULL AFTER `".$fld_info['fldafter']."`");
 		// ALTER TABLE `test_zoo` CHANGE `name` `name` TEXT NULL DEFAULT NULL;
 	}
 	
-	function change_field($fld,$fld_info)
+	function change_field($table,$fld,$fld_info)
 	{
-		//$this->query( "ALTER TABLE `@+$table` CHANGE `name` `name` TEXT NULL DEFAULT NULL");
+		$str_default = "NULL";
+		if(!empty($fld_info['defval']))
+			$str_default = "'".$fld_info['defval']."'";
+		$this->query( "ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$fld_info['Type']." NULL DEFAULT NULL");
 	}
 	
 	function build_table($table_info)
@@ -201,21 +207,14 @@ class plg_drv_mysql extends mod_plugin
 		else
 		{
 			$exist_table_info = $this->get_table_fields($table_info['table']);
-			// дропаем филды которых нет	
-			foreach ($exist_table_info as $fld => $finfo )
-			{
-				if(!isset($table_info['fields'][$fld]))
-				{
-					$this->delete_field($table_info['table'],$fld);
-				}
-				
-			}
 			// добавляем и едитим филды
 			$fldold=null;
 			foreach ($table_info['fields'] as $fld => $finfo)
 			{
 				if(isset($exist_table_info[$fld]))
-					$this->change_field($fld,$finfo);
+				{
+					$this->change_field($table_info['table'],$fld,$finfo);
+				}
 				else
 				{
 					$finfo['fldafter']=$fldold;
@@ -225,6 +224,16 @@ class plg_drv_mysql extends mod_plugin
 				$fldold = $fld;
 			}
 			
+			$exist_table_info = $this->get_table_fields($table_info['table']);
+			// дропаем филды которых нет
+			foreach ($exist_table_info as $fld => $finfo )
+			{
+				if(!isset($table_info['fields'][$fld]))
+				{
+					$this->delete_field($table_info['table'],$fld);
+				}
+			
+			}
 				
 		}
 		
