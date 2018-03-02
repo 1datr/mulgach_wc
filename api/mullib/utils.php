@@ -197,8 +197,21 @@ function x_array_walk(&$arr,$onelement)
 {
 	foreach($arr as $idx => $val)
 	{
-		$onelement($idx,$val);
+		$return = false;
+		$onelement($idx,$val,$return);
+		if($return)
+			return;
 	}
+}
+
+function get_by_key_case_no_sensitive($hash,$key)
+{
+	foreach ($hash as $_key => $val)
+	{
+		if(strtolower($key)===strtolower($_key))
+			return $val;
+	}
+	return NULL;
 }
 
 function x_make_str($str,$ptrn)
@@ -298,6 +311,8 @@ function url_seg_add()
 	return $resstr;
 	
 }
+
+
 
 // создать файл рекурсивно полностью
 function x_file_put_contents($filename,$data,$flags=0,$context=null)

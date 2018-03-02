@@ -184,22 +184,68 @@ class plg_drv_mysql extends mod_plugin
 	function add_field($table,$fld,$fld_info)
 	{
 		$str_default = "NULL";
-		if(!empty($fld_info['defval']))
-			$str_default = "'".$fld_info['defval']."'";
-		$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` ".$fld_info['Type']." NOT NULL AFTER `".$fld_info['fldafter']."`");
+		if(!empty($fld_info['Default']))
+			$str_default = "'".$fld_info['Default']."'";
+		
+		$str_null = "NULL";
+		
+		if($fld_info['Null'])
+			$str_null = "NOT NULL";
+		
+		$type_str = $fld_info['Type'].'('.$fld_info['TypeInfo'].')';
+			
+		$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` $type_str $str_null DEFAULT $str_default AFTER `".$fld_info['fldafter']."`");
 		// ALTER TABLE `test_zoo` CHANGE `name` `name` TEXT NULL DEFAULT NULL;
 	}
 	
 	function change_field($table,$fld,$fld_info)
 	{
 		$str_default = "NULL";
-		if(!empty($fld_info['defval']))
-			$str_default = "'".$fld_info['defval']."'";
-		$this->query( "ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$fld_info['Type']." NULL DEFAULT NULL");
+		if(!empty($fld_info['Default']))
+			$str_default = "'".$fld_info['Default']."'";
+		
+		$str_null = "NULL";
+		if($fld_info['Null'])
+			$str_null = "NOT NULL";
+		
+		$type_str = $fld_info['Type'].'('.$fld_info['TypeInfo'].')';
+			
+		$this->query("ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $str_null DEFAULT $str_default");
 	}
 	
 	function build_table($table_info)
 	{
+		function compare_field_settings($fld_existing,$fldinfo)
+		{
+			$res = ($fld_existing['Type']==$fldinfo['Type']);
+			
+			if(!$res) return false;
+			
+			// default
+			if(empty($fldinfo['Default'])&& empty($fld_existing['Default']))
+			{
+				$res = true;	
+			}
+			elseif($fldinfo['Default']===$fld_existing['Default'])
+			{
+				$res = true; 
+			}
+			else 
+				$res = false;
+			
+			if(!$res) return false;
+			
+			// null
+			$_existing_fld_null = false;
+			
+			$_existing_fld_null = ($fld_existing['Null']!="NO");
+			
+			$res = (!($fldinfo['Null'] && $_existing_fld_null));
+			if(!$res) return false;
+			
+			return $res;
+		}
+		
 		if(!$this->table_exists($table_info['table']))
 		{
 			$this->create_table($table_info);
@@ -213,7 +259,10 @@ class plg_drv_mysql extends mod_plugin
 			{
 				if(isset($exist_table_info[$fld]))
 				{
-					$this->change_field($table_info['table'],$fld,$finfo);
+					if(!compare_field_settings($exist_table_info[$fld],$finfo))
+					{
+						$this->change_field($table_info['table'],$fld,$finfo);
+					}
 				}
 				else
 				{
@@ -308,9 +357,13 @@ class plg_drv_mysql extends mod_plugin
 	
 	public function make_fld_info_from_data($data)
 	{
-		if($this->GetTypeClass($data['type'])=='int')
+		$type = get_by_key_case_no_sensitive($data,'type');
+		
+		$typeinfo = get_by_key_case_no_sensitive($data,'typeinfo');
+		
+		if(($this->GetTypeClass($type)=='int')||($type=='varchar'))
 		{
-			return "".$data['typeinfo']['size']."";
+			return "".$typeinfo['size']."";
 		}
 		return "";
 	}
@@ -507,14 +560,6 @@ class plg_drv_mysql extends mod_plugin
 				//print_r($matches);
 				$col['Type']=$matches[1][0];
 				$col['TypeInfo']=$matches[2][0];
-				/*
-				try
-				{
-					$intval = (int)$col['TypeInfo'];
-					$col['TypeInfo']=$intval;
-				}
-				catch (Exception $ex){}
-				*/
 				
 			}
 			

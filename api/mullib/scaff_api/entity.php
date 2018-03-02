@@ -47,7 +47,9 @@ class scaff_entity {
 				
 			$this->_TABLE_INFO['fields'][$element['fldname']]=[
 					'Type'=>$element['type'],
-					'TypeInfo'=>$this->DATA_DRV->make_fld_info_from_data($element)
+					'TypeInfo'=>$this->DATA_DRV->make_fld_info_from_data($element),
+					'Null'=>($element['required']=='on'),
+					'Default'=>$element['defval']
 			];
 			
 			if(!empty($element['fldname_old']))

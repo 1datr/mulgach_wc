@@ -205,7 +205,7 @@ class EmakerController extends \BaseController
 			$thefld->setField('required',($fld_params['Null']=='NO'));
 			$thefld->setField('file_enabled',false);
 			
-			$thefld->setField('defval', $fld_params['Defval']);
+			$thefld->setField('defval', $fld_params['Default']);
 				
 			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
 			$typeinfo_row = $typemodel->empty_row_form_model();
