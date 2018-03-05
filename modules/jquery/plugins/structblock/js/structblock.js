@@ -51,6 +51,11 @@
 			new_data_block.find('.'+id_attr+'_drop').bind( "click",drop);
 	  };
 	  
+	  function move(el,step)
+	  {
+		  
+	  }
+	  
 	  function drop() {
 			
 		  	the_block = $(this).parents('.jqStructBlock').first(); // сам набор строк
@@ -86,6 +91,7 @@
 	    */
 		 $('.'+id_attr+'_add').bind('click',add); 
 		 $('.'+id_attr+'_drop').bind('click',drop); 
+		 $('.'+id_attr+'_move').bind('click',move); 
 		  
 	  /*    var dts = $(this).children('dt');
 	      dts.click(onClick);

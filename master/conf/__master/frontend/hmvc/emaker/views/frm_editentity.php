@@ -33,7 +33,18 @@ $sbplugin->template_table_end();
 <?php $sbplugin->table_block_start('fields_item',array('id'=>'fields_block'),[],"
 <tr><th>#{Field name:}</th><th colspan=\"2\">#{Type:}</th><th>#{Primary:}</th><th>#{Required:}</th><th>#{File field:}</th><th>#{Default value:}</th></tr>		
 		");?>
-<h4>#{New entity creation}</h4>
+<h4>
+<?php 
+if($mode=='create')
+{
+	?>#{New entity creation}<?php 
+}
+else 
+{
+	?>#{Edit entity }<?=$newentity->getField('ename')?><?php
+}
+?>
+</h4>
 <label><?=Lang::__t('Field name:') ?></label>	
 <?php $form->field($newentity, 'ename')->text([]);  ?>
 <button type="button" class="fields_item_add btn btn-primary btn-sm" target="fields_block" title="#{Add field}">#{ADD FIELD}</button>
@@ -76,6 +87,17 @@ $sbplugin->template_table_end();
 	}
 	?>
 	</td>	
+	<td>
+		<a href="javascript:" class="fields_item_move" moveparam="-1"  title="#{Move up}">
+			<img alt="" src="<?=$this->get_image('../../images/triangle_up.png')?>" width="18px" height="18px" />
+		</a>	
+	</td>
+	<td>
+		<a href="javascript:" class="fields_item_move" moveparam="1"  title="#{Move down}">
+			<img alt="" src="<?=$this->get_image('../../images/triangle_down.png')?>" width="18px" height="18px" />
+		</a>	
+	</td>
+	<td></td>
 	<?php 
 	if($fld->getField('deletable'))
 		{

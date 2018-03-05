@@ -179,4 +179,7 @@ $_LANG['SAVE ENTITY']='SAVE ENTITY';
 $_LANG['Edit entity message']='Edit entity message';
 $_LANG['Edit entity users']='Edit entity users';
 $_LANG['Default value:']='Default value:';
+$_LANG['Move up']='Move up';
+$_LANG['Move down']='Move down';
+$_LANG['Edit entity ']='Edit entity ';
 ?>

@@ -216,11 +216,7 @@ class EmakerController extends \BaseController
 		} 
 		
 		$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
-	//	$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($primaryfld->getField('type')));
-	//	$typeinfo_row = $typemodel->empty_row_form_model();
-	//	$primaryfld->setField('typeinfo', $typeinfo_row,$typemodel);
-		
-		
+
 		
 		$this->add_js('#/js/emaker.js');
 		$this->_TITLE = \Lang::__t('Edit entity '.$_ename);
