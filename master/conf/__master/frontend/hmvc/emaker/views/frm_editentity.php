@@ -88,12 +88,12 @@ else
 	?>
 	</td>	
 	<td>
-		<a href="javascript:" class="fields_item_move" moveparam="-1"  title="#{Move up}">
+		<a href="javascript:" class="fields_item_move" moveto="-1"  title="#{Move up}">
 			<img alt="" src="<?=$this->get_image('../../images/triangle_up.png')?>" width="18px" height="18px" />
 		</a>	
 	</td>
 	<td>
-		<a href="javascript:" class="fields_item_move" moveparam="1"  title="#{Move down}">
+		<a href="javascript:" class="fields_item_move" moveto="1"  title="#{Move down}">
 			<img alt="" src="<?=$this->get_image('../../images/triangle_down.png')?>" width="18px" height="18px" />
 		</a>	
 	</td>

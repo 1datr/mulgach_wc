@@ -2,6 +2,7 @@
   
   $.fn.jqStructBlock = function( options ) {
     
+	  var the_element;
     // логика вызова метода
    /* if ( methods[method] ) {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
@@ -51,9 +52,30 @@
 			new_data_block.find('.'+id_attr+'_drop').bind( "click",drop);
 	  };
 	  
-	  function move(el,step)
+	  function move()
 	  {
+		  moveto = $(this).attr('moveto');
+		  if(moveto==null)
+			  return;
+		  moveto = parseInt(moveto, 10);
 		  
+		  curr_element = $(this).parents('[role=item]'); // текущий элемент
+		  
+		  elements = $(this).parents('.jqStructBlock').find('[role=item]');	// список элементов
+		  
+		  idx1 = -1;
+		  for(i=0;i<elements.length;i++)
+			  {
+			  if(elements[i]==curr_element[0])
+				  {
+				  	idx1 = i;
+				  }
+				  break;
+				  }
+			  }
+	  
+	  	 idx2 = idx1+moveto;
+		  //
 	  }
 	  
 	  function drop() {
@@ -82,6 +104,8 @@
 	  };
 	  
 	  return this.each(function(i,element) {
+		  
+		the_element = element;  
 		  
 		id_attr = $(element).attr('itemtemplate');
 		$(element).addClass('jqStructBlock');
