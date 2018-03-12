@@ -72,7 +72,6 @@
 				  }
 				  break;
 				  }
-			  }
 	  
 	  	 idx2 = idx1+moveto;
 		  //
