@@ -21,6 +21,16 @@ $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fieldit
 	</span>
 	</td>		
 	<td><?php $form->field($emptyfld, 'defval',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?></td>
+	<td>
+		<a href="javascript:" class="fields_item_move" moveto="-1"  title="#{Move up}">
+			<img alt="" src="<?=$this->get_image('../../images/triangle_up.png')?>" width="18px" height="18px" />
+		</a>	
+	</td>
+	<td>
+		<a href="javascript:" class="fields_item_move" moveto="1"  title="#{Move down}">
+			<img alt="" src="<?=$this->get_image('../../images/triangle_down.png')?>" width="18px" height="18px" />
+		</a>	
+	</td>
 	<td><button type="button" class="fields_item_drop">x</button></td>
 <?php 
 $sbplugin->template_table_end();
@@ -97,7 +107,6 @@ else
 			<img alt="" src="<?=$this->get_image('../../images/triangle_down.png')?>" width="18px" height="18px" />
 		</a>	
 	</td>
-	<td></td>
 	<?php 
 	if($fld->getField('deletable'))
 		{

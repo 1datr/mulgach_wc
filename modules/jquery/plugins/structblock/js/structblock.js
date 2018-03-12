@@ -49,7 +49,9 @@
 				{
 				options.onadd(new_data_block);
 				}
-			new_data_block.find('.'+id_attr+'_drop').bind( "click",drop);
+			new_data_block.find('.'+id_attr+'_drop').bind("click",drop);
+			new_data_block.find('.'+id_attr+'_add').bind('click',add); 
+			new_data_block.find('.'+id_attr+'_move').bind('click',move); 
 	  };
 	  
 	  function move()
@@ -61,20 +63,42 @@
 		  
 		  curr_element = $(this).parents('[role=item]'); // текущий элемент
 		  
+		  the_block = $(this).parents('.jqStructBlock');
+		  
+		  id_attr = $(the_block).attr('itemtemplate');
+		  
 		  elements = $(this).parents('.jqStructBlock').find('[role=item]');	// список элементов
 		  
 		  idx1 = -1;
 		  for(i=0;i<elements.length;i++)
-			  {
+		  {
 			  if(elements[i]==curr_element[0])
-				  {
-				  	idx1 = i;
-				  }
+			  {
+				  idx1 = i;
 				  break;
-				  }
+			  }
+			  
+		 }
 	  
 	  	 idx2 = idx1+moveto;
 		  //
+	  	 if((idx2<0)||(idx2>elements.length-1))
+	  	 {
+	  		 return;
+	  	 }
+	  	 html1 = $(elements[idx1]).html();
+	  	 html2 = $(elements[idx2]).html();
+	  	 
+	  	 $(elements[idx2]).html(html1);
+	  	 $(elements[idx1]).html(html2);
+	  	 
+	  	 $(elements[idx1]).find('.'+id_attr+'_drop').bind("click",drop);
+	  	 $(elements[idx1]).find('.'+id_attr+'_add').bind('click',add); 
+	  	 $(elements[idx1]).find('.'+id_attr+'_move').bind('click',move); 
+	  	 
+	  	 $(elements[idx2]).find('.'+id_attr+'_drop').bind("click",drop);
+	  	 $(elements[idx2]).find('.'+id_attr+'_add').bind('click',add); 
+	  	 $(elements[idx2]).find('.'+id_attr+'_move').bind('click',move); 
 	  }
 	  
 	  function drop() {
