@@ -67,7 +67,9 @@ class ModelEmaker extends \BaseModel
 									],
 									'required'=>['fldname','type']
 										
-								])
+								]),
+							'redirect_here'=>['Type'=>'boolean'],
+							'build'=>['Type'=>'boolean'],
 						],
 						'required'=>['ename',]
 				

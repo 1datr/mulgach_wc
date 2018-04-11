@@ -182,4 +182,6 @@ $_LANG['Default value:']='Default value:';
 $_LANG['Move up']='Move up';
 $_LANG['Move down']='Move down';
 $_LANG['Edit entity ']='Edit entity ';
+$_LANG['Redirect to the editor page']='Redirect to the editor page';
+$_LANG['Compile this entity']='Compile this entity';
 ?>
