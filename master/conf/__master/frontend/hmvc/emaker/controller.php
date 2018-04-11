@@ -263,7 +263,10 @@ class EmakerController extends \BaseController
 		$the_entity->DATA_DRV = $this->_CONNECTION;
 		$the_entity->make();
 		
-		$this->redirect(as_url('emaker/'.$_POST['entity']['cfg']));
+		if(!empty($_POST['entity']['redirect_here']))
+			$this->redirect_back();
+		else
+			$this->redirect(as_url('emaker/'.$_POST['entity']['cfg']));
 	}
 	
 	public function BeforeValidate(&$bv_params)

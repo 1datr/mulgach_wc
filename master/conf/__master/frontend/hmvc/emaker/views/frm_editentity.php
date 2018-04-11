@@ -122,8 +122,8 @@ else
 ?>	
 <?php $sbplugin->table_block_end(); ?>
 <fieldset>
-<?php $form->field($fld, 'redirect_here',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?><label>#{Redirect to the editor page}</label>
-<?php $form->field($fld, 'build',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?><label>#{Compile this entity}</label>
+<?php $form->field($newentity, 'redirect_here')->checkbox([]);  ?><label>#{Redirect to the editor page}</label>
+<?php $form->field($newentity, 'build')->checkbox([]);  ?><label>#{Compile this entity}</label>
 </fieldset>
 <?php 
 if($mode=='create')
