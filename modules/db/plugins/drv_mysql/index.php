@@ -210,7 +210,12 @@ class plg_drv_mysql extends mod_plugin
 		
 		$type_str = $fld_info['Type'].'('.$fld_info['TypeInfo'].')';
 			
-		$this->query("ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $str_null DEFAULT $str_default");
+		//$this->query("ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $str_null DEFAULT $str_default");
+		$after = "";
+		if(!empty($fld_info['after'])) 
+			$after = "AFTER ".$fld_info['after'];
+		$_sql = "ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $str_null DEFAULT $str_default $after";
+		$this->query($_sql);
 	}
 	
 	function build_table($table_info)
@@ -220,6 +225,9 @@ class plg_drv_mysql extends mod_plugin
 			$res = ($fld_existing['Type']==$fldinfo['Type']);
 			
 			if(!$res) return false;
+			
+			if($fld_existing['after']!=$fldinfo['after'])
+				return false;
 			
 			// default
 			if(empty($fldinfo['Default'])&& empty($fld_existing['Default']))
@@ -259,6 +267,7 @@ class plg_drv_mysql extends mod_plugin
 			{
 				if(isset($exist_table_info[$fld]))
 				{
+					$finfo['after']=$fldold;
 					if(!compare_field_settings($exist_table_info[$fld],$finfo))
 					{
 						$this->change_field($table_info['table'],$fld,$finfo);
@@ -548,6 +557,7 @@ class plg_drv_mysql extends mod_plugin
 	{
 		$res = $this->query("SHOW FULL COLUMNS FROM `@+{$tbl}`");
 		$arr=array();
+		$fld_old = null;
 		while($col = $this->get_row($res)){
 			//	print_r($col);
 			$Field = $col['Field'];
@@ -562,7 +572,8 @@ class plg_drv_mysql extends mod_plugin
 				$col['TypeInfo']=$matches[2][0];
 				
 			}
-			
+			$col['after']=$fld_old;
+			$fld_old = $Field;
 			$arr[$Field]=$col;			
 			//print_r($col); print "<br>\n";
 		}
