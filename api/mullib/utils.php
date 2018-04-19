@@ -67,6 +67,24 @@ function get_ser($ser_name)
 	return unserialize($ser_code);
 }
 
+function assoc_array_cut($assoc_arr,$_KEY)
+{
+	$res=array();
+	foreach ($assoc_arr as $idx => $val)
+	{
+		if(is_object($val))
+		{
+			if(property_exists($val,$_KEY))
+				$res[$idx]=$val->$_KEY;
+		}
+		elseif(is_array($val))
+		{
+			if(isset($val[$_KEY])) $res[$idx]=$val[$_KEY];
+		}
+	}
+	return $res;
+}
+
 function array_order_num($arr)
 {
 	$pos=0;

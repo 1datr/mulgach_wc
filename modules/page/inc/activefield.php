@@ -321,6 +321,11 @@ class ActiveField
 						$theval['%capt']=$theval['%val'];
 						break;
 				}
+				
+		if(is_string($idx))
+		{
+			$theval['%val']=$idx;
+		}
 		
 		if($theval['%val']==$curr_value)
 		{

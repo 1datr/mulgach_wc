@@ -236,38 +236,45 @@ class EmakerController extends \BaseController
 		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 		$_cfg = new \scaff_conf($cfg);
 		$dbparams = $_cfg->connect_db_if_exists($this);
-		
+				
 		switch($fldtype)
 		{
-			case 'Entity reference': {
-				$this->UseModel(new ModelInfo([
-					'domen'=>'refentity',
-					'fields'=>[						
-							'entity'=>['Type'=>'text'],
-							'fld'=>['Type'=>'text']				
-					]
-			]));
+			case '_ref': 
+				{
+					$this->UseModel(new \ModelInfo([
+						'domen'=>'refentity',
+						'fields'=>[						
+								'entity_to'=>['Type'=>'text'],
+								'fld_to'=>['Type'=>'text']				
+						],
+						'required'=>['entity_to','fld_to']
+				]));
+					//	mul_dbg($this->_MODEL);
+					$_row = $this->_MODEL->empty_row_form_model();
+
+					//		mul_dbg($_row);
+					$fld_prefix = $fld_name;
+					
+					$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
+					//mul_dbg($elist);
+
+					$matches =[];
+					preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
+					$fld_prefix = $matches[1][0].'[typeinfo]';
+					$this->out_ajax_block('eref',['cfg'=>$cfg,'elist'=>$elist,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
+				};break;
+			default: 
+				{
+					$this->UseModel($this->_CONNECTION->type_model($fldtype));
 				//	mul_dbg($this->_MODEL);
-				$_row = $this->_MODEL->empty_row_form_model();
-				//		mul_dbg($_row);
-				$fld_prefix = $fld_name;
-				$matches =[];
-				preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
-				$fld_prefix = $matches[1][0].'[typeinfo]';
-				$this->out_ajax_block('eref',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
-			};break;
-		default: 
-			{
-				$this->UseModel($this->_CONNECTION->type_model($fldtype));
-			//	mul_dbg($this->_MODEL);
-				$_row = $this->_MODEL->empty_row_form_model();
-		//		mul_dbg($_row);
-				$fld_prefix = $fld_name;
-				$matches =[];
-				preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
-				$fld_prefix = $matches[1][0].'[typeinfo]';
-				$this->out_ajax_block('fldtype_base',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
-			}
+					$_row = $this->_MODEL->empty_row_form_model();
+			//		mul_dbg($_row);
+					$fld_prefix = $fld_name;
+					$matches =[];
+					preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
+					$fld_prefix = $matches[1][0].'[typeinfo]';
+					$this->out_ajax_block('fldtype_base',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
+				}
 		}
 	}
 	
