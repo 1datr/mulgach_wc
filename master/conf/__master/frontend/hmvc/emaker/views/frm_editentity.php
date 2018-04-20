@@ -57,6 +57,7 @@ else
 </h4>
 <label><?=Lang::__t('Field name:') ?></label>	
 <?php $form->field($newentity, 'ename')->text([]);  ?>
+<?php $form->field($newentity, 'oldname')->hidden([]);  ?>
 <button type="button" class="fields_item_add btn btn-primary btn-sm" target="fields_block" title="#{Add field}">#{ADD FIELD}</button>
 <?php 
 	foreach ($newentity->getField('fieldlist') as $idx => $fld)

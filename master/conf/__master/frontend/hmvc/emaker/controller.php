@@ -191,6 +191,7 @@ class EmakerController extends \BaseController
 		//mul_dbg($_POST);
 		$editing_entity->setField('cfg', $cfg);
 		$editing_entity->setField('ename', $_ename);
+		$editing_entity->setField('oldname', $_ename);
 		$editing_entity->setField('fieldlist', array());
 		
 	//	mul_dbg($fields);
@@ -283,7 +284,7 @@ class EmakerController extends \BaseController
 		}
 	}
 	
-	public function ActionEfields($_cfg,$entity_name)
+	public function ActionEfields($cfg,$entity_name)
 	{
 		$res_array=['items'=>[]];
 		
@@ -292,9 +293,11 @@ class EmakerController extends \BaseController
 		$_cfg = new \scaff_conf($cfg);
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		
-		$_entity = $_cfg->get_entity($curr_entity, $_cfg);
+		$_entity = $_cfg->get_entity($entity_name, $_cfg);
 		$_entity->SetDrv($this->_CONNECTION);
-		$res_array['items'] = assoc_array_cut($_entity->get_fields(),'Field');
+		$fldinfo = $_entity->get_fields();
+		mul_dbg($fldinfo);
+		$res_array['items'] = assoc_array_cut($fldinfo,'Field');
 		
 		$this->out_json($res_array);
 	}
@@ -313,7 +316,18 @@ class EmakerController extends \BaseController
 		$the_entity->make();
 		
 		if(!empty($_POST['entity']['redirect_here']))
-			$this->redirect_back();
+		{
+			if($_POST['entity']['ename']!=$_POST['entity']['oldname'])
+			{
+				$addr = $_SERVER['HTTP_REFERER'];
+				$addr = str_replace($_POST['entity']['oldname'], $_POST['entity']['ename'], $addr);
+				$this->redirect($addr);
+			}
+			else 
+			{
+				$this->redirect_back();
+			}
+		}
 		else
 			$this->redirect(as_url('emaker/'.$_POST['entity']['cfg']));
 	}

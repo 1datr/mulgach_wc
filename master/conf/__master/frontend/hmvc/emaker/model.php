@@ -29,7 +29,8 @@ class ModelEmaker extends \BaseModel
 						//	'name'=>'makenew',						
 						'fields'=>[
 								'cfg'=>['Type'=>'text'],
-								'ename'=>['Type'=>'text'],								
+								'ename'=>['Type'=>'text'],
+								'oldname'=>['Type'=>'text'],
 								'fieldlist'=>new \ModelInfo([
 									'domen'=>'field',
 									'validate_proc'=>function($row,&$res,$prefix="")

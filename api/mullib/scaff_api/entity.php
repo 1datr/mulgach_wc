@@ -31,6 +31,9 @@ class scaff_entity {
 	{
 		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[]);
 		
+		if(!empty($nfo['oldname']))
+			$this->_TABLE_INFO['oldname']=$nfo['oldname'];
+		
 		foreach($nfo['fieldlist'] as $idx => $element)
 		{
 			if(isset($element['primary']))

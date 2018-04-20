@@ -254,50 +254,85 @@ class plg_drv_mysql extends mod_plugin
 			return $res;
 		}
 		
-		if(!$this->table_exists($table_info['table']))
+		$change_name = false;
+		
+		if( !empty($table_info['oldname']) )
 		{
-			$this->create_table($table_info);
-		}
-		else
-		{
-			$exist_table_info = $this->get_table_fields($table_info['table']);
-			// добавляем и едитим филды
-			$fldold=null;
-			foreach ($table_info['fields'] as $fld => $finfo)
+			if($table_info['oldname']!=$table_info['table'])
 			{
-				if(isset($exist_table_info[$fld]))
-				{
-					$finfo['after']=$fldold;
-					if(!compare_field_settings($exist_table_info[$fld],$finfo))
-					{
-						$this->change_field($table_info['table'],$fld,$finfo);
-					}
-				}
-				else
-				{
-					$finfo['fldafter']=$fldold;
-					$this->add_field($table_info['table'],$fld,$finfo);
-				}
-				
-				$fldold = $fld;
+				$change_name = true;
 			}
-			
-			$exist_table_info = $this->get_table_fields($table_info['table']);
-			// дропаем филды которых нет
-			foreach ($exist_table_info as $fld => $finfo )
-			{
-				if(!isset($table_info['fields'][$fld]))
-				{
-					$this->delete_field($table_info['table'],$fld);
-				}
-			
-			}
-				
 		}
 		
+		if($change_name)
+		{
+			if(!$this->table_exists($table_info['table']))
+			{
+				$this->rename_table($table_info['oldname'],$table_info['table']);
+				$this->change_table($table_info);
+			}
+			else 
+			{
+				// Error table with this name alleready exists
+			}
+		}
+		else 
+		{
+			if(!$this->table_exists($table_info['table']))
+			{
+				$this->create_table($table_info);
+			}
+			else
+			{
+				$this->change_table($table_info);
+					
+			}
+		}
 		//mul_dbg($table_info);
 		
 		$this->create_table($table_info);
+	}
+	
+	public function rename_table($old_table_name,$new_table_name)
+	{
+		$sql = "RENAME TABLE @+$old_table_name TO @+$new_table_name";
+		$this->query($sql);
+	}
+	
+	private function change_table($table_info)
+	{
+		$exist_table_info = $this->get_table_fields($table_info['table']);
+		// добавляем и едитим филды
+		$fldold=null;
+		foreach ($table_info['fields'] as $fld => $finfo)
+		{
+			if(isset($exist_table_info[$fld]))
+			{
+				$finfo['after']=$fldold;
+				if(!compare_field_settings($exist_table_info[$fld],$finfo))
+				{
+					$this->change_field($table_info['table'],$fld,$finfo);
+				}
+			}
+			else
+			{
+				$finfo['fldafter']=$fldold;
+				$this->add_field($table_info['table'],$fld,$finfo);
+			}
+				
+			$fldold = $fld;
+		}
+		
+		$exist_table_info = $this->get_table_fields($table_info['table']);
+		// дропаем филды которых нет
+		foreach ($exist_table_info as $fld => $finfo )
+		{
+			if(!isset($table_info['fields'][$fld]))
+			{
+				$this->delete_field($table_info['table'],$fld);
+			}
+		
+		}
 	}
 	
 	public function create_table($table_info)

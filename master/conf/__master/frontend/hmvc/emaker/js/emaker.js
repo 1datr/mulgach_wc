@@ -35,14 +35,16 @@ function on_entity_change(type_el)
 	var cfg = $('[name="entity[cfg]"').val();
 	var fldtype = $(type_el).val(); 
 	var fld_name = $(type_el).attr('name');
-	var entity_name = $('name="entity[ename]"').val();
-	var el_fldinfo = $(type_el).parents('.fielditem').one().find('.fldname');
+	var entity_name = $('[name="entity[ename]"]').val();
+	var el_fld_to = $(type_el).parents('._eref').one().find('[name="refentity[fld_to]"]');
+	
+	el_fld_to.html("");
 	
 	var the_url = "/master/emaker/efields/"+cfg+"/"+entity_name;
 	$.getJSON( the_url, function( data ) {
-		  fields_sel =$(this).parents('.').find();		  
+		  el_fld_to.html("");
 		  $.each( data.items, function( key, val ) {
-		    
+			  el_fld_to.append($('<option value="'+val+'">'+val+"</option>"));
 		  });
 	});
 }

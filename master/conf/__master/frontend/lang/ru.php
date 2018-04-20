@@ -185,4 +185,7 @@ $_LANG['Edit entity ']='Edit entity ';
 $_LANG['Redirect to the editor page']='Redirect to the editor page';
 $_LANG['Compile this entity']='Compile this entity';
 $_LANG['Edit entity primeneniye']='Edit entity primeneniye';
+$_LANG['Edit entity details']='Edit entity details';
+$_LANG['Edit entity articles']='Edit entity articles';
+$_LANG['Edit entity _articles']='Edit entity _articles';
 ?>
