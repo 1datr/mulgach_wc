@@ -315,7 +315,7 @@ class plg_drv_mysql extends mod_plugin
 				// 					
 				if( !in_array($this->GetTypeClass($theval['Type']),['text','datetime','binary'] ))
 				{
-					$theval['Type']=$theval['Type']."(".$theval['TypeInfo'].")";
+					$theval['Type']=$theval['Type']."".$theval['TypeInfo']."";
 				}				
 					
 				//	

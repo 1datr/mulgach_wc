@@ -228,7 +228,7 @@ class EmakerController extends \BaseController
 		
 	}
 	
-	public function ActionTypeinfo($cfg,$fldtype,$fld_name)
+	public function ActionTypeinfo($cfg,$fldtype,$fld_name,$curr_entity)
 	{
 	//	mul_dbg($cfg." - ".$fldtype." - ".$fld_name);
 		// подключаемся к базе и драйверу
@@ -256,12 +256,17 @@ class EmakerController extends \BaseController
 					$fld_prefix = $fld_name;
 					
 					$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
-					//mul_dbg($elist);
-
+					$elist = array_diff($elist, [$curr_entity]);					
+					
+					$_entity = $_cfg->get_entity($curr_entity, $_cfg);
+					$_entity->SetDrv($this->_CONNECTION);
+					$_fields = assoc_array_cut($_entity->get_fields(),'Field');	
+					
+					
 					$matches =[];
 					preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
 					$fld_prefix = $matches[1][0].'[typeinfo]';
-					$this->out_ajax_block('eref',['cfg'=>$cfg,'elist'=>$elist,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
+					$this->out_ajax_block('eref',['cfg'=>$cfg,'elist'=>$elist,'_fields'=>$_fields,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
 				};break;
 			default: 
 				{
@@ -276,6 +281,22 @@ class EmakerController extends \BaseController
 					$this->out_ajax_block('fldtype_base',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
 				}
 		}
+	}
+	
+	public function ActionEfields($_cfg,$entity_name)
+	{
+		$res_array=['items'=>[]];
+		
+		GLOBAL $_BASEDIR;
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$_cfg = new \scaff_conf($cfg);
+		$dbparams = $_cfg->connect_db_if_exists($this);
+		
+		$_entity = $_cfg->get_entity($curr_entity, $_cfg);
+		$_entity->SetDrv($this->_CONNECTION);
+		$res_array['items'] = assoc_array_cut($_entity->get_fields(),'Field');
+		
+		$this->out_json($res_array);
 	}
 	
 	public function ActionSave()
