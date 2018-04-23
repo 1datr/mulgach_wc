@@ -188,4 +188,5 @@ $_LANG['Edit entity primeneniye']='Edit entity primeneniye';
 $_LANG['Edit entity details']='Edit entity details';
 $_LANG['Edit entity articles']='Edit entity articles';
 $_LANG['Edit entity _articles']='Edit entity _articles';
+$_LANG['Edit entity _articles_']='Edit entity _articles_';
 ?>

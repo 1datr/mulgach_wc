@@ -6,7 +6,10 @@ $form = new mulForm(as_url("/emaker/save"),$this,[],false);
 <?php 
 $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fielditem']);
 ?>
-	<td><?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?></td>
+	<td>
+	<input type="hidden" name="nameroot" value="entity[fieldlist][{idx}]" />
+	<?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?>	
+	</td>
 	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['class'=>'fldtype','onchange'=>'on_type_change(this)']]);  ?></td>
 	<td><span class="fldinfo"></span></td>
 	<td><?php $form->field($emptyfld, 'primary',['namemode'=>'multi','name_ptrn'=>'{idx}'])->checkbox([]);  ?></td>	
@@ -64,12 +67,16 @@ else
 	{
 ?>
 <tr class="fielditem multiform_block" role="item" valign="top" class="fielditem">
+	<td>
 <?php 
 	$af_fldname = $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx]);
-	$form->field($fld, 'fldname_old',['namemode'=>'multi','nameidx'=>$idx])->hidden([]);  
+	$form->field($fld, 'fldname_old',['namemode'=>'multi','nameidx'=>$idx])->hidden([]);
 ?>
-	<td><?php $af_fldname->text([]);  ?></td>
-	<td><?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['class'=>'fldtype','onchange'=>'on_type_change(this)']]);  ?></td>
+	<?php $af_fldname->text([]);  ?>
+	</td>
+	<td>	
+	<input type="hidden" name="nameroot" value="<?=$af_fldname->get_name_root()."[$idx]"  ?>" />
+	<?php $form->field($fld, 'type',['namemode'=>'multi','nameidx'=>$idx])->ComboBox($typelist,['htmlattrs'=>['class'=>'fldtype','onchange'=>'on_type_change(this)']]);  ?></td>
 	<td><span class="fldinfo"><?php 
 	$fld_typeinfo = $fld->getField('typeinfo');
 	if(!empty($fld_typeinfo))

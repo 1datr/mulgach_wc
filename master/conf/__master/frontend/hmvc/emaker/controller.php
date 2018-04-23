@@ -242,18 +242,21 @@ class EmakerController extends \BaseController
 		{
 			case '_ref': 
 				{
+					$matches =[];
+					preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
+					$fld_prefix = $matches[1][0].'[typeinfo]';
+					
 					$this->UseModel(new \ModelInfo([
-						'domen'=>'refentity',
+						'domen'=>$fld_prefix,//'refentity',
 						'fields'=>[						
 								'entity_to'=>['Type'=>'text'],
 								'fld_to'=>['Type'=>'text']				
 						],
 						'required'=>['entity_to','fld_to']
 				]));
-					//	mul_dbg($this->_MODEL);
+
 					$_row = $this->_MODEL->empty_row_form_model();
 
-					//		mul_dbg($_row);
 					$fld_prefix = $fld_name;
 					
 					$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
@@ -261,12 +264,9 @@ class EmakerController extends \BaseController
 					
 					$_entity = $_cfg->get_entity($curr_entity, $_cfg);
 					$_entity->SetDrv($this->_CONNECTION);
-					$_fields = assoc_array_cut($_entity->get_fields(),'Field');	
+					$_fields = assoc_array_cut($_entity->get_fields(),'Field');					
 					
 					
-					$matches =[];
-					preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
-					$fld_prefix = $matches[1][0].'[typeinfo]';
 					$this->out_ajax_block('eref',['cfg'=>$cfg,'elist'=>$elist,'_fields'=>$_fields,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
 				};break;
 			default: 
@@ -279,7 +279,7 @@ class EmakerController extends \BaseController
 					$matches =[];
 					preg_match_all('/^(.+)\[(\w+)\]$/Uis', $fld_name,$matches);
 					$fld_prefix = $matches[1][0].'[typeinfo]';
-					$this->out_ajax_block('fldtype_base',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
+					$this->out_ajax_block('fldtype_base',['cfg'=>$cfg,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix,'nameroot'=>$nameroot]);
 				}
 		}
 	}
@@ -311,7 +311,7 @@ class EmakerController extends \BaseController
 			
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		
-		$the_entity = new \scaff_entity($_POST['entity'], $cfg);
+		$the_entity = new \scaff_entity($_POST['entity'], $_cfg);
 		$the_entity->DATA_DRV = $this->_CONNECTION;
 		$the_entity->make();
 		

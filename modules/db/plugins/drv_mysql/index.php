@@ -8,6 +8,7 @@ class plg_drv_mysql extends mod_plugin
 	VAR $parent_module;
 	VAR $_DB_PARAMS;
 	VAR $_CONNECTION_EMPTY=FALSE;
+	
 	function __construct($_PARAMS)
 	{
 		if($_PARAMS==='#none')
@@ -69,7 +70,7 @@ class plg_drv_mysql extends mod_plugin
 			$res_array[]=$row[ array_keys($row)[0] ];	
 		}
 		
-		mul_dbg($res_array);
+	//	mul_dbg($res_array);
 		echo json_encode($res_array);
 	}
 	

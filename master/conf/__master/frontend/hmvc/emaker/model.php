@@ -48,6 +48,7 @@ class ModelEmaker extends \BaseModel
 										},
 									'fields'=>[
 										'fldname'=>['Type'=>'text'],
+										//'nameroot'=>['Type'=>'text'],
 										'fldname_old'=>['Type'=>'text'],
 										'type'=>['Type'=>'text'],
 										'typeinfo'=>new \ModelInfo([
