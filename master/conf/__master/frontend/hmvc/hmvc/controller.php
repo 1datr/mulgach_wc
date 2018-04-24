@@ -618,6 +618,8 @@ class HmvcController extends \BaseController
 						
 						$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
 												
+						//mul_dbg($_SESSION['makeinfo']);
+						
 						$this->make_hmvc($_SESSION['makeinfo']);
 						unset($_SESSION['makeinfo']);
 						

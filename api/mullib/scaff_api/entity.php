@@ -131,7 +131,8 @@ class scaff_entity {
 	{
 		$this->compile_table_info($this->_TABLE_INFO);
 		$this->build_table();
-		$this->build_hmvc();
+		
+		$this->build_hmvc($trinfo);
 	}
 	
 	function build_table()
@@ -139,10 +140,85 @@ class scaff_entity {
 		$this->DATA_DRV->build_table($this->_TABLE_INFO);
 	}
 	
-	function build_hmvc()
+	function build_hmvc($trinfo)
 	{
+	//	mul_dbg($this->_TABLE_INFO);
+		$_trinfo = ['table'=>$this->_TABLE_INFO['table'],'required'=>[],'primary' => 'id'];
+		
+		$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+		
+		$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
+		
+		//$this->make_hmvc($_trinfo); 
+		
 		
 	}
+	
+	private function make_hmvc($_params)
+	{
+		//print_r($_params['constraints']);
+	
+		GLOBAL $_BASEDIR;
+		$conf_dir= url_seg_add($_BASEDIR,"conf");
+	
+		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		$conf_obj = new \scaff_conf($_params['conf']);
+	
+		//	print_r($_params);
+		$dbparams = $conf_obj->connect_db_if_exists($this);
+	
+		// Авторизация
+		if(isset($_params['authcon']['enable']))
+		{
+			$_SESSION['authhost']=$_params['table'];
+		}
+		else
+			$_SESSION['authhost']=$_params['con_auth'];
+	
+				
+			if(!empty($_params['ep']['frontend']))
+			{
+				$ep='frontend';
+	
+				// connect the menu from som controller
+				if(isset($_params['mainmenu'][$ep]))
+				{
+					$_SESSION['connect_from'][$ep]=$_params['table'];
+				}
+				else
+					$_SESSION['connect_from'][$ep]=$_params['connect_from'][$ep];
+						
+					$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+						
+					$the_triada->frontend_from_table($_params,$this,$opts);
+			}
+	
+			if(!empty($_params['ep']['backend']))
+			{
+	
+				$ep='backend';
+					
+				// connect the menu from som controller
+				if(isset($_params['mainmenu'][$ep]))
+				{
+					$_SESSION['connect_from'][$ep]=$_params['table'];
+				}
+				else
+					$_SESSION['connect_from'][$ep]=$_params['connect_from'][$ep];
+						
+					$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+	
+					$the_triada->backend_from_table($_params,$this,$opts);
+			}
+	
+			if(!empty($_params['ep']['install']))
+			{
+				$ep='install';
+				$the_triada = $conf_obj->create_triada($ep,$_params['table']);
+				$the_triada->install_from_table($_params,$this,$opts);
+			}
+	}
+	
 	
 	function delete()
 	{

@@ -13,7 +13,7 @@ class ArticlesController extends \BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',$this->getActions(),'anonym','site/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','articles/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class ArticlesController extends \BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "site", "menu");
+		$this->add_block("BASE_MENU", "articles", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page,1,$this->getRequest()->getArg('ord'));
 		
@@ -47,14 +47,14 @@ class ArticlesController extends \BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "site", "menu");
+		$this->add_block("BASE_MENU", "articles", "menu");
 		$this->_TITLE="CREATE ARTICLES";
 		$this->out_view('itemform',array('articles'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "site", "menu");
+		$this->add_block("BASE_MENU", "articles", "menu");
 		$articles = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$articles->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('articles'=>$articles));
@@ -91,7 +91,7 @@ class ArticlesController extends \BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "site", "menu");
+		$this->add_block("BASE_MENU", "articles", "menu");
 		$articles = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$articles->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('articles'=>$articles));
