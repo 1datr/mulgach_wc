@@ -1,3 +1,4 @@
+<a href="<?=as_url("/emaker/".$newentity->getField('cfg'))?>">#{Enitity manager}</a>
 <?php 
 $_TEXT_FOR_FILETYPE="#{For example : }audio/*, image/*";
 
@@ -131,7 +132,9 @@ else
 <?php $sbplugin->table_block_end(); ?>
 <fieldset>
 <?php $form->field($newentity, 'redirect_here')->checkbox([]);  ?><label>#{Redirect to the editor page}</label>
-<?php $form->field($newentity, 'build')->checkbox([]);  ?><label>#{Compile this entity}</label>
+<?php $form->field($newentity, 'build')->checkbox([]);  ?><label>#{Compile this entity}</label><br />
+<label>#{View}</label><?php $form->field($newentity, 'view')->text([]); ?> 
+<label>#{Auth controller}</label><?php $form->field($newentity, 'auth_con')->ComboBox($elist,['htmlattrs'=>['class'=>'fldtype',]]);  ?>
 </fieldset>
 <?php 
 if($mode=='create')

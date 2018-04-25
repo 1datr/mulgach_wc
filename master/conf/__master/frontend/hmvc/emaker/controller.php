@@ -57,11 +57,17 @@ class EmakerController extends \BaseController
 			$newentity->setField('cfg', $_POST['makenew']['cfg']);
 			$newentity->setField('ename', $_POST['makenew']['ename']);
 			$newentity->setField('fieldlist', array());
+			$newentity->setField('view', '{login}');
+			
 			
 			// подключаемся к базе и драйверу
 			GLOBAL $_BASEDIR;
 			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
 			$_cfg = new \scaff_conf($_POST['makenew']['cfg']);
+			
+			$tr_auth = $_cfg->get_auth_con();
+			//mul_dbg($tr_auth);
+			$newentity->setField('auth_con',$tr_auth);
 			
 			$dbparams = $_cfg->connect_db_if_exists($this);
 			
@@ -183,6 +189,11 @@ class EmakerController extends \BaseController
 		
 		$entity = $_cfg->get_entity($_ename,$_cfg);
 		
+		$tr_auth = $_cfg->get_auth_con();
+		
+		$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
+		$elist = array_diff($elist, [$curr_entity]);
+		
 		$entity->SetDrv($this->_CONNECTION);
 		
 		$fields = $entity->get_fields();
@@ -193,6 +204,7 @@ class EmakerController extends \BaseController
 		$editing_entity->setField('ename', $_ename);
 		$editing_entity->setField('oldname', $_ename);
 		$editing_entity->setField('fieldlist', array());
+		$editing_entity->setField('auth_con',$tr_auth);
 		
 	//	mul_dbg($fields);
 		foreach ($fields as $fld =>$fld_params)
@@ -225,7 +237,8 @@ class EmakerController extends \BaseController
 		$typelist = $this->_CONNECTION->Typelist();
 		$typelist['_ref']=\Lang::__t('Entity reference');
 	
-		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'newentity'=>$editing_entity,'mode'=>'save','emptyfld'=>$emptyfld]);
+		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'elist'=>$elist,
+				'typelist'=>$typelist,'newentity'=>$editing_entity,'mode'=>'save','emptyfld'=>$emptyfld]);
 		
 	}
 	

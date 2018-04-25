@@ -32,7 +32,7 @@ class scaff_entity {
 	function compile_table_info($nfo)
 	{
 		
-		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[]);
+		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[],'binds'=>[],'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view']);
 		
 		if(!empty($nfo['oldname']))
 			$this->_TABLE_INFO['oldname']=$nfo['oldname'];
@@ -42,7 +42,11 @@ class scaff_entity {
 			
 			if($element['type'] =="_ref")
 			{
-
+				$this->_TABLE_INFO['binds'][]=[
+						'field'=>$element['fldname'],
+						'table'=>$element['typeinfo']['entity_to'],
+						'field_to'=>$element['typeinfo']['fld_to']];
+				
 				$entity_to_obj = new scaff_entity($element['typeinfo']['entity_to'],$this->PARENT_CFG);
 				$entity_to_obj->DATA_DRV = $this->DATA_DRV;
 					
@@ -143,13 +147,50 @@ class scaff_entity {
 	function build_hmvc($trinfo)
 	{
 	//	mul_dbg($this->_TABLE_INFO);
-		$_trinfo = ['table'=>$this->_TABLE_INFO['table'],'required'=>[],'primary' => 'id'];
+		$_trinfo = ['table'=>$this->_TABLE_INFO['table'],
+				'required'=>$this->_TABLE_INFO['required'],
+				'primary' => $this->_TABLE_INFO['primary'],
+				'conf' => $this->PARENT_CFG->_NAME,
+				'rewrite_all' => 'on',
+				'ignore_existing' => 'on',
+				'ep' => [
+						'frontend' => 'on',
+						'backend' => 'on',
+						'install' => 'on',
+						'rest' => 'on',
+						],
+				'constraints'=>$this->_TABLE_INFO['binds'],
+				'model_fields'=>[],
+				'captions'=>[],
+				'view' => $this->_TABLE_INFO['view'],
+				'con_auth'=>$this->_TABLE_INFO['auth_con'],
+				'connect_from' => [
+					'frontend' => $this->_TABLE_INFO['auth_con'],
+					'backend' => $this->_TABLE_INFO['auth_con'],
+				],
+		];
 		
-		$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+		$capts = [];
+		foreach ($this->_TABLE_INFO['fields'] as $fld => $fldinfo)
+		{
+			$newfld = ['name'=>$fld,];
+			if( in_array($fld,$_trinfo['required']))
+				$newfld['required']='on';
+			$_trinfo['model_fields'][] = $newfld;
+						
+			$capts[$this->_TABLE_INFO['table'].".".$fld]=$fld;
+		}
 		
-		$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
+		$_trinfo['captions']=['frontend'=>$capts,'backend'=>$capts,'install'=>$capts,];
 		
-		//$this->make_hmvc($_trinfo); 
+	//	mul_dbg('result info');
+	//	mul_dbg($_trinfo);
+		
+	//	$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
+		
+	//	$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
+		
+		$this->make_hmvc($_trinfo); 
 		
 		
 	}
