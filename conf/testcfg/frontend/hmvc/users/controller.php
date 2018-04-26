@@ -24,7 +24,7 @@ class UsersController extends \AuthController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "articles", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page,1,$this->getRequest()->getArg('ord'));
 		
@@ -47,14 +47,14 @@ class UsersController extends \AuthController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "articles", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE USERS";
 		$this->out_view('itemform',array('users'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "articles", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$users->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('users'=>$users));
@@ -91,7 +91,7 @@ class UsersController extends \AuthController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "articles", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$users->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('users'=>$users));
@@ -106,7 +106,7 @@ class UsersController extends \AuthController
 	}
 	
 	public function ActionAuth()
-	{
+	{		
 		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
 		if($auth_res)
 		{

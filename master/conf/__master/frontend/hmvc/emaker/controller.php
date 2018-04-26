@@ -326,7 +326,7 @@ class EmakerController extends \BaseController
 		
 		$the_entity = new \scaff_entity($_POST['entity'], $_cfg);
 		$the_entity->DATA_DRV = $this->_CONNECTION;
-		$the_entity->make();
+		$the_entity->make($this);
 		
 		if(!empty($_POST['entity']['redirect_here']))
 		{
@@ -342,7 +342,9 @@ class EmakerController extends \BaseController
 			}
 		}
 		else
+		{
 			$this->redirect(as_url('emaker/'.$_POST['entity']['cfg']));
+		}
 	}
 	
 	public function BeforeValidate(&$bv_params)

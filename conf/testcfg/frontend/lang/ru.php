@@ -12,4 +12,9 @@ $_LANG['users.email']='email';
 $_LANG['users.token']='token';
 $_LANG['users.avatar']='avatar';
 $_LANG['users.status']='status';
+$_LANG['message.id']='id';
+$_LANG['message.topic']='topic';
+$_LANG['message.message']='message';
+$_LANG['message.user_from']='user_from';
+$_LANG['message.user_to']='user_to';
 ?>

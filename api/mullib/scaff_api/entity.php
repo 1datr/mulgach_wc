@@ -44,7 +44,7 @@ class scaff_entity {
 			{
 				$this->_TABLE_INFO['binds'][]=[
 						'field'=>$element['fldname'],
-						'table'=>$element['typeinfo']['entity_to'],
+						'model'=>$element['typeinfo']['entity_to'],
 						'field_to'=>$element['typeinfo']['fld_to']];
 				
 				$entity_to_obj = new scaff_entity($element['typeinfo']['entity_to'],$this->PARENT_CFG);
@@ -109,6 +109,11 @@ class scaff_entity {
 		$this->DATA_DRV = $drv;
 	}
 	
+	function watch_model($ep='frontend')
+	{
+		$tr = $this->PARENT_CFG->get_triads();
+	}
+	
 	function get_fields()
 	{
 		$fields = $this->DATA_DRV->get_table_fields($this->TABLE);
@@ -131,12 +136,12 @@ class scaff_entity {
 		return $fields;
 	}
 	
-	function make()
+	function make($controller)
 	{
 		$this->compile_table_info($this->_TABLE_INFO);
 		$this->build_table();
 		
-		$this->build_hmvc($trinfo);
+		$this->build_hmvc($trinfo,$controller);
 	}
 	
 	function build_table()
@@ -144,7 +149,7 @@ class scaff_entity {
 		$this->DATA_DRV->build_table($this->_TABLE_INFO);
 	}
 	
-	function build_hmvc($trinfo)
+	function build_hmvc($trinfo,$controller)
 	{
 	//	mul_dbg($this->_TABLE_INFO);
 		$_trinfo = ['table'=>$this->_TABLE_INFO['table'],
@@ -190,12 +195,12 @@ class scaff_entity {
 		
 	//	$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
 		
-		$this->make_hmvc($_trinfo); 
+		$this->make_hmvc($_trinfo,$controller); 
 		
 		
 	}
 	
-	private function make_hmvc($_params)
+	private function make_hmvc($_params,$controller)
 	{
 		//print_r($_params['constraints']);
 	
@@ -231,7 +236,7 @@ class scaff_entity {
 						
 					$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 						
-					$the_triada->frontend_from_table($_params,$this,$opts);
+					$the_triada->frontend_from_table($_params,$controller,$opts);
 			}
 	
 			if(!empty($_params['ep']['backend']))
@@ -249,14 +254,14 @@ class scaff_entity {
 						
 					$the_triada = $conf_obj->create_triada($ep,$_params['table']);
 	
-					$the_triada->backend_from_table($_params,$this,$opts);
+					$the_triada->backend_from_table($_params,$controller,$opts);
 			}
 	
 			if(!empty($_params['ep']['install']))
 			{
 				$ep='install';
 				$the_triada = $conf_obj->create_triada($ep,$_params['table']);
-				$the_triada->install_from_table($_params,$this,$opts);
+				$the_triada->install_from_table($_params,$controller,$opts);
 			}
 	}
 	

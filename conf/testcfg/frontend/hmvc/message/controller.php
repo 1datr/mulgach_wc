@@ -1,7 +1,7 @@
 <?php 
-namespace Testcfg\Backend;
+namespace Testcfg\Frontend;
 
-class ArticlesController extends \BaseController
+class MessageController extends \BaseController
 {
 
 	public function Rules()
@@ -20,7 +20,7 @@ class ArticlesController extends \BaseController
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="ARTICLES";
+		$this->_TITLE="MESSAGE";
 	
 		$conn = get_connection();
 		
@@ -48,21 +48,21 @@ class ArticlesController extends \BaseController
 	public function ActionCreate()
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
-		$this->_TITLE="CREATE ARTICLES";
-		$this->out_view('itemform',array('articles'=>$this->_MODEL->CreateNew()));
+		$this->_TITLE="CREATE MESSAGE";
+		$this->out_view('itemform',array('message'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$articles = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
-		$this->_TITLE=$articles->getView()." #{EDIT}"; 
-		$this->out_view('itemform',array('articles'=>$articles));
+		$message = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$message->getView()." #{EDIT}"; 
+		$this->out_view('itemform',array('message'=>$message));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->findByPrimary($_POST['articles']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['message']);
 		
 		if($newitem!=null)
 		{
@@ -73,14 +73,14 @@ class ArticlesController extends \BaseController
 			$newitem = $this->_MODEL->empty_row_form_model();
 
 		}	
-		$newitem->FillFromArray($_POST['articles']);		
+		$newitem->FillFromArray($_POST['message']);		
 		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('articles'));		
+			$this->redirect(as_url('message'));		
 	}
 			
 	public function ActionDelete($id)
@@ -92,9 +92,9 @@ class ArticlesController extends \BaseController
 	public function ActionView($id)
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
-		$articles = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
-		$this->_TITLE=$articles->getView()." #{VIEW}"; 
-		$this->out_view('itemview',array('articles'=>$articles));
+		$message = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$message->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('message'=>$message));
 	}
 	
 	

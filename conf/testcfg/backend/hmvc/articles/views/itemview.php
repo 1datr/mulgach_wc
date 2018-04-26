@@ -15,7 +15,6 @@
 		<tr>
 	<th valign="top"><label>#{articles.author}</label></th>
 	<td valign="top">
-			<?=$articles->getField('author')->getView() ?>	
-			</td>
+	<?=$articles->getField('author',true) ?>	</td>
 	</tr>
 	</table>

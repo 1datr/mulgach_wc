@@ -190,8 +190,11 @@ class scaff_triada
 	{
 		include $this->_BASEFILE_PATH;
 		
-		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
-		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
+	//	$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);		
+		$tbl_fields = $controller->_CONNECTION->get_table_fields($_params['table']);
+		
+	//	$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
+		$_primary = $controller->_CONNECTION->get_primary($tbl_fields);
 		
 		if( !($this->has_view('index')) || $_params['rewrite_all'])
 		{
@@ -315,7 +318,10 @@ class scaff_triada
 		$vars['table']=$_params['table'];
 		$vars['filesparams']='';
 		
-		$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
+	//	mul_dbg($controller);		
+		//$tbl_fields = $controller->_ENV['_CONNECTION']->get_table_fields($_params['table']);
+		
+		$tbl_fields = $controller->_CONNECTION->get_table_fields($_params['table']);
 		
 		$files_params='';
 		foreach ($_params['model_fields'] as $idx => $fld)
@@ -355,7 +361,7 @@ class scaff_triada
 		
 		$vars['array_constraints']="array($con_str)";
 		$vars['array_rules']='array()';
-		$_primary = $controller->_ENV['_CONNECTION']->get_primary($tbl_fields);
+		$_primary = $controller->_CONNECTION->get_primary($tbl_fields);
 		$vars['primary']=$_primary;
 		$vars['view']=$_params['view'];
 		

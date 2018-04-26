@@ -31,16 +31,7 @@ else
 	</tr>
 		<tr>
 	<th><label>#{articles.author}</label></th><td>
-			<?php 
-					$params = array('ds'=> $this->get_controller('')->_MODEL->find() ,'name'=>'articles[author]');			
-					if(!empty($articles))
-		{
-			$params['value']=$articles->getField('author',true);
-		}
-		$this->usewidget(new ComboboxWidget(),$params);
-		?>
-		<div class="error" id='err_author' role="alert"></div>
-			</td>
+	<?php $form->field($articles,'author')->text();	 ?>	</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

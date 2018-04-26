@@ -1,7 +1,7 @@
 <?php 
 namespace Testcfg\Backend;
 
-class UsersController extends \AuthController
+class MessageController extends \BaseController
 {
 
 	public function Rules()
@@ -13,14 +13,14 @@ class UsersController extends \AuthController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',_array_diff($this->getActions(),array('login','auth')),'anonym','users/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="USERS";
+		$this->_TITLE="MESSAGE";
 	
 		$conn = get_connection();
 		
@@ -48,21 +48,21 @@ class UsersController extends \AuthController
 	public function ActionCreate()
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
-		$this->_TITLE="CREATE USERS";
-		$this->out_view('itemform',array('users'=>$this->_MODEL->CreateNew()));
+		$this->_TITLE="CREATE MESSAGE";
+		$this->out_view('itemform',array('message'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
-		$this->_TITLE=$users->getView()." #{EDIT}"; 
-		$this->out_view('itemform',array('users'=>$users));
+		$message = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$message->getView()." #{EDIT}"; 
+		$this->out_view('itemform',array('message'=>$message));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->findByPrimary($_POST['users']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['message']);
 		
 		if($newitem!=null)
 		{
@@ -73,14 +73,14 @@ class UsersController extends \AuthController
 			$newitem = $this->_MODEL->empty_row_form_model();
 
 		}	
-		$newitem->FillFromArray($_POST['users']);		
+		$newitem->FillFromArray($_POST['message']);		
 		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('users'));		
+			$this->redirect(as_url('message'));		
 	}
 			
 	public function ActionDelete($id)
@@ -92,43 +92,11 @@ class UsersController extends \AuthController
 	public function ActionView($id)
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
-		$users = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
-		$this->_TITLE=$users->getView()." #{VIEW}"; 
-		$this->out_view('itemview',array('users'=>$users));
+		$message = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$message->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('message'=>$message));
 	}
 	
 	
-	public function ActionLogin()
-	{
-		$this->_TITLE=\Lang::__t('Authorization');
-		$this->use_layout('layout_login');
-		$this->out_view('loginform',array());
-	}
-	
-	public function ActionAuth()
-	{
-		$auth_res = $this->_MODEL->auth($_POST['login'],$_POST['password']);
-		if($auth_res)
-		{
-			$_SESSION[$this->get_ep_param('sess_user_descriptor')]=array('login'=>$_POST['login']);
-			
-			if(!empty($_POST['url_required']))
-				$this->redirect($_POST['url_required']);
-			else
-				$this->redirect(as_url('users'));
-		}
-		else 
-			$this->redirect_back();
-
-		//$this->out_view('loginform',array());
-	}
-	
-	
-	
-	public function ActionLogout()
-	{
-		$this->logout();
-		$this->redirect(as_url('users/login'));
-	}
 }
 ?>
