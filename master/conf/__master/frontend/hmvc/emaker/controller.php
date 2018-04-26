@@ -206,23 +206,55 @@ class EmakerController extends \BaseController
 		$editing_entity->setField('fieldlist', array());
 		$editing_entity->setField('auth_con',$tr_auth);
 		
+		$ref_fld_info = new \ModelInfo([
+				'domen'=>$fld_prefix,//'refentity',
+				'fields'=>[
+						'entity_to'=>['Type'=>'text'],
+						'fld_to'=>['Type'=>'text']
+				],
+				'required'=>['entity_to','fld_to']
+		]);
 	//	mul_dbg($fields);
 		foreach ($fields as $fld =>$fld_params)
 		{
+			
+			
 			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			$thefld->setField('fldname', $fld);
 			$thefld->setField('fldname_old', $fld);
-			$thefld->setField('type', $fld_params['Type']);
+			
+			if(isset($entity->_MODEL_INFO['constraints']))
+			{
+				if(isset($entity->_MODEL_INFO['constraints'][$fld]))
+				{
+					$thefld->setField('type', '_ref');
+					
+					//$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
+					//$typeinfo_row = $typemodel->empty_row_form_model();
+					//$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+				}
+			}
+			else
+			{
+				$thefld->setField('type', $fld_params['Type']);
+				
+				
+			}
+			
+			
 			$thefld->setField('primary', ($fld_params['Key']=='PRI'));
 			$thefld->setField('deletable', ($fld_params['Key']!='PRI'));
 			$thefld->setField('required',($fld_params['Null']=='NO'));
 			$thefld->setField('file_enabled',false);
 			
-			$thefld->setField('defval', $fld_params['Default']);
-				
 			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
 			$typeinfo_row = $typemodel->empty_row_form_model();
 			$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+			
+			$thefld->setField('defval', $fld_params['Default']);
+				
+			
+			
 			
 			$editing_entity->setField('fieldlist', x_array_push($editing_entity->getField('fieldlist'), $thefld));
 			

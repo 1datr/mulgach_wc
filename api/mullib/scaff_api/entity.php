@@ -8,6 +8,7 @@ class scaff_entity {
 	VAR $DATA_DRV;
 	VAR $PARENT_CFG=NULL;
 	VAR $_TABLE_INFO=NULL;
+	VAR $_MODEL_INFO=[];
 	
 	function __construct($table,$cfg)
 	{
@@ -18,6 +19,7 @@ class scaff_entity {
 			$this->PARENT_CFG = $cfg;
 			$this->PARENT_CFG->get_triada('frontend',$this->TABLE);
 			$this->DATA_DRV = $this->PARENT_CFG->_DRV;
+			$this->watch_model();
 		}
 		else 
 		{
@@ -26,6 +28,7 @@ class scaff_entity {
 			$this->PARENT_CFG = $cfg;
 			$this->_TABLE_INFO = $table;
 			$this->DATA_DRV = $this->PARENT_CFG->_DRV;
+			$this->watch_model();
 		}
 	}
 	
@@ -111,7 +114,10 @@ class scaff_entity {
 	
 	function watch_model($ep='frontend')
 	{
-		$tr = $this->PARENT_CFG->get_triads();
+		//$tr = $this->PARENT_CFG->get_triads();
+		$tr = $this->PARENT_CFG->get_triada($ep,$this->NAME);
+		include $tr->_PATH.'/baseinfo.php';
+		$this->_MODEL_INFO = $settings;
 	}
 	
 	function get_fields()
