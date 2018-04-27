@@ -85,8 +85,10 @@ $conf = array(
 		return $res;
 	}
 	
-	public function get_entity($entity_name,$_cfg)
+	public function get_entity($entity_name,$_cfg=NULL)
 	{
+		if($_cfg==NULL)
+			$_cfg = $this;
 		$newentity = new scaff_entity($entity_name,$_cfg);
 		
 		return $newentity;

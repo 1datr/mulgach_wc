@@ -81,9 +81,26 @@ else
 	<td><span class="fldinfo"><?php 
 	$fld_typeinfo = $fld->getField('typeinfo');
 	if(!empty($fld_typeinfo))
-		$fld_typeinfo->draw_def_form($form,['show_labels'=>false,
+	{
+		if($fld_typeinfo->FieldExists('entity_to'))
+		{
+			?>
+	<!-- entity reference -->
+	<table class="_eref">
+	<tr>
+	<td><?php $form->field($fld_typeinfo,'entity_to', [])->ComboBox($elist,['htmlattrs'=>['class'=>'_entity_to','onchange'=>'on_entity_change(this)']]);  ?></td>
+	<td><?php $form->field($fld_typeinfo,'fld_to', [])->ComboBox($fld_typeinfo->getField('fieldlist'),['htmlattrs'=>['class'=>'_fld_to','onchange'=>'on_fld_to_change(this)']]);  ?></td>
+	</tr>
+	</table>
+			<?php 
+		}
+		else
+		{
+			$fld_typeinfo->draw_def_form($form,['show_labels'=>false,
 				'name_root'=>$af_fldname->get_name_root()."[".$idx."][typeinfo]"				
-	]);
+		]);
+		}
+	}
 	?></span></td>
 	<td><?php $form->field($fld, 'primary',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?></td>	
 	<td><?php $form->field($fld, 'required',['namemode'=>'multi','nameidx'=>$idx])->checkbox([]);  ?></td>	

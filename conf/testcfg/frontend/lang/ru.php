@@ -17,4 +17,7 @@ $_LANG['message.topic']='topic';
 $_LANG['message.message']='message';
 $_LANG['message.user_from']='user_from';
 $_LANG['message.user_to']='user_to';
+$_LANG['ERROR']='ERROR';
+$_LANG['Error']='Error';
+$_LANG['No such page']='No such page';
 ?>

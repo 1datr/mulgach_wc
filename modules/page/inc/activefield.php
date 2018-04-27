@@ -246,9 +246,13 @@ class ActiveField
 	{
 		def_options(array('htmlattrs'=>array(),'enum_mode'=>'raw','err_box'=>true,'hidden_if_d'=>true,'required'=>$this->_ROW->_MODEL->isFieldRequired($this->_FLDNAME),), $opts);
 		if(!isset($opts['name']))
+		{
 			$opts['htmlattrs']['name']= $this->get_var_name();
+		}
 		else
-			$opts['htmlattrs']['name']= $opts['name'];				
+		{
+			$opts['htmlattrs']['name']= $opts['name'];	
+		}
 						
 		$hidden_out = false;
 		if(!$this->_ROW->fldEnabled($this->_FLDNAME))

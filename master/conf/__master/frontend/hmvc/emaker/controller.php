@@ -206,15 +206,22 @@ class EmakerController extends \BaseController
 		$editing_entity->setField('fieldlist', array());
 		$editing_entity->setField('auth_con',$tr_auth);
 		
-		$ref_fld_info = new \ModelInfo([
-				'domen'=>$fld_prefix,//'refentity',
+		if(isset($entity->_MODEL_INFO['view']))
+		{
+			$editing_entity->setField('view', $entity->_MODEL_INFO['view']);
+		}
+		
+		$ref_fld_info = [
+				'domen'=>'',//'refentity',
 				'fields'=>[
 						'entity_to'=>['Type'=>'text'],
-						'fld_to'=>['Type'=>'text']
+						'fld_to'=>['Type'=>'text'],
+						'fieldlist'=>['Type'=>'array'],
 				],
 				'required'=>['entity_to','fld_to']
-		]);
+		];
 	//	mul_dbg($fields);
+		$idx = 0;
 		foreach ($fields as $fld =>$fld_params)
 		{
 			
@@ -223,21 +230,33 @@ class EmakerController extends \BaseController
 			$thefld->setField('fldname', $fld);
 			$thefld->setField('fldname_old', $fld);
 			
-			if(isset($entity->_MODEL_INFO['constraints']))
+			if(isset($entity->_MODEL_INFO['constraints']) && isset($entity->_MODEL_INFO['constraints'][$fld]) )
 			{
-				if(isset($entity->_MODEL_INFO['constraints'][$fld]))
-				{
-					$thefld->setField('type', '_ref');
+				$thefld->setField('type', '_ref');
 					
-					//$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
-					//$typeinfo_row = $typemodel->empty_row_form_model();
-					//$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
-				}
+				$ref_fld_info['domen']= "entity[fieldlist][".$idx."][typeinfo]";
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,new \ModelInfo($ref_fld_info));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+					
+				$typeinfo_row->setField('entity_to',$entity->_MODEL_INFO['constraints'][$fld]['model']);
+				$typeinfo_row->setField('fld_to',$entity->_MODEL_INFO['constraints'][$fld]['fld']);
+				
+				$model_entity = $_cfg->get_entity($entity->_MODEL_INFO['constraints'][$fld]['model']);
+				$model_entity->SetDrv($this->_CONNECTION);
+				
+				$typeinfo_row->setField('fieldlist',assoc_array_cut($model_entity->get_fields(),'Field'));
+					
+				$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+				//$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
+				//$typeinfo_row =  $typemodel->empty_row_form_model();							
 			}
 			else
 			{
 				$thefld->setField('type', $fld_params['Type']);
 				
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
 				
 			}
 			
@@ -247,9 +266,7 @@ class EmakerController extends \BaseController
 			$thefld->setField('required',($fld_params['Null']=='NO'));
 			$thefld->setField('file_enabled',false);
 			
-			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
-			$typeinfo_row = $typemodel->empty_row_form_model();
-			$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+			
 			
 			$thefld->setField('defval', $fld_params['Default']);
 				
@@ -258,6 +275,7 @@ class EmakerController extends \BaseController
 			
 			$editing_entity->setField('fieldlist', x_array_push($editing_entity->getField('fieldlist'), $thefld));
 			
+			$idx = $idx+1;
 		} 
 		
 		$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
@@ -341,7 +359,7 @@ class EmakerController extends \BaseController
 		$_entity = $_cfg->get_entity($entity_name, $_cfg);
 		$_entity->SetDrv($this->_CONNECTION);
 		$fldinfo = $_entity->get_fields();
-		mul_dbg($fldinfo);
+	//	mul_dbg($fldinfo);
 		$res_array['items'] = assoc_array_cut($fldinfo,'Field');
 		
 		$this->out_json($res_array);
