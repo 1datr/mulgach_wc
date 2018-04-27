@@ -142,12 +142,14 @@ class scaff_entity {
 		return $fields;
 	}
 	
-	function make($controller)
+	function make($controller,$build=TRUE)
 	{
 		$this->compile_table_info($this->_TABLE_INFO);
 		$this->build_table();
-		
-		$this->build_hmvc($trinfo,$controller);
+		if($build)
+		{
+			$this->build_hmvc($trinfo,$controller);
+		}
 	}
 	
 	function build_table()

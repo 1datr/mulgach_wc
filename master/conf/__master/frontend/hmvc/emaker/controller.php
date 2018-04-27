@@ -58,6 +58,7 @@ class EmakerController extends \BaseController
 			$newentity->setField('ename', $_POST['makenew']['ename']);
 			$newentity->setField('fieldlist', array());
 			$newentity->setField('view', '{login}');
+			$newentity->setField('build',true);
 			
 			
 			// подключаемся к базе и драйверу
@@ -205,6 +206,8 @@ class EmakerController extends \BaseController
 		$editing_entity->setField('oldname', $_ename);
 		$editing_entity->setField('fieldlist', array());
 		$editing_entity->setField('auth_con',$tr_auth);
+		$editing_entity->setField('build',true);
+		$editing_entity->setField('redirect_here',isset($_SESSION['redirect_here']));
 		
 		if(isset($entity->_MODEL_INFO['view']))
 		{
@@ -376,10 +379,15 @@ class EmakerController extends \BaseController
 		
 		$the_entity = new \scaff_entity($_POST['entity'], $_cfg);
 		$the_entity->DATA_DRV = $this->_CONNECTION;
-		$the_entity->make($this);
+		
+		$build=(isset($_POST['entity']['build']));
+		
+		$the_entity->make($this,$build);
+		
 		
 		if(!empty($_POST['entity']['redirect_here']))
 		{
+			$_SESSION['redirect_here']=true;
 			if($_POST['entity']['ename']!=$_POST['entity']['oldname'])
 			{
 				$addr = $_SERVER['HTTP_REFERER'];
@@ -393,6 +401,7 @@ class EmakerController extends \BaseController
 		}
 		else
 		{
+			unset($_SESSION['redirect_here']);
 			$this->redirect(as_url('emaker/'.$_POST['entity']['cfg']));
 		}
 	}
