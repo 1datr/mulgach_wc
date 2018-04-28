@@ -35,7 +35,8 @@ class scaff_entity {
 	function compile_table_info($nfo)
 	{
 		
-		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[],'binds'=>[],'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view']);
+		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[],'binds'=>[],
+				'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view'],'file_fields'=>[]);
 		
 		if(!empty($nfo['oldname']))
 			$this->_TABLE_INFO['oldname']=$nfo['oldname'];
@@ -92,17 +93,26 @@ class scaff_entity {
 					$this->_TABLE_INFO['required'][]=$element['fldname'];
 				}
 					
-				$this->_TABLE_INFO['fields'][$element['fldname']]=[
+				$_fld_element=[
 						'Type'=>$element['type'],
 						'TypeInfo'=>$this->DATA_DRV->make_fld_info_from_data($element),
 						'Null'=>($element['required']=='on'),
-						'Default'=>$element['defval']
+						'Default'=>$element['defval'],						
 				];
+				
+				$this->_TABLE_INFO['fields'][$element['fldname']]=$_fld_element;
 				
 				if(!empty($element['fldname_old']))
 				{
 					$this->_TABLE_INFO['fields'][$element['fldname']]['fldname_old'] = $element['fldname_old'];
 				}
+				
+				if(isset($element['file']))
+				{
+					$this->_TABLE_INFO['fields'][$element['fldname']]['file_fields']=true;
+					$this->_TABLE_INFO['fields'][$element['fldname']]['filter']=$element['filetype'];
+				}
+				
 			}
 		}				
 	}
@@ -174,7 +184,7 @@ class scaff_entity {
 						],
 				'constraints'=>$this->_TABLE_INFO['binds'],
 				'model_fields'=>[],
-				'file_fields'=>[],
+				'file_fields'=>$this->_TABLE_INFO['file_fields'],
 				'captions'=>[],
 				'view' => $this->_TABLE_INFO['view'],
 				'con_auth'=>$this->_TABLE_INFO['auth_con'],
@@ -190,23 +200,27 @@ class scaff_entity {
 			$newfld = ['name'=>$fld,];
 			if( in_array($fld,$_trinfo['required']))
 				$newfld['required']='on';
+			
+			if(isset($fldinfo['file_fields']))
+			{
+				$newfld['file_fields']='on';
+				$newfld['filter']=$fldinfo['filter'];
+			}
+				
 			$_trinfo['model_fields'][] = $newfld;
 						
 			$capts[$this->_TABLE_INFO['table'].".".$fld]=$fld;
 		}
 		
 		$_trinfo['captions']=['frontend'=>$capts,'backend'=>$capts,'install'=>$capts,];
-		
-	//	mul_dbg('result info');
-	//	mul_dbg($_trinfo);
-		
-	//	$_SESSION['makeinfo'] = array_merge($_SESSION['makeinfo'],$_POST);
-		
-	//	$_SESSION['hmvc_name'] = $_SESSION['makeinfo']['table'];
-		
+				
 		$this->make_hmvc($_trinfo,$controller); 
-		
-		
+				
+	}
+	
+	public function get_primary_fld()
+	{
+		return $this->DATA_DRV->get_primary($this->TABLE);
 	}
 	
 	private function make_hmvc($_params,$controller)

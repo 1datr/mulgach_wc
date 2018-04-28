@@ -265,7 +265,15 @@ class EmakerController extends \BaseController
 			$thefld->setField('primary', ($fld_params['Key']=='PRI'));
 			$thefld->setField('deletable', ($fld_params['Key']!='PRI'));
 			$thefld->setField('required',($fld_params['Null']=='NO'));
-			$thefld->setField('file_enabled',false);
+			
+			if($fld==$entity->get_primary_fld())
+			{
+				$thefld->setField('file_enabled',false);
+			}
+			else 
+			{
+				$thefld->setField('file_enabled',true);
+			}
 			
 			if(isset($entity->_MODEL_INFO['file_fields'][$fld]))
 			{
