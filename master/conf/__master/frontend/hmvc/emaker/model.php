@@ -32,7 +32,15 @@ class ModelEmaker extends \BaseModel
 								'ename'=>['Type'=>'text'],
 								'oldname'=>['Type'=>'text'],
 								'view'=>['Type'=>'text'],
-								'auth_con'=>['Type'=>'text'],								
+								'auth_con'=>['Type'=>'text'],	
+								//auth fields
+								'auth_fld_login'=>['Type'=>'text'],
+								'auth_fld_email'=>['Type'=>'text'],
+								'auth_fld_passw'=>['Type'=>'text'],
+								'auth_fld_hash'=>['Type'=>'text'],
+								
+								'main_menu'=>['Type'=>'boolean'],
+								
 								'fieldlist'=>new \ModelInfo([
 									'domen'=>'field',
 									'validate_proc'=>function($row,&$res,$prefix="")
