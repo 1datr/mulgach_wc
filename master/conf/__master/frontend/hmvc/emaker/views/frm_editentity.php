@@ -108,12 +108,27 @@ else
 		if($fld->getField('file_enabled'))
 		{
 			$form->field($fld, 'file',['namemode'=>'multi','nameidx'=>$idx])->checkbox(['htmlattrs'=>['onchange'=>'on_sel_file(this)']]);
+			if(!$fld->getField('file'))
+			{
 			?>
 			<span class="filetype_div" style="display: none">
 			<?php $form->field($fld, 'filetype',['namemode'=>'multi','nameidx'=>$idx])->text(['htmlattrs'=>['class'=>'filetype','placeholder'=>'File type']]); ?>
 <div><?=$_TEXT_FOR_FILETYPE?></div>
 			</span>
 			<?php   
+			}
+			else
+			{
+			?>	
+			<span class="filetype_div" >
+			<?php $form->field($fld, 'filetype',['namemode'=>'multi','name_ptrn'=>'{idx}','nameidx'=>$idx])->text(['htmlattrs'=>['class'=>'filetype','placeholder'=>'File type']]); ?>
+				<div>
+				<?=$_TEXT_FOR_FILETYPE?>
+				</div>
+			</span>
+			<?php 
+			}
+			
 		}
 	?></td>	
 	<td><?php 

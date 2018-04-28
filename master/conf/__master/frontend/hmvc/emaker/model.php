@@ -32,7 +32,7 @@ class ModelEmaker extends \BaseModel
 								'ename'=>['Type'=>'text'],
 								'oldname'=>['Type'=>'text'],
 								'view'=>['Type'=>'text'],
-								'auth_con'=>['Type'=>'text'],
+								'auth_con'=>['Type'=>'text'],								
 								'fieldlist'=>new \ModelInfo([
 									'domen'=>'field',
 									'validate_proc'=>function($row,&$res,$prefix="")

@@ -174,6 +174,7 @@ class scaff_entity {
 						],
 				'constraints'=>$this->_TABLE_INFO['binds'],
 				'model_fields'=>[],
+				'file_fields'=>[],
 				'captions'=>[],
 				'view' => $this->_TABLE_INFO['view'],
 				'con_auth'=>$this->_TABLE_INFO['auth_con'],

@@ -24,4 +24,9 @@
 			<?=$message->getField('user_to')->getView() ?>	
 			</td>
 	</tr>
+		<tr>
+	<th valign="top"><label>#{message.picture}</label></th>
+	<td valign="top">
+	<?=$message->getField('picture',true) ?>	</td>
+	</tr>
 	</table>

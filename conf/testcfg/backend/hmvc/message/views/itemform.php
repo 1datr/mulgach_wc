@@ -55,6 +55,10 @@ else
 		<div class="error" id='err_user_to' role="alert"></div>
 			</td>
 	</tr>
+		<tr>
+	<th><label>#{message.picture}</label></th><td>
+	<?php $form->field($message,'picture')->file();	 ?>	</td>
+	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />
 <?php $form->submit('#{SAVE}'); ?>

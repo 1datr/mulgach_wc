@@ -20,4 +20,5 @@ $_LANG['message.user_to']='user_to';
 $_LANG['ERROR']='ERROR';
 $_LANG['Error']='Error';
 $_LANG['No such page']='No such page';
+$_LANG['message.picture']='picture';
 ?>

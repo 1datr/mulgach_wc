@@ -226,9 +226,7 @@ class EmakerController extends \BaseController
 	//	mul_dbg($fields);
 		$idx = 0;
 		foreach ($fields as $fld =>$fld_params)
-		{
-			
-			
+		{			
 			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			$thefld->setField('fldname', $fld);
 			$thefld->setField('fldname_old', $fld);
@@ -269,7 +267,12 @@ class EmakerController extends \BaseController
 			$thefld->setField('required',($fld_params['Null']=='NO'));
 			$thefld->setField('file_enabled',false);
 			
-			
+			if(isset($entity->_MODEL_INFO['file_fields'][$fld]))
+			{
+				$thefld->setField('file_enabled',true);
+				$thefld->setField('file',true);
+				$thefld->setField('filetype',$entity->_MODEL_INFO['file_fields'][$fld]['type']);
+			}
 			
 			$thefld->setField('defval', $fld_params['Default']);
 				

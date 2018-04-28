@@ -35,4 +35,7 @@ $_LANG['Create ARTICLES']='Create ARTICLES';
 $_LANG['SAVE']='SAVE';
 $_LANG['MESSAGE LIST']='MESSAGE LIST';
 $_LANG['Create MESSAGE']='Create MESSAGE';
+$_LANG['message.picture']='picture';
+$_LANG['Edit MESSAGE']='Edit MESSAGE';
+$_LANG['Clear the file']='Clear the file';
 ?>
