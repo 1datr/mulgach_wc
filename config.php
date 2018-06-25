@@ -1,3 +1,3 @@
 <?php
-$_CONFIG ='testcfg';
-//$_CONFIG ='testcfg';
+$_CONFIG ='antwars';
+//$_CONFIG ='antwars';

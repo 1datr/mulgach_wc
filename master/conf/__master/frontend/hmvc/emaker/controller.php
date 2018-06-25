@@ -336,13 +336,20 @@ class EmakerController extends \BaseController
 
 					$fld_prefix = $fld_name;
 					
-					$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
+					$_elist = $_cfg->get_entities($this->_CONNECTION, $_cfg);
+					$elist = assoc_array_cut($_elist,'NAME');
 					$elist = array_diff($elist, [$curr_entity]);					
+					//mul_dbg($elist);
+					//mul_dbg($curr_entity);
+					$_keys = array_keys($elist);
+					$_def_entity_key = $_keys[0];
+					$def_entity = $elist[$_def_entity_key];
 					
-					$_entity = $_cfg->get_entity($curr_entity, $_cfg);
-					$_entity->SetDrv($this->_CONNECTION);
-					$_fields = assoc_array_cut($_entity->get_fields(),'Field');					
-					
+					$def_entity = $_cfg->get_entity($def_entity, $_cfg);
+					//mul_dbg($_entity);
+					$def_entity->SetDrv($this->_CONNECTION);
+					$_fields = assoc_array_cut($def_entity->get_fields(),'Field');					
+					//mul_dbg($_fields);
 					
 					$this->out_ajax_block('eref',['cfg'=>$cfg,'elist'=>$elist,'_fields'=>$_fields,'type'=>$fldtype,'row'=>$_row,'prefix'=>$fld_prefix]);
 				};break;

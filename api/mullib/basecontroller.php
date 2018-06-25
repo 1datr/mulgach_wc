@@ -441,10 +441,12 @@ class BaseController
 		}
 	
 		$_view_path = $this->get_view_path($view);
+		
+		ob_start();
 		if($this->get_ep_param('print_template_path'))
 			echo "<!-- {$_view_path} -->";
 		
-		ob_start();
+		
 		include $_view_path;
 		$the_content = ob_get_clean();
 		
