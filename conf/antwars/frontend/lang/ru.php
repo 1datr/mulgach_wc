@@ -11,4 +11,12 @@ $_LANG['game.name']='name';
 $_LANG['game.owner_id']='owner_id';
 $_LANG['game.creation_date']='creation_date';
 $_LANG['game.charact']='charact';
+$_LANG['ant_race.id']='id';
+$_LANG['ant_race.name']='name';
+$_LANG['ant.id']='id';
+$_LANG['ant.race']='race';
+$_LANG['ant.number']='number';
+$_LANG['ant.owner_id']='owner_id';
+$_LANG['ant.game_id']='game_id';
+$_LANG['game.gamer2_id']='gamer2_id';
 ?>

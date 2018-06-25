@@ -171,12 +171,13 @@ class scaff_triada
 	
 	function action_exists($act)
 	{
-		$_CONTROLLER_FILE = url_seg_add($this->_PATH,'controller.php');
+		$controller_name = BaseController::ControllerName($this->NAME);
+		$_CONTROLLER_FILE = url_seg_add($this->_PATH,$controller_name.'.php');
 		if(file_exists( $_CONTROLLER_FILE))
 		{
 			require_once $_CONTROLLER_FILE;
 				
-			$controller_name = BaseController::ControllerName($this->NAME);
+			
 			$controller_name = ucfirst($this->_PARENT_CONF->_NAME).'\\'.ucfirst($this->_EP).'\\'.$controller_name;
 			$con_obj = new $controller_name('#test');
 			
@@ -407,7 +408,9 @@ class scaff_triada
 	function make_controller($vars=array(),$rewrite,$template='controller')
 	{
 		$_template = url_seg_add(__DIR__,'/phpt/',$template.'.phpt');
-		$this->_CONTROLLER_PATH=url_seg_add($this->_PATH,'controller.php');
+		
+		$this->_CONTROLLER_PATH=url_seg_add($this->_PATH,$vars['controller_file_base_name']);
+		//	$this->_CONTROLLER_PATH=url_seg_add($this->_PATH,'controller.php');
 		$vars['_EP'] = ucfirst($this->_EP);
 		$vars['_CONFIG'] = ucfirst($this->_PARENT_CONF->_NAME);
 		if(!file_exists($this->_CONTROLLER_PATH) || $rewrite)
@@ -670,6 +673,7 @@ class scaff_triada
 		$vars['table_uc_first']=UcaseFirst($_params['table']);
 		$vars['TABLE_UC']=strtoupper($_params['table']);
 		$vars['table'] = $_params['table'];
+		$vars['controller_file_base_name'] = UcaseFirst($_params['table'])."Controller.php";
 		$vars['OTHER_METHODS']='';
 		$vars['ADV_RULES']='';		
 		$vars = array_merge($vars,$_params);

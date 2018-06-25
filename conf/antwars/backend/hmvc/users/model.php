@@ -1,7 +1,7 @@
 <?php
 namespace Antwars\Backend;
 
-class ModelUsers extends \BaseModel
+class ModelUsers extends \AuthModel
 {
 	
 }

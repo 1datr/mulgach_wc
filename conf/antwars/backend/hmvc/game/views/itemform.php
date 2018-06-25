@@ -24,7 +24,7 @@ else
 	<tr>
 	<th><label>#{game.owner_id}</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'name'=>'game[owner_id]');			
+					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'required'=>true, 'name'=>'game[owner_id]');
 					if(!empty($game))
 		{
 			$params['value']=$game->getField('owner_id',true);
@@ -45,6 +45,19 @@ else
 		<tr>
 	<th><label>#{game.charact}</label></th><td>
 	<?php $form->field($game,'charact')->text();	 ?>	</td>
+	</tr>
+		<tr>
+	<th><label>#{game.gamer2_id}</label></th><td>
+			<?php 
+					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'required'=>true, 'name'=>'game[gamer2_id]');
+					if(!empty($game))
+		{
+			$params['value']=$game->getField('gamer2_id',true);
+		}
+		$this->usewidget(new ComboboxWidget(),$params);
+		?>
+		<div class="error" id='err_gamer2_id' role="alert"></div>
+			</td>
 	</tr>
 	</table>
 <input type="hidden" name="back_url" value="<?=$_SERVER['HTTP_REFERER']; ?>" />

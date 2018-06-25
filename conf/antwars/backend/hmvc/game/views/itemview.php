@@ -23,4 +23,10 @@
 	<td valign="top">
 	<?=$game->getField('charact',true) ?>	</td>
 	</tr>
+		<tr>
+	<th valign="top"><label>#{game.gamer2_id}</label></th>
+	<td valign="top">
+			<?=$game->getField('gamer2_id')->getView() ?>	
+			</td>
+	</tr>
 	</table>

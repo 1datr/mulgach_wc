@@ -78,12 +78,25 @@ class mul_page extends mul_Module
 			$res['_DIR_CONTROLLER'] = dir_dotted(url_seg_add($res['_DIR_EP'],"/hmvc/{$_CONTROLLER}"));
 		}
 		$res['_CONTROLLER_CLASS'] = strtoupper(substr($res['_CONTROLLER_NAME'],0,1)).substr($res['_CONTROLLER_NAME'],1,strlen($res['_CONTROLLER_NAME'])-1)."Controller";
-		$res['_CONTROLLER_FILE']=url_seg_add( $res['_DIR_CONTROLLER'],"controller.php");
+		/* to rename*/
+		$_CONTROLLER_FILE_NEW = url_seg_add( $res['_DIR_CONTROLLER'], ucfirst($_CONTROLLER)."Controller.php");
+		$_CONTROLLER_FILE_OLD = url_seg_add( $res['_DIR_CONTROLLER'],"controller.php");
+		$res['_CONTROLLER_FILE']=$_CONTROLLER_FILE_NEW;
+		
+		$this->rename_controller_file($_CONTROLLER_FILE_OLD, $_CONTROLLER_FILE_NEW);
 		$res['_ACTION'] = "Action".strtoupper(substr($_ACTION,0,1)).substr($_ACTION,1,strlen($_ACTION)-1);	
 		
 	//	print_r($res);
 		
 		return $res;
+	}
+	
+	private function rename_controller_file($_old_file_name,$new_file_name)
+	{
+		if(file_exists($_old_file_name))
+		{
+			rename($_old_file_name, $new_file_name);
+		}
 	}
 	
 	function out_map($js_arr,$map_file)
