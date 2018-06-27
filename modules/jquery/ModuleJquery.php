@@ -19,7 +19,7 @@ class mul_jquery extends mul_Module
 function use_jq_plugin($plg,$params=array())
 {
 	try{
-		require_once url_seg_add(__DIR__,"/plugins/$plg/index.php");
+		require_once url_seg_add(__DIR__,"/plugins/$plg/".ucfirst($plg).".php");
 		$plg_class_name ="plg_{$plg}";
 		$plg_class = new $plg_class_name($params);
 		return $plg_class;

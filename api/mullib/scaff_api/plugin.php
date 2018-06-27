@@ -29,7 +29,7 @@ class scaff_plugin
 		x_mkdir(url_seg_add($this->_PATH,'/css'));
 		$file_plugin=url_seg_add(__DIR__,'phpt/module/plugin.phpt');
 		$vars = array('plgname'=>$this->_NAME);
-		$this->index_file = url_seg_add($this->_PATH,'index.php');
+		$this->index_file = url_seg_add($this->_PATH,ucfirst($this->_NAME).'.php');
 		x_file_put_contents($this->index_file, parse_code_template($file_plugin,$vars));
 	}
 	

@@ -24,7 +24,7 @@ class scaff_module
 	
 	function plugin_exists($plgname)
 	{
-		$plg_path = url_seg_add($this->_PATH,'plugins',$plgname,'index.php');
+		$plg_path = url_seg_add($this->_PATH,'plugins',$plgname,ucfirst($plgname).'.php');
 	//	mul_dbg($plg_path);
 		return file_exists($plg_path);
 	}

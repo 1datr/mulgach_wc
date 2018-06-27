@@ -50,7 +50,7 @@ class mul_captcha extends mul_Module
 		$plugs = $this->get_plug_list();
 		foreach($plugs as $idx => $plg)
 		{
-			$plg_index_file = url_seg_add(__DIR__,'plugins',$plg,'index.php');
+			$plg_index_file = url_seg_add(__DIR__,'plugins',$plg,ucfirst($plg).'.php');
 			include $plg_index_file;
 			$plg_class="plg_$plg";
 			$rec = $plg_class::recognize($data);
