@@ -20,7 +20,7 @@ class mul_captcha extends mul_Module
 		try{
 			def_options(['controller'=>$_controller], $opts);
 			
-			require_once url_seg_add(__DIR__,"/plugins/$plg_name/index.php");
+			require_once url_seg_add(__DIR__,"/plugins/$plg_name/".ucfirst($plg_name).".php");
 			$plg_class_name ="plg_{$plg_name}";
 			$plg_class = new $plg_class_name($opts);
 			
