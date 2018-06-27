@@ -1,3 +1,3 @@
 <?php
-$_CONFIG ='antwars';
-//$_CONFIG ='antwars';
+$_CONFIG ='edulab';
+//$_CONFIG ='edulab';

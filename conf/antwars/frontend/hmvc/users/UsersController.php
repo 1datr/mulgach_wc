@@ -97,7 +97,12 @@ class UsersController extends \AuthController
 		$this->out_view('itemview',array('users'=>$users));
 	}
 	
-	
+	public function ActionMenu()
+	{
+		$menu = $this->getinfo('basemenu');
+		//print_r($menu);
+		$this->out_view('menu',array('menu'=>$menu));
+	}
 	public function ActionLogin()
 	{
 		$this->_TITLE=\Lang::__t('Authorization');

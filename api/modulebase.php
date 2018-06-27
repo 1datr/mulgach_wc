@@ -96,7 +96,13 @@ class mul_Module
 	
 	function use_plugin($plg,$params=array())
 	{
-		$_plug_file_path = $this->get_module_dir()."/plugins/$plg/index.php";
+		$_plug_file_path_old = $this->get_module_dir()."/plugins/$plg/index.php";
+		$_plug_file_path = $this->get_module_dir()."/plugins/$plg/".ucfirst($plg).".php";
+		if(file_exists($_plug_file_path_old))
+		{
+			rename($_plug_file_path_old, $_plug_file_path);
+		}
+		
 		if(file_exists($_plug_file_path))
 		{
 			require_once $_plug_file_path;

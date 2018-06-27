@@ -75,6 +75,14 @@ else
 	}
 }
 
+function rename_mod_file($_old_file,$_new_file)
+{
+	if(file_exists($_old_file))
+	{
+		rename($_old_file, $_new_file);
+	}
+}
+
 	// Загрузка всех модулей
 	foreach ($_THE_MODULES as $mod => $params)
 	{
@@ -82,7 +90,13 @@ else
 			$module_path = __DIR__."/../modules/$mod";
 			if(file_exists($module_path))
 			{
-				require_once "$module_path/index.php";
+				/*
+				$_OLD_FORMAT_FILE = url_seg_add($module_path,"Modeule".ucfirst($mod).".php");
+				$_NEW_FORMAT_FILE = url_seg_add($module_path,"Module".ucfirst($mod).".php");
+				rename_mod_file($_OLD_FORMAT_FILE, $_NEW_FORMAT_FILE);*/
+				
+				$_MOD_FILE = url_seg_add($module_path,"Module".ucfirst($mod).".php");
+				require_once $_MOD_FILE;
 				$module_class = __module_class_prefix__."$mod".__module_class_suffix__;
 				
 				$mod =new $module_class($params);

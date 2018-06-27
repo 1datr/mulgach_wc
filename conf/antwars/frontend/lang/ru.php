@@ -19,4 +19,7 @@ $_LANG['ant.number']='number';
 $_LANG['ant.owner_id']='owner_id';
 $_LANG['ant.game_id']='game_id';
 $_LANG['game.gamer2_id']='gamer2_id';
+$_LANG['ERROR']='ERROR';
+$_LANG['Error']='Error';
+$_LANG['No such page']='No such page';
 ?>
