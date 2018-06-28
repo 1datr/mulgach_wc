@@ -1,6 +1,6 @@
 <?php
 
-class plg_unactivecheckbox extends mod_plugin 
+class plg_unactivecheckbox extends mod_plugin  
 {
 
 	// Параметры :

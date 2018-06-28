@@ -95,9 +95,9 @@ function rename_mod_file($_old_file,$_new_file)
 				$_NEW_FORMAT_FILE = url_seg_add($module_path,"Module".ucfirst($mod).".php");
 				rename_mod_file($_OLD_FORMAT_FILE, $_NEW_FORMAT_FILE);*/
 				
-				$_MOD_FILE = url_seg_add($module_path,"Module".ucfirst($mod).".php");
+				$_MOD_FILE = url_seg_add($module_path,"Module".ucfirst(strtr($mod,'.','_')).".php");
 				require_once $_MOD_FILE;
-				$module_class = __module_class_prefix__."$mod".__module_class_suffix__;
+				$module_class = __module_class_prefix__."".strtr($mod,'.','_')."".__module_class_suffix__;
 				
 				$mod =new $module_class($params);
 								
