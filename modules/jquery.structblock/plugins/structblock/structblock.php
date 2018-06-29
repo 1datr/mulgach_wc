@@ -1,6 +1,6 @@
 <?php
 
-class mul_jquery_structblock extends mul_Module 
+class plg_structblock extends mod_plugin 
 {
 	VAR $_controller;
 	

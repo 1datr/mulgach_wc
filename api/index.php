@@ -99,9 +99,9 @@ function rename_mod_file($_old_file,$_new_file)
 				require_once $_MOD_FILE;
 				$module_class = __module_class_prefix__."".strtr($mod,'.','_')."".__module_class_suffix__;
 				
-				$mod =new $module_class($params);
+				$mod_obj =new $module_class($params);
 								
-				$_MOD_CLASSES[]=$mod;
+				$_MOD_CLASSES[]=$mod_obj;
 				$mod_idx = count($_MOD_CLASSES)-1;
 				
 				// добавляем действия 

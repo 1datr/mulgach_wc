@@ -17,6 +17,8 @@ class mul_Module
 		
 		$name="";
 		list($name) = sscanf( $classname,__module_class_prefix__.'%s'.__module_class_suffix__);		
+		
+		$name = strtr($name,['_'=>'.']);
 		return $name;
 	}
 	

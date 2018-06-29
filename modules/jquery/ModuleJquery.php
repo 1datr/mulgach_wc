@@ -3,6 +3,10 @@
 
 class mul_jquery extends mul_Module 
 {
+	VAR $dbparams;
+	VAR $drv;
+	
+	
 	function __construct($_PARAMS)
 	{
 		
@@ -25,6 +29,32 @@ function use_jq_plugin($plg,$params=array())
 		$plg_class_name ="plg_{$plg}";
 		$plg_class = new $plg_class_name($params);
 		return $plg_class;
+	}
+	catch (Exception $ex)
+	{
+		$ex->getMessage();
+		return NULL;
+	}
+}
+
+function _use_jq_plugin($plg,$params=array(),$modname='jquery')
+{
+	try{
+		
+		if(!module_exists($modname))
+		{
+			$exc = new Exception();
+			throw $exc; 			
+		}
+		
+		$mod = find_module($modname);
+		/*
+		require_once url_seg_add(__DIR__,"/plugins/$plg/".ucfirst($plg).".php");
+		$plg_class_name ="plg_{$plg}";
+		$plg_class = new $plg_class_name($params);*/
+		$plg = $mod->get_plugin($plg,$params);
+		return $plg;
+		
 	}
 	catch (Exception $ex)
 	{

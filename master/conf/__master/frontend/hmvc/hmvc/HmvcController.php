@@ -562,7 +562,7 @@ class HmvcController extends \BaseController
 							$table_info = $dbw->watch_triada($cfg,$_SESSION['makeinfo']['table'], $table_info);
 						
 						//$settings = $this->getExistingModelInfo($_SESSION['makeinfo']['conf'],$_SESSION['makeinfo']['table']);	
-						$sbplugin = use_jq_plugin('structblock',$this);
+						$sbplugin = _use_jq_plugin('structblock',$this,'jquery.structblock');
 						$this->_TITLE=$_SESSION['makeinfo']['table']." ". \Lang::__t("Bindings and settings");
 						
 						$eps=array('frontend','backend');
