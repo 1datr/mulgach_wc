@@ -5,6 +5,7 @@ class SrvRequest
 	VAR $module;
 	VAR $plugin=null;
 	VAR $method;
+	VAR $MLAM=null;
 	function  __construct($srv_str)
 	{
 		$srv_pieces = explode('.', $srv_str);
@@ -33,12 +34,29 @@ function module_exists($modname)
 	return false;
 }
 
-
+/*
 function call_modules($module,$eventname,$args=[],$eopts=[])
 {
 	def_options(array('src'=>'module'), $eopts);
 	
 	
+	global $_MOD_CLASSES;
+	$called_list=array();
+	foreach ($_MOD_CLASSES as $idx => $mod)
+	{
+		if(($mod->get_mod_name()!=$module)&&(!in_array($mod,$called_list)))
+		{
+			call_event($mod,$eventname,$module,$called_list,$args, $eopts);
+		}
+	}
+	return $args;
+}
+*/
+function call_modules($module,$eventname,$args=[],$eopts=[])
+{
+	def_options(array('src'=>'module'), $eopts);
+
+
 	global $_MOD_CLASSES;
 	$called_list=array();
 	foreach ($_MOD_CLASSES as $idx => $mod)

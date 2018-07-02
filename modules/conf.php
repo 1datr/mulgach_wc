@@ -1,12 +1,12 @@
 <?php 
-$_MODULES = array(
+$_SETTINGS=['_MODULES'=>[
 	'page'=>array(),
 	'db'=>array(),	
 	'jquery'=>array(),
-	'jquery.structblock'=>[],
+	'jquery.ui'=>[],
 	'bootstrap'=>array(),
 	'route'=>array(),
 	'captcha'=>array(),
 	'archive'=>array(),
-);
+]];
 ?>

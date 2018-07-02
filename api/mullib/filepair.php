@@ -1,5 +1,5 @@
 <?php
-namespace Core {
+//namespace Core {
 
 	class FilePair
 	{
@@ -28,6 +28,15 @@ namespace Core {
 			{
 				$this->_SETTINGS = unserialize(file_get_contents($this->ser_file_path));
 			}
+		}
+		
+		public static function exists($kpname)
+		{
+			$finfo = pathinfo($kpname, PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME);
+			//print_r($finfo);
+			$php_file_path = $finfo['dirname']."/".$finfo['filename'].".php";
+			$ser_file_path = $php_file_path.".ser";
+			return( file_exists($php_file_path) || file_exists($ser_file_path) );		
 		}
 		
 		function compile_ser_if_changed()
@@ -60,4 +69,4 @@ namespace Core {
 		}
 	}
 
-}
+//}

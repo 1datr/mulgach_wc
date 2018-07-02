@@ -195,4 +195,5 @@ $_LANG['Auth controller']='Auth controller';
 $_LANG['Edit entity game']='Edit entity game';
 $_LANG['Edit entity ant_race']='Edit entity ant_race';
 $_LANG['Edit entity ant']='Edit entity ant';
+$_LANG['Edit entity bykva']='Edit entity bykva';
 ?>

@@ -19,6 +19,7 @@ class mul_page extends mul_Module
 	VAR $_THEME;
 	VAR $CFG_INFO;
 	VAR $_ENV_INFO=array();
+	VAR $MLAM;
 	
 	VAR $CONF_BASE=array();
 	VAR $CONF_EP=array();
@@ -29,7 +30,7 @@ class mul_page extends mul_Module
 	
 	function __construct($_PARAMS)
 	{
-		
+		$this->MLAM = $_PARAMS['MLAM'];
 	}
 	
 	function getController()
@@ -278,7 +279,7 @@ class mul_page extends mul_Module
 	{
 		$event_res = array();
 		// вызвать событие в модулях
-		$res = call_modules($this->get_mod_name(),'before_out',$event_res);
+		$res = $this->call_modules($this->get_mod_name(),'before_out',$event_res);
 		
 		if(!empty($_REQUEST['jsblock']))	// блок js-файлов
 		{
@@ -419,7 +420,7 @@ class mul_page extends mul_Module
 		}
 		else 
 		{*/
-			$res = call_modules($this->get_mod_name(),$eventname,$event_res,$eopts);
+			$res = $this->call_modules($this->get_mod_name(),$eventname,$event_res,$eopts);
 		//}
 		
 		return $event_res;
@@ -435,7 +436,7 @@ class mul_page extends mul_Module
 		
 		$event_res = array();
 		// вызвать событие в модулях
-		$res = call_modules($this->get_mod_name(),'before_html',$event_res);
+		$res = $this->call_modules($this->get_mod_name(),'before_html',$event_res);
 		//print_r($res);
 		foreach($res as $module => $res_item)
 		{

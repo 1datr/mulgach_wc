@@ -1,7 +1,7 @@
 <?php
 // модуль страница
 
-class mul_jquery_structblock extends mul_Module 
+class mul_jquery_ui extends mul_Module 
 {
 	VAR $name;
 	

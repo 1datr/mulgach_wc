@@ -1,9 +1,10 @@
 <?php
 class mul_Module 
 {
+	VAR $MLAM;
 	function __construct($_PARAMS)
 	{
-		
+		$this->MLAM = $_PARAMS['MLAM'];
 	}
 	
 	function wait_events()
@@ -29,6 +30,16 @@ class mul_Module
 		$name="";
 		list($name) = sscanf( $classname,__module_class_prefix__.'%s'.__module_class_suffix__);
 		return $name;
+	}
+	
+	function call_modules($module,$eventname,$args=[],$eopts=[])
+	{
+		$this->MLAM->call_event($module,$eventname,$module,$called_list,$args, $eopts);		
+	}
+	
+	public function call_module($modname,$method,&$params)
+	{
+		//$this->MLAM->
 	}
 	
 	function get_srv()
