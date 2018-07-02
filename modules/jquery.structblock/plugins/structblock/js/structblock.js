@@ -2,6 +2,11 @@
   
   $.fn.jqStructBlock = function( options ) {
     
+	  options = $.extend({
+          param1: 'param1Value', //параметр1
+          param2: 'param2Value' //параметр2
+      }, options );
+	  
 	  var the_element;
     // логика вызова метода
    /* if ( methods[method] ) {
@@ -12,6 +17,8 @@
       $.error( 'Метод с именем ' +  method + ' не существует для jQuery.tooltip' );
     } 	
     */
+	  
+	  
 	  function add(  ) // добавить строку 
 	  {	      
 		  the_block = $(this).parents('.jqStructBlock').first(); // сам набор строк
@@ -23,12 +30,12 @@
 		  id_attr = $(the_block).attr('itemtemplate');
 		  block_one_sel = '#'+id_attr;
 		  
-	    	$(block_one_sel).first().attr('role','item');
-			new_data_block = $(block_one_sel).first().clone();
-			new_data_block.css('visibility', 'visible' );
+		  $(block_one_sel).first().attr('role','item');
+		  new_data_block = $(block_one_sel).first().clone();
+		  new_data_block.css('visibility', 'visible' );
 			
-			new_data_block.removeAttr('id');
-			new_data_block.find('[name *= \\{idx\\}]').each(function(i,tag)
+		  new_data_block.removeAttr('id');
+		  new_data_block.find('[name *= \\{idx\\}]').each(function(i,tag)
 					{
 						currname = $(tag).attr('name');
 						template = currname.replace(/{/g,"#");
@@ -36,22 +43,26 @@
 						$(tag).attr('nametemplate',template);		
 					});
 			
-			var nb_html = new_data_block.html();
+		  var nb_html = new_data_block.html();
 			// сколько элементов в списке 
-			var childs = the_block.find(".items [role=item]");
+		  var childs = the_block.find(".items [role=item]");
 			
-			nb_html = nb_html.replace(/{idx}/g, childs.length.toString());
-			new_data_block.html(nb_html);
+		  nb_html = nb_html.replace(/{idx}/g, childs.length.toString());
+		  new_data_block.html(nb_html);
 			//new_element = $(nb_html);
 
-			$(the_block).find(".items").append(new_data_block);
-			if(options.onadd != null)
-				{
+		  $(the_block).find(".items").append(new_data_block);
+		  if(options.hasOwnProperty('onadd'))
+		      {
 				options.onadd(new_data_block);
-				}
-			new_data_block.find('.'+id_attr+'_drop').bind("click",drop);
-			new_data_block.find('.'+id_attr+'_add').bind('click',add); 
-			new_data_block.find('.'+id_attr+'_move').bind('click',move); 
+			  }
+		  
+		  new_data_block.find('.'+id_attr+'_drop').bind("click",drop);			  
+			  
+		  new_data_block.find('.'+id_attr+'_add').bind('click',add);			  
+		  
+		  new_data_block.find('.'+id_attr+'_move').bind('click',move);
+		 
 	  };
 	  
 	  function move()
@@ -146,4 +157,6 @@
 	      if(settings.open) $(this).children('dt:first-child').next().show();*/
 	    });
   };  
+  
+  options = options;
 })( jQuery );
