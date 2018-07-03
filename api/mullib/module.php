@@ -25,13 +25,8 @@ class SrvRequest
 
 function module_exists($modname)
 {
-	global $_MOD_CLASSES;
-	foreach ($_MOD_CLASSES as $idx => $mod)
-	{
-		if($mod->get_mod_name()==$modname)
-			return true;
-	}			
-	return false;
+	global $_MLAM;
+	return $_MLAM->module_loaded($modname);
 }
 
 /*
@@ -158,15 +153,9 @@ function make_event_queue($event,$module_from)
 
 function find_module($modname)
 {
-	GLOBAL $_MOD_CLASSES;
-	foreach ($_MOD_CLASSES as $idx => $mod)
-	{
-		if($mod->get_mod_name()==$modname)
-		{
-			return $mod;
-		}
-	}
-	return null;
+	GLOBAL $_MLAM;
+	
+	return $_MLAM->find_module($modname);
 }
 
 

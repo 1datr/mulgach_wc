@@ -35,7 +35,7 @@ class mul_Module
 	function call_modules($eventname,$args=[],$eopts=[])
 	{
 		$_module = $this->get_mod_name(); 
-		$this->MLAM->call_modules($_module,$eventname,$module,$called_list,$args, $eopts);		
+		return $this->MLAM->call_modules($_module,$eventname,$module,$called_list,$args, $eopts);		
 	}
 	
 	public function call_module($modname,$method,&$params)
