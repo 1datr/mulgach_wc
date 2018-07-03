@@ -48,7 +48,12 @@ class SiteController extends \BaseController
 //			echo as_url('site');
 
 			if(!empty($_POST['url_required']))
-				$this->redirect($_POST['url_required']);
+			{
+				if(substr($_POST['url_required'],-strlen('logout'))=='logout')
+					$this->redirect(as_url('site'));
+				else
+					$this->redirect($_POST['url_required']);
+			}
 			else 
 				$this->redirect(as_url('site'));
 		}
