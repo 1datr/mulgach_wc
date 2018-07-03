@@ -27,7 +27,7 @@ class MLAM
 			$this->load_module($mod);
 		}
 		
-		print_r($this->_MOD_CLASSES);
+		//print_r($this->_MOD_CLASSES);
 	}
 	
 	function module_loaded($modname)
@@ -83,14 +83,12 @@ class MLAM
 	{
 		def_options(array('src'=>'module'), $eopts);
 	
-	
-		global $_MOD_CLASSES;
 		$called_list=array();
 		foreach ($this->_MOD_CLASSES as $idx => $mod)
 		{
 			if(($mod->get_mod_name()!=$module)&&(!in_array($mod,$called_list)))
 			{
-				call_event($mod,$eventname,$module,$called_list,$args, $eopts);
+				$this->call_event($mod,$eventname,$module,$called_list,$args, $eopts);
 			}
 		}
 		return $args;
@@ -100,7 +98,7 @@ class MLAM
 	{
 		def_options(array('src'=>'module'), $eopts);
 		
-		$mod = $this->find_module($mod);
+		//$mod = $this->find_module($mod);
 		
 		$waits = $mod->wait_events();
 		if(count($waits))
@@ -111,17 +109,17 @@ class MLAM
 				{
 					if($w['event']==$eventname)
 					{
-						$req_mod = find_module($w['module']);
+						$req_mod = $this->find_module($w['module']);
 					}
 				}
 				else 
 				{
-					$req_mod = find_module($w);
+					$req_mod = $this->find_module($w);
 				}
 				if(!in_array($req_mod, $called_list))
 				{
 					
-					call_event($req_mod, $eventname,$event_src,$called_list,$res_of_module); // вызвать событие от модуля
+					$this->call_event($req_mod, $eventname,$event_src,$called_list,$res_of_module); // вызвать событие от модуля
 					
 					$called_list[]=$req_mod;
 				}

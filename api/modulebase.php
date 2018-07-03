@@ -32,9 +32,10 @@ class mul_Module
 		return $name;
 	}
 	
-	function call_modules($module,$eventname,$args=[],$eopts=[])
+	function call_modules($eventname,$args=[],$eopts=[])
 	{
-		$this->MLAM->call_event($module,$eventname,$module,$called_list,$args, $eopts);		
+		$_module = $this->get_mod_name(); 
+		$this->MLAM->call_modules($_module,$eventname,$module,$called_list,$args, $eopts);		
 	}
 	
 	public function call_module($modname,$method,&$params)

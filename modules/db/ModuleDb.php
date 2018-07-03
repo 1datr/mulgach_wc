@@ -4,13 +4,15 @@ require_once url_seg_add(__DIR__,"trait_driver.php");
 
 function get_connection($key=NULL)
 {
-	$db_module = find_module('db');
+	GLOBAL $_MLAM;
+	$db_module = $_MLAM->find_module('db');
 	return $db_module->get_drv($key);
 }
 
 function connect_db($params)
 {
-	$db_module = find_module('db');
+	GLOBAL $_MLAM;
+	$db_module = $_MLAM->find_module('db');
 	return $db_module->connect($params);
 }
 

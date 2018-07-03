@@ -279,7 +279,7 @@ class mul_page extends mul_Module
 	{
 		$event_res = array();
 		// вызвать событие в модулях
-		$res = $this->call_modules($this->get_mod_name(),'before_out',$event_res);
+		$res = $this->call_modules('before_out',$event_res);
 		
 		if(!empty($_REQUEST['jsblock']))	// блок js-файлов
 		{
@@ -420,7 +420,7 @@ class mul_page extends mul_Module
 		}
 		else 
 		{*/
-			$res = $this->call_modules($this->get_mod_name(),$eventname,$event_res,$eopts);
+			$res = $this->call_modules($eventname,$event_res,$eopts);
 		//}
 		
 		return $event_res;
@@ -436,7 +436,7 @@ class mul_page extends mul_Module
 		
 		$event_res = array();
 		// вызвать событие в модулях
-		$res = $this->call_modules($this->get_mod_name(),'before_html',$event_res);
+		$res = $this->call_modules('before_html',$event_res);
 		//print_r($res);
 		foreach($res as $module => $res_item)
 		{
