@@ -19,20 +19,15 @@ class mul_page extends mul_Module
 	VAR $_THEME;
 	VAR $CFG_INFO;
 	VAR $_ENV_INFO=array();
-	VAR $MLAM;
+	
 	
 	VAR $CONF_BASE=array();
 	VAR $CONF_EP=array();
 	VAR $theme_obj;
 	VAR $_REQUEST=NULL;
 	VAR $_CONTROLLER;
-	
-	
-	function __construct($_PARAMS)
-	{
-		$this->MLAM = $_PARAMS['MLAM'];
-	}
-	
+	VAR $_MUL_PARAMS=[]; 
+		
 	function getController()
 	{
 		return $this->_CONTROLLER;
@@ -40,7 +35,14 @@ class mul_page extends mul_Module
 	
 	function get_actions()
 	{
-		return array('draw');
+		return array(				
+		//'draw'				
+		);
+	}
+	
+	function mulgach_onload($params)
+	{
+		$this->draw();
 	}
 	// инфо о том где лежит текущий контроллер
 	function controller_info($_CONTROLLER=NULL, $_ACTION=NULL)
@@ -57,7 +59,7 @@ class mul_page extends mul_Module
 		GLOBAL $_CONFIGS_AREA, $_CONFIG, $_BASEDIR;
 		
 		$res = array(
-			'_DIR_CONFIG' => dir_dotted(url_seg_add($_CONFIGS_AREA,$_CONFIG)),
+			'_DIR_CONFIG' => dir_dotted(url_seg_add($this->_DIR_CONFIG)),
 			'_ACTION_NAME' => $_ACTION,
 		);
 				
@@ -299,6 +301,8 @@ class mul_page extends mul_Module
 			die();
 		}
 		
+		$this->_MUL_PARAMS = get_mulgach_params();
+		
 		GLOBAL $_EP, $_CONTROLLER, $_ACTION, $_THEME;
 		GLOBAL $_CONFIGS_AREA, $_CONFIG, $_BASEDIR;
 		
@@ -317,13 +321,13 @@ class mul_page extends mul_Module
 		}
 		*/
 			
-		$this->_DIR_CONFIG = url_seg_add($_CONFIGS_AREA,$_CONFIG); // директория конфигурации		
+		$this->_DIR_CONFIG = $this->_MUL_PARAMS['curr_cfg_dir']; // директория конфигурации		
 		
 		$this->_DIR_EP = url_seg_add($this->_DIR_CONFIG, $_EP);	// директория точки входа
 			
 		//echo $this->_DIR_EP;
 		
-		GLOBAL $_EP_PATH; 
+		//GLOBAL $_EP_PATH; 
 		$_EP_PATH = $this->_DIR_EP;
 		
 		$conf_info = $this->controller_info();
@@ -335,7 +339,7 @@ class mul_page extends mul_Module
 		{
 			$srv_req = new SrvRequest($_REQUEST['srv']);	
 						
-			GLOBAL $_MOD_CLASSES;
+			//GLOBAL $_MOD_CLASSES;
 			$the_module = find_module($srv_req->module);
 			
 			//mul_dbg($the_module);

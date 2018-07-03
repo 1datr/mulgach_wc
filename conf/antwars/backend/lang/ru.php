@@ -33,4 +33,5 @@ $_LANG['DELETE']='DELETE';
 $_LANG['USERS LIST']='USERS LIST';
 $_LANG['Create USERS']='Create USERS';
 $_LANG['token']='token';
+$_LANG['Forbidden page']='Forbidden page';
 ?>

@@ -27,6 +27,10 @@ class MLAM
 			$this->load_module($mod);
 		}
 		
+		foreach ($this->_MOD_CLASSES as $idx => $_mod)
+		{
+			$_mod->OnLoad();
+		}
 		//print_r($this->_MOD_CLASSES);
 	}
 	
@@ -35,6 +39,11 @@ class MLAM
 		$_mod_ = $this->find_module($modname);
 		if($_mod_===null) return false;
 		return true;
+	}
+	
+	function module_exists($modname)
+	{
+		return file_exists( url_seg_add($this->_MODULES_DIR,$modname."/index.php"));
 	}
 	
 	function find_module($modname)
@@ -162,7 +171,7 @@ class MLAM
 	
 	function err_log($err)
 	{
-			
+		echo "<span class=\"exception\">$err</span>";
 	}
 	
 	function exe_modules()

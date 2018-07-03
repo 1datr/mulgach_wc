@@ -5,6 +5,12 @@ class mul_Module
 	function __construct($_PARAMS)
 	{
 		$this->MLAM = $_PARAMS['MLAM'];
+		//$this->OnLoad();
+	}
+	
+	function OnLoad()
+	{
+		
 	}
 	
 	function wait_events()

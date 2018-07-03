@@ -21,9 +21,15 @@ class mul_db extends mul_Module
 	VAR $dbparams;
 	VAR $drv;
 	VAR $connections;
-	function __construct($_PARAMS)
+	
+	function page_before_out($_PARAMS)
 	{
-		$this->dbparams = $_PARAMS;
+		$mp = get_mulgach_params();
+		if(isset($mp['SETTINGS']['db']))
+		{
+			$this->dbparams = $mp['SETTINGS']['db'];
+			$this->connect($this->dbparams);
+		}
 	}
 	
 	function get_actions()

@@ -14,7 +14,7 @@ else
 //$_CACHE_CSS=true;
 
 
-$_MODULES=array(
+$_SETTINGS=array(
 		"db"=>$dbparams,		
 )
 				

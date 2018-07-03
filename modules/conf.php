@@ -1,5 +1,6 @@
 <?php 
 $_SETTINGS=['_MODULES'=>[
+	'mulgach'=>[],
 	'page'=>array(),
 	'db'=>array(),	
 	'jquery'=>array(),
