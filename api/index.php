@@ -10,16 +10,6 @@ require_once __DIR__."/mullib/utils.php";
 require_once __DIR__."/mullib/mlam.php";
 
 /*
-if(empty($_EP))
-	$_EP=NULL;
-if(empty($_CONTROLLER))
-	$_CONTROLLER=NULL;
-if(empty($_ACTION))
-	$_ACTION=NULL;
-if(empty($_CONFIGS_AREA))
-	$_CONFIGS_AREA=url_seg_add($_BASEDIR,"/conf/");
-	*/
-/*
 if(empty($_NO_READ_CONFIG))
 {
 	require_once url_seg_add(__DIR__,"../config.php");

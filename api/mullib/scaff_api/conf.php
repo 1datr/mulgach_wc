@@ -322,14 +322,14 @@ EOT;
 			include $conffile;				
 		//	
 			
-			if(isset($_MODULES['db']))	// конфа подключена к базе
+			if(isset($_SETTINGS['db']))	// конфа подключена к базе
 			{
-				$result = $controller->connect_db($_MODULES['db']);
+				$result = $controller->connect_db($_SETTINGS['db']);
 				
 				//GLOBAL $_MUL_DBG_WORK;
 				//print_r($_MODULES['db']);
 				$controller->_CONNECTION = $result;
-				return $_MODULES['db'];
+				return $_SETTINGS['db'];
 			}
 			
 			return null;

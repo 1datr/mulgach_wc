@@ -41,6 +41,20 @@ class MLAM
 		return true;
 	}
 	
+	// обращение прямое к функции модуля
+	public function exe_module($modname,$method,&$params)
+	{
+		if(isset($this->_MODULES_OBJS[$modname]))
+		{
+			return $this->_MODULES_OBJS[$modname]->$method($params);
+		}
+		else
+		{
+			$this->err_log("Module not exists");
+			return null;
+		}
+	}
+	
 	function module_exists($modname)
 	{
 		return file_exists( url_seg_add($this->_MODULES_DIR,$modname."/index.php"));
