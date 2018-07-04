@@ -41,6 +41,15 @@ class ModelEmaker extends \BaseModel
 								
 								'main_menu'=>['Type'=>'boolean'],
 								
+								'menusettings'=>new \ModelInfo([
+									'domen'=>'menu',
+									'fields'=>[
+										'ep'=>['Type'=>'text'],
+										'is_menucon'=>['Type'=>'boolean'],
+										'menucon'=>['Type'=>'text'],
+									],	
+								]),
+								
 								'fieldlist'=>new \ModelInfo([
 									'domen'=>'field',
 									'validate_proc'=>function($row,&$res,$prefix="")

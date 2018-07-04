@@ -168,6 +168,32 @@ else
 <label>#{View}</label><?php $form->field($newentity, 'view')->text([]); ?> 
 <label>#{Auth controller}</label><?php $form->field($newentity, 'auth_con')->ComboBox($elist,['htmlattrs'=>['class'=>'fldtype',]]);  ?>
 </fieldset>
+<ul class="nav nav-tabs">  
+  	<?php 
+  	$ep_set=['frontend','backend'/*,'install','rest'*/];
+  	foreach ($ep_set as $idx => $_ep){
+  		?>
+  		<li class="nav-item">
+  		<a data-toggle="tab" role="tab" class="nav-link <?=(($idx==0)?'active':'')?>" href="#epsettings_<?=$_ep?>"><?=$_ep?></a>
+  		</li> 
+  		<?php 	
+  	}
+  	?>  	
+  
+</ul>
+<div class="tab-content">
+<?php
+$ep_settings = $newentity->getField('menusettings');
+	foreach ($ep_set as $idx => $_ep){
+	?>
+	<div id="epsettings_<?=$_ep?>" class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" role="tabpanel">
+	<?php $form->field($ep_settings[$idx], 'is_menucon', ['namemode'=>'multi','nameidx'=>$ep_settings[$idx]->getfield('ep')])->checkbox([]);  ?><label>#{Make menu}</label><br />
+	<?php $form->field($ep_settings[$idx], 'menucon', ['namemode'=>'multi','nameidx'=>$ep_settings[$idx]->getfield('ep')])->ComboBox($elist,['htmlattrs'=>['class'=>'fldtype',]]);  ?>
+	</div>
+	<?php 
+	}
+?>
+</div>
 <?php 
 if($mode=='create')
 	$form->submit('#{MAKE ENTITY}'); 

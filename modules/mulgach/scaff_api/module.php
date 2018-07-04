@@ -4,6 +4,7 @@ class scaff_module
 	VAR $_PATH;
 	VAR $_ERROR=false;
 	VAR $_NAME;
+	VAR $_OPTS;
 	
 	function __construct($modname,$opts=array())
 	{
@@ -12,6 +13,8 @@ class scaff_module
 		
 		GLOBAL $_BASEDIR;
 		$this->_PATH = url_seg_add($_BASEDIR,$opts['mod_dir'],$this->_NAME);
+		
+		$this->_OPTS = $opts;
 		
 		if(file_exists($this->_PATH) && !$opts['rewrite'] )
 			return;

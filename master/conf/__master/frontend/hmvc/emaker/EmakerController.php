@@ -191,7 +191,7 @@ class EmakerController extends \BaseController
 		
 		$entity = $_cfg->get_entity($_ename,$_cfg);
 		
-		$tr_auth = $_cfg->get_auth_con();
+		$tr_auth = $_cfg->get_auth_con();		
 		
 		$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
 		$elist = array_diff($elist, [$curr_entity]);
@@ -201,6 +201,10 @@ class EmakerController extends \BaseController
 		$fields = $entity->get_fields();
 		
 		$editing_entity = $this->_MODEL->empty_row_form_model();
+		
+		$menu_con = ['frontend'=>$_cfg->find_menu_triada('frontend'),
+				'backend'=>$_cfg->find_menu_triada('backend'),
+		];
 		//mul_dbg($_POST);
 		$editing_entity->setField('cfg', $cfg);
 		$editing_entity->setField('ename', $_ename);
@@ -301,6 +305,19 @@ class EmakerController extends \BaseController
 		
 		$typelist = $this->_CONNECTION->Typelist();
 		$typelist['_ref']=\Lang::__t('Entity reference');
+		
+		$ep_set=['frontend','backend',/*'install','rest'*/];
+		$editing_entity->setField('menusettings',[]);
+		foreach ($ep_set as $idx => $_ep)
+		{
+			$ep_row = $this->_MODEL->nested('menusettings')->empty_row_form_model();
+			
+				$ep_row->setField('ep',$_ep);
+				$ep_row->setField('is_menucon',true);
+				$ep_row->setField('menucon',$menu_con[$_ep]);
+				$editing_entity->setField('menusettings', x_array_push($editing_entity->getField('menusettings'), $ep_row));
+				
+		}
 	
 		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'elist'=>$elist,
 				'typelist'=>$typelist,'newentity'=>$editing_entity,'mode'=>'save','emptyfld'=>$emptyfld]);

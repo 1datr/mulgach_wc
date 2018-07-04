@@ -39,15 +39,25 @@ class scaff_triada
 		}
 	}
 	
+	function get_controller_info()
+	{
+		return ['_FILE'=>url_seg_add($this->_PATH,ucfirst(strtr($this->NAME,['.'=>'_'])).'Controller.php'),
+				'_CONTROLLER_CLASS'=>ucfirst($this->_PARENT_CONF->_NAME).'\\'.ucfirst($this->_EP)."\\".ucfirst(strtr($this->NAME,['.'=>'_'])).'Controller',
+		];
+	}
+	
 	function is_auth()
 	{
-		$_CONTROLLER_FILE = url_seg_add($this->_PATH,'controller.php');
-		if(file_exists( $_CONTROLLER_FILE))
+		//$_CONTROLLER_FILE = url_seg_add($this->_PATH,ucfirst($this->NAME).'Controller.php');
+		$con_info = $this->get_controller_info();
+		if(file_exists($con_info['_FILE']))
 		{
-			require_once $_CONTROLLER_FILE;
+			require_once $con_info['_FILE'];
 			
-			$controller_name = BaseController::ControllerName($this->NAME);
+		/*	$controller_name = BaseController::ControllerName($this->NAME);
 			$controller_name = ucfirst($this->_PARENT_CONF->_NAME).'\\'.ucfirst($this->_EP).'\\'.$controller_name;
+			*/
+			$controller_name = $con_info['_CONTROLLER_CLASS'];
 			$con_obj = new $controller_name('#test');
 			if($this->_EP=='install')
 				return method_exists($con_obj, "ActionregAdmin");
@@ -56,6 +66,25 @@ class scaff_triada
 		}
 		return false;
 	}
+	
+	function has_menu()
+	{
+		//$_CONTROLLER_FILE = url_seg_add($this->_PATH,ucfirst($this->NAME).'Controller.php');
+		$con_info = $this->get_controller_info();
+		if(file_exists($con_info['_FILE']))
+		{
+			require_once $con_info['_FILE'];
+				
+			/*	$controller_name = BaseController::ControllerName($this->NAME);
+				$controller_name = ucfirst($this->_PARENT_CONF->_NAME).'\\'.ucfirst($this->_EP).'\\'.$controller_name;
+				*/
+			$controller_name = $con_info['_CONTROLLER_CLASS'];
+			$con_obj = new $controller_name('#test');
+			return method_exists($con_obj, "ActionMenu");			
+		}
+		return false;
+	}
+	
 	// 'actions' => action list
 	function make_pure($params,$rewrite_all=true)
 	{

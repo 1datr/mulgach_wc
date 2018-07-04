@@ -299,13 +299,13 @@ EOT;
 		return NULL;
 	}
 	
-	function find_menu_triada($_ep)
+	function find_menu_triada($ep='frontend')
 	{
-		$triads = $this->get_triads($_ep);
+		$triads = $this->get_triads($ep);
 		foreach ($triads as $trname)
 		{
-			$tr_obj = $this->get_triada('frontend', $trname);
-			if($tr_obj->is_auth())
+			$tr_obj = $this->get_triada($ep, $trname);
+			if($tr_obj->has_menu())
 				return $trname;
 		}
 		return NULL;

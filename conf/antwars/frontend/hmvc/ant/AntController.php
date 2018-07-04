@@ -13,7 +13,7 @@ class AntController extends \BaseController
 				'delete'=>['id'=>'integer'],
 			),			
 			'action_access'=>array(
-						new \ActionAccessRule('deny',$this->getActions(),'anonym','/login')
+						new \ActionAccessRule('deny',$this->getActions(),'anonym','users/login')
 				),	
 		);
 	}
@@ -24,7 +24,7 @@ class AntController extends \BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page,1,$this->getRequest()->getArg('ord'));
 		
@@ -47,14 +47,14 @@ class AntController extends \BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE ANT";
 		$this->out_view('itemform',array('ant'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$ant = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$ant->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('ant'=>$ant));
@@ -91,7 +91,7 @@ class AntController extends \BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$ant = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$ant->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('ant'=>$ant));

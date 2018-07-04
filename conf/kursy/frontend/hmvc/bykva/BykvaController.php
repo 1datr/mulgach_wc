@@ -1,7 +1,7 @@
 <?php 
-namespace Antwars\Backend;
+namespace Kursy\Frontend;
 
-class AntController extends \BaseController
+class BykvaController extends \BaseController
 {
 
 	public function Rules()
@@ -20,7 +20,7 @@ class AntController extends \BaseController
 		
 	public function ActionIndex($page=1)
 	{
-		$this->_TITLE="ANT";
+		$this->_TITLE="BYKVA";
 	
 		$conn = get_connection();
 		
@@ -48,21 +48,21 @@ class AntController extends \BaseController
 	public function ActionCreate()
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
-		$this->_TITLE="CREATE ANT";
-		$this->out_view('itemform',array('ant'=>$this->_MODEL->CreateNew()));
+		$this->_TITLE="CREATE BYKVA";
+		$this->out_view('itemform',array('bykva'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
 		$this->add_block("BASE_MENU", "users", "menu");
-		$ant = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
-		$this->_TITLE=$ant->getView()." #{EDIT}"; 
-		$this->out_view('itemform',array('ant'=>$ant));
+		$bykva = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
+		$this->_TITLE=$bykva->getView()." #{EDIT}"; 
+		$this->out_view('itemform',array('bykva'=>$bykva));
 	}
 	
 	public function ActionSave()
 	{
-		$newitem = $this->_MODEL->findByPrimary($_POST['ant']);
+		$newitem = $this->_MODEL->findByPrimary($_POST['bykva']);
 		
 		if($newitem!=null)
 		{
@@ -73,14 +73,14 @@ class AntController extends \BaseController
 			$newitem = $this->_MODEL->empty_row_form_model();
 
 		}	
-		$newitem->FillFromArray($_POST['ant']);		
+		$newitem->FillFromArray($_POST['bykva']);		
 		
 		$newitem->save();
 		
 		if(!empty($_POST['back_url']))
 			$this->redirect($_POST['back_url']);
 		else 
-			$this->redirect(as_url('ant'));		
+			$this->redirect(as_url('bykva'));		
 	}
 			
 	public function ActionDelete($id)
@@ -92,9 +92,9 @@ class AntController extends \BaseController
 	public function ActionView($id)
 	{
 		$this->add_block("BASE_MENU", "users", "menu");
-		$ant = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
-		$this->_TITLE=$ant->getView()." #{VIEW}"; 
-		$this->out_view('itemview',array('ant'=>$ant));
+		$bykva = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
+		$this->_TITLE=$bykva->getView()." #{VIEW}"; 
+		$this->out_view('itemview',array('bykva'=>$bykva));
 	}
 	
 	

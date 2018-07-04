@@ -3,7 +3,7 @@ $settings = array(
 	'table'=>'game',
 	'fields'=>array('id'=>array('Type'=>'bigint','TypeInfo'=>"20"),'owner_id'=>array('Type'=>'bigint','TypeInfo'=>"20"),'creation_date'=>array('Type'=>'datetime','TypeInfo'=>""),'name'=>array('Type'=>'text','TypeInfo'=>""),'charact'=>array('Type'=>'mediumtext','TypeInfo'=>""),'gamer2_id'=>array('Type'=>'bigint','TypeInfo'=>"20")),
 	'primary'=>'id',
-	'constraints'=>array('owner_id'=>array('model'=>'users','fld'=>'id','required'=>true),'gamer2_id'=>array('model'=>'users','fld'=>'id','required'=>true),),	
+	'constraints'=>array('owner_id'=>array('model'=>'users','fld'=>'id','required'=>false),'gamer2_id'=>array('model'=>'users','fld'=>'id','required'=>false),),	
 	'required'=>array('id'),
 	'rules'=>array(),	
 	'view'=>'{login}',

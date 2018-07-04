@@ -14,7 +14,6 @@ class ModelModules extends \BaseModel
 						'domen'=>'makenew',
 					//	'name'=>'makenew',
 						'fields'=>[
-								'cfg'=>['Type'=>'text'],
 								'modname'=>['Type'=>'text'],
 								'modparent'=>['Type'=>'text'],
 								'settings'=>['Type'=>'boolean'],							
