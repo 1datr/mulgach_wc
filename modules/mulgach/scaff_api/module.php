@@ -17,6 +17,11 @@ class scaff_module
 			return;
 	}
 	
+	function create()
+	{
+		
+	}
+	
 	function getplugin($plgname)
 	{
 		
