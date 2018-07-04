@@ -51,8 +51,7 @@ class ConfigsController extends \BaseController
 	
 	public function ActionSetdbcfg()
 	{
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$cnf = new scaff_conf($_POST['cfg']);
 		$cnf->set_db_conf_code($_POST['code']);
 		$this->redirect(as_url('configs'));
@@ -63,7 +62,7 @@ class ConfigsController extends \BaseController
 		$this->add_block('BASE_MENU', 'site', 'menu');
 		GLOBAL $_BASEDIR;		
 		$this->_TITLE=$cfg.' #{Edit database connection config}';
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$cnf = new \scaff_conf($cfg); 
 		
 		$this->out_view('configform',array('cfg'=>$cfg,'conf_code'=>$cnf->get_db_conf_code()));
@@ -78,7 +77,7 @@ class ConfigsController extends \BaseController
 		
 		GLOBAL $_BASEDIR;
 		$this->_TITLE=$cfg.' #{Edit database connection config}';
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$cnf = new \scaff_conf($cfg);
 		
 		$arcplg = \mul_archive::use_archive_plg('zip');
@@ -103,7 +102,7 @@ class ConfigsController extends \BaseController
 		if(!empty($_POST['newcfg']))
 		{
 			GLOBAL $_BASEDIR;		
-			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			use_scaff_api();
 			$cnf = new \scaff_conf($_POST['newcfg'],array('rewrite'=>true));
 		}
 		$this->redirect_back();
@@ -133,8 +132,7 @@ class ConfigsController extends \BaseController
 			return $file_info['filename'];
 		}
 		
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		//form_req_cfg_name
 		
 		$the_post=$_POST;
@@ -263,8 +261,7 @@ class ConfigsController extends \BaseController
 	
 	public function ActionSetcurrent()
 	{
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		
 		\scaff_conf::set_current_cfg($_POST['cfg']);
 		

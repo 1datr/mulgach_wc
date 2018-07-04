@@ -230,7 +230,7 @@ class scaff_entity {
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
 	
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$conf_obj = new \scaff_conf($_params['conf']);
 	
 		//	print_r($_params);

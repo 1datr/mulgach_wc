@@ -22,4 +22,5 @@ $_LANG['game.gamer2_id']='gamer2_id';
 $_LANG['ERROR']='ERROR';
 $_LANG['Error']='Error';
 $_LANG['No such page']='No such page';
+$_LANG['ant.fld']='fld';
 ?>

@@ -24,7 +24,7 @@ else
 	<tr>
 	<th><label>#{ant.race}</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('ant_race')->_MODEL->find() ,'required'=>true, 'name'=>'ant[race]');
+					$params = array('ds'=> $this->get_controller('ant_race')->_MODEL->find() ,'name'=>'ant[race]');			
 					if(!empty($ant))
 		{
 			$params['value']=$ant->getField('race',true);
@@ -41,7 +41,7 @@ else
 		<tr>
 	<th><label>#{ant.owner_id}</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'required'=>true, 'name'=>'ant[owner_id]');
+					$params = array('ds'=> $this->get_controller('users')->_MODEL->find() ,'name'=>'ant[owner_id]');			
 					if(!empty($ant))
 		{
 			$params['value']=$ant->getField('owner_id',true);
@@ -54,7 +54,7 @@ else
 		<tr>
 	<th><label>#{ant.game_id}</label></th><td>
 			<?php 
-					$params = array('ds'=> $this->get_controller('game')->_MODEL->find() ,'required'=>true, 'name'=>'ant[game_id]');
+					$params = array('ds'=> $this->get_controller('game')->_MODEL->find() ,'name'=>'ant[game_id]');			
 					if(!empty($ant))
 		{
 			$params['value']=$ant->getField('game_id',true);

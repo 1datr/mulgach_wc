@@ -1,14 +1,11 @@
 <?php
 // модуль страница
 
-class mul_jquery_ui extends mul_Module 
+class mul_jquery_ui extends mul_jquery 
 {
 	VAR $name;
 	
-	function __construct($_PARAMS)
-	{
-		
-	}
+	
 	
 	
 	function page_before_html(&$args)
@@ -17,22 +14,7 @@ class mul_jquery_ui extends mul_Module
 	}
 
 	
-	function get_plugin($plg,$params=array())
-	{
-		try{
-			//$modname="jquery.$plg";
-			//module_exists($modname);
-			require_once url_seg_add(__DIR__,"/plugins/$plg/".$plg.".php");
-			$plg_class_name ="plg_{$plg}";
-			$plg_class = new $plg_class_name($params);
-			return $plg_class;
-		}
-		catch (Exception $ex)
-		{
-			$ex->getMessage();
-			return NULL;
-		}
-	}
+	
 }
 
 

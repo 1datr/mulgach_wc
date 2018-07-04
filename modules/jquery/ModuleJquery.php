@@ -7,10 +7,7 @@ class mul_jquery extends mul_Module
 	VAR $drv;
 	
 	
-	function __construct($_PARAMS)
-	{
-		
-	}
+	
 	
 	
 	function page_before_html(&$args)
@@ -23,7 +20,7 @@ class mul_jquery extends mul_Module
 		try{
 			//$modname="jquery.$plg";
 			//module_exists($modname);
-			require_once url_seg_add(__DIR__,"/plugins/$plg/".$plg.".php");
+			require_once url_seg_add( $this->get_module_dir(),"plugins/$plg/".$plg.".php");
 			$plg_class_name ="plg_{$plg}";
 			$plg_class = new $plg_class_name($params);
 			return $plg_class;
@@ -54,7 +51,7 @@ function use_jq_plugin($plg,$params=array())
 	}
 }
 
-function _use_jq_plugin($plg,$params=array(),$modname='jquery')
+function use_jq_plugin_x($plg,$params=array(),$modname='jquery')
 {
 	try{
 		

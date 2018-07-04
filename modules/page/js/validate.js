@@ -329,7 +329,8 @@ function process_submit(that_form)
 		error: function(jqXHR, textStatus, errorThrown) 
 	    {	    	
 			$(that_form).find('#mul_form_progress').hide();
-	    	console.log(textStatus);	    	
+	    	console.log(textStatus);
+	    	$('body').append('<div class="error_box">'+jqXHR.responseText+"</div>");	    
 	    },
 		});
     

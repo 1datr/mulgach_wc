@@ -38,12 +38,24 @@ class ModulesController extends \BaseController
 	{
 		if(!empty($_POST['plgname']))
 		{
-			GLOBAL $_BASEDIR;
-			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			use_scaff_api();
 			
 			$module = new \scaff_module($_POST['module']);
 			$module->create_plugin($_POST['plgname'],array('rewrite'=>true));
 		
+			$this->redirect(as_url('modules'));
+		}
+	}
+	
+	public function ActionMakemodule()
+	{
+		if(!empty($_POST['modname']['name']))
+		{
+			use_scaff_api();
+				
+			$module = new \scaff_module($_POST['module']['name']);
+			$module->create_plugin($_POST['plgname'],array('rewrite'=>true));
+	
 			$this->redirect(as_url('modules'));
 		}
 	}

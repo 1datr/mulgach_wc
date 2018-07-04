@@ -600,7 +600,7 @@ class StepProcess
 	
 	function __construct($pid=NULL,$_passw=NULL)
 	{
-		use_jq_plugin('__ui', find_module('page')->getController() );
+		use_jq_plugin_x('__ui', find_module('page')->getController(),'jquery.ui' );
 		
 		if($pid==NULL)
 		{

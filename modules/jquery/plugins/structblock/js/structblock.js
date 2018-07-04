@@ -157,6 +157,5 @@
 	      if(settings.open) $(this).children('dt:first-child').next().show();*/
 	    });
   };  
-  
-  options = options;
+
 })( jQuery );

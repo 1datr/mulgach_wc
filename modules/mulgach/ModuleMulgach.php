@@ -53,6 +53,17 @@ class mul_mulgach extends mul_Module
 		$opts=[];
 		$this->call_modules('onload',$args,$opts);
 	}
+	
+	public function use_scaff_api()
+	{
+		require_once url_seg_add($this->get_module_dir(),'scaff_api/index.php');
+	}
+}
+
+function use_scaff_api()
+{
+	$mulgach = find_module('mulgach');
+	$mulgach->use_scaff_api();
 }
 
 function get_mulgach_params()

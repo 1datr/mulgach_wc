@@ -29,7 +29,8 @@ class HmvcController extends \BaseController
 		$sbplugin = use_jq_plugin('structblock',$this);
 		
 		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+				
+		use_scaff_api();
 		$_cfg = new \scaff_conf($cfg);		
 		
 		$dbparams = $_cfg->connect_db_if_exists($this);
@@ -60,7 +61,8 @@ class HmvcController extends \BaseController
 	public function ActionDelete($cfg,$ep,$triada)
 	{
 		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		
+		use_scaff_api();
 		$_cfg = new scaff_conf($cfg);
 		$tr = $_cfg->get_triada($ep, $triada);
 		$tr->delete();
@@ -69,8 +71,7 @@ class HmvcController extends \BaseController
 	
 	public function ActionFields($cfg='main',$table)
 	{
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$_cfg = new \scaff_conf($cfg);
 		
 		$dbparams = $_cfg->connect_db_if_exists($this);
@@ -89,7 +90,7 @@ class HmvcController extends \BaseController
 		{
 			ser_post('makepure');
 			GLOBAL $_BASEDIR;
-			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			use_scaff_api();
 			$conf = new \scaff_conf($_POST['conf']);
 								
 			foreach ($_POST['ep'] as $ep => $val)
@@ -112,7 +113,8 @@ class HmvcController extends \BaseController
 	public function ActionAddbasicuser($cfg=NULL)
 	{
 		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
+		
 				
 		if($cfg==NULL)
 		{
@@ -145,8 +147,7 @@ class HmvcController extends \BaseController
 	
 	public function ActionAddadmin($cfg)
 	{
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		
 		if($cfg==NULL)
 		{
@@ -201,8 +202,7 @@ class HmvcController extends \BaseController
 	
 	public function ActionMaketotal()
 	{
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 				
 		if(isset($_POST['pid']))
 		{
@@ -454,8 +454,8 @@ class HmvcController extends \BaseController
 	{		
 		$conf_dir = url_seg_add();
 		
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
+		
 		$conf_obj = new \scaff_conf($_POST['dbinfo']['conf']);
 		
 		$dbconf_file = url_seg_add($conf_dir,'dbconf.php');
@@ -474,8 +474,7 @@ class HmvcController extends \BaseController
 		//mul_dbg($_POST);
 		if(isset($_POST['baseadmin']))	// 
 		{
-			GLOBAL $_BASEDIR;
-			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			use_scaff_api();
 			
 			if($cfg==NULL)
 			{
@@ -548,7 +547,8 @@ class HmvcController extends \BaseController
 						};break;
 			case 'binds': {
 						GLOBAL $_BASEDIR;
-						require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+						
+						use_scaff_api();
 						$cfg = new \scaff_conf($_SESSION['makeinfo']['conf']);
 						$cfg->connect_db_if_exists($this);
 						
@@ -746,7 +746,8 @@ class HmvcController extends \BaseController
 		GLOBAL $_BASEDIR;
 		$conf_dir= url_seg_add($_BASEDIR,"conf");
 		
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
+
 		$conf_obj = new \scaff_conf($_params['conf']);
 
 	//	print_r($_params);
