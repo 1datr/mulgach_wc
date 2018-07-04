@@ -11,7 +11,7 @@ $_EP_PATH = NULL;
 
 
 
-class mul_page extends mul_Module 
+class mul_mulgach_hmvc extends mul_Module 
 {
 	VAR $_DIR_CONFIG;
 	VAR $_CONFIG;
@@ -837,7 +837,7 @@ class mul_page extends mul_Module
 		
 		$bad_result = array('ok'=>false);
 			
-		require_once url_seg_add($_BASEDIR,"api/mullib/basecontroller.php");
+	//	require_once url_seg_add($_BASEDIR,"api/mullib/basecontroller.php");
 			
 		if( file_exists($con_info['_CONTROLLER_FILE']))
 		{

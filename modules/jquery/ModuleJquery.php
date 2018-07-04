@@ -10,7 +10,7 @@ class mul_jquery extends mul_Module
 	
 	
 	
-	function page_before_html(&$args)
+	function mulgach_hmvc_before_html(&$args)
 	{
 		$args['JS']=array($this->get_module_dir()."/assets/js/jquery.min.js");;
 	}

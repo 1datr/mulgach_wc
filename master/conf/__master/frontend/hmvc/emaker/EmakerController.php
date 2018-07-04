@@ -22,8 +22,7 @@ class EmakerController extends \BaseController
 	//	$newrow->setfield('auth_entity',false);
 		$this->_TITLE=\Lang::__t('Entity manager');
 		
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$_cfg = new \scaff_conf($cfg);
 		
 		$dbparams = $_cfg->connect_db_if_exists($this);

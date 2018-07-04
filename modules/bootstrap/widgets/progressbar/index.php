@@ -13,7 +13,7 @@ namespace BootstrapProgressBar
 			$params['htmlattrs']['id']=$params['id'];
 			if(isset($params['class']))
 				$params['htmlattrs']['class']='progress '.$params['class'];
-			find_module('page')->getController()->add_js(filepath2url(url_seg_add(__DIR__,'/js/progbar.js')));
+			find_module('mulgach.hmvc')->getController()->add_js(filepath2url(url_seg_add(__DIR__,'/js/progbar.js')));
 			?>
 			 <div <?=$this->get_attr_str($params['htmlattrs'])?> >
 			  <div <?=$this->get_attr_str($params['htmlattrs_inside'])?> class="progress-bar" role="progressbar" aria-valuenow="<?=$params['value']?>"  aria-valuemin="<?=$params['value_min']?>" aria-valuemax="<?=$params['value_max']?>"></div>

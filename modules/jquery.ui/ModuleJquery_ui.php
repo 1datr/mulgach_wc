@@ -8,7 +8,7 @@ class mul_jquery_ui extends mul_jquery
 	
 	
 	
-	function page_before_html(&$args)
+	function mulgach_hmvc_before_html(&$args)
 	{
 		$args['JS']=array($this->get_module_dir()."/assets/js/jquery.min.js");;
 	}

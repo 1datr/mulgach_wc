@@ -23,7 +23,7 @@ class plg_drv_mysql extends mod_plugin
 		$this->_DB_PARAMS = $_PARAMS;		
 	//print_r($_PARAMS);
 	//	mysql_ping();
-		$con = find_module('page')->getController();
+		$con = find_module('mulgach.hmvc')->getController();
 		if($con!=NULL)
 			$con->add_js( filepath2url(url_seg_add(__DIR__,'js/dbutils.js')) );
 		

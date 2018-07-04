@@ -9,8 +9,42 @@ class mul_mulgach extends mul_Module
 	VAR $_CONF_PATH;
 	VAR $_SETTINGS;
 	
+	function __construct($_PARAMS)
+	{
+		parent::__construct($_PARAMS);
+		$this->load_api();
+		
+	}
+	
+	function load_api()
+	{
+		require_once url_seg_add($this->get_module_dir(),'api/basecontroller.php');
+		require_once url_seg_add($this->get_module_dir(),'api/modelbase.php');
+		require_once url_seg_add($this->get_module_dir(),'api/authmodel.php');
+		require_once url_seg_add($this->get_module_dir(),'api/widget.php');
+		require_once url_seg_add($this->get_module_dir(),'api/dataset.php');
+		require_once url_seg_add($this->get_module_dir(),'api/install/installcontroller.php');
+		require_once url_seg_add($this->get_module_dir(),'api/install/installtablecontroller.php');
+		require_once url_seg_add($this->get_module_dir(),'api/install/x_installauthcontroller.php');
+	/*	$api_scripts=get_files_in_folder(url_seg_add($this->get_module_dir(),'api'));
+		foreach ($api_scripts as $idx => $scrpt)
+		{
+			if(is_dir($scrpt))
+			{
+				$nested_scripts=get_files_in_folder($scrpt);
+				foreach ($nested_scripts as $idx => $_scrpt)
+				{
+					require_once $_scrpt;
+				}
+			}
+			else
+				require_once $scrpt;
+		}*/
+	}
+	
 	function OnLoad()
 	{
+		//
 		$this->dbparams = $_PARAMS;
 		GLOBAL $_CONFIG;
 		GLOBAL $_EP;

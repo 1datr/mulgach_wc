@@ -29,7 +29,7 @@ class mul_bootstrap extends mul_Module
 		return array('jquery');
 	}
 		
-	function page_before_html(&$args)
+	function mulgach_hmvc_before_html(&$args)
 	{
 		GLOBAL $_BASEDIR;
 		$args['CSS']=array($this->get_module_dir()."/assets/css/bootstrap.min.css");

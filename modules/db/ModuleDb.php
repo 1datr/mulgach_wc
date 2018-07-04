@@ -22,7 +22,7 @@ class mul_db extends mul_Module
 	VAR $drv;
 	VAR $connections;
 	
-	function page_before_out($_PARAMS)
+	function mulgach_hmvc_before_out($_PARAMS)
 	{
 		$mp = get_mulgach_params();
 		if(isset($mp['SETTINGS']['db']))

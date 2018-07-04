@@ -1,7 +1,7 @@
 <?php 
 $_SETTINGS=['_MODULES'=>[
 	'mulgach'=>[],
-	'page'=>array(),
+	'mulgach.hmvc'=>array(),
 	'db'=>array(),	
 	'jquery'=>array(),
 	'jquery.ui'=>[],

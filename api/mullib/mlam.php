@@ -152,7 +152,7 @@ class MLAM
 		switch($eopts['src'])
 		{
 			case 'module':
-				$metodname = "{$event_src}_{$eventname}";
+				$metodname = strtr($event_src,['.'=>'_'])."_{$eventname}";
 				if(method_exists($mod, $metodname))
 				{
 					$mod_res=array();
