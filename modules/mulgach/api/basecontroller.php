@@ -600,7 +600,7 @@ class StepProcess
 	
 	function __construct($pid=NULL,$_passw=NULL)
 	{
-		use_jq_plugin_x('__ui', find_module('page')->getController(),'jquery.ui' );
+		use_jq_plugin_x('__ui', find_module('mulgach.hmvc')->getController(),'jquery.ui' );
 		
 		if($pid==NULL)
 		{

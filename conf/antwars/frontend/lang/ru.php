@@ -23,4 +23,5 @@ $_LANG['ERROR']='ERROR';
 $_LANG['Error']='Error';
 $_LANG['No such page']='No such page';
 $_LANG['ant.fld']='fld';
+$_LANG['ant.user']='user';
 ?>

@@ -36,8 +36,8 @@ class EmakerController extends \BaseController
 	public function ActionDrop($cfg,$ename)
 	{
 		// подключаемся к базе и драйверу
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+	
+		use_scaff_api();
 		$_cfg = new \scaff_conf($cfg);
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		$_cfg->_DRV = $this->_CONNECTION;
@@ -311,8 +311,7 @@ class EmakerController extends \BaseController
 	{
 	//	mul_dbg($cfg." - ".$fldtype." - ".$fld_name);
 		// подключаемся к базе и драйверу
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$_cfg = new \scaff_conf($cfg);
 		$dbparams = $_cfg->connect_db_if_exists($this);
 				
@@ -390,8 +389,7 @@ class EmakerController extends \BaseController
 	public function ActionSave()
 	{
 		// подключаемся к базе и драйверу
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$_cfg = new \scaff_conf($_POST['entity']['cfg']);
 			
 		$dbparams = $_cfg->connect_db_if_exists($this);
@@ -437,8 +435,7 @@ class EmakerController extends \BaseController
 		elseif(isset($_POST['entity'])) // при создании либоредактирование сущности
 		{
 			// подключаемся к базе и драйверу
-			GLOBAL $_BASEDIR;
-			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			use_scaff_api();
 			$_cfg = new \scaff_conf($_POST['entity']['cfg']);
 				
 			$dbparams = $_cfg->connect_db_if_exists($this);

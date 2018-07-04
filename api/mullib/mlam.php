@@ -4,16 +4,23 @@ define('__module_class_suffix__','');
 define('__module_file_prefix__',"Module");
 define('__module_file_suffix__',"");
 
+define('__AM_ASSOC__',"ASSOC");
+define('__AM_IDX__',"IDX");
+
 class MLAM 
 {
 	VAR $_MOD_CLASSES=[];
 	VAR $_SETTINGS;
 	VAR $_MODULES_DIR;
+	VAR $_ARRAY_MODE;
 	
-	function __construct()
+	function __construct($params=[])
 	{
 		GLOBAL $_BASEDIR;
+		def_options(['_ARRAY_MODE'=>__AM_ASSOC__], $params);
 			
+		$this->_ARRAY_MODE  = $params["_ARRAY_MODE"];
+		
 		$this->_MODULES_DIR = url_seg_add($_BASEDIR,'modules');
 			
 		$fp_settings  = new FilePair( url_seg_add($this->_MODULES_DIR,"conf.php"));		
@@ -62,11 +69,25 @@ class MLAM
 	
 	function find_module($modname)
 	{
-		foreach($this->_MOD_CLASSES as $idx => $mod)
+		
+		switch($this->_ARRAY_MODE)
 		{
-			if($mod->get_mod_name()==$modname)
-				return $this->_MOD_CLASSES[$idx];
+			case __AM_ASSOC__:
+				{
+					if(isset($this->_MOD_CLASSES[$modname]))
+						return $this->_MOD_CLASSES[$modname];
+				};break;
+			case __AM_IDX__:
+				{
+				foreach($this->_MOD_CLASSES as $idx => $mod)
+					{
+						if($mod->get_mod_name()==$modname)
+							return $this->_MOD_CLASSES[$idx];
+					}
+				};break;
 		}
+		
+		
 		return null;
 	}
 	// загрузить модуль
@@ -98,9 +119,21 @@ class MLAM
 		$module_class = __module_class_prefix__."".strtr($mod,'.','_')."".__module_class_suffix__;
 		
 		$mod_obj =new $module_class($params);
+
+		switch($this->_ARRAY_MODE)
+		{
+			case __AM_ASSOC__:
+			{
+				$this->_MOD_CLASSES[$mod]=$mod_obj;
+			};break;
+			case __AM_IDX__:
+			{
+					$this->_MOD_CLASSES[]=$mod_obj;
+			};break;
+		}
 		
-		$this->_MOD_CLASSES[]=$mod_obj;
 	}
+		
 	
 	function call_modules($module,$eventname,$args=[],$eopts=[])
 	{

@@ -58,8 +58,8 @@ function load_ajax_block(sel,url)//,afterload=null
 		
 	}).fail(function( jqxhr, textStatus, error ) {
 	    var err = textStatus + ", " + error;
-	    console.log( "Request Failed: " + err );
-	    console.log( jqxhr.responseText );
+	    console.log(textStatus);	  
+	    $('body').append('<div class="error_box">'+jqxhr.responseText+"</div>");
 	});
 }
 
@@ -118,7 +118,7 @@ function exe_process(pid,pwd,theform,fun_onstep=null,fun_onterminate=null)
 	    error: function(jqXHR, textStatus, errorThrown) 
 		    {	    	
 		    	console.log(textStatus);	  
-		    	$('#error_div').html(jqXHR.responseText);
+		    	$('body').append('<div class="error_box">'+jqXHR.responseText+"</div>");
 		    },
 		});
 }

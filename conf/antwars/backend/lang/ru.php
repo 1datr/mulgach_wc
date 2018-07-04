@@ -35,4 +35,5 @@ $_LANG['Create USERS']='Create USERS';
 $_LANG['token']='token';
 $_LANG['Forbidden page']='Forbidden page';
 $_LANG['ant.fld']='fld';
+$_LANG['ant.user']='user';
 ?>
