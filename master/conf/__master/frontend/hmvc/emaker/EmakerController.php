@@ -313,7 +313,10 @@ class EmakerController extends \BaseController
 			$ep_row = $this->_MODEL->nested('menusettings')->empty_row_form_model();
 			
 				$ep_row->setField('ep',$_ep);
-				$ep_row->setField('is_menucon',true);
+				
+				$_ep_triada = $_cfg->get_triada($_ep, $_ename);
+				$_is_menu = ($_ep_triada->has_menu());
+				$ep_row->setField('is_menucon',$_is_menu);
 				$ep_row->setField('menucon',$menu_con[$_ep]);
 				$editing_entity->setField('menusettings', x_array_push($editing_entity->getField('menusettings'), $ep_row));
 				

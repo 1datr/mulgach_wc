@@ -187,8 +187,19 @@ $ep_settings = $newentity->getField('menusettings');
 	foreach ($ep_set as $idx => $_ep){
 	?>
 	<div id="epsettings_<?=$_ep?>" class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" role="tabpanel">
-	<?php $form->field($ep_settings[$idx], 'is_menucon', ['namemode'=>'multi','nameidx'=>$ep_settings[$idx]->getfield('ep')])->checkbox([]);  ?><label>#{Make menu}</label><br />
+	<?php $form->field($ep_settings[$idx], 'is_menucon', ['namemode'=>'multi','nameidx'=>$ep_settings[$idx]->getfield('ep'),])->checkbox(
+			['htmlattrs'=>['onclick'=>"
+   	if($(this).prop('checked')) $('#ep_menucon_".$_ep."').hide();
+	else $('#ep_menucon_".$_ep."').show();"]						
+	]);  ?><label>#{Make menu}</label><br />
+	<?php 
+	$menucon_vis='';
+	if($ep_settings[$idx]->getfield('is_menucon'))
+		$menucon_vis='display:none';
+	?>
+	<div id="ep_menucon_<?=$_ep?>" style="<?=$menucon_vis?>">
 	<?php $form->field($ep_settings[$idx], 'menucon', ['namemode'=>'multi','nameidx'=>$ep_settings[$idx]->getfield('ep')])->ComboBox($elist,['htmlattrs'=>['class'=>'fldtype',]]);  ?>
+	</div>
 	</div>
 	<?php 
 	}

@@ -947,7 +947,7 @@ class mul_mulgach_hmvc extends mul_Module
 			GLOBAL $_EP;
 		}
 	
-		require_once "{$_BASEDIR}api/mullib/basecontroller.php";
+		//require_once "{$_BASEDIR}api/mullib/basecontroller.php";
 	
 		require_once $con_info['_CONTROLLER_FILE'];
 		

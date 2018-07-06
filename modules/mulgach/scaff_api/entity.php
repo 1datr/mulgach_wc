@@ -34,9 +34,16 @@ class scaff_entity {
 	
 	function compile_table_info($nfo)
 	{
+		$mainmenu=[];
+		foreach (['frontend','backend'] as $_ep)
+		{
+			$mainmenu[$_ep] = (isset($this->_TABLE_INFO['menusettings'][$_ep]['is_menucon']))?
+				$this->_TABLE_INFO['ename']:
+				$this->_TABLE_INFO['menusettings'][$_ep];
+		}
 		
 		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[],'binds'=>[],
-				'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view'],'file_fields'=>[]);
+				'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view'],'file_fields'=>[],'mainmenu'=>$mainmenu);
 		
 		if(!empty($nfo['oldname']))
 			$this->_TABLE_INFO['oldname']=$nfo['oldname'];
@@ -192,6 +199,7 @@ class scaff_entity {
 					'frontend' => $this->_TABLE_INFO['auth_con'],
 					'backend' => $this->_TABLE_INFO['auth_con'],
 				],
+				'mainmenu'=>$this->_TABLE_INFO['mainmenu'],
 		];
 		
 		$capts = [];
