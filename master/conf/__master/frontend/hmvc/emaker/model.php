@@ -34,6 +34,7 @@ class ModelEmaker extends \BaseModel
 								'view'=>['Type'=>'text'],
 								'auth_con'=>['Type'=>'text'],	
 								//auth fields
+								'is_auth'=>['Type'=>'boolean'],
 								'auth_fld_login'=>['Type'=>'text'],
 								'auth_fld_email'=>['Type'=>'text'],
 								'auth_fld_passw'=>['Type'=>'text'],

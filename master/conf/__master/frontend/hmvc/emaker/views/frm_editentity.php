@@ -168,6 +168,24 @@ else
 <label>#{View}</label><?php $form->field($newentity, 'view')->text([]); ?> 
 <label>#{Auth controller}</label><?php $form->field($newentity, 'auth_con')->ComboBox($elist,['htmlattrs'=>['class'=>'fldtype',]]);  ?>
 </fieldset>
+
+<?php 
+/* 
+   auth settings  
+ */
+?>
+<?php $form->field($newentity, 'is_auth')->checkbox([]);  ?><label>#{Authorize controller}</label><br />
+<fieldset><legend>#{Authorization settings}</legend>
+<label>#{Login field}</label><?php $form->field($newentity, 'auth_fld_login')->ComboBox($fieldlist); ?> 
+<label>#{e-mail}</label><?php $form->field($newentity, 'auth_fld_email')->ComboBox($fieldlist); ?> 
+<label>#{Password field}</label><?php $form->field($newentity, 'auth_fld_passw')->ComboBox($fieldlist); ?>
+<label>#{Hash field}</label><?php $form->field($newentity, 'auth_fld_hash')->ComboBox($fieldlist); ?>
+</fieldset>
+<?php 
+/* 
+   menu settings  
+ */
+?>
 <ul class="nav nav-tabs">  
   	<?php 
   	$ep_set=['frontend','backend'/*,'install','rest'*/];
@@ -187,7 +205,8 @@ $ep_settings = $newentity->getField('menusettings');
 	foreach ($ep_set as $idx => $_ep){
 	?>
 	<div id="epsettings_<?=$_ep?>" class="tab-pane <?=(($idx==0)?'active':'')?> tab-page" role="tabpanel">
-	<?php $form->field($ep_settings[$idx], 'is_menucon', ['namemode'=>'multi','nameidx'=>$ep_settings[$idx]->getfield('ep'),])->checkbox(
+	<?php $form->field($ep_settings[$idx], 'is_menucon', ['namemode'=>'multi',
+			'nameidx'=>$ep_settings[$idx]->getfield('ep'),])->checkbox(
 			['htmlattrs'=>['onclick'=>"
    	if($(this).prop('checked')) $('#ep_menucon_".$_ep."').hide();
 	else $('#ep_menucon_".$_ep."').show();"]						

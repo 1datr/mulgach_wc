@@ -59,10 +59,8 @@ class EmakerController extends \BaseController
 			$newentity->setField('view', '{login}');
 			$newentity->setField('build',true);
 			
-			
-			// подключаемся к базе и драйверу
-			GLOBAL $_BASEDIR;
-			require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+			use_scaff_api();
+			// подключаемся к базе и драйверу		
 			$_cfg = new \scaff_conf($_POST['makenew']['cfg']);
 			
 			$tr_auth = $_cfg->get_auth_con();
@@ -96,6 +94,8 @@ class EmakerController extends \BaseController
 			$primaryfld->fldEnabled('required',false);
 			
 			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
+			
+			$fieldlist=[];
 			if(isset($_POST['makenew']['auth_entity']))	// сущность авторизации
 			{
 				// login field
@@ -105,6 +105,7 @@ class EmakerController extends \BaseController
 				$fld_login->setField('required', true);								
 				$fld_login->setField('file_enabled',false);
 				$fld_login->setField('deletable', false);
+				$fieldlist[]='login';
 				
 				//$fld_login->fldEnabled('type',false);
 				$fld_login->fldEnabled('primary',false);
@@ -122,6 +123,7 @@ class EmakerController extends \BaseController
 				$fld_passw->setField('required', true);
 				$fld_passw->setField('file_enabled',false);
 				$fld_passw->setField('deletable', false);
+				$fieldlist[]='password';
 				
 				$fld_passw->fldEnabled('primary',false);
 				$fld_passw->fldEnabled('required',false);
@@ -138,6 +140,8 @@ class EmakerController extends \BaseController
 				$fld_email->setField('required', true);
 				$fld_email->setField('file_enabled',false);
 				$fld_email->setField('deletable', false);
+				
+				$fieldlist[]='email';
 				
 				//$fld_email->fldEnabled('type',false);
 				$fld_email->fldEnabled('primary',false);
@@ -159,6 +163,7 @@ class EmakerController extends \BaseController
 				$fld_token->fldEnabled('primary',false);
 				$fld_token->fldEnabled('required',false);
 				$fld_token->setField('deletable', false);
+				$fieldlist[]='token';
 				
 				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_token->getField('type')));
 				$typeinfo_row = $typemodel->empty_row_form_model();
@@ -170,7 +175,22 @@ class EmakerController extends \BaseController
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			
 			$this->_TITLE = \Lang::__t('New entity creation');
-			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'typelist'=>$typelist,'mode'=>'create','newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
+			
+			$newentity->setField('menusettings',[]);
+			
+			$menu_con = ['frontend'=>$_cfg->find_menu_triada('frontend'),
+					'backend'=>$_cfg->find_menu_triada('backend'),
+			];
+			
+			foreach (['frontend','backend'] as $_ep)
+			{
+				$_is_menu = false;
+				$ep_row = $this->_MODEL->nested('menusettings')->empty_row_form_model();
+				$ep_row->setField('is_menucon',$_is_menu);
+				$ep_row->setField('menucon',$menu_con[$_ep]);
+				$newentity->setField('menusettings', x_array_push($newentity->getField('menusettings'), $ep_row));
+			}
+			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'fieldlist'=>$fieldlist,'typelist'=>$typelist,'mode'=>'create','newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
 	}
 
