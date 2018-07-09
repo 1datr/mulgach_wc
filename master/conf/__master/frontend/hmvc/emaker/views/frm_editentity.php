@@ -9,7 +9,7 @@ $sbplugin->template_table_start('fields_item',['valign'=>"top",'class'=>'fieldit
 ?>
 	<td>
 	<input type="hidden" name="nameroot" value="entity[fieldlist][{idx}]" />
-	<?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text([]);  ?>	
+	<?php $form->field($emptyfld, 'fldname',['namemode'=>'multi','name_ptrn'=>'{idx}'])->text(['htmlattrs'=>['onchange'=>'get_field_list()']]);  ?>	
 	</td>
 	<td><?php $form->field($emptyfld, 'type',['namemode'=>'multi','name_ptrn'=>'{idx}'])->ComboBox($typelist,['htmlattrs'=>['class'=>'fldtype','onchange'=>'on_type_change(this)']]);  ?></td>
 	<td><span class="fldinfo"></span></td>
@@ -70,7 +70,7 @@ else
 <tr class="fielditem multiform_block" role="item" valign="top" class="fielditem">
 	<td>
 <?php 
-	$af_fldname = $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx]);
+	$af_fldname = $form->field($fld, 'fldname',['namemode'=>'multi','nameidx'=>$idx,'htmlattrs'=>['onchange'=>'get_field_list()']]);
 	$form->field($fld, 'fldname_old',['namemode'=>'multi','nameidx'=>$idx])->hidden([]);
 ?>
 	<?php $af_fldname->text([]);  ?>
@@ -173,9 +173,12 @@ else
 /* 
    auth settings  
  */
+$style="";
+if(!$newentity->getField('is_auth'))
+	$style="display:none";
 ?>
-<?php $form->field($newentity, 'is_auth')->checkbox([]);  ?><label>#{Authorize controller}</label><br />
-<fieldset><legend>#{Authorization settings}</legend>
+<?php $form->field($newentity, 'is_auth')->checkbox(['htmlattrs'=>['onclick'=>"$('#auth_settings').toggle()"]]); ?><label>#{Authorize controller}</label><br />
+<fieldset id="auth_settings" style="<?=$style?>"><legend>#{Authorization settings}</legend>
 <label>#{Login field}</label><?php $form->field($newentity, 'auth_fld_login')->ComboBox($fieldlist); ?> 
 <label>#{e-mail}</label><?php $form->field($newentity, 'auth_fld_email')->ComboBox($fieldlist); ?> 
 <label>#{Password field}</label><?php $form->field($newentity, 'auth_fld_passw')->ComboBox($fieldlist); ?>

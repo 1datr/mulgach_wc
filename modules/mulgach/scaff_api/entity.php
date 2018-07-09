@@ -137,6 +137,16 @@ class scaff_entity {
 		$this->_MODEL_INFO = $settings;
 	}
 	
+	function get_auth_fields()
+	{
+		if(!$this->is_auth())
+			return null;
+		
+		$tr = $this->PARENT_CFG->get_triada('frontend',$this->NAME);
+		$_settings = $tr->getExistingModelInfo($this->NAME,"frontend");
+		return $_settings['authdata'];
+	}
+	
 	function get_fields()
 	{
 		$fields = $this->DATA_DRV->get_table_fields($this->TABLE);
@@ -172,6 +182,12 @@ class scaff_entity {
 	function build_table()
 	{
 		$this->DATA_DRV->build_table($this->_TABLE_INFO);
+	}
+	
+	function is_auth()
+	{
+		$tr = $this->PARENT_CFG->get_triada('frontend',$this->NAME);
+		return $tr->is_auth();
 	}
 	
 	function build_hmvc($trinfo,$controller)

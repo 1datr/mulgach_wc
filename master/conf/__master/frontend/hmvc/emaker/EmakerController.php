@@ -95,6 +95,8 @@ class EmakerController extends \BaseController
 			
 			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
 			
+			$newentity->setField('is_auth',isset($_POST['makenew']['auth_entity']));
+			
 			$fieldlist=[];
 			if(isset($_POST['makenew']['auth_entity']))	// сущность авторизации
 			{
@@ -170,6 +172,13 @@ class EmakerController extends \BaseController
 				$fld_token->setField('typeinfo', $typeinfo_row,$typemodel);
 				
 				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_token));
+				
+				
+				
+				$newentity->setField('auth_fld_login','login');
+				$newentity->setField('auth_fld_passw','password');
+				$newentity->setField('auth_fld_hash','token');
+				$newentity->setField('auth_fld_email','email');
 			}
 			
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
@@ -200,9 +209,7 @@ class EmakerController extends \BaseController
 		$sbplugin = use_jq_plugin('structblock',['controller'=>$this,'onadd'=>""]);
 		$this->_MODEL->scenario("efield");
 		
-		// подключаемся к базе и драйверу
-		GLOBAL $_BASEDIR;
-		
+		// подключаемся к базе и драйверу	
 		use_scaff_api();
 
 		$_cfg = new \scaff_conf($cfg);
@@ -230,6 +237,7 @@ class EmakerController extends \BaseController
 		$editing_entity->setField('ename', $_ename);
 		$editing_entity->setField('oldname', $_ename);
 		$editing_entity->setField('fieldlist', array());
+		$editing_entity->setField('is_auth',$entity->is_auth());
 		$editing_entity->setField('auth_con',$tr_auth);
 		$editing_entity->setField('build',true);
 		$editing_entity->setField('redirect_here',isset($_SESSION['redirect_here']));
@@ -250,11 +258,22 @@ class EmakerController extends \BaseController
 		];
 	//	mul_dbg($fields);
 		$idx = 0;
+		$fieldlist=[];
+		
+		if($entity->is_auth())
+		{
+			$auth_info = $entity->get_auth_fields();
+			$editing_entity->setField('auth_fld_login',$auth_info['login_field']);
+			$editing_entity->setField('auth_fld_passw',$auth_info['passw_field']);
+			$editing_entity->setField('auth_fld_hash',$auth_info['hash_tag']);
+			$editing_entity->setField('auth_fld_email',$auth_info['email_field']);
+		}
 		foreach ($fields as $fld =>$fld_params)
 		{			
 			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
 			$thefld->setField('fldname', $fld);
 			$thefld->setField('fldname_old', $fld);
+			$fieldlist[]=$fld;
 			
 			if(isset($entity->_MODEL_INFO['constraints']) && isset($entity->_MODEL_INFO['constraints'][$fld]) )
 			{
@@ -342,7 +361,7 @@ class EmakerController extends \BaseController
 				
 		}
 	
-		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'elist'=>$elist,
+		$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'elist'=>$elist,'fieldlist'=>$fieldlist,
 				'typelist'=>$typelist,'newentity'=>$editing_entity,'mode'=>'save','emptyfld'=>$emptyfld]);
 		
 	}
@@ -412,8 +431,7 @@ class EmakerController extends \BaseController
 	{
 		$res_array=['items'=>[]];
 		
-		GLOBAL $_BASEDIR;
-		require_once url_seg_add($_BASEDIR,'api/mullib/scaff_api/index.php');
+		use_scaff_api();
 		$_cfg = new \scaff_conf($cfg);
 		$dbparams = $_cfg->connect_db_if_exists($this);
 		

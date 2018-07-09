@@ -1,3 +1,5 @@
+
+
 $( document ).ready(function() 
 {
 	$('.ref_delete').click(function(obj) 
@@ -9,6 +11,32 @@ $( document ).ready(function()
     			return false;
     		});
 });
+
+function get_field_list()
+{
+	var trs = $('#fields_block > .items').find('tr.multiform_block');
+	var fields=new Array();
+	var login_fld = $('[name="entity[auth_fld_login]"]');
+	var email_fld = $('[name="entity[auth_fld_email]"]');
+	var passw_fld = $('[name="entity[auth_fld_passw]"]');
+	var hash_fld = $('[name="entity[auth_fld_hash]"]');
+	
+	$(login_fld).empty();
+	$(email_fld).empty();
+	$(passw_fld).empty();
+	$(hash_fld).empty();
+	
+	for(i=0;i<trs.length;i++)
+	{
+		selector='[name="entity[fieldlist]['+i+'][fldname]"]';
+		var newfld = $(selector).val();
+		//fields.push(newfld);
+		$(login_fld).append( $('<option value="'+newfld+'">'+newfld+'</option>') );
+		$(email_fld).append( $('<option value="'+newfld+'">'+newfld+'</option>') );
+		$(passw_fld).append( $('<option value="'+newfld+'">'+newfld+'</option>') );
+		$(hash_fld).append( $('<option value="'+newfld+'">'+newfld+'</option>') );
+	}
+}
 
 function on_sel_file(el)
 {
@@ -46,5 +74,9 @@ function on_entity_change(type_el)
 		  $.each( data.items, function( key, val ) {
 			  el_fld_to.append($('<option value="'+val+'">'+val+"</option>"));
 		  });
+	}).fail(function( jqxhr, textStatus, error ) {
+	    var err = textStatus + ", " + error;
+	    console.log(textStatus);	  
+	    $('body').append('<div class="error_box">'+jqxhr.responseText+"</div>");
 	});
 }

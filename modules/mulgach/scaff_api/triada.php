@@ -798,7 +798,8 @@ class scaff_triada
 	function getExistingModelInfo($triada,$ep="frontend")
 	{
 		GLOBAL $_BASEDIR;
-		$baseinfo_file=url_seg_add($this->_PATH,$ep,"hmvc",$triada,"baseinfo.php");
+		//$baseinfo_file=url_seg_add($this->_PATH,$ep,"hmvc",$triada,"baseinfo.php");
+		$baseinfo_file=url_seg_add($this->_PATH,"baseinfo.php");
 		//echo $baseinfo_file;
 		if(file_exists($baseinfo_file))
 		{
