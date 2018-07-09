@@ -76,6 +76,8 @@ class EmakerController extends \BaseController
 			
 			$this->add_js('#/js/emaker.js');
 			
+			$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
+			
 			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
 			$primaryfld->setField('type',  $this->_CONNECTION->get_basic_type('int'));
@@ -100,7 +102,8 @@ class EmakerController extends \BaseController
 			$fieldlist=[];
 			if(isset($_POST['makenew']['auth_entity']))	// сущность авторизации
 			{
-				// login field
+				// login field				
+				
 				$fld_login = $this->_MODEL->nested('fieldlist')->empty_row_form_model(); 
 				$fld_login->setField('fldname', 'login');
 				$fld_login->setField('type', $this->_CONNECTION->get_basic_type('text'));				
@@ -195,11 +198,15 @@ class EmakerController extends \BaseController
 			{
 				$_is_menu = false;
 				$ep_row = $this->_MODEL->nested('menusettings')->empty_row_form_model();
+				if(($tr_auth==null) && (isset($_POST['makenew']['auth_entity'])))
+				{
+					$_is_menu=true;
+				}
 				$ep_row->setField('is_menucon',$_is_menu);
 				$ep_row->setField('menucon',$menu_con[$_ep]);
 				$newentity->setField('menusettings', x_array_push($newentity->getField('menusettings'), $ep_row));
 			}
-			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'fieldlist'=>$fieldlist,'typelist'=>$typelist,'mode'=>'create','newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
+			$this->out_view('frm_editentity',['sbplugin'=>$sbplugin,'elist'=>$elist,'fieldlist'=>$fieldlist,'typelist'=>$typelist,'mode'=>'create','newentity'=>$newentity,'emptyfld'=>$emptyfld,'primaryfld'=>$primaryfld]);
 		}				
 	}
 

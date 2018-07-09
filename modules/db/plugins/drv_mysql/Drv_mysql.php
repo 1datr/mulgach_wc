@@ -675,8 +675,8 @@ class plg_drv_mysql extends mod_plugin
 						 * */
 						'htmlattrs'=>['id'=>'dbname']
 						]);
-		$cntrlr = find_module('page')->getController();
-		use_jq_plugin('__ui',$cntrlr);
+		$cntrlr = find_module('mulgach.hmvc')->getController();
+		use_jq_plugin_x('__ui',$cntrlr,'jquery.ui');
 		$cntrlr->inline_script("
 \$('#dbname').on('input', function () {
     var term = \$(this).val();

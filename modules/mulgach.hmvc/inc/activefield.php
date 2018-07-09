@@ -553,12 +553,7 @@ class ActiveField
 		$this->_ELEMENT_OPTIONS = $opts;
 		
 		$this->_HTML_NAME = $opts['htmlattrs']['name'];
-		/*
-		if(!isset($opts['name']))
-			$opts['htmlattrs']['name']= $this->_ROW->_MODEL->_TABLE.'['.$this->_FLDNAME.']';
-		else
-			$opts['htmlattrs']['name']= $opts['name'];
-		*/
+		
 		$fldval = $this->_ROW->getField($this->_FLDNAME);
 		
 		$hidden_out = false;		

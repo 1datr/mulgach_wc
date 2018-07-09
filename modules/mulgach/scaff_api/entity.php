@@ -51,13 +51,13 @@ class scaff_entity {
 		
 		foreach (['frontend','backend'] as $_ep)
 		{
-			if(isset($this->_TABLE_INFO['menusettings'][$_ep]['is_menucon']))
+			if(isset($nfo['menusettings'][$_ep]['is_menucon']))
 			{
-				$this->_TABLE_INFO['mainmenu'][$ep]=$this->NAME;
+				$this->_TABLE_INFO['mainmenu'][$_ep]=$this->NAME;
 			}
 			else
 			{
-				$this->_TABLE_INFO['connect_from'][$ep]=$this->_TABLE_INFO['menusettings'][$_ep];
+				$this->_TABLE_INFO['connect_from'][$_ep]=$this->_TABLE_INFO['menusettings'][$_ep];
 			}
 				
 		/*	$mainmenu[$_ep] = (isset($this->_TABLE_INFO['menusettings'][$_ep]['is_menucon']))?
@@ -247,7 +247,8 @@ class scaff_entity {
 				],
 				'mainmenu'=>$this->_TABLE_INFO['mainmenu'],
 		];
-		if($this->_TABLE_INFO['auth_con']==$this->_TABLE_INFO['table'])
+		//if($this->_TABLE_INFO['auth_con']==$this->_TABLE_INFO['table'])
+		if(isset($this->_TABLE_INFO['authcon']['enable']))
 		{
 			$_trinfo['authcon']=$this->_TABLE_INFO['authcon'];
 		}
