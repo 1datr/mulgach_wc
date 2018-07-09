@@ -35,15 +35,45 @@ class scaff_entity {
 	function compile_table_info($nfo)
 	{
 		$mainmenu=[];
-		foreach (['frontend','backend'] as $_ep)
+		
+		
+		if(isset($nfo['is_auth']))
 		{
-			$mainmenu[$_ep] = (isset($this->_TABLE_INFO['menusettings'][$_ep]['is_menucon']))?
-				$this->_TABLE_INFO['ename']:
-				$this->_TABLE_INFO['menusettings'][$_ep];
+			//$nfo['auth_con']=$nfo['ename'];
 		}
 		
+		$tinfo = $this->_TABLE_INFO;
+		
 		$this->_TABLE_INFO = array('fields'=>[],'table'=>$nfo['ename'],'required'=>[],'primary'=>[],'binds'=>[],
-				'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view'],'file_fields'=>[],'mainmenu'=>$mainmenu);
+				'auth_con'=>$nfo['auth_con'],'view'=>$nfo['view'],'file_fields'=>[],
+				//'mainmenu'=>$mainmenu				
+		);
+		
+		foreach (['frontend','backend'] as $_ep)
+		{
+			if(isset($this->_TABLE_INFO['menusettings'][$_ep]['is_menucon']))
+			{
+				$this->_TABLE_INFO['mainmenu'][$ep]=$this->NAME;
+			}
+			else
+			{
+				$this->_TABLE_INFO['connect_from'][$ep]=$this->_TABLE_INFO['menusettings'][$_ep];
+			}
+				
+		/*	$mainmenu[$_ep] = (isset($this->_TABLE_INFO['menusettings'][$_ep]['is_menucon']))?
+			$this->_TABLE_INFO['ename']:
+			$this->_TABLE_INFO['menusettings'][$_ep];*/
+		}
+		
+		if(isset($nfo['is_auth']))
+		{
+			$this->_TABLE_INFO['authcon']['enable']=true;
+			
+			$this->_TABLE_INFO['authcon']['login']=$tinfo['auth_fld_login'];
+			$this->_TABLE_INFO['authcon']['passw']=$tinfo['auth_fld_passw'];
+			$this->_TABLE_INFO['authcon']['email']=$tinfo['auth_fld_email'];
+			$this->_TABLE_INFO['authcon']['hash']=$tinfo['auth_fld_hash'];
+		}
 		
 		if(!empty($nfo['oldname']))
 			$this->_TABLE_INFO['oldname']=$nfo['oldname'];
@@ -217,6 +247,10 @@ class scaff_entity {
 				],
 				'mainmenu'=>$this->_TABLE_INFO['mainmenu'],
 		];
+		if($this->_TABLE_INFO['auth_con']==$this->_TABLE_INFO['table'])
+		{
+			$_trinfo['authcon']=$this->_TABLE_INFO['authcon'];
+		}
 		
 		$capts = [];
 		foreach ($this->_TABLE_INFO['fields'] as $fld => $fldinfo)

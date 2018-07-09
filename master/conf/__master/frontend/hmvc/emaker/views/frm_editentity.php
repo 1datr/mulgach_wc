@@ -177,7 +177,7 @@ $style="";
 if(!$newentity->getField('is_auth'))
 	$style="display:none";
 ?>
-<?php $form->field($newentity, 'is_auth')->checkbox(['htmlattrs'=>['onclick'=>"$('#auth_settings').toggle()"]]); ?><label>#{Authorize controller}</label><br />
+<?php $form->field($newentity, 'is_auth')->checkbox(['htmlattrs'=>['onclick'=>"$('#auth_settings').toggle()"]]); ?><label>#{Authorization entity}</label><br />
 <fieldset id="auth_settings" style="<?=$style?>"><legend>#{Authorization settings}</legend>
 <label>#{Login field}</label><?php $form->field($newentity, 'auth_fld_login')->ComboBox($fieldlist); ?> 
 <label>#{e-mail}</label><?php $form->field($newentity, 'auth_fld_email')->ComboBox($fieldlist); ?> 

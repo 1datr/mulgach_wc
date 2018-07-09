@@ -24,7 +24,7 @@ class Ant_raceController extends \BaseController
 	
 		$conn = get_connection();
 		
-		$this->add_block("BASE_MENU", "ant_race", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 
 		$ds = $this->_MODEL->findAsPager(array('page_size'=>10),$page,1,$this->getRequest()->getArg('ord'));
 		
@@ -47,14 +47,14 @@ class Ant_raceController extends \BaseController
 	
 	public function ActionCreate()
 	{
-		$this->add_block("BASE_MENU", "ant_race", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$this->_TITLE="CREATE ANT_RACE";
 		$this->out_view('itemform',array('ant_race'=>$this->_MODEL->CreateNew()));
 	}
 	
 	public function ActionEdit($id)
 	{		
-		$this->add_block("BASE_MENU", "ant_race", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$ant_race = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id");
 		$this->_TITLE=$ant_race->getView()." #{EDIT}"; 
 		$this->out_view('itemform',array('ant_race'=>$ant_race));
@@ -91,11 +91,12 @@ class Ant_raceController extends \BaseController
 	
 	public function ActionView($id)
 	{
-		$this->add_block("BASE_MENU", "ant_race", "menu");
+		$this->add_block("BASE_MENU", "users", "menu");
 		$ant_race = $this->_MODEL->findOne('*.'.$this->_MODEL->getPrimaryName()."=$id"); 
 		$this->_TITLE=$ant_race->getView()." #{VIEW}"; 
 		$this->out_view('itemview',array('ant_race'=>$ant_race));
 	}
+	
 	
 }
 ?>
