@@ -48,7 +48,7 @@ foreach ($entities_table as $entityinfo)
 			$formrow = $this->_MODEL->empty_row_form_model();
 			$formrow->setField('ename',$entityinfo['entity']);
 			$formrow->setField('cfg',$cfg);
-			$formrow->setField('existing_table',$entityinfo['entity']->NAME);
+			$formrow->setField('existing_table',$entityinfo['entity']);
 			$this->out_view('from_existing_table',['formrow'=>$formrow]); 
 			?></td>
 			<?php 

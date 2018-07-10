@@ -10,7 +10,8 @@ $frm->field($formrow, 'cfg')->hidden([]);
 $frm->submit("MAKE FROM EXISTING TABLE",'',['class'=>'btn btn-sm']);
 ?>
 			<?php $frm->field($formrow, 'ename')->hidden(['noerrbox'=>true,'htmlattrs'=>['placeholder'=>Lang::__t('Entity name'),]]); ?>
-			<?php $frm->field($formrow, 'auth_entity')->checkbox() ?><label>#{FOR AUTH}</label>					
+			<?php $frm->field($formrow, 'auth_entity')->checkbox() ?><label>#{FOR AUTH}</label>		
+			<?php $frm->field($formrow, 'existing_table')->hidden(['noerrbox'=>true,]); ?>			
 		
 			<?php
 			$frm->close();

@@ -10,4 +10,8 @@ $_LANG['message.id']='id';
 $_LANG['message.from']='from';
 $_LANG['message.to']='to';
 $_LANG['message.when']='when';
+$_LANG['attachement.id']='id';
+$_LANG['attachement.file_path']='file_path';
+$_LANG['attachement.comment']='comment';
+$_LANG['attachement.message_id']='message_id';
 ?>

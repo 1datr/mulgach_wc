@@ -122,6 +122,7 @@ function x_array_push($arr,$newitem)
 	{
 		return merge_arrays($arr, $newitem);
 	}
+
 	array_push($arr, $newitem);
 	return $arr;
 }

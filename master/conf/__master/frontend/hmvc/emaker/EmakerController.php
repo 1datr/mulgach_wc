@@ -45,6 +45,216 @@ class EmakerController extends \BaseController
 		$this->redirect_back();
 	}
 	
+	private function make_from_existsing_table($_cfg,$table,&$newentity,&$fieldlist)
+	{
+		$entity = $_cfg->get_entity($table,$_cfg); 
+		
+		$tr_auth = $_cfg->get_auth_con();
+		
+		$elist = $_cfg->get_entities($this->_CONNECTION, $_cfg, true);
+		$elist = array_diff($elist, [$curr_entity]);
+		
+		$entity->SetDrv($this->_CONNECTION);
+		
+		$fields = $entity->get_fields();
+		
+		$menu_con = ['frontend'=>$_cfg->find_menu_triada('frontend'),
+				'backend'=>$_cfg->find_menu_triada('backend'),
+		];
+		//mul_dbg($_POST);
+		
+		
+		if(isset($entity->_MODEL_INFO['view']))
+		{
+			$newentity->setField('view', $entity->_MODEL_INFO['view']);
+		}
+		
+		$ref_fld_info = [
+				'domen'=>'',//'refentity',
+				'fields'=>[
+						'entity_to'=>['Type'=>'text'],
+						'fld_to'=>['Type'=>'text'],
+						'fieldlist'=>['Type'=>'array'],
+				],
+				'required'=>['entity_to','fld_to']
+		];
+		//	mul_dbg($fields);
+		$idx = 0;
+		$fieldlist=[];
+		
+		/*if($entity->is_auth())
+		{
+			$auth_info = $entity->get_auth_fields();
+			$newentity->setField('auth_fld_login',$auth_info['login_field']);
+			$newentity->setField('auth_fld_passw',$auth_info['passw_field']);
+			$newentity->setField('auth_fld_hash',$auth_info['hash_tag']);
+			$newentity->setField('auth_fld_email',$auth_info['email_field']);
+		}*/
+		
+		foreach ($fields as $fld =>$fld_params)
+		{
+			$thefld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			$thefld->setField('fldname', $fld);
+			$thefld->setField('fldname_old', $fld);
+			$fieldlist[]=$fld;
+				
+			if(isset($entity->_MODEL_INFO['constraints']) && isset($entity->_MODEL_INFO['constraints'][$fld]) )
+			{
+				$thefld->setField('type', '_ref');
+					
+				$ref_fld_info['domen']= "entity[fieldlist][".$idx."][typeinfo]";
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,new \ModelInfo($ref_fld_info));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+					
+				$typeinfo_row->setField('entity_to',$entity->_MODEL_INFO['constraints'][$fld]['model']);
+				$typeinfo_row->setField('fld_to',$entity->_MODEL_INFO['constraints'][$fld]['fld']);
+		
+				$model_entity = $_cfg->get_entity($entity->_MODEL_INFO['constraints'][$fld]['model']);
+				$model_entity->SetDrv($this->_CONNECTION);
+		
+				$typeinfo_row->setField('fieldlist',assoc_array_cut($model_entity->get_fields(),'Field'));
+					
+				$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+				//$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
+				//$typeinfo_row =  $typemodel->empty_row_form_model();
+			}
+			else
+			{
+				$thefld->setField('type', $fld_params['Type']);
+		
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($thefld->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$thefld->setField('typeinfo', $typeinfo_row,$typemodel);
+		
+			}
+				
+				
+			$thefld->setField('primary', ($fld_params['Key']=='PRI'));
+			$thefld->setField('deletable', ($fld_params['Key']!='PRI'));
+			$thefld->setField('required',($fld_params['Null']=='NO'));
+				
+			if($fld==$entity->get_primary_fld())
+			{
+				$thefld->setField('file_enabled',false);
+			}
+			else
+			{
+				$thefld->setField('file_enabled',true);
+			}
+				
+			if(isset($entity->_MODEL_INFO['file_fields'][$fld]))
+			{
+				$thefld->setField('file_enabled',true);
+				$thefld->setField('file',true);
+				$thefld->setField('filetype',$entity->_MODEL_INFO['file_fields'][$fld]['type']);
+			}
+				
+			$thefld->setField('defval', $fld_params['Default']);
+		
+				
+				
+				
+			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $thefld));
+				
+			$idx = $idx+1;
+		}
+	}
+	
+	private function make_base_authcon(&$newentity,&$fieldlist)
+	{
+		if(!in_array('login', $fieldlist))
+		{
+			$fld_login = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			$fld_login->setField('fldname', 'login');
+			$fld_login->setField('type', $this->_CONNECTION->get_basic_type('text'));
+			$fld_login->setField('required', true);
+			$fld_login->setField('file_enabled',false);
+			$fld_login->setField('deletable', false);
+			$fieldlist[]='login';
+				
+			//$fld_login->fldEnabled('type',false);
+			$fld_login->fldEnabled('primary',false);
+			$fld_login->fldEnabled('required',false);
+			
+			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_login->getField('type')));
+			$typeinfo_row = $typemodel->empty_row_form_model();
+			$fld_login->setField('typeinfo', $typeinfo_row,$typemodel);
+			
+			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_login));
+		}
+		// password field
+		if(!in_array('password', $fieldlist))
+		{
+			$fld_passw = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			$fld_passw->setField('fldname', 'password');
+			$fld_passw->setField('type', $this->_CONNECTION->get_basic_type('text'));
+			$fld_passw->setField('required', true);
+			$fld_passw->setField('file_enabled',false);
+			$fld_passw->setField('deletable', false);
+			$fieldlist[]='password';
+			
+			$fld_passw->fldEnabled('primary',false);
+			$fld_passw->fldEnabled('required',false);
+		
+		
+			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_passw->getField('type')));
+			$typeinfo_row = $typemodel->empty_row_form_model();
+			$fld_passw->setField('typeinfo', $typeinfo_row,$typemodel);
+		
+		
+			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_passw));
+		}
+		// email field
+		if(!in_array('email', $fieldlist))
+		{
+			$fld_email = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			$fld_email->setField('fldname', 'email');
+			$fld_email->setField('type', $this->_CONNECTION->get_basic_type('text'));
+			$fld_email->setField('required', true);
+			$fld_email->setField('file_enabled',false);
+			$fld_email->setField('deletable', false);
+			
+			$fieldlist[]='email';
+			
+			//$fld_email->fldEnabled('type',false);
+			$fld_email->fldEnabled('primary',false);
+			$fld_email->fldEnabled('required',false);
+			
+			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_email->getField('type')));
+			$typeinfo_row = $typemodel->empty_row_form_model();
+			$fld_email->setField('typeinfo', $typeinfo_row,$typemodel);
+			
+			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_email));
+		}
+		// hash field
+		if(!in_array('email', $fieldlist))
+		{
+			$fld_token = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+			$fld_token->setField('fldname', 'token');
+			$fld_token->setField('type', $this->_CONNECTION->get_basic_type('text'));
+			$fld_token->setField('required', true);
+			$fld_token->setField('file_enabled',false);
+			
+			//$fld_token->fldEnabled('type',false);
+			$fld_token->fldEnabled('primary',false);
+			$fld_token->fldEnabled('required',false);
+			$fld_token->setField('deletable', false);
+			$fieldlist[]='token';
+			
+			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_token->getField('type')));
+			$typeinfo_row = $typemodel->empty_row_form_model();
+			$fld_token->setField('typeinfo', $typeinfo_row,$typemodel);
+			
+			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_token));
+		}
+		
+		
+		$newentity->setField('auth_fld_login','login');
+		$newentity->setField('auth_fld_passw','password');
+		$newentity->setField('auth_fld_hash','token');
+		$newentity->setField('auth_fld_email','email');
+	}
+	
 	public function ActionCreationform()
 	{
 		if(isset($_POST['makenew']))
@@ -78,110 +288,44 @@ class EmakerController extends \BaseController
 			
 			$elist = $_cfg->get_entities($this->_CONNECTION, $_cfg, true);
 			
-			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
-			$primaryfld->setField('fldname', 'id');
-			$primaryfld->setField('type',  $this->_CONNECTION->get_basic_type('int'));
-			$primaryfld->setField('deletable', false);
-
-			// add typeinfo
-			$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($primaryfld->getField('type')));
-			$typeinfo_row = $typemodel->empty_row_form_model();			
-			$primaryfld->setField('typeinfo', $typeinfo_row,$typemodel);
-			
-			$primaryfld->setField('primary', true);
-			$primaryfld->setField('required', true);
-			
-			$primaryfld->fldEnabled('type',false);
-			$primaryfld->fldEnabled('primary',false);
-			$primaryfld->fldEnabled('required',false);
-			
-			$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $primaryfld));
-			
-			$newentity->setField('is_auth',isset($_POST['makenew']['auth_entity']));
+								
 			
 			$fieldlist=[];
+			
+			if(isset($_POST['makenew']['existing_table']))
+			{
+				$this->make_from_existsing_table($_cfg,$_POST['makenew']['existing_table'],$newentity,$fieldlist);
+			}
+			
+			if(!in_array('id', $fieldlist))
+			{
+				$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
+				$primaryfld->setField('fldname', 'id');
+				$primaryfld->setField('type',  $this->_CONNECTION->get_basic_type('int'));
+				$primaryfld->setField('deletable', false);
+				
+				// add typeinfo
+				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($primaryfld->getField('type')));
+				$typeinfo_row = $typemodel->empty_row_form_model();
+				$primaryfld->setField('typeinfo', $typeinfo_row,$typemodel);
+					
+				$primaryfld->setField('primary', true);
+				$primaryfld->setField('required', true);
+					
+				$primaryfld->fldEnabled('type',false);
+				$primaryfld->fldEnabled('primary',false);
+				$primaryfld->fldEnabled('required',false);
+					
+				$newentity->setField('fieldlist', array_merge([$primaryfld],$newentity->getField('fieldlist')));
+					
+				$newentity->setField('is_auth',isset($_POST['makenew']['auth_entity']));
+			}
+			
 			if(isset($_POST['makenew']['auth_entity']))	// сущность авторизации
 			{
 				// login field				
+				$this->make_base_authcon($newentity,$fieldlist);
 				
-				$fld_login = $this->_MODEL->nested('fieldlist')->empty_row_form_model(); 
-				$fld_login->setField('fldname', 'login');
-				$fld_login->setField('type', $this->_CONNECTION->get_basic_type('text'));				
-				$fld_login->setField('required', true);								
-				$fld_login->setField('file_enabled',false);
-				$fld_login->setField('deletable', false);
-				$fieldlist[]='login';
-				
-				//$fld_login->fldEnabled('type',false);
-				$fld_login->fldEnabled('primary',false);
-				$fld_login->fldEnabled('required',false);
-				
-				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_login->getField('type')));
-				$typeinfo_row = $typemodel->empty_row_form_model();
-				$fld_login->setField('typeinfo', $typeinfo_row,$typemodel);
-				
-				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_login));
-				// password field
-				$fld_passw = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
-				$fld_passw->setField('fldname', 'password');
-				$fld_passw->setField('type', $this->_CONNECTION->get_basic_type('text'));
-				$fld_passw->setField('required', true);
-				$fld_passw->setField('file_enabled',false);
-				$fld_passw->setField('deletable', false);
-				$fieldlist[]='password';
-				
-				$fld_passw->fldEnabled('primary',false);
-				$fld_passw->fldEnabled('required',false);
-				
-				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_passw->getField('type')));
-				$typeinfo_row = $typemodel->empty_row_form_model();
-				$fld_passw->setField('typeinfo', $typeinfo_row,$typemodel);
-				
-				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_passw));
-				// email field
-				$fld_email = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
-				$fld_email->setField('fldname', 'email');
-				$fld_email->setField('type', $this->_CONNECTION->get_basic_type('text'));
-				$fld_email->setField('required', true);
-				$fld_email->setField('file_enabled',false);
-				$fld_email->setField('deletable', false);
-				
-				$fieldlist[]='email';
-				
-				//$fld_email->fldEnabled('type',false);
-				$fld_email->fldEnabled('primary',false);
-				$fld_email->fldEnabled('required',false);
-				
-				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_email->getField('type')));
-				$typeinfo_row = $typemodel->empty_row_form_model();
-				$fld_email->setField('typeinfo', $typeinfo_row,$typemodel);
-				
-				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_email));
-				// hash field
-				$fld_token = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
-				$fld_token->setField('fldname', 'token');
-				$fld_token->setField('type', $this->_CONNECTION->get_basic_type('text'));
-				$fld_token->setField('required', true);
-				$fld_token->setField('file_enabled',false);
-				
-				//$fld_token->fldEnabled('type',false);
-				$fld_token->fldEnabled('primary',false);
-				$fld_token->fldEnabled('required',false);
-				$fld_token->setField('deletable', false);
-				$fieldlist[]='token';
-				
-				$typemodel = new \BaseModel('',$this->_MODEL->_ENV,$this->_CONNECTION->type_model($fld_token->getField('type')));
-				$typeinfo_row = $typemodel->empty_row_form_model();
-				$fld_token->setField('typeinfo', $typeinfo_row,$typemodel);
-				
-				$newentity->setField('fieldlist', x_array_push($newentity->getField('fieldlist'), $fld_token));
-				
-				
-				
-				$newentity->setField('auth_fld_login','login');
-				$newentity->setField('auth_fld_passw','password');
-				$newentity->setField('auth_fld_hash','token');
-				$newentity->setField('auth_fld_email','email');
 			}
 			
 			$emptyfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();
