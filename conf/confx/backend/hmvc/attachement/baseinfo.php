@@ -4,7 +4,7 @@ $settings = array(
 	'fields'=>array('file_path'=>array('Type'=>'text','TypeInfo'=>""),'comment'=>array('Type'=>'text','TypeInfo'=>""),'message_id'=>array('Type'=>'bigint','TypeInfo'=>"20")),
 	'primary'=>'',
 	'constraints'=>array(),	
-	'required'=>array('id','file_path','comment','message_id'),
+	'required'=>array('file_path','comment','message_id','id'),
 	'rules'=>array(),	
 	'view'=>'{name}',
 	'file_fields'=>array(),

@@ -193,6 +193,9 @@ class plg_drv_mysql extends mod_plugin
 		if($fld_info['Null'])
 			$str_null = "NOT NULL";
 		
+		if($fld_info['TypeInfo']=='()')
+			$fld_info['TypeInfo']='';
+		
 		$type_str = $fld_info['Type'].''.$fld_info['TypeInfo'].'';
 			
 		$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` $type_str $str_null DEFAULT $str_default AFTER `".$fld_info['fldafter']."`");
