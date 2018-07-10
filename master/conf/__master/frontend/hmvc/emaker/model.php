@@ -16,7 +16,8 @@ class ModelEmaker extends \BaseModel
 						'fields'=>[
 								'cfg'=>['Type'=>'text'],
 								'ename'=>['Type'=>'text'],							
-								'auth_entity'=>['Type'=>'boolean'],							
+								'auth_entity'=>['Type'=>'boolean'],			
+								'existing_table'=>['Type'=>'text'],
 						],
 						'required'=>['ename',]
 						

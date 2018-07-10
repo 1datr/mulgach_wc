@@ -73,14 +73,38 @@ $conf = array(
 		return $_PATH;
 	}
 	
-	public function get_entities($dbdrv,$_cfg)
+	public function get_entities($dbdrv,$_cfg,$mode_existing=false)
 	{
 		$tables = $dbdrv->get_tables();
 		$res = [];
-		foreach($tables as $table)
+		if($mode_existing)
 		{
-			$newentity = new scaff_entity($table,$_cfg);
-			$res[]=$newentity;
+			foreach($tables as $table)
+			{						
+				if($this->entity_exists($table))
+				{
+					$newentity = new scaff_entity($table,$_cfg);
+					$res[]=$table;
+				}
+			
+			}
+		}
+		else
+		{		
+			foreach($tables as $table)
+			{
+				
+			
+					if($this->entity_exists($table))
+					{
+						$newentity = new scaff_entity($table,$_cfg);
+						$res[]=['entity'=>$newentity,'exists'=>true];
+					}
+					else 
+					{
+						$res[]=['entity'=>$table,'exists'=>false];
+					}
+			}
 		}
 		return $res;
 	}
@@ -229,6 +253,22 @@ $conf = array(
 		}
 	}
 	
+	function entity_exists($ename)
+	{
+		$tr = $this->get_triada('frontend', $ename);
+		if($tr!=null)
+		{
+			return true;
+		}
+		else
+		{
+			$tr = $this->get_triada('backend', $ename);
+			if($tr!=null)
+			{
+				return true;
+			}
+		}
+	}
 	// проверка существует ли конфигурация
 	static function exists($conf)
 	{

@@ -30,7 +30,7 @@ class EmakerController extends \BaseController
 		$entities_table = $_cfg->get_entities($this->_CONNECTION,$_cfg);
 		$this->add_js('#/js/emaker.js');
 		
-		$this->out_view('index',['newrow'=>$newrow,'entities_table'=>$entities_table]);
+		$this->out_view('index',['newrow'=>$newrow,'cfg'=>$cfg,'entities_table'=>$entities_table]);
 	}
 	
 	public function ActionDrop($cfg,$ename)
@@ -76,7 +76,7 @@ class EmakerController extends \BaseController
 			
 			$this->add_js('#/js/emaker.js');
 			
-			$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
+			$elist = $_cfg->get_entities($this->_CONNECTION, $_cfg, true);
 			
 			$primaryfld = $this->_MODEL->nested('fieldlist')->empty_row_form_model();			 
 			$primaryfld->setField('fldname', 'id');
@@ -227,7 +227,7 @@ class EmakerController extends \BaseController
 		
 		$tr_auth = $_cfg->get_auth_con();		
 		
-		$elist = assoc_array_cut($_cfg->get_entities($this->_CONNECTION, $_cfg),'NAME');
+		$elist = $_cfg->get_entities($this->_CONNECTION, $_cfg, true);
 		$elist = array_diff($elist, [$curr_entity]);
 		
 		$entity->SetDrv($this->_CONNECTION);
