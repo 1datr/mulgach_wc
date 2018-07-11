@@ -184,9 +184,11 @@ class plg_drv_mysql extends mod_plugin
 	
 	function add_field($table,$fld,$fld_info)
 	{
-		$str_default = "NULL";
+		$str_default = "";
 		if(!empty($fld_info['Default']))
-			$str_default = "'".$fld_info['Default']."'";
+		{
+			$str_default = "DEFAULT '".$fld_info['Default']."'";
+		}
 		
 		$str_null = "NULL";
 		
@@ -197,8 +199,18 @@ class plg_drv_mysql extends mod_plugin
 			$fld_info['TypeInfo']='';
 		
 		$type_str = $fld_info['Type'].''.$fld_info['TypeInfo'].'';
-			
-		$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` $type_str $str_null DEFAULT $str_default AFTER `".$fld_info['fldafter']."`");
+		//ALTER TABLE `dbx_attachement` CHANGE `id` `id` BIGINT(20) NOT NULL AUTO_INCREMENT;
+		$_OPTIONS='';
+		/*if(isset($fld_info['autoincrement']))
+		{
+			$_OPTIONS=$_OPTIONS." AUTO_INCREMENT";
+		}*/
+		$_sql = "ALTER TABLE `@+".$table."` ADD `$fld` $type_str $str_null $str_default $_OPTIONS AFTER `".$fld_info['fldafter']."`";
+	//	mul_dbg($_sql);
+		
+		
+		$this->query($_sql);
+		//$this->query( "ALTER TABLE `@+".$table."` ADD `$fld` $type_str $str_null DEFAULT $str_default AFTER `".$fld_info['fldafter']."`");
 		// ALTER TABLE `test_zoo` CHANGE `name` `name` TEXT NULL DEFAULT NULL;
 	}
 	
@@ -218,7 +230,14 @@ class plg_drv_mysql extends mod_plugin
 		$after = "";
 		if(!empty($fld_info['after'])) 
 			$after = "AFTER ".$fld_info['after'];
-		$_sql = "ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $str_null DEFAULT $str_default $after";
+		
+		$a_i='';
+		if($fld_info['autoincrement'])
+		{
+			$a_i="AUTO_INCREMENT";
+		}
+			
+		$_sql = "ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $a_i $str_null DEFAULT $str_default $after";
 		$this->query($_sql);
 	}
 	
@@ -326,7 +345,7 @@ class plg_drv_mysql extends mod_plugin
 				
 			$fldold = $fld;
 		}
-		
+						
 		$exist_table_info = $this->get_table_fields($table_info['table']);
 		// дропаем филды которых нет
 		foreach ($exist_table_info as $fld => $finfo )
@@ -337,6 +356,57 @@ class plg_drv_mysql extends mod_plugin
 			}
 		
 		}
+		
+		$current_primary = $this->get_primary($table_info['table']);
+		if($current_primary!=$table_info['primary'])
+		{
+			$this->alter_primary($table_info['table'], $table_info['primary'],$table_info['fields'][$table_info['primary']],$current_primary);
+		}
+		
+		// ALTER TABLE provider DROP PRIMARY KEY, ADD PRIMARY KEY(person, place, thing);
+	}
+	
+	private function alter_primary($table,$pk,$fld_info,$existing_pk=null)
+	{
+		if($existing_pk!=null)
+		{
+			$sql = "ALTER TABLE `@+$table` DROP PRIMARY KEY";
+			$this->query($sql);
+		}
+		
+		//ALTER TABLE `dbx_attachement` CHANGE `id` `id` BIGINT(20) NOT NULL AUTO_INCREMENT;
+		
+		$sql = "ALTER TABLE `@+$table` ADD PRIMARY KEY(`{$pk}`)";
+		$this->query($sql);
+		
+		$str_null = "NULL";
+		if($fld_info['Null'])
+			$str_null = "NOT NULL";
+		
+		if($fld_info['TypeInfo']=='()')
+			$fld_info['TypeInfo']='';
+		$type_str = $fld_info['Type'].''.$fld_info['TypeInfo'].'';
+				
+			//$this->query("ALTER TABLE `@+$table` CHANGE `".$fld_info['fldname_old']."` `$fld` ".$type_str." $str_null DEFAULT $str_default");
+		$after = "";
+		if(!empty($fld_info['after']))
+			$after = "AFTER ".$fld_info['after'];
+		
+		$a_i='';
+		if($fld_info['autoincrement'])
+		{
+			$a_i="AUTO_INCREMENT";
+		}
+		
+		
+		$_sql = "ALTER TABLE `@+$table` CHANGE `$pk` `$pk` ".$type_str." $a_i";
+		$this->query($_sql);
+		//$this->change_field($table,$pk,$fld_info);
+		
+		/*$fields = $this->get_table_fields($table);
+		 
+		$sql = "ALTER TABLE `@+$table` MODIFY COLUMN {$pk} $_TYPE auto_increment";*/
+		
 	}
 	
 	public function create_table($table_info)

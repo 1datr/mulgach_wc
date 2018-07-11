@@ -137,6 +137,11 @@ class scaff_entity {
 						'Default'=>$element['defval'],						
 				];
 				
+				if(isset($element['primary']))
+				{
+					$_fld_element['autoincrement']=true;
+				}
+				
 				$this->_TABLE_INFO['fields'][$element['fldname']]=$_fld_element;
 				
 				if(!empty($element['fldname_old']))

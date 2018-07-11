@@ -1,10 +1,10 @@
 <?php
 $settings = array(
 	'table'=>'attachement',
-	'fields'=>array('file_path'=>array('Type'=>'text','TypeInfo'=>""),'comment'=>array('Type'=>'text','TypeInfo'=>""),'message_id'=>array('Type'=>'bigint','TypeInfo'=>"20")),
-	'primary'=>'',
+	'fields'=>array('path'=>array('Type'=>'text','TypeInfo'=>""),'comment'=>array('Type'=>'longtext','TypeInfo'=>""),'message_id'=>array('Type'=>'bigint','TypeInfo'=>"20"),'id'=>array('Type'=>'bigint','TypeInfo'=>"20")),
+	'primary'=>'id',
 	'constraints'=>array(),	
-	'required'=>array('file_path','comment','message_id','id'),
+	'required'=>array('path','comment','message_id','id'),
 	'rules'=>array(),	
 	'view'=>'{name}',
 	'file_fields'=>array(),

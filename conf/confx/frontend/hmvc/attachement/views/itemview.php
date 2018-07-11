@@ -3,14 +3,14 @@
 <table>
 
 	<tr>
-	<th valign="top"><label>#{attachement.file_path}</label></th>
+	<th valign="top"><label>#{attachement.path}</label></th>
 	<td valign="top">
-	<?=$attachement->getField('file_path',true) ?>	</td>
+	<?=$attachement->getField('path',true) ?>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{attachement.comment}</label></th>
 	<td valign="top">
-	<?=$attachement->getField('comment',true) ?>	</td>
+				<p><?=nl2br($attachement->getField('comment',true)) ?></p>	</td>
 	</tr>
 		<tr>
 	<th valign="top"><label>#{attachement.message_id}</label></th>
