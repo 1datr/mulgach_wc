@@ -1,3 +1,0 @@
-
-				
-	07-11-2018 15:27:50.000000: ALTER TABLE `@+attachement` ADD `id` bigint(20) NOT NULL   AUTO_INCREMENT AFTER `message_id`

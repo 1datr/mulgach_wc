@@ -16,4 +16,5 @@ $_LANG['attachement.comment']='comment';
 $_LANG['attachement.message_id']='message_id';
 $_LANG['attachement.zuzu']='zuzu';
 $_LANG['attachement.path']='path';
+$_LANG['attachement.zzz']='zzz';
 ?>
